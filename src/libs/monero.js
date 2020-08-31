@@ -1,17 +1,23 @@
+import { DEFAULT_ID } from "monero-javascript/src/main/js/daemon/MoneroDaemonRpc";
+
 const monerojs = require("monero-javascript");
 
-export async function createWallet() {
+export async function createWallet(lang = "English") {
   let walletWasm = await monerojs.createWalletWasm({
     networkType: "stagenet",
-    serverUri: "http://stagenet.community.xmr.to:38081",
-    mnemonic:
-      "reef dilute hold vats usher apart atom muppet vegan relic enlist spout layout identity obtains urgent lymph jaunt koala agile anybody wagtail roster sickness wagtail",
+    language: lang,
     password: "penis",
-    restoreHeight: 650434,
+    serverUri: "http://stagenet.community.xmr.to:38081",
   });
   return walletWasm;
 }
 
 export async function newSubaddress(walletWasm) {
-  return await walletWasm.createSubaddress(0, "test");
+  return await walletWasm.createSubaddress(0, "");
 }
+
+export async function getMnemonic(walletWasm) {
+  return await walletWasm.getMnemonic();
+}
+
+export default { createWallet, newSubaddress, getMnemonic };
