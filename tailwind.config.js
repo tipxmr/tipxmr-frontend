@@ -16,9 +16,9 @@ module.exports = {
           darker: "#EB601A",
         },
         xmrgray: {
-          lighter: "#D1D1D1",
-          default: "#C4C4C4",
-          darker: "#B0B0B0",
+          lighter: "#696969",
+          default: "#4C4C4C",
+          darker: "#404040",
         },
       },
     },
