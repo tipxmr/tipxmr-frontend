@@ -2,6 +2,15 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let configBase = {
+  entry: {
+    index: "./index.js",
+    monero: "./libs/monero.js",
+  },
+  output: {
+    path: path.resolve(__dirname, "dist2"),
+    filename: "[name].js",
+    publicPath: "/",
+  },
   module: {
     rules: [
       {
@@ -20,6 +29,13 @@ let configBase = {
     ],
   },
   devtool: "source-map",
+  devServer: {
+    contentBase: path.join(__dirname, "dist2"),
+    historyApiFallback: true,
+    // open browser after npm start
+    open: true,
+    hot: true,
+  },
   externals: ["worker_threads", "ws", "perf_hooks"], // exclude nodejs
   resolve: {
     alias: {
@@ -29,20 +45,11 @@ let configBase = {
     modules: ["node_modules"],
   },
   cache: true,
-  context: __dirname,
+  context: path.resolve(__dirname, "src"),
+  plugins: [new HtmlWebpackPlugin()],
 };
 
-let devServer = {
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    historyApiFallback: true,
-    // open browser after npm start
-    open: true,
-    hot: true,
-  },
-};
-
-let monero = {
+/* let monero = {
   name: "Offline wallet generator",
   entry: "./src/libs/monero.js",
   output: {
@@ -58,7 +65,6 @@ let indexjs = Object.assign({}, configBase, {
     path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
   },
-  plugins: [new HtmlWebpackPlugin()],
-});
+}); */
 
-module.exports = [indexjs, monero, devServer];
+module.exports = configBase;
