@@ -52,13 +52,13 @@ let monero = {
   },
 };
 
-let indexjs = {
+let indexjs = Object.assign({}, configBase, {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
   },
   plugins: [new HtmlWebpackPlugin()],
-};
+});
 
-module.exports = [configBase, indexjs, monero, devServer];
+module.exports = [indexjs, monero, devServer];
