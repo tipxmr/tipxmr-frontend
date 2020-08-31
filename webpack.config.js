@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let configBase = {
   module: {
@@ -43,9 +44,16 @@ let monero = Object.assign({}, configBase, {
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     // open browser after npm start
-    open: false,
+    open: true,
     hot: true,
   },
 });
 
-module.exports = monero;
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "./dist"),
+    filename: "index_bundle.js",
+  },
+  plugins: [new HtmlWebpackPlugin()],
+};
