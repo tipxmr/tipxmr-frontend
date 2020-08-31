@@ -108,8 +108,8 @@ function CreateWallet() {
           <p className="mt-10">
             <em>
               <small>
-                Keep this secret private and don't loose it. You will need it to
-                log in and access your funds.
+                Keep this secret private and don&apos;t loose it. You will need
+                it to log in and access your funds.
               </small>
             </em>
           </p>
