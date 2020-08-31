@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Link } from "react-router-dom";
-import Routes from "./Routes";
-import { Header, Footer } from "./components";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Header,
+  Footer,
+  Paymentmask,
+  Paymentinfo,
+  Paymentrecieved,
+} from "./components";
 import { createWallet, newSubaddress } from "./libs/monero";
 import "./styles.css";
 
@@ -14,11 +19,19 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <Router>
       <Header />
-      <Routes />
+      <Route path="/" exact>
+        <Paymentmask />
+      </Route>
+      <Route path="/payment" exact>
+        <Paymentinfo />
+      </Route>
+      <Route path="/success" exact>
+        <Paymentrecieved />
+      </Route>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 
