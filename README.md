@@ -14,10 +14,10 @@ As [OBS](https://obsproject.com/) is the most popular software for streamers, we
 
 For the user the process is as follows:
 
-- Navigate to the tip website of the streamer
-- Entering a name and a message
-- Paying an XMR address displayed on the website
-- Done
+- Navigate to the tip website of the streamer :eyes:
+- Entering a name and a message :speech_balloon:
+- Paying an XMR address displayed on the website :money_with_wings:
+- Wait for your message in the stream :computer:
 
 # Getting Started
 
