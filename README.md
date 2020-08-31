@@ -6,7 +6,7 @@
 
 We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their Streams and display some information about the donor.
 
-This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub and the like.
+This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub and the like. :speak_no_evil:
 
 ## How it works
 
