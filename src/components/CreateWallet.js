@@ -47,16 +47,22 @@ LanguageSelector.propTypes = {
 function CreateWallet() {
   const [language, setLanguage] = useState("English");
   const [seed, setSeed] = useState(defaultStateSeed);
-
-  /*   useEffect(() => {
-    if (seed === defaultStateSeed) {
-      monerojs.createWallet("English").then(monerojs.getMnemonic).then(setSeed);
-    }
-  }); */
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setSeed(defaultStateSeed);
-    monerojs.createWallet(language).then(monerojs.getMnemonic).then(setSeed);
+    if (seed === defaultStateSeed) {
+      setIsLoading(true);
+      monerojs.createWallet("English").then(monerojs.getMnemonic).then(setSeed);
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (seed !== defaultStateSeed) {
+      setIsLoading(true);
+      monerojs.createWallet(language).then(monerojs.getMnemonic).then(setSeed);
+      setIsLoading(false);
+    }
   }, [language]);
 
   async function onChange(event) {
@@ -82,7 +88,7 @@ function CreateWallet() {
             name="seed"
             rows="4"
             cols="50"
-            value={seed}
+            value={isLoading ? defaultStateSeed : seed}
             readOnly
             style={{ resize: "none" }}
           />
