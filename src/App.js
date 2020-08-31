@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link } from "react-router-dom";
 import Routes from "./Routes";
 import { Header, Footer } from "./components";
-import monerojs from "./libs/monero";
+import { createWallet, newSubaddress } from "./libs/monero";
 import "./styles.css";
 
 function App() {
-  console.log("App gestartet");
+  useEffect(() => {
+    createWallet()
+      .then(newSubaddress)
+      .then((subaddress) => console.log(subaddress.state.address));
+  }, []);
+
   return (
     <BrowserRouter>
-      <main className="container">
-        <Header />
-        <Routes />
-        <Footer />
-      </main>
+      <Header />
+      <Routes />
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -1,10 +1,6 @@
 import React from "react";
 
 function Paymentmask(props) {
-  function handleChange(event) {
-    props.onChange(event.target.value);
-    console.log(event.target.value);
-  }
   const streamerName = "StreamerName";
   return (
     <div className="mt-64 flex justify-center">
@@ -24,8 +20,6 @@ function Paymentmask(props) {
           align="middle"
           className="block w-1/2 text-center mx-auto mt-4 p-2 border border-8 border-gray-600"
           placeholder="Your Name"
-          value={props.value}
-          onChange={handleChange}
         />
         <input
           type="text"
