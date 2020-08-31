@@ -56,7 +56,7 @@ function CreateWallet() {
         .createWallet("English")
         .then(monerojs.getMnemonic)
         .then(setSeed)
-        .then(setIsLoading(false));
+        .then(() => setIsLoading(false));
     }
   }, []);
 
@@ -67,7 +67,7 @@ function CreateWallet() {
         .createWallet(language)
         .then(monerojs.getMnemonic)
         .then(setSeed)
-        .then(setIsLoading(false));
+        .then(() => setIsLoading(false));
     }
   }, [language]);
 
