@@ -52,16 +52,22 @@ function CreateWallet() {
   useEffect(() => {
     if (seed === defaultStateSeed) {
       setIsLoading(true);
-      monerojs.createWallet("English").then(monerojs.getMnemonic).then(setSeed);
-      setIsLoading(false);
+      monerojs
+        .createWallet("English")
+        .then(monerojs.getMnemonic)
+        .then(setSeed)
+        .then(setIsLoading(false));
     }
   }, []);
 
   useEffect(() => {
     if (seed !== defaultStateSeed) {
       setIsLoading(true);
-      monerojs.createWallet(language).then(monerojs.getMnemonic).then(setSeed);
-      setIsLoading(false);
+      monerojs
+        .createWallet(language)
+        .then(monerojs.getMnemonic)
+        .then(setSeed)
+        .then(setIsLoading(false));
     }
   }, [language]);
 
