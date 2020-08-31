@@ -33,15 +33,18 @@ let configBase = {
 
 let monero = Object.assign({}, configBase, {
   name: "Offline wallet generator",
-  entry: "./src/lib/monero.js",
+  entry: "./src/libs/monero.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "monero_wasm.js",
+    filename: "monero.js",
     publicPath: "/",
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
+    // open browser after npm start
+    open: false,
+    hot: true,
   },
 });
 
