@@ -3,3 +3,10 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+@font-face {
+  font-family: "MoneroGothic";
+  font-weight: 400;
+  src: url("./font/monerogothic_v3-webfont.woff2") format("woff2"),
+    url("./font/monerogothic_v3-webfont.woff") format("woff");
+}
