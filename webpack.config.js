@@ -32,6 +32,16 @@ let configBase = {
   context: __dirname,
 };
 
+let devServer = {
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    historyApiFallback: true,
+    // open browser after npm start
+    open: true,
+    hot: true,
+  },
+};
+
 let monero = Object.assign({}, configBase, {
   name: "Offline wallet generator",
   entry: "./src/libs/monero.js",
@@ -40,16 +50,9 @@ let monero = Object.assign({}, configBase, {
     filename: "monero.js",
     publicPath: "/",
   },
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    historyApiFallback: true,
-    // open browser after npm start
-    open: true,
-    hot: true,
-  },
 });
 
-module.exports = {
+let indexjs = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -57,3 +60,5 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin()],
 };
+
+module.exports = [indexjs, monero, devServer];
