@@ -1,6 +1,25 @@
-# TipXMR
+# TipXMR - The Livestream Tip Bot for OBS
 
-TipXMR is a web based application that let's you accept donations in your livestream.
+(Under Development)
+
+## The Goal
+
+We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their Streams and display some information about the donor.
+
+This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub and the like.
+
+## How it works
+
+As [OBS](https://obsproject.com/) is the most popular software for streamers, we use it to display information about the livestream donations. This is done by simply adding a browser source to the OBS scene pointing to an animation website.
+
+For the user the process is as follows:
+
+- Navigate to the tip website of the streamer
+- Entering a name and a message
+- Paying an XMR address displayed on the website
+- Done
+
+# Getting Started
 
 ## Installation
 

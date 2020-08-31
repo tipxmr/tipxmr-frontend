@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Link } from "react-router-dom";
-import Routes from "./Routes";
-import { Header, Footer } from "./components";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Header, Footer, LandingPage, Payment, Success } from "./components";
 import { createWallet, newSubaddress } from "./libs/monero";
-import "./styles.css";
 
 function App() {
   useEffect(() => {
@@ -14,11 +11,19 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <Router>
       <Header />
-      <Routes />
+      <Route path="/" exact>
+        <LandingPage />
+      </Route>
+      <Route path="/payment" exact>
+        <Payment />
+      </Route>
+      <Route path="/success" exact>
+        <Success />
+      </Route>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 
