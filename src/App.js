@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import {
   Header,
