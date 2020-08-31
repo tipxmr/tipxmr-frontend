@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
 
+const defaultStateSeed = "Generating Seed. Please wait...";
 const languages = [
   "English",
   "German",
@@ -16,11 +17,13 @@ const languages = [
 ];
 
 function LanguageSelector({ languages, onChange }) {
-  const languageItems = Array.from(languages).map((language) => (
-    <option key={language} value={language}>
-      {language}
-    </option>
-  ));
+  const languageItems = Array.from(languages.sort()).map((language) => {
+    return (
+      <option key={language} value={language}>
+        {language}
+      </option>
+    );
+  });
 
   return (
     <div>
@@ -28,12 +31,8 @@ function LanguageSelector({ languages, onChange }) {
       <select
         id="languages"
         name="languages"
-        onChange={(e) => {
-          onChange(e.target.value);
-          const seed = monerojs
-            .CreateWallet(e.target.value)
-            .then(monerojs.getMnemonic);
-        }}
+        defaultValue="English"
+        onChange={onChange}
       >
         {languageItems}
       </select>
@@ -46,15 +45,36 @@ LanguageSelector.propTypes = {
 };
 
 function CreateWallet() {
-  const [language, setLanguage] = useState(languages[0]);
-  // neue Funktion scheiben onChange, die lang übergeben bekommt und damit setLanguage und andere Funkt. aufrufen
+  const [language, setLanguage] = useState("English");
+  const [seed, setSeed] = useState(defaultStateSeed);
 
-  function onChange() {}
+  /*   useEffect(() => {
+    if (seed === defaultStateSeed) {
+      monerojs.createWallet("English").then(monerojs.getMnemonic).then(setSeed);
+    }
+  }); */
+
+  useEffect(() => {
+    setSeed(defaultStateSeed);
+    monerojs.createWallet(language).then(monerojs.getMnemonic).then(setSeed);
+  }, [language]);
+
+  async function onChange(event) {
+    setLanguage(event.target.value);
+  }
 
   return (
     <div>
-      <LanguageSelector languages={languages} onChange={setLanguage} />
-      <p>Selected: {language}</p>
+      <LanguageSelector languages={languages} onChange={onChange} />
+      <p>{language} seed:</p>
+      <textarea
+        id="seed"
+        name="seed"
+        rows="4"
+        cols="50"
+        value={seed}
+        readOnly
+      />
     </div>
   );
 }

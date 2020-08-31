@@ -11,13 +11,6 @@ import {
 import monerojs from "./libs/monero";
 
 function App() {
-  useEffect(() => {
-    monerojs
-      .createWallet()
-      .then(monerojs.newSubaddress)
-      .then((subaddress) => console.log(subaddress.state.address));
-  }, []);
-
   return (
     <Router>
       <Header />

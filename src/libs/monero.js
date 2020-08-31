@@ -1,8 +1,7 @@
-import { DEFAULT_ID } from "monero-javascript/src/main/js/daemon/MoneroDaemonRpc";
-
 const monerojs = require("monero-javascript");
 
 export async function createWallet(lang = "English") {
+  console.log("Creating new wallet");
   let walletWasm = await monerojs.createWalletWasm({
     networkType: "stagenet",
     language: lang,
