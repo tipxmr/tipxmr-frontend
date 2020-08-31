@@ -40,4 +40,4 @@ npm start
 
 ## License
 
-[AGPL](https://github.com/hundehausen/tipxmr/blob/master/LICENSE)
+:balance_scale: [AGPL-3.0 License](https://github.com/hundehausen/tipxmr/blob/master/LICENSE)
