@@ -42,7 +42,7 @@ let devServer = {
   },
 };
 
-let monero = Object.assign({}, configBase, {
+let monero = {
   name: "Offline wallet generator",
   entry: "./src/libs/monero.js",
   output: {
@@ -50,7 +50,7 @@ let monero = Object.assign({}, configBase, {
     filename: "monero.js",
     publicPath: "/",
   },
-});
+};
 
 let indexjs = {
   entry: "./src/index.js",
@@ -61,4 +61,4 @@ let indexjs = {
   plugins: [new HtmlWebpackPlugin()],
 };
 
-module.exports = [indexjs, monero, devServer];
+module.exports = [configBase, indexjs, monero, devServer];
