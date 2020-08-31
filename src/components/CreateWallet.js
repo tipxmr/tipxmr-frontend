@@ -17,6 +17,7 @@ const languages = [
 ];
 
 function LanguageSelector({ languages, onChange }) {
+  // Build list of language items, alphabetically sorted
   const languageItems = Array.from(languages.sort()).map((language) => {
     return (
       <option key={language} value={language}>
@@ -39,17 +40,21 @@ function LanguageSelector({ languages, onChange }) {
     </div>
   );
 }
+// Defining property types
 LanguageSelector.propTypes = {
   languages: PropTypes.array,
   onChange: PropTypes.func,
 };
 
 function CreateWallet() {
+  // states
   const [language, setLanguage] = useState("English");
   const [seed, setSeed] = useState(defaultStateSeed);
   const [isLoading, setIsLoading] = useState(false);
 
+  // this useEffect gets triggered, when render() is executed
   useEffect(() => {
+    // but our code gets only executed, when there is still the default value of the uninitialized seed
     if (seed === defaultStateSeed) {
       setIsLoading(true);
       monerojs
@@ -60,6 +65,7 @@ function CreateWallet() {
     }
   }, []);
 
+  // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
     if (seed !== defaultStateSeed) {
       setIsLoading(true);
@@ -71,6 +77,7 @@ function CreateWallet() {
     }
   }, [language]);
 
+  // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
   async function onChange(event) {
     setLanguage(event.target.value);
   }
