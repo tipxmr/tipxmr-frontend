@@ -8,19 +8,20 @@ module.exports = {
       display: ["MoneroGothic"],
       body: ["MoneroGothic"],
     },
-    colors: {
-      xmrorange: {
-        lighter: "#FF7733",
-        default: "#F16822",
-        darker: "#EB601A",
-      },
-      xmrgray: {
-        lighter: "#D1D1D1",
-        default: "#C4C4C4",
-        darker: "#B0B0B0",
+    extend: {
+      colors: {
+        xmrorange: {
+          lighter: "#FF7733",
+          default: "#F16822",
+          darker: "#EB601A",
+        },
+        xmrgray: {
+          lighter: "#D1D1D1",
+          default: "#C4C4C4",
+          darker: "#B0B0B0",
+        },
       },
     },
-    extend: {},
   },
   variants: {},
   plugins: [],
