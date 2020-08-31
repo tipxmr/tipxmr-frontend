@@ -26,7 +26,7 @@ function LanguageSelector({ languages, onChange }) {
   });
 
   return (
-    <div>
+    <div className="mt-10">
       <label htmlFor="languages">Choose a language:</label>
       <select
         id="languages"
@@ -65,16 +65,40 @@ function CreateWallet() {
 
   return (
     <div>
-      <LanguageSelector languages={languages} onChange={onChange} />
-      <p>{language} seed:</p>
-      <textarea
-        id="seed"
-        name="seed"
-        rows="4"
-        cols="50"
-        value={seed}
-        readOnly
-      />
+      <div className="mt-10 flex justify-center">
+        <div className="my-auto">
+          <h2 className="text-center text-2xl">
+            Create your personal wallet 👛
+          </h2>
+          <LanguageSelector
+            languages={languages}
+            onChange={onChange}
+            align="middle"
+          />
+          <p>{language} seed:</p>
+          <textarea
+            className="mt-5"
+            id="seed"
+            name="seed"
+            rows="4"
+            cols="50"
+            value={seed}
+            readOnly
+            style={{ resize: "none" }}
+          />
+          <p className="mt-10">
+            <em>
+              <small>
+                Keep this secret private and don't loose it. You will need it to
+                log in and access your funds.
+              </small>
+            </em>
+          </p>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
