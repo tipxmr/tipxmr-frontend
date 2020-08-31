@@ -7,7 +7,7 @@ let configBase = {
     monero: "./libs/monero.js",
   },
   output: {
-    path: path.resolve(__dirname, "dist2"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
     publicPath: "/",
   },
@@ -26,11 +26,33 @@ let configBase = {
           },
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: [require("tailwindcss"), require("autoprefixer")],
+            },
+          },
+        ],
+      },
     ],
   },
   devtool: "source-map",
   devServer: {
-    contentBase: path.join(__dirname, "dist2"),
+    contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     // open browser after npm start
     open: true,
@@ -46,25 +68,12 @@ let configBase = {
   },
   cache: true,
   context: path.resolve(__dirname, "src"),
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Template",
+      template: "index.html",
+    }),
+  ],
 };
-
-/* let monero = {
-  name: "Offline wallet generator",
-  entry: "./src/libs/monero.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "monero.js",
-    publicPath: "/",
-  },
-};
-
-let indexjs = Object.assign({}, configBase, {
-  entry: "./src/index.js",
-  output: {
-    path: path.resolve(__dirname, "./dist"),
-    filename: "index_bundle.js",
-  },
-}); */
 
 module.exports = configBase;
