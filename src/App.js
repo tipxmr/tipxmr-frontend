@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import {
   Header,
@@ -12,14 +12,15 @@ import {
 import monerojs from "./libs/monero";
 
 function App() {
+  const [paymentinfo, setPaymentinfo] = useState({});
   return (
     <Router>
       <Header />
       <Route path="/" exact>
-        <LandingPage />
+        <LandingPage onSubmit={setPaymentinfo} />
       </Route>
       <Route path="/payment" exact>
-        <Payment />
+        <Payment donor={paymentinfo.donor} message={paymentinfo.message} />
       </Route>
       <Route path="/success" exact>
         <Success />
