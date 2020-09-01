@@ -4,9 +4,9 @@
 
 ## The Goal
 
-We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their Streams and display some information about the donor.
+We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their live streams and display some information about the donor.
 
-This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub and the like.
+This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub and the like. :speak_no_evil:
 
 ## How it works
 
@@ -14,10 +14,10 @@ As [OBS](https://obsproject.com/) is the most popular software for streamers, we
 
 For the user the process is as follows:
 
-- Navigate to the tip website of the streamer
-- Entering a name and a message
-- Paying an XMR address displayed on the website
-- Done
+- Navigate to the tip website of the streamer :eyes:
+- Entering a name and a message :speech_balloon:
+- Paying an XMR address displayed on the website :money_with_wings:
+- Wait for your message in the stream :computer:
 
 # Getting Started
 
@@ -40,4 +40,4 @@ npm start
 
 ## License
 
-[AGPL](https://github.com/hundehausen/tipxmr/blob/master/LICENSE)
+:balance_scale: [AGPL-3.0 License](https://github.com/hundehausen/tipxmr/blob/master/LICENSE)
