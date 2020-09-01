@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import {
   Header,
@@ -10,7 +10,6 @@ import {
   OpenWallet,
   Animation,
 } from "./components";
-import monerojs from "./libs/monero";
 
 function App() {
   const [paymentinfo, setPaymentinfo] = useState({});
