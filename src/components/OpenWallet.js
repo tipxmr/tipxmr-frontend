@@ -19,6 +19,7 @@ function OpenWallet() {
   };
 
   const [seed, setSeed] = useState("Enter your seed");
+  const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [isSeedValid, setIsSeedValid] = useState(false);
@@ -33,6 +34,7 @@ function OpenWallet() {
         .openWalletFromSeed(seed)
         .then(setWallet)
         .then(() => setIsSeedValid(true))
+        .then(setHashedSeed(monerojs.getMnemonicHash(seed)))
         .catch(() => {
           setIsSeedValid(false);
           console.error("Failed to open wallet.");
