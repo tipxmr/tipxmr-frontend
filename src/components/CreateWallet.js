@@ -34,6 +34,7 @@ function LanguageSelector({ languages, onChange }) {
         name="languages"
         defaultValue="English"
         onChange={onChange}
+        className="ml-4 p-2"
       >
         {languageItems}
       </select>
@@ -55,6 +56,7 @@ function CreateWallet() {
   // this useEffect gets triggered, when render() is executed
   useEffect(() => {
     // but our code gets only executed, when there is still the default value of the uninitialized seed
+    // TODO: Refactor these into one
     if (seed === defaultStateSeed) {
       setIsLoading(true);
       monerojs
@@ -83,40 +85,42 @@ function CreateWallet() {
   }
 
   return (
-    <div>
-      <div className="mt-10 flex justify-center">
-        <div className="my-auto">
-          <h2 className="text-center text-2xl">
-            Create your personal wallet 👛
-          </h2>
-          <LanguageSelector
-            languages={languages}
-            onChange={onChange}
-            align="middle"
-          />
-          <p>{language} seed:</p>
-          <textarea
-            className="mt-5"
-            id="seed"
-            name="seed"
-            rows="4"
-            cols="50"
-            value={isLoading ? defaultStateSeed : seed}
-            readOnly
-            style={{ resize: "none" }}
-          />
-          <p className="mt-10">
-            <em>
-              <small>
-                Keep this secret private and don&apos;t loose it. You will need
-                it to log in and access your funds.
-              </small>
-            </em>
-          </p>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
-            Next
-          </button>
+    <div className="w-1/2 mx-auto mt-10">
+      <div className="my-auto text-center">
+        <h2 className="text-center text-2xl">Create your XMR wallet 👛</h2>
+        <LanguageSelector
+          languages={languages}
+          onChange={onChange}
+          align="middle"
+        />
+        {/* TODO: we might be able to simply cut this p tag */}
+        {/* <p className="mt-4">{language} seed:</p> */}
+        <textarea
+          className="mt-10 text-xmrgray-darker text-justify border-4 border-dashed border-xmrorange-lighter p-5"
+          id="seed"
+          name="seed"
+          rows="4"
+          cols="50"
+          value={isLoading ? defaultStateSeed : seed}
+          readOnly
+          style={{ resize: "none" }}
+        />
+        <div className="w-3/4 mx-auto mt-10 mb-5">
+          <span role="img" aria-label="lightbulp" className="block text-4xl">
+            💡
+          </span>
+          <em>
+            <small className="text-justify">
+              Keep this secret private and don&apos;t loose it. You will need it
+              to log in and access your funds. This wallet was generated on your
+              machine. At no point in time was this secret exposed to
+              tipxmr.live
+            </small>
+          </em>
         </div>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
+          Next
+        </button>
       </div>
     </div>
   );
