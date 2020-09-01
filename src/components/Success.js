@@ -1,6 +1,6 @@
 import React from "react";
 
-function Paymentrecieved() {
+function Success() {
   const streamerName = "StreamerName";
   const amount = "1337";
   const message = "This is an example message";
@@ -31,4 +31,4 @@ function Paymentrecieved() {
   );
 }
 
-export default Paymentrecieved;
+export default Success;

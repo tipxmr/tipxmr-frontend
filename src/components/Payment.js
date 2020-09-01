@@ -2,7 +2,7 @@ import React from "react";
 import testqr from "../images/test-qr.png";
 import ReactLoading from "react-loading";
 
-function Paymentinfo(props) {
+function Payment(props) {
   const amount = "1337";
   return (
     <div className="mt-24 text-center">
@@ -19,4 +19,4 @@ function Paymentinfo(props) {
   );
 }
 
-export default Paymentinfo;
+export default Payment;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Paymentmask(props) {
+function LandingPage(props) {
   const [donor, setDonor] = useState("");
   const [message, setMessage] = useState("");
 
@@ -54,4 +54,4 @@ function Paymentmask(props) {
   );
 }
 
-export default Paymentmask;
+export default LandingPage;
