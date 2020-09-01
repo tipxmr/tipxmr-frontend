@@ -45,6 +45,10 @@ function OpenWallet() {
   }, [seed]);
 
   useEffect(() => {
+    console.log("Hashed Seed:", hashedSeed);
+  }, [hashedSeed]);
+
+  useEffect(() => {
     if (wallet !== null) {
       monerojs.getPrimaryAddress(wallet).then(setPrimaryAddress);
     }

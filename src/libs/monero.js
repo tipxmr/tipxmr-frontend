@@ -1,5 +1,6 @@
 const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
+import Hex from "crypto-js/enc-hex";
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
@@ -35,7 +36,7 @@ export async function getMnemonic(walletWasm) {
 }
 
 export function getMnemonicHash(seed) {
-  return sha256(seed);
+  return Hex.stringify(sha256(seed));
 }
 
 export default {
