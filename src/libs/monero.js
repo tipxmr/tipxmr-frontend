@@ -21,6 +21,10 @@ export async function openWalletFromSeed(seed) {
   return walletWasm;
 }
 
+export async function getPrimaryAddress(walletWasm) {
+  return await walletWasm.getPrimaryAddress();
+}
+
 export async function createSubaddress(walletWasm) {
   return await walletWasm.createSubaddress(0, "");
 }
@@ -32,6 +36,7 @@ export async function getMnemonic(walletWasm) {
 export default {
   createWallet,
   openWalletFromSeed,
+  getPrimaryAddress,
   createSubaddress,
   getMnemonic,
 };
