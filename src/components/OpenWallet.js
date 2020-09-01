@@ -3,13 +3,28 @@ import monerojs from "../libs/monero";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("Enter your seed");
+  const [wallet, setWallet] = useState(null);
+  const [primaryAddress, setPrimaryAddress] = useState(null);
+  const [isSeedValid, setIsSeedValid] = useState(false);
 
   useEffect(() => {
     if (seed.split(" ").length === 25) {
       console.log("25 words reached");
-      let wallet = openWalletFromSeed(seed);
+      monerojs.openWalletFromSeed(seed).then(setWallet);
     }
   }, [seed]);
+
+  useEffect(() => {
+    if (wallet !== null) {
+      monerojs
+        .getPrimaryAddress(wallet)
+        .then((address) => {
+          setPrimaryAddress(address);
+          return address;
+        })
+        .then((address) => console.log("Primary Address:", address));
+    }
+  }, [wallet]);
 
   return (
     <div>
@@ -25,6 +40,7 @@ function OpenWallet() {
             value={seed}
             style={{ resize: "none" }}
             onChange={(e) => setSeed(e.target.value)}
+            onFocus={(e) => e.target.select()}
           />
         </div>
       </div>
