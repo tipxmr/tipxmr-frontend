@@ -8,6 +8,7 @@ import {
   Success,
   CreateWallet,
   OpenWallet,
+  Animation,
 } from "./components";
 import monerojs from "./libs/monero";
 
@@ -30,6 +31,9 @@ function App() {
       </Route>
       <Route path="/openwallet" exact>
         <OpenWallet />
+      </Route>
+      <Route path="/animation" exact>
+        <Animation />
       </Route>
       <Footer />
     </Router>
