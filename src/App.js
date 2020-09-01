@@ -7,6 +7,7 @@ import {
   Payment,
   Success,
   CreateWallet,
+  OpenWallet,
 } from "./components";
 import monerojs from "./libs/monero";
 
@@ -25,6 +26,9 @@ function App() {
       </Route>
       <Route path="/createwallet" exact>
         <CreateWallet />
+      </Route>
+      <Route path="/openwallet" exact>
+        <OpenWallet />
       </Route>
       <Footer />
     </Router>

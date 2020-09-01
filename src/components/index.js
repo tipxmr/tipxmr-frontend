@@ -4,3 +4,4 @@ export { default as Payment } from "./Payment";
 export { default as LandingPage } from "./LandingPage";
 export { default as Success } from "./Success";
 export { default as CreateWallet } from "./CreateWallet";
+export { default as OpenWallet } from "./OpenWallet";
