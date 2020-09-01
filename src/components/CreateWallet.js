@@ -155,7 +155,7 @@ function CreateWallet() {
             </small>
           </em>
         </div>
-        <button className="bg-xmrorange-500 hover:bg-xmrorange-darker-700 text-white font-bold py-2 px-4 rounded mt-15">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
           Next
         </button>
       </div>
