@@ -16,18 +16,43 @@ const languages = [
   "Portuguese",
 ];
 
+function convertFlag(language) {
+  switch (language) {
+    case "German":
+      return "🇩🇪";
+    case "French":
+      return "🇲🇫";
+    case "Esperanto":
+      return "🏴‍☠️";
+    case "Spanish":
+      return "🇪🇦";
+    case "Russian":
+      return "🇷🇺";
+    case "Italian":
+      return "🇮🇹";
+    case "Japanese":
+      return "🇯🇵";
+    case "Protuguese":
+      return "🇵🇹";
+    case "Dutch":
+      return "🇳🇱";
+    default:
+      return "🇬🇧";
+  }
+}
+
 function LanguageSelector({ languages, onChange }) {
   // Build list of language items, alphabetically sorted
   const languageItems = Array.from(languages.sort()).map((language) => {
     return (
       <option key={language} value={language}>
-        {language}
+        {convertFlag(language) + " " + language}
       </option>
     );
   });
 
   return (
-    <div className="mt-10">
+    <div>
       <label
         className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
         htmlFor="languages"
@@ -92,12 +117,19 @@ function CreateWallet() {
   return (
     <div className="w-1/2 mx-auto mt-10">
       <div className="my-auto text-center">
-        <h2 className="text-center text-2xl">Create your XMR wallet 👛</h2>
-        <LanguageSelector
-          languages={languages}
-          onChange={onChange}
-          align="middle"
-        />
+        <h2 className="text-center text-2xl">
+          Create your XMR wallet{" "}
+          <span role="img" aria-label="wallet">
+            👛
+          </span>
+        </h2>
+        <div className="mx-auto w-1/2 md:w-1/4 mt-10">
+          <LanguageSelector
+            languages={languages}
+            onChange={onChange}
+            align="middle"
+          />
+        </div>
         {/* TODO: we might be able to simply cut this p tag */}
         {/* <p className="mt-4">{language} seed:</p> */}
         <textarea
