@@ -11,7 +11,17 @@ export async function createWallet(lang = "English") {
   return walletWasm;
 }
 
-export async function newSubaddress(walletWasm) {
+export async function openWalletFromSeed(seed) {
+  let walletWasm = await monerojs.createWalletWasm({
+    networkType: "stagenet",
+    mnemonic: seed,
+    password: "penis",
+    serverUri: "http://stagenet.community.xmr.to:38081",
+  });
+  return walletWasm;
+}
+
+export async function createSubaddress(walletWasm) {
   return await walletWasm.createSubaddress(0, "");
 }
 
@@ -19,4 +29,9 @@ export async function getMnemonic(walletWasm) {
   return await walletWasm.getMnemonic();
 }
 
-export default { createWallet, newSubaddress, getMnemonic };
+export default {
+  createWallet,
+  openWalletFromSeed,
+  createSubaddress,
+  getMnemonic,
+};
