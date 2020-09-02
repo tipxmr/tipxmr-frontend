@@ -1,6 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import monerologo from "../images/monero-symbol.png";
+import Overview from "./Overview";
+import Wallet from "./Wallet";
+import Settings from "./Settings";
+import Animation from "./Animation";
 
 function Dashboard() {
   return (
@@ -18,22 +22,22 @@ function Dashboard() {
             <div className="mt-10 text-white">
               <ul>
                 <li className="mb-6">
-                  <Link to="">
+                  <Link to="/dashboard/overview">
                     <span>Overview</span>
                   </Link>
                 </li>
                 <li className="mb-6">
-                  <Link to="">
+                  <Link to="/dashboard/wallet">
                     <span>Wallet</span>
                   </Link>
                 </li>
                 <li className="mb-6">
-                  <Link to="">
+                  <Link to="settings">
                     <span>Settings</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="">
+                  <Link to="animation">
                     <span>Animation</span>
                   </Link>
                 </li>
@@ -42,8 +46,20 @@ function Dashboard() {
           </div>
         </nav>
         <div className="px-16 py-4 text-gray-700 bg-gray-200 w-screen">
-          <p>Testing</p>
-          {/* Content */}
+          <Router>
+            <Route path="/dashboard/overview" exact>
+              <Overview />
+            </Route>
+            <Route path="/dashboard/wallet" exact>
+              <Wallet />
+            </Route>
+            <Route path="/settings" exact>
+              <Settings />
+            </Route>
+            <Route path="/animation" exact>
+              <Animation />
+            </Route>
+          </Router>
         </div>
       </div>
     </div>

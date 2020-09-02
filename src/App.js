@@ -43,7 +43,7 @@ function App() {
           <Route path="/animation" exact>
             <Animation />
           </Route>
-          <Route path="/dashboard" exact>
+          <Route path="/dashboard">
             <Dashboard />
           </Route>
         </div>
