@@ -9,6 +9,7 @@ import {
   CreateWallet,
   OpenWallet,
   Animation,
+  Dashboard,
 } from "./components";
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
       </Route>
       <Route path="/animation" exact>
         <Animation />
+      </Route>
+      <Route path="/dashboard" exact>
+        <Dashboard />
       </Route>
       <Footer />
     </Router>
