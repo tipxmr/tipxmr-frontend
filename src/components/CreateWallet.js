@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
 
@@ -155,9 +156,11 @@ function CreateWallet() {
             </small>
           </em>
         </div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
-          Next
-        </button>
+        <Link to="/openwallet">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
+            Login
+          </button>
+        </Link>
       </div>
     </div>
   );
