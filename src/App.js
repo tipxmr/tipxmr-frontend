@@ -12,6 +12,9 @@ import {
 import monerojs from "./libs/monero";
 
 function App() {
+  const [hashedSeed, setHashedSeed] = useState(null);
+  const [wallet, setWallet] = useState(null);
+  const [primaryAddress, setPrimaryAddress] = useState(null);
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
     <Router>
@@ -29,7 +32,10 @@ function App() {
         <CreateWallet />
       </Route>
       <Route path="/openwallet" exact>
-        <OpenWallet />
+        <OpenWallet
+          walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
+          walletVariables={{ hashedSeed, wallet, primaryAddress }}
+        />
       </Route>
       <Footer />
     </Router>
