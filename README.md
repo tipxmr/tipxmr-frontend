@@ -1,6 +1,6 @@
 # TipXMR - The Livestream Tip Bot for OBS
 
-(Under Development)
+TipXMR is a web based application that let's you accept donations in your livestream.
 
 ## The Goal
 
@@ -23,7 +23,7 @@ For the user the process is as follows:
 
 ## Installation
 
-Use the package manager [npm](https://pip.pypa.io/en/stable/) to install TipXMR.
+Use the package manager [npm](https://www.npmjs.com/) to install the needed dependencies TipXMR.
 
 ```bash
 git clone https://github.com/hundehausen/tipxmr.git
