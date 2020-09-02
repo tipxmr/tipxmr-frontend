@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import monerojs from "../libs/monero";
+import PropTypes from "prop-types";
 
 function WalletUnlocked(primaryAddress) {
   return (
@@ -10,7 +11,7 @@ function WalletUnlocked(primaryAddress) {
   );
 }
 
-function OpenWallet() {
+function OpenWallet({ walletFunctions, walletVariables }) {
   const stylesTextBoxOptions = {
     valid:
       "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-green-600 p-5",
@@ -19,22 +20,22 @@ function OpenWallet() {
   };
 
   const [seed, setSeed] = useState("Enter your seed");
-  const [hashedSeed, setHashedSeed] = useState(null);
-  const [wallet, setWallet] = useState(null);
-  const [primaryAddress, setPrimaryAddress] = useState(null);
+
   const [isSeedValid, setIsSeedValid] = useState(false);
   const [textBoxStyle, setTextBoxStyle] = useState(
     stylesTextBoxOptions.invalid
   );
 
+  // monitors the input text area of the seed
   useEffect(() => {
+    // if 25 words are reached
     if (seed.split(" ").length === 25) {
       console.log("25 words reached");
       monerojs
         .openWalletFromSeed(seed)
-        .then(setWallet)
+        .then(walletFunctions.setWallet)
         .then(() => setIsSeedValid(true))
-        .then(setHashedSeed(monerojs.getMnemonicHash(seed)))
+        .then(walletFunctions.setHashedSeed(monerojs.getMnemonicHash(seed)))
         .catch(() => {
           setIsSeedValid(false);
           console.error("Failed to open wallet.");
@@ -45,18 +46,20 @@ function OpenWallet() {
   }, [seed]);
 
   useEffect(() => {
-    console.log("Hashed Seed:", hashedSeed);
-  }, [hashedSeed]);
+    console.log("Hashed Seed:", walletVariables.hashedSeed);
+  }, [walletVariables.hashedSeed]);
 
   useEffect(() => {
-    if (wallet !== null) {
-      monerojs.getPrimaryAddress(wallet).then(setPrimaryAddress);
+    if (walletVariables.wallet !== null) {
+      monerojs
+        .getPrimaryAddress(walletVariables.wallet)
+        .then(walletFunctions.setPrimaryAddress);
     }
-  }, [wallet]);
+  }, [walletVariables.wallet]);
 
   useEffect(() => {
-    console.log("Primary Address:", primaryAddress);
-  }, [primaryAddress]);
+    console.log("Primary Address:", walletVariables.primaryAddress);
+  }, [walletVariables.primaryAddress]);
 
   useEffect(() => {
     isSeedValid
@@ -80,11 +83,17 @@ function OpenWallet() {
             onChange={(e) => setSeed(e.target.value)}
             onFocus={(e) => e.target.select()}
           />
-          {isSeedValid ? WalletUnlocked(primaryAddress) : null}
+          {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
         </div>
       </div>
     </div>
   );
 }
+
+// Defining property types
+OpenWallet.propTypes = {
+  walletFunctions: PropTypes.object,
+  walletVariables: PropTypes.object,
+};
 
 export default OpenWallet;
