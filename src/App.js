@@ -18,8 +18,8 @@ function App() {
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
-    <div className="flex flex-col h-screen">
-      <Router>
+    <div className="flex flex-col min-h-screen">
+      <Router className="h-full">
         <Header />
         <div className="mb-auto">
           <Route path="/" exact>

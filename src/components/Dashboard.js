@@ -4,10 +4,10 @@ import monerologo from "../images/monero-symbol.png";
 
 function Dashboard() {
   return (
-    <div>
+    <div className="h-full">
       <div className="flex flex-row">
         {/* Sidebar */}
-        <nav className="bg-gray-900 w-32 justify-between flex flex-col ">
+        <nav className="bg-gray-900 h-full w-32 justify-between flex flex-col ">
           <div className="mt-10 pl-4">
             <Link to="/dashboard">
               <img
