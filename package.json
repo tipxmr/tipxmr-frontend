@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.11.4",
+    "crypto-js": "^4.0.0",
     "monero-javascript": "^0.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
