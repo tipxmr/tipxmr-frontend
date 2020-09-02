@@ -36,7 +36,7 @@ npm start
 ## Authors
 
 - [AlexAnarcho](https://github.com/AlexAnarcho)
-- Grischa Daum (hundehausen)
+- [hundehausen](https://github.com/hundehausen) (Grischa Daum)
 
 ## License
 
