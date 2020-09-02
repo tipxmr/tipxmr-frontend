@@ -23,7 +23,7 @@ For the user the process is as follows:
 
 ## Installation
 
-Use the package manager [npm](https://www.npmjs.com/) to install the needed dependencies TipXMR.
+Use the package manager [npm](https://www.npmjs.com/) to install the dependencies for TipXMR.
 
 ```bash
 git clone https://github.com/hundehausen/tipxmr.git
