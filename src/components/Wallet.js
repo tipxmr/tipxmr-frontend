@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import monerojs from "../libs/monero";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 
 function Wallet({ walletFunctions, walletVariables }) {
-  async function syncWallet(walletWasm) {
+  useEffect(() => {
+    if (walletVariables.wallet !== null) {
+      console.log("Wallet File hat sich verändert.");
+    }
+    console.log("Wallet state in App.js:", walletVariables.wallet);
+  }, [walletVariables.wallet]);
+
+  async function syncWallet() {
     // synchronize with progress notifications
-    await walletWasm.sync(
+    await walletVariables.wallet.sync(
       new (class extends monerojs.MoneroWalletListener {
         onSyncProgress(height, startHeight, endHeight, percentDone, message) {
           console.log(message);
@@ -16,7 +23,7 @@ function Wallet({ walletFunctions, walletVariables }) {
 
   return (
     <div>
-      <button onClick={syncWallet(walletVariables.wallet)}>Start Sync</button>
+      <button onClick={() => syncWallet()}>Start Sync</button>
     </div>
   );
 }
