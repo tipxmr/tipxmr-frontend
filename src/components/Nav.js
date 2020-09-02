@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../images/tipxmr-live.png";
 
 function Nav() {
   return (
@@ -7,8 +8,12 @@ function Nav() {
       <div className="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
         <div className="flex justify-between items-center">
           <div>
-            <Link className="md:text-2xl hover:text-xmrgray-darker" to="/">
-              TipXMR.live
+            <Link className="md:text-2xl " to="/">
+              <img
+                src={logo}
+                alt="tipxmr logo"
+                className="w-64 transform hover:scale-105"
+              />
             </Link>
           </div>
           {/* Mobile menu button */}
