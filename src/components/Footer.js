@@ -4,7 +4,7 @@ import github from "../images/github-logo.png";
 
 function Footer() {
   return (
-    <footer className="absolute bottom-0 bg-xmrgray-lighter w-full py-3">
+    <footer className="bg-xmrgray-lighter w-full py-3">
       <div className="flex justify-center mb-3">
         <a
           href="https://www.getmonero.org/"

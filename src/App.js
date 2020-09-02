@@ -18,34 +18,38 @@ function App() {
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
-    <Router>
-      <Header />
-      <Route path="/" exact>
-        <LandingPage onSubmit={setPaymentinfo} />
-      </Route>
-      <Route path="/payment" exact>
-        <Payment donor={paymentinfo.donor} message={paymentinfo.message} />
-      </Route>
-      <Route path="/success" exact>
-        <Success />
-      </Route>
-      <Route path="/createwallet" exact>
-        <CreateWallet />
-      </Route>
-      <Route path="/openwallet" exact>
-        <OpenWallet
-          walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
-          walletVariables={{ hashedSeed, wallet, primaryAddress }}
-        />
-      </Route>
-      <Route path="/animation" exact>
-        <Animation />
-      </Route>
-      <Route path="/dashboard" exact>
-        <Dashboard />
-      </Route>
-      <Footer />
-    </Router>
+    <div className="flex flex-col h-screen">
+      <Router>
+        <Header />
+        <div className="mb-auto">
+          <Route path="/" exact>
+            <LandingPage onSubmit={setPaymentinfo} />
+          </Route>
+          <Route path="/payment" exact>
+            <Payment donor={paymentinfo.donor} message={paymentinfo.message} />
+          </Route>
+          <Route path="/success" exact>
+            <Success />
+          </Route>
+          <Route path="/createwallet" exact>
+            <CreateWallet />
+          </Route>
+          <Route path="/openwallet" exact>
+            <OpenWallet
+              walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
+              walletVariables={{ hashedSeed, wallet, primaryAddress }}
+            />
+          </Route>
+          <Route path="/animation" exact>
+            <Animation />
+          </Route>
+          <Route path="/dashboard" exact>
+            <Dashboard />
+          </Route>
+        </div>
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
