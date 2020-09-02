@@ -51,6 +51,12 @@ function Nav() {
             >
               Animation
             </Link>
+            <Link
+              to="/dashboard"
+              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              Dashboard
+            </Link>
           </div>
         </div>
       </div>

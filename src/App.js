@@ -9,6 +9,7 @@ import {
   CreateWallet,
   OpenWallet,
   Animation,
+  Dashboard,
 } from "./components";
 
 function App() {
@@ -17,31 +18,38 @@ function App() {
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
-    <Router>
-      <Header />
-      <Route path="/" exact>
-        <LandingPage onSubmit={setPaymentinfo} />
-      </Route>
-      <Route path="/payment" exact>
-        <Payment donor={paymentinfo.donor} message={paymentinfo.message} />
-      </Route>
-      <Route path="/success" exact>
-        <Success />
-      </Route>
-      <Route path="/createwallet" exact>
-        <CreateWallet />
-      </Route>
-      <Route path="/openwallet" exact>
-        <OpenWallet
-          walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
-          walletVariables={{ hashedSeed, wallet, primaryAddress }}
-        />
-      </Route>
-      <Route path="/animation" exact>
-        <Animation />
-      </Route>
-      <Footer />
-    </Router>
+    <div className="flex flex-col min-h-screen">
+      <Router className="h-full">
+        <Header />
+        <div className="mb-auto">
+          <Route path="/" exact>
+            <LandingPage onSubmit={setPaymentinfo} />
+          </Route>
+          <Route path="/payment" exact>
+            <Payment donor={paymentinfo.donor} message={paymentinfo.message} />
+          </Route>
+          <Route path="/success" exact>
+            <Success />
+          </Route>
+          <Route path="/createwallet" exact>
+            <CreateWallet />
+          </Route>
+          <Route path="/openwallet" exact>
+            <OpenWallet
+              walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
+              walletVariables={{ hashedSeed, wallet, primaryAddress }}
+            />
+          </Route>
+          <Route path="/animation" exact>
+            <Animation />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </div>
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
