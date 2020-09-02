@@ -46,6 +46,12 @@ function Nav() {
               OpenWallet
             </Link>
             <Link
+              to="/wallet"
+              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              Wallet
+            </Link>
+            <Link
               to="/animation"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
             >

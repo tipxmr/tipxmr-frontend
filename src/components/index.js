@@ -5,5 +5,6 @@ export { default as LandingPage } from "./LandingPage";
 export { default as Success } from "./Success";
 export { default as CreateWallet } from "./CreateWallet";
 export { default as OpenWallet } from "./OpenWallet";
+export { default as Wallet } from "./Wallet";
 export { default as Animation } from "./Animation";
 export { default as Nav } from "./Nav";

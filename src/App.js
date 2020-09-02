@@ -8,6 +8,7 @@ import {
   Success,
   CreateWallet,
   OpenWallet,
+  Wallet,
   Animation,
 } from "./components";
 
@@ -33,6 +34,12 @@ function App() {
       </Route>
       <Route path="/openwallet" exact>
         <OpenWallet
+          walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
+          walletVariables={{ hashedSeed, wallet, primaryAddress }}
+        />
+      </Route>
+      <Route path="/wallet" exact>
+        <Wallet
           walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
           walletVariables={{ hashedSeed, wallet, primaryAddress }}
         />

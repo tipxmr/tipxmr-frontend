@@ -39,6 +39,10 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
+export function sync(wallet, MoneroWalletListener, startHeight) {
+  wallet.sync(MoneroWalletListener, startHeight);
+}
+
 export default {
   createWallet,
   openWalletFromSeed,
@@ -46,4 +50,5 @@ export default {
   createSubaddress,
   getMnemonic,
   getMnemonicHash,
+  sync,
 };
