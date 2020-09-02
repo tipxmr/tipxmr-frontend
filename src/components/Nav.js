@@ -21,24 +21,37 @@ function Nav() {
         {/* Mobile Menu open: "block", Menu closed: "hidden" */}
         <div className="md:flex items-center">
           <div className="flex flex-col md:flex-row md:mx-6">
-            <a
-              className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
-              href="#"
+            <Link
+              to="/payment"
+              className="my-2 md:my-0 md:mx-3 hover:text-xmrorange"
             >
-              Home
-            </a>
-            <a
-              className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
-              href="#"
+              Payment
+            </Link>
+            <Link
+              to="/success"
+              className="my-2 md:my-0 md:mx-3 hover:text-xmrorange"
             >
-              Shop
-            </a>
-            <a
-              className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
-              href="#"
+              Success
+            </Link>
+            <Link
+              to="/createwallet"
+              className="my-2 md:my-0 md:mx-3 hover:text-xmrorange"
             >
-              Contact
-            </a>
+              CreateWallet
+            </Link>
+            <Link
+              to="/openwallet"
+              className="my-2 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              OpenWallet
+            </Link>
+            <Link
+              to="/animation"
+              className="my-2 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              Animation
+            </Link>
+
             <a
               className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
               href="#"
