@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
 
+// component for successful wallet unlock
 function WalletUnlocked(primaryAddress) {
   return (
     <div id="wallet-successful-opened">
@@ -12,6 +13,7 @@ function WalletUnlocked(primaryAddress) {
 }
 
 function OpenWallet({ walletFunctions, walletVariables }) {
+  // styles for seed text box depending on the seed validation
   const stylesTextBoxOptions = {
     valid:
       "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-green-600 p-5",
@@ -19,8 +21,8 @@ function OpenWallet({ walletFunctions, walletVariables }) {
       "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-red-600 p-5",
   };
 
+  // states
   const [seed, setSeed] = useState("Enter your seed");
-
   const [isSeedValid, setIsSeedValid] = useState(false);
   const [textBoxStyle, setTextBoxStyle] = useState(
     stylesTextBoxOptions.invalid
