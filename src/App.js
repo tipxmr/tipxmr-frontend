@@ -16,6 +16,11 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
+
+  /*  const hashedSeed = React.createContext(null);
+  const wallet = React.createContext(null);
+  const primaryAddress = React.createContext(null); */
+
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
     <Router>

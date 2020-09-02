@@ -8,7 +8,7 @@ function Wallet({ walletFunctions, walletVariables }) {
       console.log("Wallet File hat sich verändert.");
     }
     console.log("Wallet state in App.js:", walletVariables.wallet);
-  }, [walletVariables.wallet]);
+  }, [walletVariables.allet]);
 
   async function syncWallet() {
     // synchronize with progress notifications
