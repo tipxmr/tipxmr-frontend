@@ -9,6 +9,11 @@ function WalletUnlocked(primaryAddress) {
     <div id="wallet-successful-opened">
       <p>Wallet unlocked 🔓</p>
       <p>Your primary address: {primaryAddress}</p>
+      <Link to="/wallet">
+        <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded">
+          Login
+        </button>
+      </Link>
     </div>
   );
 }
@@ -87,11 +92,6 @@ function OpenWallet({ walletFunctions, walletVariables }) {
             onFocus={(e) => e.target.select()}
           />
           {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
-          <Link to="/wallet">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
-              Sync
-            </button>
-          </Link>
         </div>
       </div>
     </div>

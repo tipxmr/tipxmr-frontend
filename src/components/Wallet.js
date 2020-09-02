@@ -7,7 +7,7 @@ function Wallet({ walletFunctions, walletVariables }) {
     if (walletVariables.wallet !== null) {
       console.log("Wallet File hat sich verändert.");
     }
-    console.log("Wallet state in App.js:", walletVariables.wallet);
+    console.dir("Wallet state in App.js:", walletVariables.wallet);
   }, [walletVariables.allet]);
 
   async function syncWallet() {
