@@ -8,6 +8,7 @@ import {
   Success,
   CreateWallet,
   OpenWallet,
+  Wallet,
   Animation,
   Dashboard,
 } from "./components";
@@ -16,6 +17,7 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
+
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,6 +38,12 @@ function App() {
           </Route>
           <Route path="/openwallet" exact>
             <OpenWallet
+              walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
+              walletVariables={{ hashedSeed, wallet, primaryAddress }}
+            />
+          </Route>
+          <Route path="/wallet" exact>
+            <Wallet
               walletFunctions={{ setHashedSeed, setWallet, setPrimaryAddress }}
               walletVariables={{ hashedSeed, wallet, primaryAddress }}
             />

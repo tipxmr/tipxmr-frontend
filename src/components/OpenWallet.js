@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
 
@@ -8,6 +9,11 @@ function WalletUnlocked(primaryAddress) {
     <div id="wallet-successful-opened">
       <p>Wallet unlocked 🔓</p>
       <p>Your primary address: {primaryAddress}</p>
+      <Link to="/wallet">
+        <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded">
+          Login
+        </button>
+      </Link>
     </div>
   );
 }
