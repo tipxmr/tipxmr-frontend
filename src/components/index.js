@@ -8,4 +8,4 @@ export { default as OpenWallet } from "./OpenWallet";
 export { default as Wallet } from "./Wallet";
 export { default as Animation } from "./Animation";
 export { default as Nav } from "./Nav";
-export { default as Dashboard } from "./Dashboard";
+export { default as Dashboard } from "./dashboard/Dashboard";

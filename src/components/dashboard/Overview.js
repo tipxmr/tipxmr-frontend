@@ -30,8 +30,8 @@ function Overview() {
     },
   ]);
   return (
-    <div className="">
-      <div className="grid grid-cols-3 gap-12">
+    <div className="h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Your Balance</p>
@@ -47,14 +47,14 @@ function Overview() {
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Last Month</p>
-            <div className="text-4xl my-2">123,1115710237 XMR</div>
+            <div className="text-4xl my-2">&#8773; 123 XMR</div>
           </div>
         </div>
       </div>
       <div className="mt-12 mx-auto w-3/4">
         <h2 className="text-3xl text-center my-3">Most recent Donations</h2>
         {/* Dynamische Tabelle nach dieser Anleitung */}
-        <table className="table-auto border border-4 mx-auto">
+        <table className="table-auto border-4 mx-auto">
           <thead>
             <tr className="text-xl">
               <th className="px-4 py-2">Donor</th>
@@ -64,11 +64,10 @@ function Overview() {
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item.id}>
-                {console.log(item.id)}
-                <td className="border px-4 py-2">{item.donor}</td>
-                <td className="border px-4 py-2">{item.message}</td>
-                <td className="border px-4 py-2">{item.amount} XMR</td>
+              <tr key={item.id} className="border-2">
+                <td className="px-4 py-2">{item.donor}</td>
+                <td className="px-4 py-2">{item.message}</td>
+                <td className="px-4 py-2 md:w-16">{item.amount} XMR</td>
                 <td />
               </tr>
             ))}
