@@ -28,7 +28,6 @@ function Dashboard() {
   }
   return (
     <div className="flex flex-row h-full">
-      {/* Sidebar */}
       <nav className="bg-gray-900 w-32 justify-between flex flex-col">
         <div className="mt-10 pl-4">
           <div className="w-full mx-auto">
