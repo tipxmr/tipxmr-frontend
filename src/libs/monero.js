@@ -2,21 +2,16 @@ const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
 
-let walletRpc = new monerojs.MoneroRpcConnection({
-  //uri: "http://stagenet.community.xmr.to:38081",
-  uri: "http://localhost:38081",
-  username: "superuser",
-  password: "abctesting123",
-  rejectUnauthorized: false, // e.g. local development
-});
-
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
   let walletWasm = await monerojs.createWalletWasm({
     networkType: "stagenet",
     language: lang,
-    password: "penis",
-    server: walletRpc,
+    password: "pass123",
+    serverUri: "http://localhost:38081",
+    serverUsername: "superuser",
+    serverPassword: "abctesting123",
+    rejectUnauthorized: false, // e.g. local development
   });
   return walletWasm;
 }
@@ -25,8 +20,12 @@ export async function openWalletFromSeed(seed) {
   let walletWasm = await monerojs.createWalletWasm({
     networkType: "stagenet",
     mnemonic: seed,
-    password: "penis",
-    server: walletRpc,
+    password: "pass123",
+    serverUri: "http://localhost:38081",
+    //serverUri: "http://stagenet.community.xmr.to:38081",
+    serverUsername: "superuser",
+    serverPassword: "abctesting123",
+    rejectUnauthorized: false, // e.g. local development
   });
   return walletWasm;
 }
