@@ -20,6 +20,9 @@ module.exports = {
           default: "#4C4C4C",
           darker: "#404040",
         },
+        flex: {
+          flexfull: "1 0 100%",
+        },
       },
     },
   },
