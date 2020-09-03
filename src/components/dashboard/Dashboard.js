@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import monerologo from "../images/monero-symbol.png";
+import monerologo from "../../images/monero-symbol.png";
 import Overview from "./Overview";
-import Wallet from "./Wallet";
+import Wallet from "../Wallet";
 import Settings from "./Settings";
-import Animation from "./Animation";
+import Animation from "../Animation";
 
 function Dashboard() {
   const [dashcomponent, setDashcomponent] = useState("overview");
