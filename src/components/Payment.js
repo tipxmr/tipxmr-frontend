@@ -4,7 +4,8 @@ import ReactLoading from "react-loading";
 
 function Payment(props) {
   const amount = "1337";
-  const address = "l;kajdsflkjsdaf;l";
+  const address =
+    "45ZoRheLkX2H3UjYSFs2wP9yo739nQ7irZA2pX6MQr5FeebkC2n8hABYGQRCcrzJ2AaGbNUyR4EfvanP1G2H5DSrMWi97Sk";
   return (
     <div className="flex flex-grow justify-center text-center">
       <div className="text-center my-auto">
