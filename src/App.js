@@ -21,9 +21,9 @@ function App() {
   const [paymentinfo, setPaymentinfo] = useState({});
   return (
     <div className="flex flex-col min-h-screen">
-      <Router className="h-full">
+      <Router>
         <Header />
-        <div className="mb-auto">
+        <div className="flex-auto">
           <Route path="/" exact>
             <LandingPage onSubmit={setPaymentinfo} />
           </Route>
