@@ -3,6 +3,7 @@ import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
 
 let walletRpc = new monerojs.MoneroRpcConnection({
+  //uri: "http://stagenet.community.xmr.to:38081",
   uri: "http://localhost:38081",
   username: "superuser",
   password: "abctesting123",

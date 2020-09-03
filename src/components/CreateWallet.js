@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
+import Loading from "./Loading";
 
-const defaultStateSeed = "Generating Seed. Please wait...";
+const defaultStateSeed = "";
 const languages = [
   "English",
   "German",
@@ -143,6 +144,7 @@ function CreateWallet() {
           readOnly
           style={{ resize: "none" }}
         />
+        {isLoading ? <Loading text="Creating new wallet" /> : null}
         <div className="w-3/4 mx-auto mt-10 mb-5">
           <span role="img" aria-label="lightbulp" className="block text-4xl">
             💡
@@ -156,6 +158,7 @@ function CreateWallet() {
             </small>
           </em>
         </div>
+
         <Link to="/openwallet">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-15">
             Login

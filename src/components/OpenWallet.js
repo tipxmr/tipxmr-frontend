@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
+import Loading from "./Loading";
 
 // component for successful wallet unlock
 function WalletUnlocked(primaryAddress) {
@@ -33,16 +34,19 @@ function OpenWallet({ walletFunctions, walletVariables }) {
   const [textBoxStyle, setTextBoxStyle] = useState(
     stylesTextBoxOptions.invalid
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   // monitors the input text area of the seed
   useEffect(() => {
     // if 25 words are reached
     if (seed.split(" ").length === 25) {
       console.log("25 words reached");
+      setIsLoading(true);
       monerojs
         .openWalletFromSeed(seed)
         .then(walletFunctions.setWallet)
         .then(() => setIsSeedValid(true))
+        .then(() => setIsLoading(false))
         .then(walletFunctions.setHashedSeed(monerojs.getMnemonicHash(seed)))
         .catch(() => {
           setIsSeedValid(false);
@@ -91,6 +95,7 @@ function OpenWallet({ walletFunctions, walletVariables }) {
             onChange={(e) => setSeed(e.target.value)}
             onFocus={(e) => e.target.select()}
           />
+          {isLoading ? <Loading text="Creating new wallet" /> : null}
           {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
         </div>
       </div>
