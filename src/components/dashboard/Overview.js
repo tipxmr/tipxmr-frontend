@@ -65,7 +65,6 @@ function Overview() {
           <tbody>
             {data.map((item) => (
               <tr key={item.id}>
-                {console.log(item.id)}
                 <td className="border px-4 py-2">{item.donor}</td>
                 <td className="border px-4 py-2">{item.message}</td>
                 <td className="border px-4 py-2">{item.amount} XMR</td>
