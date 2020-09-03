@@ -2,13 +2,20 @@ const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
 
+let walletRpc = new monerojs.MoneroRpcConnection({
+  uri: "http://localhost:38081",
+  username: "superuser",
+  password: "abctesting123",
+  rejectUnauthorized: false, // e.g. local development
+});
+
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
   let walletWasm = await monerojs.createWalletWasm({
     networkType: "stagenet",
     language: lang,
     password: "penis",
-    serverUri: "http://stagenet.community.xmr.to:38081",
+    server: walletRpc,
   });
   return walletWasm;
 }
@@ -18,7 +25,7 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "penis",
-    serverUri: "http://stagenet.community.xmr.to:38081",
+    server: walletRpc,
   });
   return walletWasm;
 }
@@ -39,8 +46,18 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
-export function sync(wallet, MoneroWalletListener, startHeight) {
+export async function sync(wallet, MoneroWalletListener, startHeight) {
   wallet.sync(MoneroWalletListener, startHeight);
+}
+
+class MyWalletListener extends monerojs.MoneroWalletListener {
+  constructor(fn) {
+    super();
+    this.fn = fn;
+  }
+  onSyncProgress(height, startHeight, endHeight, percentDone, message) {
+    this.fn(percentDone);
+  }
 }
 
 export default {
@@ -51,4 +68,5 @@ export default {
   getMnemonic,
   getMnemonicHash,
   sync,
+  MyWalletListener,
 };
