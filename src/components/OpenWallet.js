@@ -94,7 +94,7 @@ function OpenWallet({ walletFunctions, walletVariables }) {
           onChange={(e) => setSeed(e.target.value)}
           onFocus={(e) => e.target.select()}
         />
-        {isLoading ? <Loading text="Creating new wallet" /> : null}
+        {isLoading ? <Loading text="Opening your wallet" /> : null}
         {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
       </div>
     </div>
