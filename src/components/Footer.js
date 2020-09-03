@@ -29,7 +29,11 @@ function Footer() {
           />
         </a>
       </div>
-      <p className="text-center text-white">Find out more</p>
+      <div className="text-center text-white text-xl">
+        <a href="/disclaimer" className="hover:text-xmrorange">
+          Disclaimer
+        </a>
+      </div>
     </footer>
   );
 }
