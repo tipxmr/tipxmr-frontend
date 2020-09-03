@@ -27,8 +27,7 @@ function Dashboard() {
     syncedbutton = <SyncButton synced={false} />;
   }
   return (
-    <div className="flex flex-row h-full">
-      {/* Sidebar */}
+    <div className="flex flex-grow">
       <nav className="bg-gray-900 w-32 justify-between flex flex-col">
         <div className="mt-10 pl-4">
           <div className="w-full mx-auto">
@@ -62,7 +61,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
-      <div className="px-16 py-4 text-gray-700 bg-gray-200 w-screen">
+      <div className="px-16 py-4 text-gray-700 bg-gray-200 w-full ">
         <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
           {syncedbutton}
         </div>

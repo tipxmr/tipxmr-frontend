@@ -10,7 +10,7 @@ function LandingPage(props) {
   }
   const streamerName = "StreamerName";
   return (
-    <div className="mt-64 flex justify-center">
+    <div className="flex flex-grow justify-center">
       <div className="my-auto">
         <h2 className="text-center text-3xl">
           <span role="img" aria-label="Green Money">

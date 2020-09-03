@@ -22,8 +22,10 @@ function Wallet({ walletFunctions, walletVariables }) {
   }
 
   return (
-    <div>
-      <button onClick={() => syncWallet()}>Start Sync</button>
+    <div className="flex flex-grow justify-center">
+      <div className="text-center my-auto">
+        <button onClick={() => syncWallet()}>Start Sync</button>
+      </div>
     </div>
   );
 }
