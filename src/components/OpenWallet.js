@@ -80,24 +80,22 @@ function OpenWallet({ walletFunctions, walletVariables }) {
   }, [isSeedValid]);
 
   return (
-    <div>
-      <div className="w-1/2 mx-auto mt-10">
-        <div className="my-auto text-center">
-          <h2 className="text-center text-2xl">Enter your seed ⌨️</h2>
-          <textarea
-            className={textBoxStyle}
-            id="seed"
-            name="seed"
-            rows="4"
-            cols="50"
-            value={seed}
-            style={{ resize: "none" }}
-            onChange={(e) => setSeed(e.target.value)}
-            onFocus={(e) => e.target.select()}
-          />
-          {isLoading ? <Loading text="Creating new wallet" /> : null}
-          {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
-        </div>
+    <div className="flex flex-grow justify-center">
+      <div className="my-auto text-center">
+        <h2 className="text-center text-2xl">Enter your seed ⌨️</h2>
+        <textarea
+          className={textBoxStyle}
+          id="seed"
+          name="seed"
+          rows="4"
+          cols="50"
+          value={seed}
+          style={{ resize: "none" }}
+          onChange={(e) => setSeed(e.target.value)}
+          onFocus={(e) => e.target.select()}
+        />
+        {isLoading ? <Loading text="Creating new wallet" /> : null}
+        {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
       </div>
     </div>
   );
