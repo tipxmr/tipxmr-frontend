@@ -116,7 +116,7 @@ function CreateWallet() {
   }
 
   return (
-    <div className="w-1/2 mx-auto mt-10">
+    <div className="flex flex-grow justify-center">
       <div className="my-auto text-center">
         <h2 className="text-center text-2xl">
           Create your XMR wallet{" "}
