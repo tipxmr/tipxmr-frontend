@@ -23,17 +23,18 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [restoreHeight, setRestoreHeight] = useState(650113);
+  const [restoreHeight, setRestoreHeight] = useState(650113); // 23.August2020
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [IsSyncActive, setIsSyncActive] = useState(false);
 
   const mwl = new monerojs.MyWalletListener(setPercentageSynced);
 
   async function syncWallet() {
-    monerojs
-      .sync(wallet, mwl, restoreHeight)
-      .then(() => setIsSyncActive(true))
-      .catch((err) => console.error(err));
+    setIsSyncActive(true);
+    monerojs.sync(wallet, mwl, restoreHeight).catch((err) => {
+      console.error(err);
+      setIsSyncActive(false);
+    });
   }
 
   return (
