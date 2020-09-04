@@ -11,6 +11,7 @@ import {
   Wallet,
   Animation,
   Dashboard,
+  Disclaimer,
 } from "./components";
 
 function App() {
@@ -68,6 +69,9 @@ function App() {
             </Route>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/disclaimer">
+              <Disclaimer />
             </Route>
           </div>
         </div>
