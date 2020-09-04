@@ -13,6 +13,7 @@ import {
   Animation,
   Dashboard,
   Disclaimer,
+  FAQ,
 } from "./components";
 
 function App() {
@@ -109,6 +110,9 @@ function App() {
             </Route>
             <Route path="/disclaimer">
               <Disclaimer />
+            </Route>
+            <Route path="/faq">
+              <FAQ />
             </Route>
           </div>
         </div>
