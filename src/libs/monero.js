@@ -21,6 +21,7 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
+    //serverUri: "http://192.168.0.2:38081",
     serverUri: "http://localhost:38081",
     //serverUri: "http://stagenet.community.xmr.to:38081",
     serverUsername: "superuser",
@@ -50,17 +51,19 @@ export async function sync(wallet, MoneroWalletListener, startHeight) {
   wallet.sync(MoneroWalletListener, startHeight);
 }
 
-export async function stopSync(wallet) {
+export async function stopSyncing(wallet) {
   wallet.stopSyncing();
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(fn) {
+  constructor(setPercentageSynced) {
     super();
-    this.fn = fn;
+    this.setPercentageSynced = setPercentageSynced;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
-    this.fn(percentDone);
+    this.setPercentageSynced(
+      Math.round((percentDone + Number.EPSILON) * 10) / 10
+    ); // Round to one decimal
   }
 }
 
@@ -72,6 +75,6 @@ export default {
   getMnemonic,
   getMnemonicHash,
   sync,
-  stopSync,
+  stopSyncing,
   MyWalletListener,
 };
