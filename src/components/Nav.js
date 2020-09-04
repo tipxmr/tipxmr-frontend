@@ -63,6 +63,12 @@ function Nav() {
             >
               Dashboard
             </Link>
+            <Link
+              to="/faq"
+              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              FAQ
+            </Link>
           </div>
         </div>
       </div>

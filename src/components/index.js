@@ -10,3 +10,4 @@ export { default as Animation } from "./Animation";
 export { default as Nav } from "./Nav";
 export { default as Dashboard } from "./dashboard/Dashboard";
 export { default as Disclaimer } from "./Disclaimer";
+export { default as FAQ } from "./FAQ";
