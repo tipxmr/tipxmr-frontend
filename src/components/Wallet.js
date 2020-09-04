@@ -23,7 +23,10 @@ function Wallet({ walletFunctions, walletVariables }) {
           <div className="px-4 py-6">
             <p>Sync Status</p>
             <div className="text-4xl my-2">
-              <Progressbar percentage={walletVariables.percentageSynced} />
+              <Progressbar
+                percentage={walletVariables.percentageSynced}
+                isSyncActive={walletVariables.isSyncActive}
+              />
             </div>
           </div>
         </div>
@@ -33,6 +36,7 @@ function Wallet({ walletFunctions, walletVariables }) {
           onClick={() => {
             if (walletVariables.isSyncActive) {
               monerojs.stopSyncing(walletVariables.wallet);
+              walletFunctions.setIsSyncActive(false);
             } else {
               walletFunctions.syncWallet();
             }

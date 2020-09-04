@@ -10,7 +10,7 @@ function WalletUnlocked(primaryAddress) {
     <div id="wallet-successful-opened">
       <p>Wallet unlocked 🔓</p>
       <p>Your primary address: {primaryAddress}</p>
-      <Link to="/wallet">
+      <Link to="/dashboard">
         <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded">
           Login
         </button>

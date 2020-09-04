@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import monerojs from "./libs/monero";
 import {
@@ -25,7 +25,7 @@ function App() {
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [restoreHeight, setRestoreHeight] = useState(650113); // 23.August2020
   const [percentageSynced, setPercentageSynced] = useState(0);
-  const [IsSyncActive, setIsSyncActive] = useState(false);
+  const [isSyncActive, setIsSyncActive] = useState(false);
 
   const mwl = new monerojs.MyWalletListener(setPercentageSynced);
 
@@ -37,6 +37,9 @@ function App() {
     });
   }
 
+  useEffect(() => {
+    console.log("isSyncActive: ", isSyncActive);
+  }, [isSyncActive]);
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
@@ -78,7 +81,7 @@ function App() {
                   setPrimaryAddress,
                 }}
                 walletVariables={{
-                  IsSyncActive,
+                  isSyncActive,
                   hashedSeed,
                   wallet,
                   primaryAddress,
@@ -99,7 +102,7 @@ function App() {
                   setPrimaryAddress,
                 }}
                 walletVariables={{
-                  IsSyncActive,
+                  isSyncActive,
                   hashedSeed,
                   wallet,
                   primaryAddress,
