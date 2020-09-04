@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import monerojs from "./libs/monero";
 import {
   Header,
   Footer,
@@ -18,11 +19,24 @@ function App() {
   const flexfull = {
     flex: "1 0 100%",
   };
+  const [paymentinfo, setPaymentinfo] = useState({});
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
+  const [restoreHeight, setRestoreHeight] = useState(650113); // 23.August2020
+  const [percentageSynced, setPercentageSynced] = useState(0);
+  const [IsSyncActive, setIsSyncActive] = useState(false);
 
-  const [paymentinfo, setPaymentinfo] = useState({});
+  const mwl = new monerojs.MyWalletListener(setPercentageSynced);
+
+  async function syncWallet() {
+    setIsSyncActive(true);
+    monerojs.sync(wallet, mwl, restoreHeight).catch((err) => {
+      console.error(err);
+      setIsSyncActive(false);
+    });
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
@@ -57,18 +71,41 @@ function App() {
             <Route path="/wallet" exact>
               <Wallet
                 walletFunctions={{
+                  setIsSyncActive,
+                  syncWallet,
                   setHashedSeed,
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={{ hashedSeed, wallet, primaryAddress }}
+                walletVariables={{
+                  IsSyncActive,
+                  hashedSeed,
+                  wallet,
+                  primaryAddress,
+                  percentageSynced,
+                }}
               />
             </Route>
             <Route path="/animation" exact>
               <Animation />
             </Route>
             <Route path="/dashboard">
-              <Dashboard />
+              <Dashboard
+                walletFunctions={{
+                  setIsSyncActive,
+                  syncWallet,
+                  setHashedSeed,
+                  setWallet,
+                  setPrimaryAddress,
+                }}
+                walletVariables={{
+                  IsSyncActive,
+                  hashedSeed,
+                  wallet,
+                  primaryAddress,
+                  percentageSynced,
+                }}
+              />
             </Route>
             <Route path="/disclaimer">
               <Disclaimer />

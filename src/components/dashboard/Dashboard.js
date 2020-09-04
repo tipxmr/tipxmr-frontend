@@ -5,14 +5,20 @@ import Wallet from "../Wallet";
 import Settings from "./Settings";
 import Animation from "../Animation";
 import SyncButton from "./Syncbutton";
+import PropTypes from "prop-types";
 
-function Dashboard() {
+function Dashboard({ walletFunctions, walletVariables }) {
   const [dashcomponent, setDashcomponent] = useState("overview");
   let subcomponent;
   if (dashcomponent === "overview") {
     subcomponent = <Overview />;
   } else if (dashcomponent === "wallet") {
-    subcomponent = <Wallet />;
+    subcomponent = (
+      <Wallet
+        walletFunctions={walletFunctions}
+        walletVariables={walletVariables}
+      />
+    );
   } else if (dashcomponent === "settings") {
     subcomponent = <Settings />;
   } else if (dashcomponent === "animation") {
@@ -70,5 +76,10 @@ function Dashboard() {
     </div>
   );
 }
+// Defining property types
+Dashboard.propTypes = {
+  walletFunctions: PropTypes.object,
+  walletVariables: PropTypes.object,
+};
 
 export default Dashboard;
