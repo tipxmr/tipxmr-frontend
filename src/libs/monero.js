@@ -50,6 +50,10 @@ export async function sync(wallet, MoneroWalletListener, startHeight) {
   wallet.sync(MoneroWalletListener, startHeight);
 }
 
+export async function stopSync(wallet) {
+  wallet.stopSyncing();
+}
+
 class MyWalletListener extends monerojs.MoneroWalletListener {
   constructor(fn) {
     super();
@@ -68,5 +72,6 @@ export default {
   getMnemonic,
   getMnemonicHash,
   sync,
+  stopSync,
   MyWalletListener,
 };

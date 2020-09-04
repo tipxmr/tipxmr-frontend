@@ -70,7 +70,7 @@ let configBase = {
   context: path.resolve(__dirname, "src"),
   plugins: [
     new HtmlWebpackPlugin({
-      title: "TimXMR",
+      title: "TipXMR",
       template: "index.html",
     }),
   ],
