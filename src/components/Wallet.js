@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
+import Progressbar from "./Progressbar";
 
 function Wallet({ walletFunctions, walletVariables }) {
   return (
@@ -22,7 +23,7 @@ function Wallet({ walletFunctions, walletVariables }) {
           <div className="px-4 py-6">
             <p>Sync Status</p>
             <div className="text-4xl my-2">
-              {walletVariables.percentageSynced} %
+              <Progressbar percentage={walletVariables.percentageSynced} />
             </div>
           </div>
         </div>

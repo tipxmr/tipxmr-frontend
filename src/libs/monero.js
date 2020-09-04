@@ -55,12 +55,14 @@ export async function stopSync(wallet) {
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(fn) {
+  constructor(setPercentageSynced) {
     super();
-    this.fn = fn;
+    this.setPercentageSynced = setPercentageSynced;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
-    this.fn(percentDone);
+    this.setPercentageSynced(
+      Math.round((percentDone + Number.EPSILON) * 10) / 10
+    ); // Round to one decimal
   }
 }
 
