@@ -1,6 +1,7 @@
 const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
+import QRCode from "qrcode";
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
@@ -36,7 +37,8 @@ export async function getPrimaryAddress(walletWasm) {
 }
 
 export async function createSubaddress(walletWasm) {
-  return await walletWasm.createSubaddress(0, "");
+  const subadress = await walletWasm.createSubaddress(0, "");
+  return await subadress.state.address;
 }
 
 export async function getMnemonic(walletWasm) {
@@ -52,7 +54,7 @@ export async function sync(wallet, MoneroWalletListener, startHeight) {
 }
 
 export async function stopSyncing(wallet) {
-  wallet.stopSyncing();
+  await wallet.stopSyncing();
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
@@ -67,6 +69,10 @@ class MyWalletListener extends monerojs.MoneroWalletListener {
   }
 }
 
+export async function generateQrCode(subaddress) {
+  return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
+}
+
 export default {
   createWallet,
   openWalletFromSeed,
@@ -77,4 +83,5 @@ export default {
   sync,
   stopSyncing,
   MyWalletListener,
+  generateQrCode,
 };

@@ -20,7 +20,10 @@ function App() {
   const flexfull = {
     flex: "1 0 100%",
   };
-  const [paymentinfo, setPaymentinfo] = useState({});
+  const [paymentinfo, setPaymentinfo] = useState({
+    donor: "Testuser",
+    message: "Meine Nachricht an dich",
+  });
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
@@ -36,6 +39,13 @@ function App() {
       console.error(err);
       setIsSyncActive(false);
     });
+  }
+  // Funktion wird der Paymentseite übergeben, da die sich die Wallet in App.js befindet und nicht an die Paymentseite
+  // weitergeleitet werden soll, da diese dem Zuschauer ausgeliefert wird.
+  async function createSubaddress() {
+    const subaddress = await monerojs.createSubaddress(wallet);
+    console.log("Subadress:", subaddress);
+    return subaddress;
   }
 
   useEffect(() => {
@@ -54,6 +64,7 @@ function App() {
               <Payment
                 donor={paymentinfo.donor}
                 message={paymentinfo.message}
+                createSubaddress={createSubaddress}
               />
             </Route>
             <Route path="/success" exact>
