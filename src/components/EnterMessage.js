@@ -5,9 +5,6 @@ function LandingPage(props) {
   const [donor, setDonor] = useState("");
   const [message, setMessage] = useState("");
 
-  function onClick() {
-    props.onSubmit({ donor, message });
-  }
   const streamerName = "StreamerName";
   return (
     <div className="flex flex-grow justify-center">
@@ -43,7 +40,7 @@ function LandingPage(props) {
           <Link to="/payment">
             <button
               className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={onClick}
+              onClick={}
             >
               Submit
             </button>
