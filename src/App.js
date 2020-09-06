@@ -4,9 +4,8 @@ import monerojs from "./libs/monero";
 import {
   Header,
   Footer,
-  LandingPage,
-  Payment,
-  Success,
+  Start,
+  Donate,
   CreateWallet,
   OpenWallet,
   Wallet,
@@ -20,10 +19,7 @@ function App() {
   const flexfull = {
     flex: "1 0 100%",
   };
-  const [paymentinfo, setPaymentinfo] = useState({
-    donor: "Testuser",
-    message: "Meine Nachricht an dich",
-  });
+
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
@@ -58,17 +54,10 @@ function App() {
         <div className="flex-auto flex flex-col">
           <div className="flex" style={flexfull}>
             <Route path="/" exact>
-              <LandingPage onSubmit={setPaymentinfo} />
+              <Start />
             </Route>
-            <Route path="/payment" exact>
-              <Payment
-                donor={paymentinfo.donor}
-                message={paymentinfo.message}
-                createSubaddress={createSubaddress}
-              />
-            </Route>
-            <Route path="/success" exact>
-              <Success />
+            <Route path="/donate" exact>
+              <Donate createSubaddress={createSubaddress} />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
