@@ -21,35 +21,14 @@ function Nav() {
         {/* Mobile Menu open: "block", Menu closed: "hidden" */}
         <div className="md:flex items-center">
           <div className="flex flex-col md:flex-row md:mx-6">
-            <Link
-              to="/payment"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              Payment
+            <Link to="/" className="my-1 md:my-0 md:mx-3 hover:text-xmrorange">
+              Start
             </Link>
             <Link
-              to="/success"
+              to="/donate"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
             >
-              Success
-            </Link>
-            <Link
-              to="/createwallet"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              CreateWallet
-            </Link>
-            <Link
-              to="/openwallet"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              OpenWallet
-            </Link>
-            <Link
-              to="/wallet"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              Wallet
+              Donate
             </Link>
             <Link
               to="/animation"

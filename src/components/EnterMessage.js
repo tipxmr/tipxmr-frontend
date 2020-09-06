@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function LandingPage(props) {
-  const [donor, setDonor] = useState("");
-  const [message, setMessage] = useState("");
-
+function EnterMessage({
+  setDonor,
+  setMessage,
+  setShowEnterMessage,
+  setShowPayment,
+}) {
   const streamerName = "StreamerName";
   return (
     <div className="flex flex-grow justify-center">
@@ -37,18 +39,24 @@ function LandingPage(props) {
           }}
         />
         <div className="w-full flex justify-center">
-          <Link to="/payment">
-            <button
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={}
-            >
-              Submit
-            </button>
-          </Link>
+          <button
+            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            onClick={() => {
+              setShowEnterMessage(false);
+              setShowPayment(true);
+            }}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-export default LandingPage;
+EnterMessage.propTypes = {
+  setDonor: PropTypes.func,
+  setMessage: PropTypes.func,
+  setShowEnterMessage: PropTypes.func,
+  setShowPayment: PropTypes.func,
+};
+export default EnterMessage;
