@@ -26,6 +26,7 @@ function App() {
   const [restoreHeight, setRestoreHeight] = useState(650113); // 23.August2020
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
+  const [streamerName, setStreamerName] = useState("MoneroMumble");
 
   const mwl = new monerojs.MyWalletListener(setPercentageSynced);
 
@@ -47,6 +48,7 @@ function App() {
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
   }, [isSyncActive]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
@@ -57,7 +59,11 @@ function App() {
               <Start />
             </Route>
             <Route path="/donate" exact>
-              <Donate createSubaddress={createSubaddress} />
+              <Donate
+                createSubaddress={createSubaddress}
+                streamerName={streamerName}
+                hashedSeed={hashedSeed}
+              />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../libs/monero";
-import { Link } from "react-router-dom";
 
 function Payment({ message, donor, createSubaddress }) {
   const [subaddress, setSubaddress] = useState(null);
