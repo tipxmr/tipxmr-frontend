@@ -1,6 +1,15 @@
 import React, { useState } from "react";
+import SyncButton from "./Syncbutton";
 
 function Overview() {
+  const [isSynced, setIsSynced] = useState(false);
+  let syncedbutton;
+  if (isSynced) {
+    syncedbutton = <SyncButton synced={true} />;
+  } else {
+    syncedbutton = <SyncButton synced={false} />;
+  }
+
   const [data, setData] = useState([
     {
       id: 1,
@@ -31,6 +40,10 @@ function Overview() {
   ]);
   return (
     <div className="h-full">
+      <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
+        {syncedbutton}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">

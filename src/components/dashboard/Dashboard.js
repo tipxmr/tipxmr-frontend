@@ -4,7 +4,6 @@ import Overview from "./Overview";
 import Wallet from "../Wallet";
 import Settings from "./Settings";
 import Animation from "../Animation";
-import SyncButton from "./Syncbutton";
 import PropTypes from "prop-types";
 
 function Dashboard({ walletFunctions, walletVariables }) {
@@ -23,14 +22,6 @@ function Dashboard({ walletFunctions, walletVariables }) {
     subcomponent = <Settings />;
   } else if (dashcomponent === "animation") {
     subcomponent = <Animation />;
-  }
-
-  const [isSynced, setIsSynced] = useState(false);
-  let syncedbutton;
-  if (isSynced) {
-    syncedbutton = <SyncButton synced={true} />;
-  } else {
-    syncedbutton = <SyncButton synced={false} />;
   }
   return (
     <div className="flex flex-grow">
@@ -68,9 +59,6 @@ function Dashboard({ walletFunctions, walletVariables }) {
         </div>
       </nav>
       <div className="px-16 py-4 text-gray-700 bg-gray-200 w-full ">
-        <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-          {syncedbutton}
-        </div>
         {subcomponent}
       </div>
     </div>
