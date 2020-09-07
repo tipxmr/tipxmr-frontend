@@ -5,6 +5,8 @@ import Payment from "./Payment";
 import Success from "./Success";
 import io from "socket.io-client";
 
+const socket = io("ws://localhost:3000");
+
 function Donate({ streamerName, hashedSeed }) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
@@ -13,7 +15,6 @@ function Donate({ streamerName, hashedSeed }) {
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
-  const socket = io("ws://localhost:3000");
 
   function getSubaddress() {
     socket.on("connect", () => {
