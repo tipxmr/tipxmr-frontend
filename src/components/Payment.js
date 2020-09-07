@@ -5,18 +5,9 @@ import monerojs from "../libs/monero";
 
 function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
-  const firstUpdate = useRef(true);
 
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      getSubaddress();
-      console.log("firstUpdate", firstUpdate.current);
-    }
-    // on unmount
-    return () => {
-      firstUpdate.current = true;
-    };
+    getSubaddress();
   }, []);
 
   // generete QR Code on subaddress change
@@ -43,7 +34,7 @@ function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
         </span>
         <br />
         <img className="mx-auto w-400px h-auto" src={qrcode} alt="qr code" />
-        <a href={"monero:" + subaddress} target="_blank" rel="noreferrer">
+        <a href={"monero:" + subaddress} onClick={handleClick}>
           <pre className="text-center overlfow-x-auto text-xs">
             {subaddress}
           </pre>
