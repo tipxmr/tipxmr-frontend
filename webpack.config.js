@@ -27,7 +27,7 @@ let configBase = {
         ],
       },
       {
-        test: /\.(woff(2)?|png|jpe?g|gif)$/i,
+        test: /\.(woff(2)?|png|jpe?g|gif|mp3)$/i,
         use: [
           {
             loader: "file-loader",
