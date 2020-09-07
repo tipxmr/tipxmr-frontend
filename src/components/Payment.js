@@ -3,24 +3,23 @@ import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../libs/monero";
 
-function Payment({ message, donor, createSubaddress }) {
-  const [subaddress, setSubaddress] = useState(null);
+function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
-    createSubaddress()
-      .then((subaddress) => {
-        setSubaddress(subaddress);
-        return subaddress;
-      })
-      .then((subaddress) => {
-        return monerojs.generateQrCode(subaddress);
-      })
-      .then((qrcode) => {
-        setQrcode(qrcode);
-        console.log("qrcode:", qrcode);
-      });
+    getSubaddress();
   }, []);
+
+  // generete QR Code on subaddress change
+  useEffect(() => {
+    async function generateQrCode() {
+      if (subaddress !== null) {
+        const qrcode = await monerojs.generateQrCode(subaddress);
+        setQrcode(qrcode);
+      }
+    }
+    generateQrCode();
+  }, [subaddress]);
 
   return (
     <div className="flex flex-grow justify-center text-center">
@@ -46,9 +45,11 @@ function Payment({ message, donor, createSubaddress }) {
 }
 // Payment property types
 Payment.propTypes = {
+  streamerName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
-  createSubaddress: PropTypes.func,
+  subaddress: PropTypes.string,
+  getSubaddress: PropTypes.func,
 };
 
 export default Payment;

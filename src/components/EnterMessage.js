@@ -7,7 +7,6 @@ function EnterMessage({
   setShowEnterMessage,
   setShowPayment,
   streamerName,
-  hashedSeed,
 }) {
   return (
     <div className="flex flex-grow justify-center">
@@ -60,6 +59,5 @@ EnterMessage.propTypes = {
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
   streamerName: PropTypes.string,
-  hashedSeed: PropTypes.string,
 };
 export default EnterMessage;

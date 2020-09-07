@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
 import io from "socket.io-client";
 
-function Donate({ createSubaddress, streamerName, hashedSeed }) {
+function Donate({ streamerName, hashedSeed }) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
-  const [subaddress, setSubaddress] = useState(null);
+  const socket = io("ws://localhost:3000");
 
-  useEffect(() => {
-    createSubaddress().then((subaddress) => {
-      setSubaddress(subaddress);
-    });
-  }, []);
-
-  // Connection to backend
-  useEffect(() => {
-    if (subaddress !== null) {
-      const socket = io("ws://localhost:3000");
-      socket.on("connect", () => {
-        console.log("connected");
-        socket.emit("returnSubaddress", subaddress);
+  function getSubaddress() {
+    socket.on("connect", () => {
+      socket.emit("getSubaddress", {
+        streamerName: streamerName,
+        hashedSeed: hashedSeed,
+        donor: donor,
+        message: message,
       });
-    }
-  }, [subaddress]);
+      socket.on("returnSubaddress", (data) => {
+        setSubaddress(data.subaddress);
+      });
+    });
+  }
 
   return (
     <div className="flex flex-grow justify-center">
@@ -40,15 +38,16 @@ function Donate({ createSubaddress, streamerName, hashedSeed }) {
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
-            hashedSeed={hashedSeed}
             streamerName={streamerName}
           />
         ) : null}
         {showPayment ? (
           <Payment
+            streamerName={streamerName}
             donor={donor}
             message={message}
-            createSubaddress={createSubaddress}
+            subaddress={subaddress}
+            getSubaddress={getSubaddress}
           />
         ) : null}
         {showSuccess ? <Success /> : null}
@@ -57,7 +56,7 @@ function Donate({ createSubaddress, streamerName, hashedSeed }) {
   );
 }
 Donate.propTypes = {
-  createSubaddress: PropTypes.func,
+  subaddress: PropTypes.string,
   streamerName: PropTypes.string,
   hashedSeed: PropTypes.string,
 };

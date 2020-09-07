@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import monerojs from "./libs/monero";
+import io from "socket.io-client";
 import {
   Header,
   Footer,
@@ -37,13 +38,25 @@ function App() {
       setIsSyncActive(false);
     });
   }
-  // Funktion wird der Paymentseite übergeben, da die sich die Wallet in App.js befindet und nicht an die Paymentseite
-  // weitergeleitet werden soll, da diese dem Zuschauer ausgeliefert wird.
-  async function createSubaddress() {
-    const subaddress = await monerojs.createSubaddress(wallet);
-    console.log("Subadress:", subaddress);
-    return subaddress;
-  }
+
+  // Connection to backend
+  useEffect(() => {
+    if (wallet !== null) {
+      const socket = io("ws://localhost:3000");
+      socket.on("connect", () => {
+        socket.emit("streamerInfo", {
+          streamerName: streamerName,
+          hashedSeed: hashedSeed,
+        });
+        socket.on("getSubaddress", (data) => {
+          monerojs.createSubaddress(wallet).then((subaddress) => {
+            data.subaddress = subaddress;
+            socket.emit("returnSubaddress", data);
+          });
+        });
+      });
+    }
+  }, [wallet]);
 
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
@@ -59,11 +72,7 @@ function App() {
               <Start />
             </Route>
             <Route path="/donate" exact>
-              <Donate
-                createSubaddress={createSubaddress}
-                streamerName={streamerName}
-                hashedSeed={hashedSeed}
-              />
+              <Donate streamerName={streamerName} hashedSeed={hashedSeed} />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
