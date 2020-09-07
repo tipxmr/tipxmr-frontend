@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTransition, animated } from "react-spring";
-import useSound from "use-sound";
-import stutter from "../sounds/biden-stutter.mp3";
+import ring from "../sounds/one-ring.mp3";
 
+const Sound = () => {
+  return <audio src={ring} autoPlay={true}></audio>;
+};
 function Animation() {
   const [donor, setDonor] = useState("AlexAnarcho");
   const [amount, setAmount] = useState("420");
@@ -15,17 +17,17 @@ function Animation() {
   });
   return (
     <div>
-      <button onClick={() => setShowMessage(!showMessage)}>
-        Show animation
-      </button>
-
       <div className="flex flex-grow justify-center">
         <div className="my-auto">
+          <button onClick={() => setShowMessage(!showMessage)}>
+            Show Animation
+          </button>
           <div className="text-4xl bg-opacity-0 pl-8">
             {messageTransitions.map(
               ({ item, key, props }) =>
                 item && (
                   <animated.div key={key} style={props} className="text-6xl">
+                    <Sound />
                     <p>
                       {donor} donated {amount} XMR
                     </p>
