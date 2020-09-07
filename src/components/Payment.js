@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../libs/monero";
-import { Link } from "react-router-dom";
 
-function Payment({ message, donor, createSubaddress }) {
-  const [subaddress, setSubaddress] = useState(null);
+function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
-    createSubaddress()
-      .then((subaddress) => {
-        setSubaddress(subaddress);
-        return subaddress;
-      })
-      .then((subaddress) => {
-        return monerojs.generateQrCode(subaddress);
-      })
-      .then((qrcode) => {
-        setQrcode(qrcode);
-        console.log("qrcode:", qrcode);
-      });
+    getSubaddress();
   }, []);
+
+  // generete QR Code on subaddress change
+  useEffect(() => {
+    async function generateQrCode() {
+      if (subaddress !== null) {
+        const qrcode = await monerojs.generateQrCode(subaddress);
+        setQrcode(qrcode);
+      }
+    }
+    generateQrCode();
+  }, [subaddress]);
+
+  function handleClick(e) {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  }
 
   return (
     <div className="flex flex-grow justify-center text-center">
@@ -31,7 +34,7 @@ function Payment({ message, donor, createSubaddress }) {
         </span>
         <br />
         <img className="mx-auto w-400px h-auto" src={qrcode} alt="qr code" />
-        <a href={"monero:" + subaddress}>
+        <a href={"monero:" + subaddress} onClick={handleClick}>
           <pre className="text-center overlfow-x-auto text-xs">
             {subaddress}
           </pre>
@@ -47,9 +50,11 @@ function Payment({ message, donor, createSubaddress }) {
 }
 // Payment property types
 Payment.propTypes = {
+  streamerName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
-  createSubaddress: PropTypes.func,
+  subaddress: PropTypes.string,
+  getSubaddress: PropTypes.func,
 };
 
 export default Payment;

@@ -6,8 +6,8 @@ function EnterMessage({
   setMessage,
   setShowEnterMessage,
   setShowPayment,
+  streamerName,
 }) {
-  const streamerName = "StreamerName";
   return (
     <div className="flex flex-grow justify-center">
       <div className="my-auto">
@@ -58,5 +58,6 @@ EnterMessage.propTypes = {
   setMessage: PropTypes.func,
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
+  streamerName: PropTypes.string,
 };
 export default EnterMessage;

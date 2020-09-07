@@ -3,14 +3,32 @@ import PropTypes from "prop-types";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
+import io from "socket.io-client";
 
-function Donate({ createSubaddress }) {
+function Donate({ streamerName, hashedSeed }) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const socket = io("ws://localhost:3000");
+
+  function getSubaddress() {
+    socket.on("connect", () => {
+      socket.emit("getSubaddress", {
+        streamerName: streamerName,
+        hashedSeed: hashedSeed,
+        donor: donor,
+        message: message,
+      });
+      socket.on("returnSubaddress", (data) => {
+        setSubaddress(data.subaddress);
+      });
+    });
+  }
 
   return (
     <div className="flex flex-grow justify-center">
@@ -21,13 +39,16 @@ function Donate({ createSubaddress }) {
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
+            streamerName={streamerName}
           />
         ) : null}
         {showPayment ? (
           <Payment
+            streamerName={streamerName}
             donor={donor}
             message={message}
-            createSubaddress={createSubaddress}
+            subaddress={subaddress}
+            getSubaddress={getSubaddress}
           />
         ) : null}
         {showSuccess ? <Success /> : null}
@@ -36,6 +57,8 @@ function Donate({ createSubaddress }) {
   );
 }
 Donate.propTypes = {
-  createSubaddress: PropTypes.func,
+  subaddress: PropTypes.string,
+  streamerName: PropTypes.string,
+  hashedSeed: PropTypes.string,
 };
 export default Donate;
