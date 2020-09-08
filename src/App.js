@@ -24,12 +24,48 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [restoreHeight, setRestoreHeight] = useState(650113); // 23.August2020
+  const [restoreHeight, setRestoreHeight] = useState(660900); // 8. Sep 2020
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
   const [streamerName, setStreamerName] = useState("MoneroMumble");
 
-  const mwl = new monerojs.MyWalletListener(setPercentageSynced);
+  /* Example for donorInfo object: {
+    donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
+    donor: "Grischa"
+    hashedSeed: null
+    message: "Test 6"
+    streamerName: "MoneroMumble"
+    subaddress: "76ABPQ3e2GmVAkDf7BQwXcFb3QCfwG2osQpJo8J3WVVoa4ZrXzPxoEm9fPq7nHdFJMZ32q7B5qGNbBJCiaSBzSAJ1wgFwJi"
+    }
+    */
+  let donorInfo = [];
+  let donations = [];
+
+  function getNewOutput(output) {
+    console.log("getNewOutput aufgerufen, output:", output);
+    monerojs
+      .getSubaddress(wallet, output.subaddressIndex)
+      .then((subaddress) => {
+        console.log("Donation an diese Subaddresse:", subaddress);
+        console.log("donorInfo:", donorInfo);
+        const donationsInfo = donorInfo.find(
+          (donationInfo) => donationInfo.subaddress === subaddress
+        );
+        if (donationsInfo !== undefined) {
+          const newDonation = {
+            subaddress: subaddress,
+            amount: output.amount,
+            donor: donationsInfo.donor,
+            message: donationsInfo.message,
+          };
+          console.log("New Donation:", newDonation);
+          donations.push(newDonation);
+        }
+        console.log("donationsInfo:", donationsInfo);
+      });
+  }
+
+  const mwl = new monerojs.MyWalletListener(setPercentageSynced, getNewOutput);
 
   async function syncWallet() {
     setIsSyncActive(true);
@@ -51,7 +87,9 @@ function App() {
         socket.on("getSubaddress", (data) => {
           monerojs.createSubaddress(wallet).then((subaddress) => {
             data.subaddress = subaddress;
+            donorInfo.push(data);
             socket.emit("returnSubaddress", data);
+            console.log("created Subaddress for:", data);
           });
         });
       });
