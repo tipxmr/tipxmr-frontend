@@ -15,6 +15,12 @@ import {
   FAQ,
 } from "./components";
 
+let config = {
+  streamername: "AlexAnarcho",
+  username: "alexanarcho",
+  secondprice: 0.00043,
+};
+
 function App() {
   const flexfull = {
     flex: "1 0 100%",
@@ -91,7 +97,7 @@ function App() {
               />
             </Route>
             <Route path="/animation" exact>
-              <Animation />
+              <Animation config={config} />
             </Route>
             <Route path="/dashboard">
               <Dashboard
@@ -109,6 +115,7 @@ function App() {
                   primaryAddress,
                   percentageSynced,
                 }}
+                config={config}
               />
             </Route>
             <Route path="/disclaimer">

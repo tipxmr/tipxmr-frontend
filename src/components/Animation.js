@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
 import ring from "../sounds/one-ring.mp3";
 
@@ -6,9 +7,9 @@ const Sound = () => {
   return <audio src={ring} autoPlay={true}></audio>;
 };
 
-function Animation() {
+function Animation({ config }) {
   // in milliseconds, one second costs 0.00043 xmr
-  const timeout = 2325581;
+  const timeout = 1000 / config.secondprice;
   const [donor, setDonor] = useState("AlexAnarcho");
   const [amount, setAmount] = useState(0.00172);
   const [message, setMessage] = useState("Testing things out");
@@ -47,5 +48,9 @@ function Animation() {
     </div>
   );
 }
+
+Animation.propTypes = {
+  config: PropTypes.object,
+};
 
 export default Animation;
