@@ -41,6 +41,11 @@ export async function createSubaddress(walletWasm) {
   return await subadress.state.address;
 }
 
+export async function getSubaddress(walletWasm, index) {
+  const subadress = await walletWasm.getSubaddress(0, index);
+  return await subadress.state.address;
+}
+
 export async function getMnemonic(walletWasm) {
   return await walletWasm.getMnemonic();
 }
@@ -58,14 +63,23 @@ export async function stopSyncing(wallet) {
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(setPercentageSynced) {
+  constructor(setPercentageSynced, getNewOutput) {
     super();
     this.setPercentageSynced = setPercentageSynced;
+    this.getNewOutput = getNewOutput;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
     this.setPercentageSynced(
       Math.round((percentDone + Number.EPSILON) * 10) / 10
     ); // Round to one decimal
+  }
+  onOutputReceived(output) {
+    if (output.state.tx.state.inTxPool && output.state.tx.state.isIncoming)
+      console.dir("monerojs: onOutputReceived", output);
+    this.getNewOutput({
+      subaddressIndex: output.getSubaddressIndex(),
+      amount: output.getAmount(),
+    });
   }
 }
 
@@ -78,6 +92,7 @@ export default {
   openWalletFromSeed,
   getPrimaryAddress,
   createSubaddress,
+  getSubaddress,
   getMnemonic,
   getMnemonicHash,
   sync,
