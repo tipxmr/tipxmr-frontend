@@ -9,9 +9,12 @@ const Sound = () => {
 
 function Animation({ config }) {
   // in milliseconds, one second costs 0.00043 xmr
-  const timeout = 1000 / config.secondprice;
+  const timeout = 1000 / config.stream.secondprice;
+  const goalprogress = config.stream.goalprogress;
+  const goal = config.stream.goal;
+  const fontcolor = config.stream.fontcolor;
   const [donor, setDonor] = useState("AlexAnarcho");
-  const [amount, setAmount] = useState(0.00172);
+  const [amount, setAmount] = useState(0.0172);
   const [message, setMessage] = useState("Testing things out");
   const [showMessage, setShowMessage] = useState(false);
   const messageTransitions = useTransition(showMessage, null, {
@@ -30,7 +33,10 @@ function Animation({ config }) {
         dismountMessage();
       }}
     >
-      <div className="my-auto text-4xl text-center">
+      <div
+        className="my-auto text-4xl text-center"
+        style={{ color: fontcolor }}
+      >
         {messageTransitions.map(
           ({ item, key, props }) =>
             item && (
@@ -41,6 +47,9 @@ function Animation({ config }) {
                 </p>
 
                 <p>{message}</p>
+                <p className="text-xl">
+                  Goal: {goalprogress + amount}/{goal} XMR
+                </p>
               </animated.div>
             )
         )}
