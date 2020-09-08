@@ -74,12 +74,13 @@ class MyWalletListener extends monerojs.MoneroWalletListener {
     ); // Round to one decimal
   }
   onOutputReceived(output) {
-    if (output.state.tx.state.inTxPool && output.state.tx.state.isIncoming)
+    if (output.state.tx.state.inTxPool && output.state.tx.state.isIncoming) {
       console.dir("monerojs: onOutputReceived", output);
-    this.getNewOutput({
-      subaddressIndex: output.getSubaddressIndex(),
-      amount: output.getAmount(),
-    });
+      this.getNewOutput({
+        subaddressIndex: output.getSubaddressIndex(),
+        amount: output.getAmount(),
+      });
+    }
   }
 }
 
