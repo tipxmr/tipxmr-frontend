@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
-import ring from "../sounds/one-ring.mp3";
-
-const Sound = () => {
-  return <audio src={ring} autoPlay={true}></audio>;
-};
 
 function Animation({ config }) {
   // in milliseconds, one second costs 0.00043 xmr
   const timeout = 1000 / config.stream.secondprice;
   const goalprogress = config.stream.goalprogress;
+  const sound = config.stream.sound;
   const goal = config.stream.goal;
   const fontcolor = config.stream.fontcolor;
   const [donor, setDonor] = useState("AlexAnarcho");
@@ -22,6 +18,10 @@ function Animation({ config }) {
     enter: { opacity: 1 },
     leave: { opacity: 0 },
   });
+  const Sound = () => {
+    return <audio src={sound} autoPlay={true}></audio>;
+  };
+
   function dismountMessage() {
     setTimeout(() => setShowMessage(false), timeout * amount);
   }

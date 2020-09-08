@@ -32,6 +32,7 @@ let config = {
     goalprogress: 0,
     goalreached: false,
     charlimit: 1000,
+    sound: "/src/sounds/crocodile.mp3",
   },
 };
 
