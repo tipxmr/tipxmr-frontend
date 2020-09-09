@@ -66,14 +66,18 @@ export async function stopSyncing(wallet) {
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(setPercentageSynced, getNewOutput) {
+  constructor(setPercentageSynced, setCurrentBlockheight, getNewOutput) {
     super();
     this.setPercentageSynced = setPercentageSynced;
     this.getNewOutput = getNewOutput;
+    this.setCurrentBlockheight = setCurrentBlockheight;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
+    console.log("Syncing Block " + height + " of " + endHeight);
     this.setPercentageSynced(
-      Math.round(((height / endHeight) * 100 + Number.EPSILON) * 10) / 10
+      Math.round(
+        ((height - startHeight + 1) / (endHeight - startHeight)) * 1000
+      ) / 10.0
     ); // Round to one decimal
   }
   onOutputReceived(output) {
@@ -88,6 +92,9 @@ class MyWalletListener extends monerojs.MoneroWalletListener {
         amount: output.getAmount(),
       });
     }
+  }
+  onNewBlock(height) {
+    this.setCurrentBlockheight(height);
   }
 }
 

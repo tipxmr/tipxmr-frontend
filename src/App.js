@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import monerojs from "./libs/monero";
-import io from "socket.io-client";
+import socketio from "./libs/socket";
+
 import {
   Header,
   Footer,
@@ -24,12 +25,14 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [restoreHeight, setRestoreHeight] = useState(660900); // 8. Sep 2020
+  const [restoreHeight, setRestoreHeight] = useState(661800); // 6. Sep 2020
+  const [currentBlockheight, setCurrentBlockheight] = useState(null);
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
   const [streamerName, setStreamerName] = useState("MoneroMumble");
   const [donorInfo, setDonorInfo] = useState([]);
-  const [donations, setDonations] = useState([]);
+  const [donationsQueue, setDonationsQueue] = useState([]);
+  const [donationsHistory, setDonationsHistory] = useState([]);
 
   /* Example for donorInfo object: {
     donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
@@ -59,13 +62,28 @@ function App() {
             message: donationsInfo.message,
           };
           console.log("New Donation:", newDonation);
-          setDonations((previousArray) => [...previousArray, newDonation]);
+          setDonationsQueue((previousArray) => [...previousArray, newDonation]);
+          setDonationsHistory((previousArray) => [
+            ...previousArray,
+            newDonation,
+          ]);
+          console.log("donationsInfo:", donationsInfo);
+          return newDonation;
         }
-        console.log("donationsInfo:", donationsInfo);
+        return null;
+      })
+      .then((newDonation) => {
+        if (newDonation !== null && newDonation !== undefined) {
+          socketio.emitPaymentRecieved(newDonation);
+        }
       });
   }
 
-  const mwl = new monerojs.MyWalletListener(setPercentageSynced, getNewOutput);
+  const mwl = new monerojs.MyWalletListener(
+    setPercentageSynced,
+    setCurrentBlockheight,
+    getNewOutput
+  );
 
   async function syncWallet() {
     setIsSyncActive(true);
@@ -78,19 +96,13 @@ function App() {
   // Connection to backend
   useEffect(() => {
     if (wallet !== null) {
-      const socket = io("ws://localhost:3000");
-      socket.on("connect", () => {
-        socket.emit("streamerInfo", {
-          streamerName: streamerName,
-          hashedSeed: hashedSeed,
-        });
-        socket.on("getSubaddress", (data) => {
-          monerojs.createSubaddress(wallet).then((subaddress) => {
-            const newDonorInfo = { ...data, subaddress: subaddress };
-            setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-            socket.emit("returnSubaddress", newDonorInfo);
-            console.log("created Subaddress for:", newDonorInfo);
-          });
+      socketio.emitStreamerInfo(streamerName, hashedSeed);
+      socketio.getSubaddress((data) => {
+        monerojs.createSubaddress(wallet).then((subaddress) => {
+          const newDonorInfo = { ...data, subaddress: subaddress };
+          setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
+          socketio.emitReturnSubaddress(newDonorInfo);
+          console.log("created Subaddress for:", newDonorInfo);
         });
       });
     }
@@ -99,6 +111,13 @@ function App() {
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
   }, [isSyncActive]);
+
+  // New Block is added to the chain
+  useEffect(() => {
+    console.log(
+      "New Block (" + currentBlockheight + ") added to the blockchain."
+    );
+  }, [currentBlockheight]);
 
   return (
     <div className="flex flex-col min-h-screen">
