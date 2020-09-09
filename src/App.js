@@ -28,6 +28,8 @@ function App() {
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
   const [streamerName, setStreamerName] = useState("MoneroMumble");
+  const [donorInfo, setDonorInfo] = useState([]);
+  const [donations, setDonations] = useState([]);
 
   /* Example for donorInfo object: {
     donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
@@ -38,8 +40,6 @@ function App() {
     subaddress: "76ABPQ3e2GmVAkDf7BQwXcFb3QCfwG2osQpJo8J3WVVoa4ZrXzPxoEm9fPq7nHdFJMZ32q7B5qGNbBJCiaSBzSAJ1wgFwJi"
     }
     */
-  let donorInfo = [];
-  let donations = [];
 
   function getNewOutput(output) {
     console.log("getNewOutput aufgerufen, output:", output);
@@ -59,7 +59,7 @@ function App() {
             message: donationsInfo.message,
           };
           console.log("New Donation:", newDonation);
-          donations.push(newDonation);
+          setDonations((previousArray) => [...previousArray, newDonation]);
         }
         console.log("donationsInfo:", donationsInfo);
       });
@@ -69,7 +69,7 @@ function App() {
 
   async function syncWallet() {
     setIsSyncActive(true);
-    monerojs.sync(wallet, mwl, restoreHeight).catch((err) => {
+    monerojs.startSyncing(wallet, mwl, restoreHeight).catch((err) => {
       console.error(err);
       setIsSyncActive(false);
     });
@@ -86,10 +86,10 @@ function App() {
         });
         socket.on("getSubaddress", (data) => {
           monerojs.createSubaddress(wallet).then((subaddress) => {
-            data.subaddress = subaddress;
-            donorInfo.push(data);
-            socket.emit("returnSubaddress", data);
-            console.log("created Subaddress for:", data);
+            const newDonorInfo = { ...data, subaddress: subaddress };
+            setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
+            socket.emit("returnSubaddress", newDonorInfo);
+            console.log("created Subaddress for:", newDonorInfo);
           });
         });
       });

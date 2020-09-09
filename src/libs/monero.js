@@ -54,12 +54,15 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
-export async function sync(wallet, MoneroWalletListener, startHeight) {
-  wallet.sync(MoneroWalletListener, startHeight);
+export async function startSyncing(wallet, moneroWalletListener, syncHeight) {
+  await wallet.setSyncHeight(syncHeight);
+  await wallet.addListener(moneroWalletListener);
+  await wallet.startSyncing();
 }
 
 export async function stopSyncing(wallet) {
   await wallet.stopSyncing();
+  await wallet.removeListener(wallet.getListeners()[0]);
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
@@ -70,11 +73,15 @@ class MyWalletListener extends monerojs.MoneroWalletListener {
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
     this.setPercentageSynced(
-      Math.round((percentDone + Number.EPSILON) * 10) / 10
+      Math.round(((height / endHeight) * 100 + Number.EPSILON) * 10) / 10
     ); // Round to one decimal
   }
   onOutputReceived(output) {
-    if (output.state.tx.state.inTxPool && output.state.tx.state.isIncoming) {
+    if (
+      output.state.tx.state.inTxPool &&
+      output.state.tx.state.isLocked &&
+      output.state.tx.state.isIncoming
+    ) {
       console.dir("monerojs: onOutputReceived", output);
       this.getNewOutput({
         subaddressIndex: output.getSubaddressIndex(),
@@ -96,7 +103,7 @@ export default {
   getSubaddress,
   getMnemonic,
   getMnemonicHash,
-  sync,
+  startSyncing,
   stopSyncing,
   MyWalletListener,
   generateQrCode,
