@@ -59,7 +59,6 @@ function App() {
       setIsSyncActive(false);
     });
   }
-
   // Connection to backend
   useEffect(() => {
     if (wallet !== null) {
@@ -72,7 +71,9 @@ function App() {
         socket.on("getSubaddress", (data) => {
           monerojs.createSubaddress(wallet).then((subaddress) => {
             data.subaddress = subaddress;
+            donorInfo.push(data);
             socket.emit("returnSubaddress", data);
+            console.log("created Subaddress for:", data);
           });
         });
       });
