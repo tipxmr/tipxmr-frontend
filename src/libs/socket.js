@@ -5,14 +5,14 @@ const socket = io("ws://localhost:3000");
 // Streamer Functions
 // ===============================================================
 
-// socket.on
+// socket.on functions
 export function getSubaddress(callback) {
   socket.on("getSubaddress", (data) => {
     callback(data);
   });
 }
 
-// emit functions
+// socket.emit functions
 export function emitStreamerInfo(streamerName, hashedSeed) {
   socket.emit("streamerInfo", {
     streamerName,
@@ -31,6 +31,13 @@ export function emitReturnSubaddress(newDonorInfo) {
 // ===============================================================
 // Donator Functions
 // ===============================================================
+
+// socket.on functions
+export function onPaymentRecieved(callback) {
+  socket.on("paymentRecieved", (newDonation) => {
+    callback(newDonation);
+  });
+}
 
 export default {
   emitStreamerInfo,

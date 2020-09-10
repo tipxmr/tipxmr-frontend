@@ -29,17 +29,42 @@ function App() {
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
-  const [streamerName, setStreamerName] = useState("MoneroMumble");
+  const [displayName, setDisplayName] = useState("MoneroMumble");
+  const [username, setUsername] = useState("MoneroMumble");
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
+
+  const [streamerConfig, setStreamerConfig] = useState({
+    hashedseed: "",
+    displayname: "AlexAnarcho",
+    username: "alexanarcho",
+    online: false,
+    restorheight: 661800,
+    account: {
+      basic: true,
+      advanced: true,
+      premium: true,
+    },
+    stream: {
+      secondprice: 0.00043,
+      fontcolor: "#F23456",
+      minamount: 0.00043,
+      gifs: true,
+      goal: 1,
+      goalprogress: 0,
+      goalreached: false,
+      charlimit: 1000,
+      sound: "/src/sounds/crocodile.mp3",
+    },
+  });
 
   /* Example for donorInfo object: {
     donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
     donor: "Grischa"
     hashedSeed: null
     message: "Test 6"
-    streamerName: "MoneroMumble"
+    displayName: "MoneroMumble"
     subaddress: "76ABPQ3e2GmVAkDf7BQwXcFb3QCfwG2osQpJo8J3WVVoa4ZrXzPxoEm9fPq7nHdFJMZ32q7B5qGNbBJCiaSBzSAJ1wgFwJi"
     }
     */
@@ -87,16 +112,21 @@ function App() {
 
   async function syncWallet() {
     setIsSyncActive(true);
-    monerojs.startSyncing(wallet, mwl, restoreHeight).catch((err) => {
-      console.error(err);
-      setIsSyncActive(false);
-    });
+    monerojs
+      .startSyncing(wallet, mwl, streamerConfig.restorheight)
+      .catch((err) => {
+        console.error(err);
+        setIsSyncActive(false);
+      });
   }
 
   // Connection to backend
   useEffect(() => {
     if (wallet !== null) {
-      socketio.emitStreamerInfo(streamerName, hashedSeed);
+      socketio.emitStreamerInfo(
+        streamerConfig.displayname,
+        streamerConfig.hashedseed
+      );
       socketio.getSubaddress((data) => {
         monerojs.createSubaddress(wallet).then((subaddress) => {
           const newDonorInfo = { ...data, subaddress: subaddress };
@@ -129,7 +159,10 @@ function App() {
               <Start />
             </Route>
             <Route path="/donate" exact>
-              <Donate streamerName={streamerName} hashedSeed={hashedSeed} />
+              <Donate
+                displayName={streamerConfig.displayname}
+                hashedSeed={streamerConfig.hashedseed}
+              />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
@@ -141,7 +174,9 @@ function App() {
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={{ hashedSeed, wallet, primaryAddress }}
+                walletVariables={
+                  (streamerConfig.hashedseed, { wallet, primaryAddress })
+                }
               />
             </Route>
             <Route path="/wallet" exact>
