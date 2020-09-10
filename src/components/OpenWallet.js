@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Loading from "./Loading";
 
 // component for successful wallet unlock
-function WalletUnlocked(primaryAddress) {
+function WalletUnlocked({ primaryAddress }) {
   return (
     <div id="wallet-successful-opened">
       <p>Wallet unlocked 🔓</p>
@@ -18,6 +18,9 @@ function WalletUnlocked(primaryAddress) {
     </div>
   );
 }
+WalletUnlocked.propTypes = {
+  primaryAddress: PropTypes.string,
+};
 
 function OpenWallet({ walletFunctions, walletVariables }) {
   // styles for seed text box depending on the seed validation
@@ -27,6 +30,8 @@ function OpenWallet({ walletFunctions, walletVariables }) {
     invalid:
       "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-red-600 p-5",
   };
+
+  const textBoxStyles = { resize: "none" };
 
   // states
   const [seed, setSeed] = useState("Enter your seed");
@@ -79,6 +84,14 @@ function OpenWallet({ walletFunctions, walletVariables }) {
       : setTextBoxStyle(stylesTextBoxOptions.invalid);
   }, [isSeedValid]);
 
+  function handleChange(e) {
+    setSeed(e.target.value);
+  }
+
+  function handleFocus(e) {
+    e.target.select();
+  }
+
   return (
     <div className="flex flex-grow justify-center">
       <div className="my-auto text-center">
@@ -90,12 +103,14 @@ function OpenWallet({ walletFunctions, walletVariables }) {
           rows="4"
           cols="50"
           value={seed}
-          style={{ resize: "none" }}
-          onChange={(e) => setSeed(e.target.value)}
-          onFocus={(e) => e.target.select()}
+          style={textBoxStyles}
+          onChange={handleChange}
+          onFocus={handleFocus}
         />
         {isLoading ? <Loading text="Opening your wallet" /> : null}
-        {isSeedValid ? WalletUnlocked(walletVariables.primaryAddress) : null}
+        {isSeedValid ? (
+          <WalletUnlocked primaryAddress={walletVariables.primaryAddress} />
+        ) : null}
       </div>
     </div>
   );

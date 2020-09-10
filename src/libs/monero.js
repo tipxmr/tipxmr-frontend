@@ -9,7 +9,7 @@ export async function createWallet(lang = "English") {
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    serverUri: "http://localhost:38081",
+    serverUri: "http://192.168.0.119:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
@@ -23,7 +23,7 @@ export async function openWalletFromSeed(seed) {
     mnemonic: seed,
     password: "pass123",
     //serverUri: "http://192.168.0.2:38081",
-    serverUri: "http://localhost:38081",
+    serverUri: "http://192.168.0.119:38081",
     //serverUri: "http://stagenet.community.xmr.to:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
@@ -41,6 +41,11 @@ export async function createSubaddress(walletWasm) {
   return await subadress.state.address;
 }
 
+export async function getSubaddress(walletWasm, index) {
+  const subadress = await walletWasm.getSubaddress(0, index);
+  return await subadress.state.address;
+}
+
 export async function getMnemonic(walletWasm) {
   return await walletWasm.getMnemonic();
 }
@@ -49,23 +54,47 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
-export async function sync(wallet, MoneroWalletListener, startHeight) {
-  wallet.sync(MoneroWalletListener, startHeight);
+export async function startSyncing(wallet, moneroWalletListener, syncHeight) {
+  await wallet.setSyncHeight(syncHeight);
+  await wallet.addListener(moneroWalletListener);
+  await wallet.startSyncing();
 }
 
 export async function stopSyncing(wallet) {
   await wallet.stopSyncing();
+  await wallet.removeListener(wallet.getListeners()[0]);
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(setPercentageSynced) {
+  constructor(setPercentageSynced, setCurrentBlockheight, getNewOutput) {
     super();
     this.setPercentageSynced = setPercentageSynced;
+    this.getNewOutput = getNewOutput;
+    this.setCurrentBlockheight = setCurrentBlockheight;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
+    console.log("Syncing Block " + height + " of " + endHeight);
     this.setPercentageSynced(
-      Math.round((percentDone + Number.EPSILON) * 10) / 10
+      Math.round(
+        ((height - startHeight + 1) / (endHeight - startHeight)) * 1000
+      ) / 10.0
     ); // Round to one decimal
+  }
+  onOutputReceived(output) {
+    if (
+      output.state.tx.state.inTxPool &&
+      output.state.tx.state.isLocked &&
+      output.state.tx.state.isIncoming
+    ) {
+      console.dir("monerojs: onOutputReceived", output);
+      this.getNewOutput({
+        subaddressIndex: output.getSubaddressIndex(),
+        amount: output.getAmount(),
+      });
+    }
+  }
+  onNewBlock(height) {
+    this.setCurrentBlockheight(height);
   }
 }
 
@@ -78,9 +107,10 @@ export default {
   openWalletFromSeed,
   getPrimaryAddress,
   createSubaddress,
+  getSubaddress,
   getMnemonic,
   getMnemonicHash,
-  sync,
+  startSyncing,
   stopSyncing,
   MyWalletListener,
   generateQrCode,
