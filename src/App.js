@@ -179,6 +179,7 @@ function App() {
               <Donate
                 displayName={streamerConfig.displayname}
                 hashedSeed={streamerConfig.hashedseed}
+                onlineStatus={streamerConfig.online}
               />
             </Route>
             <Route path="/createwallet" exact>
@@ -191,27 +192,7 @@ function App() {
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={
-                  (streamerConfig.hashedseed, { wallet, primaryAddress })
-                }
-              />
-            </Route>
-            <Route path="/wallet" exact>
-              <Wallet
-                walletFunctions={{
-                  setIsSyncActive,
-                  syncWallet,
-                  setHashedSeed,
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{
-                  isSyncActive,
-                  hashedSeed,
-                  wallet,
-                  primaryAddress,
-                  percentageSynced,
-                }}
+                walletVariables={{ hashedseed, wallet, primaryAddress }}
               />
             </Route>
             <Route path="/animation" exact>
