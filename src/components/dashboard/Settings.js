@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 function Settings({ streamerConfig, setStreamerConfig }) {
+  // TODO state for every config option
+  const [streamerName, setStreamerName] = useState(streamerConfig.streamerName);
+  function handleChange(e) {
+    //
+  }
+
+  function updateStreamerConfig() {
+    // TODO read states and update streamerConfig object
+  }
   return (
     <div>
       <input
