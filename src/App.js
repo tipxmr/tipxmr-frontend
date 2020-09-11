@@ -67,12 +67,12 @@ function App() {
     stream: {
       secondPrice: 0.00043,
       fontColor: "#F23456",
-      minamount: 0.00043,
+      minAmount: 0.00043,
       gifs: true,
       goal: 1,
-      goalprogress: 0,
-      goalreached: false,
-      charlimit: 1000,
+      goalProgress: 0,
+      goalReached: false,
+      charLimit: 1000,
       sound: "/src/sounds/crocodile.mp3",
     },
   });
