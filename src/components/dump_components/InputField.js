@@ -8,7 +8,7 @@ function InputField({ labelName, fieldName, placeholderName, fieldType }) {
   return (
     <div>
       <label>
-        {labelName}
+        {labelName}:
         <input
           placeholder={placeholderName}
           name={fieldName}

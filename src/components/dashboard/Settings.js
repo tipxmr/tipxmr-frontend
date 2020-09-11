@@ -4,7 +4,7 @@ import InputField from "../dump_components/InputField";
 
 function Settings({ streamerConfig, setStreamerConfig }) {
   // TODO state for every config option
-  const [streamerName, setStreamerName] = useState(streamerConfig.streamerName);
+  const [state, setState] = useState(streamerConfig);
   function handleChange(e) {
     //
   }
@@ -18,19 +18,12 @@ function Settings({ streamerConfig, setStreamerConfig }) {
       <div className="text-center text-xl underline mb-4">
         Change your Settings:
       </div>
-      <label>
-        Your displayName:
-        <input
-          placeholder={streamerConfig.streamerName}
-          onChange={(e) => {
-            setStreamerConfig({
-              ...streamerConfig,
-              streamerName: e.target.value,
-            });
-            console.log(streamerConfig.streamerName);
-          }}
-        ></input>
-      </label>
+      <InputField
+        name="displayName"
+        labelName="Change your display name"
+        placeholder={state.displayName}
+        type="text"
+      />
     </div>
   );
 }
