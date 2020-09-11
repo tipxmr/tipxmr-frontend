@@ -5,7 +5,7 @@ import Payment from "./Payment";
 import Success from "./Success";
 import io from "socket.io-client";
 
-function Donate({ streamerName, hashedSeed }) {
+function Donate({ streamerName, hashedSeed, onlineStatus }) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -40,6 +40,7 @@ function Donate({ streamerName, hashedSeed }) {
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
             streamerName={streamerName}
+            onlineStatus={onlineStatus}
           />
         ) : null}
         {showPayment ? (
@@ -57,8 +58,8 @@ function Donate({ streamerName, hashedSeed }) {
   );
 }
 Donate.propTypes = {
-  subaddress: PropTypes.string,
   streamerName: PropTypes.string,
   hashedSeed: PropTypes.string,
+  onlineStatus: PropTypes.bool,
 };
 export default Donate;
