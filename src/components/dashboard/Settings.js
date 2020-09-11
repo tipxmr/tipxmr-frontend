@@ -7,7 +7,10 @@ function Settings({ streamerConfig, setStreamerConfig }) {
       <input
         placeholder={streamerConfig.streamerName}
         onChange={(e) => {
-          setStreamerConfig(...streamerConfig, (streamerName = e.target.value));
+          setStreamerConfig({
+            ...streamerConfig,
+            streamerName: e.target.value,
+          });
           console.log(streamerConfig.streamerName);
         }}
       ></input>
