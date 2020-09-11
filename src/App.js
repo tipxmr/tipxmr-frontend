@@ -46,7 +46,7 @@ function App() {
     streamURLS: {
       // stream urls to display on the streamers donation site
       // only 4 examples, more options can be added later on
-      twitch: "",
+      twitch: "mydirtyhobby.com",
       youtube: "",
       chaturbate: "",
       dLive: "",
