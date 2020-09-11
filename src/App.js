@@ -10,40 +10,17 @@ import {
   Donate,
   CreateWallet,
   OpenWallet,
-  Wallet,
   Animation,
   Dashboard,
   Disclaimer,
   FAQ,
 } from "./components";
 
-let config = {
-  streamername: "AlexAnarcho",
-  username: "alexanarcho",
-  account: {
-    basic: true,
-    advanced: true,
-    premium: true,
-  },
-  stream: {
-    secondprice: 0.00043,
-    fontcolor: "#F23456",
-    minamount: 0.00043,
-    gifs: true,
-    goal: 1,
-    goalprogress: 0,
-    goalreached: false,
-    charlimit: 1000,
-    sound: "/src/sounds/crocodile.mp3",
-  },
-};
-
 function App() {
   const flexfull = {
     flex: "1 0 100%",
   };
 
-  const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
@@ -155,6 +132,11 @@ function App() {
     }
   }, [wallet]);
 
+  // handleChange for userConfig
+  useEffect(() => {
+    socketio.emitUpdateStreamerConfig(streamerConfig);
+  }, [streamerConfig]);
+
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
   }, [isSyncActive]);
@@ -188,33 +170,34 @@ function App() {
             <Route path="/openwallet" exact>
               <OpenWallet
                 walletFunctions={{
-                  setHashedSeed,
+                  setStreamerConfig,
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={{ hashedseed, wallet, primaryAddress }}
+                walletVariables={{ streamerConfig, wallet, primaryAddress }}
               />
             </Route>
             <Route path="/animation" exact>
-              <Animation config={config} />
+              <Animation streamerConfig={streamerConfig} />
             </Route>
             <Route path="/dashboard">
               <Dashboard
                 walletFunctions={{
+                  setStreamerConfig,
                   setIsSyncActive,
                   syncWallet,
-                  setHashedSeed,
                   setWallet,
                   setPrimaryAddress,
                 }}
                 walletVariables={{
                   isSyncActive,
-                  hashedSeed,
+                  streamerConfig,
                   wallet,
                   primaryAddress,
                   percentageSynced,
                 }}
-                config={config}
+                streamerConfig={streamerConfig}
+                setStreamerConfig={setStreamerConfig}
               />
             </Route>
             <Route path="/disclaimer">

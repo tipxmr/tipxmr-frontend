@@ -24,6 +24,10 @@ function emitGetStreamerConfig(hashedSeed) {
   socketStreamer.emit("getStreamerConfig", hashedSeed);
 }
 
+function emitUpdateStreamerConfig(streamerConfig) {
+  socketStreamer.emit("updateConfig", streamerConfig);
+}
+
 function emitStreamerInfo(streamerName, hashedSeed) {
   socketStreamer.emit("streamerInfo", {
     streamerName,
@@ -64,6 +68,8 @@ function onPaymentRecieved(callback) {
 
 export default {
   emitGetStreamerConfig,
+  onRecieveStreamerConfig,
+  emitUpdateStreamerConfig,
   emitStreamerInfo,
   emitPaymentRecieved,
   emitReturnSubaddress,

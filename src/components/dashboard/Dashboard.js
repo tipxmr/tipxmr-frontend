@@ -6,7 +6,12 @@ import Wallet from "../Wallet";
 import Settings from "./Settings";
 import Animation from "../Animation";
 
-function Dashboard({ walletFunctions, walletVariables, config }) {
+function Dashboard({
+  walletFunctions,
+  walletVariables,
+  streamerConfig,
+  setStreamerConfig,
+}) {
   const [dashcomponent, setDashcomponent] = useState("overview");
   let subcomponent;
   if (dashcomponent === "overview") {
@@ -19,7 +24,12 @@ function Dashboard({ walletFunctions, walletVariables, config }) {
       />
     );
   } else if (dashcomponent === "settings") {
-    subcomponent = <Settings config={config} />;
+    subcomponent = (
+      <Settings
+        streamerConfig={streamerConfig}
+        setStreamerConfig={setStreamerConfig}
+      />
+    );
   } else if (dashcomponent === "animation") {
     subcomponent = <Animation />;
   }
@@ -68,7 +78,8 @@ function Dashboard({ walletFunctions, walletVariables, config }) {
 Dashboard.propTypes = {
   walletFunctions: PropTypes.object,
   walletVariables: PropTypes.object,
-  config: PropTypes.object,
+  streamerConfig: PropTypes.object,
+  setStreamerConfig: PropTypes.func,
 };
 
 export default Dashboard;
