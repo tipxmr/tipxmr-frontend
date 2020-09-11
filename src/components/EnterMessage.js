@@ -6,7 +6,7 @@ function EnterMessage({
   setMessage,
   setShowEnterMessage,
   setShowPayment,
-  streamerName,
+  displayName,
 }) {
   return (
     <div className="flex flex-grow justify-center">
@@ -15,8 +15,7 @@ function EnterMessage({
           <span role="img" aria-label="Green Money">
             💸
           </span>
-          Donate to <span className="font-bold">{streamerName}</span> with
-          Monero
+          Donate to <span className="font-bold">{displayName}</span> with Monero
           <span role="img" aria-label="Green Money">
             💸
           </span>
@@ -58,6 +57,6 @@ EnterMessage.propTypes = {
   setMessage: PropTypes.func,
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
-  streamerName: PropTypes.string,
+  displayName: PropTypes.string,
 };
 export default EnterMessage;

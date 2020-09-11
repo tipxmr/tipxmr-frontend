@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
-import io from "socket.io-client";
+import socketio from "../libs/socket";
 
-function Donate({ streamerName, hashedSeed, onlineStatus }) {
+function Donate({ displayName, hashedSeed, onlineStatus }) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -14,19 +14,16 @@ function Donate({ streamerName, hashedSeed, onlineStatus }) {
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const socket = io("ws://localhost:3000");
-
   function getSubaddress() {
-    socket.on("connect", () => {
-      socket.emit("getSubaddress", {
-        streamerName: streamerName,
-        hashedSeed: hashedSeed,
-        donor: donor,
-        message: message,
-      });
-      socket.on("returnSubaddress", (data) => {
-        setSubaddress(data.subaddress);
-      });
+    socket.emit("getSubaddress", {
+      displayName: displayName,
+      hashedSeed: hashedSeed,
+      donor: donor,
+      message: message,
+    });
+
+    socket.on("returnSubaddress", (data) => {
+      setSubaddress(data.subaddress);
     });
   }
 
@@ -39,7 +36,7 @@ function Donate({ streamerName, hashedSeed, onlineStatus }) {
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
-            streamerName={streamerName}
+            displayName={displayName}
             onlineStatus={onlineStatus}
           />
         ) : null}
@@ -58,7 +55,7 @@ function Donate({ streamerName, hashedSeed, onlineStatus }) {
   );
 }
 Donate.propTypes = {
-  streamerName: PropTypes.string,
+  displayName: PropTypes.string,
   hashedSeed: PropTypes.string,
   onlineStatus: PropTypes.bool,
 };

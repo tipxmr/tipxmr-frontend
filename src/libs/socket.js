@@ -7,7 +7,7 @@ const socketStreamer = io("ws://localhost:3000/streamer");
 // ===============================================================
 
 // socket.on functions
-function getSubaddress(callback) {
+function onGetSubaddress(callback) {
   socketStreamer.on("getSubaddress", (data) => {
     callback(data);
   });
@@ -28,11 +28,8 @@ function emitUpdateStreamerConfig(streamerConfig) {
   socketStreamer.emit("updateConfig", streamerConfig);
 }
 
-function emitStreamerInfo(streamerName, hashedSeed) {
-  socketStreamer.emit("streamerInfo", {
-    streamerName,
-    hashedSeed,
-  });
+function emitStreamerInfo(streamerConfig) {
+  socketStreamer.emit("streamerInfo", streamerConfig);
 }
 
 function emitPaymentRecieved(newDonation) {
@@ -74,5 +71,5 @@ export default {
   emitPaymentRecieved,
   emitReturnSubaddress,
   onPaymentRecieved,
-  getSubaddress,
+  onGetSubaddress,
 };
