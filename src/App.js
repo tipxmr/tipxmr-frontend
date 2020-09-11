@@ -10,7 +10,6 @@ import {
   Donate,
   CreateWallet,
   OpenWallet,
-  Wallet,
   Animation,
   Dashboard,
   Disclaimer,
@@ -22,40 +21,67 @@ function App() {
     flex: "1 0 100%",
   };
 
-  const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [restoreHeight, setRestoreHeight] = useState(661800); // 6. Sep 2020
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
-  const [displayName, setDisplayName] = useState("MoneroMumble");
-  const [username, setUsername] = useState("MoneroMumble");
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
 
   const [streamerConfig, setStreamerConfig] = useState({
-    hashedseed: "",
-    displayname: "AlexAnarcho",
-    username: "alexanarcho",
-    online: false,
-    restorheight: 661800,
-    account: {
-      basic: true,
-      advanced: true,
-      premium: true,
+    hashedSeed: "", // acts as password for login
+    displayName: "AlexAnarcho", // name to show to donator
+    userName: "alexanarcho", // lowercase displayName
+    isOnline: false, // show if streamer is currently able to recieve payments
+    streamerSocketId: "",
+    creationDate: "", // track since when the user is registered
+    restoreHeight: 661800,
+    profilePicture: "", // allow the user to upload a user avatar
+    accountTier: {
+      basic: true, // only basic functions available for customizations
+      advanced: true, // more customisations
+      premium: true, // all customisations available
     },
-    stream: {
-      secondprice: 0.00043,
-      fontcolor: "#F23456",
-      minamount: 0.00043,
-      gifs: true,
-      goal: 1,
-      goalprogress: 0,
-      goalreached: false,
-      charlimit: 1000,
-      sound: "/src/sounds/crocodile.mp3",
+    streamURLS: {
+      // stream urls to display on the streamers donation site
+      // only 4 examples, more options can be added later on
+      twitch: "",
+      youtube: "",
+      chaturbate: "",
+      dLive: "",
+    },
+    animationSettings: {
+      secondPrice: 0.00043, // XMR price of a second of display time
+      fontColor: "#F23456", // fontColor of the animation text
+      fontSize: "xl", // size of animation text
+      fontShadow: false, // enable a shadow around text
+      minAmount: 0.00043, // donations must be equal to or greater than minAmount
+      gifs: true, // allow users to include gifs as message
+      gifsMinAmount: 0, // min amount to let user send a gif
+      showGoal: false, // let the streamer decide whether to show a goal or not
+      goal: 1, // goal amount in XMR
+      goalProgress: 0, // how many XMR already paid towards goal
+      goalReached: false, // maybe unnecessary, if true, reset the goal
+      charLimit: 1000, // upperlimit for message length
+      sound: "/src/sounds/crocodile.mp3", // custom mp3 sound, needs to be an attachement
+      bgImg: "", // show background image in stream
+    },
+    donationStats: {
+      totalDonations: 0, // increment with every donation
+      largestDonation: 0, // show largest donation
+      allDonations: [
+        // objects of all transactions, basically array of donorInfo
+        {
+          1: {
+            donor: "Grischa",
+            message: "Hello",
+            amount: 123, // amount in XMR
+            date: "", // datetime object to track a timeline
+          },
+        },
+      ],
     },
   });
 
@@ -113,21 +139,18 @@ function App() {
   async function syncWallet() {
     setIsSyncActive(true);
     monerojs
-      .startSyncing(wallet, mwl, streamerConfig.restorheight)
+      .startSyncing(wallet, mwl, streamerConfig.restoreHeight)
       .catch((err) => {
         console.error(err);
         setIsSyncActive(false);
       });
   }
 
-  // Connection to backend
+  // as soon as wallet is loaded
   useEffect(() => {
     if (wallet !== null) {
-      socketio.emitStreamerInfo(
-        streamerConfig.displayname,
-        streamerConfig.hashedseed
-      );
-      socketio.getSubaddress((data) => {
+      socketio.emitStreamerInfo(streamerConfig);
+      socketio.onGetSubaddress((data) => {
         monerojs.createSubaddress(wallet).then((subaddress) => {
           const newDonorInfo = { ...data, subaddress: subaddress };
           setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
@@ -137,6 +160,11 @@ function App() {
       });
     }
   }, [wallet]);
+
+  // handleChange for userConfig
+  useEffect(() => {
+    socketio.emitUpdateStreamerConfig(streamerConfig);
+  }, [streamerConfig]);
 
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
@@ -160,8 +188,9 @@ function App() {
             </Route>
             <Route path="/donate" exact>
               <Donate
-                displayName={streamerConfig.displayname}
-                hashedSeed={streamerConfig.hashedseed}
+                displayName={streamerConfig.displayName}
+                hashedSeed={streamerConfig.hashedSeed}
+                onlineStatus={streamerConfig.online}
               />
             </Route>
             <Route path="/createwallet" exact>
@@ -169,53 +198,36 @@ function App() {
             </Route>
             <Route path="/openwallet" exact>
               <OpenWallet
+                streamerConfig={streamerConfig}
+                setStreamerConfig={setStreamerConfig}
                 walletFunctions={{
-                  setHashedSeed,
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={
-                  (streamerConfig.hashedseed, { wallet, primaryAddress })
-                }
-              />
-            </Route>
-            <Route path="/wallet" exact>
-              <Wallet
-                walletFunctions={{
-                  setIsSyncActive,
-                  syncWallet,
-                  setHashedSeed,
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{
-                  isSyncActive,
-                  hashedSeed,
-                  wallet,
-                  primaryAddress,
-                  percentageSynced,
-                }}
+                walletVariables={{ streamerConfig, wallet, primaryAddress }}
               />
             </Route>
             <Route path="/animation" exact>
-              <Animation />
+              <Animation streamerConfig={streamerConfig} />
             </Route>
             <Route path="/dashboard">
               <Dashboard
                 walletFunctions={{
+                  setStreamerConfig,
                   setIsSyncActive,
                   syncWallet,
-                  setHashedSeed,
                   setWallet,
                   setPrimaryAddress,
                 }}
                 walletVariables={{
                   isSyncActive,
-                  hashedSeed,
+                  streamerConfig,
                   wallet,
                   primaryAddress,
                   percentageSynced,
                 }}
+                streamerConfig={streamerConfig}
+                setStreamerConfig={setStreamerConfig}
               />
             </Route>
             <Route path="/disclaimer">

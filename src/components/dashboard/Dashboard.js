@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import monerologo from "../../images/monero-symbol.png";
 import Overview from "./Overview";
+import PropTypes from "prop-types";
 import Wallet from "../Wallet";
 import Settings from "./Settings";
 import Animation from "../Animation";
-import PropTypes from "prop-types";
 
-function Dashboard({ walletFunctions, walletVariables }) {
+function Dashboard({
+  walletFunctions,
+  walletVariables,
+  streamerConfig,
+  setStreamerConfig,
+}) {
   const [dashcomponent, setDashcomponent] = useState("overview");
   let subcomponent;
   if (dashcomponent === "overview") {
@@ -19,7 +24,12 @@ function Dashboard({ walletFunctions, walletVariables }) {
       />
     );
   } else if (dashcomponent === "settings") {
-    subcomponent = <Settings />;
+    subcomponent = (
+      <Settings
+        streamerConfig={streamerConfig}
+        setStreamerConfig={setStreamerConfig}
+      />
+    );
   } else if (dashcomponent === "animation") {
     subcomponent = <Animation />;
   }
@@ -68,6 +78,8 @@ function Dashboard({ walletFunctions, walletVariables }) {
 Dashboard.propTypes = {
   walletFunctions: PropTypes.object,
   walletVariables: PropTypes.object,
+  streamerConfig: PropTypes.object,
+  setStreamerConfig: PropTypes.func,
 };
 
 export default Dashboard;

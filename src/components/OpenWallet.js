@@ -22,7 +22,12 @@ WalletUnlocked.propTypes = {
   primaryAddress: PropTypes.string,
 };
 
-function OpenWallet({ walletFunctions, walletVariables }) {
+function OpenWallet({
+  streamerConfig,
+  setStreamerConfig,
+  walletFunctions,
+  walletVariables,
+}) {
   // styles for seed text box depending on the seed validation
   const stylesTextBoxOptions = {
     valid:
@@ -46,13 +51,17 @@ function OpenWallet({ walletFunctions, walletVariables }) {
     // if 25 words are reached
     if (seed.split(" ").length === 25) {
       console.log("25 words reached");
+      const hashedSeed = monerojs.getMnemonicHash(seed);
+      setStreamerConfig({
+        ...streamerConfig,
+        hashedSeed: hashedSeed,
+      });
       setIsLoading(true);
       monerojs
         .openWalletFromSeed(seed)
         .then(walletFunctions.setWallet)
         .then(() => setIsSeedValid(true))
         .then(() => setIsLoading(false))
-        .then(walletFunctions.setHashedSeed(monerojs.getMnemonicHash(seed)))
         .catch(() => {
           setIsSeedValid(false);
           console.error("Failed to open wallet.");
@@ -118,6 +127,8 @@ function OpenWallet({ walletFunctions, walletVariables }) {
 
 // Defining property types
 OpenWallet.propTypes = {
+  streamerConfig: PropTypes.object,
+  setStreamerConfig: PropTypes.func,
   walletFunctions: PropTypes.object,
   walletVariables: PropTypes.object,
 };
