@@ -16,6 +16,7 @@ import {
   Disclaimer,
   FAQ,
 } from "./components";
+import { configs } from "eslint-plugin-prettier";
 
 let config = {
   streamername: "AlexAnarcho",
@@ -155,6 +156,11 @@ function App() {
     }
   }, [wallet]);
 
+  // handleChange for userConfig
+  useEffect(() => {
+    socketio.emitUpdateStreamerConfig(streamerConfig);
+  }, [streamerConfig]);
+
   useEffect(() => {
     console.log("isSyncActive: ", isSyncActive);
   }, [isSyncActive]);
@@ -188,11 +194,11 @@ function App() {
             <Route path="/openwallet" exact>
               <OpenWallet
                 walletFunctions={{
-                  setHashedSeed,
+                  setStreamerConfig,
                   setWallet,
                   setPrimaryAddress,
                 }}
-                walletVariables={{ hashedseed, wallet, primaryAddress }}
+                walletVariables={{ streamerConfig, wallet, primaryAddress }}
               />
             </Route>
             <Route path="/animation" exact>
@@ -201,15 +207,15 @@ function App() {
             <Route path="/dashboard">
               <Dashboard
                 walletFunctions={{
+                  setStreamerConfig,
                   setIsSyncActive,
                   syncWallet,
-                  setHashedSeed,
                   setWallet,
                   setPrimaryAddress,
                 }}
                 walletVariables={{
                   isSyncActive,
-                  hashedSeed,
+                  streamerConfig,
                   wallet,
                   primaryAddress,
                   percentageSynced,
