@@ -25,30 +25,27 @@ function App() {
   const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [restoreHeight, setRestoreHeight] = useState(661800); // 6. Sep 2020
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
-  const [displayName, setDisplayName] = useState("MoneroMumble");
-  const [username, setUsername] = useState("MoneroMumble");
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
 
   const [streamerConfig, setStreamerConfig] = useState({
-    hashedseed: "",
-    displayname: "AlexAnarcho",
+    hashedSeed: "",
+    displayName: "AlexAnarcho",
     username: "alexanarcho",
     online: false,
-    restorheight: 661800,
+    restorHeight: 661800,
     account: {
       basic: true,
       advanced: true,
       premium: true,
     },
     stream: {
-      secondprice: 0.00043,
-      fontcolor: "#F23456",
+      secondPrice: 0.00043,
+      fontColor: "#F23456",
       minamount: 0.00043,
       gifs: true,
       goal: 1,
