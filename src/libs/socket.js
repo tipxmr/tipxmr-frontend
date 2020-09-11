@@ -68,6 +68,7 @@ function onPaymentRecieved(callback) {
 
 export default {
   emitGetStreamerConfig,
+  onRecieveStreamerConfig,
   emitUpdateStreamerConfig,
   emitStreamerInfo,
   emitPaymentRecieved,
