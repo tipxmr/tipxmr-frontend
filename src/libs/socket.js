@@ -1,31 +1,48 @@
 import io from "socket.io-client";
-const socket = io("ws://localhost:3000");
+const socketDonator = io("ws://localhost:3000/donator");
+const socketStreamer = io("ws://localhost:3000/streamer");
 
 // ===============================================================
 // Streamer Functions
 // ===============================================================
 
 // socket.on functions
-export function getSubaddress(callback) {
-  socket.on("getSubaddress", (data) => {
+function getSubaddress(callback) {
+  socketStreamer.on("getSubaddress", (data) => {
     callback(data);
   });
 }
 
+function onRecieveStreamerConfig(callback) {
+  socketStreamer.on("recieveStreamerConfig", (streamerConfig) => {
+    callback(streamerConfig);
+  });
+}
+
 // socket.emit functions
-export function emitStreamerInfo(streamerName, hashedSeed) {
-  socket.emit("streamerInfo", {
+function emitGetStreamerConfig(hashedSeed) {
+  socketStreamer.emit("getStreamerConfig", hashedSeed);
+}
+
+function emitStreamerInfo(streamerName, hashedSeed) {
+  socketStreamer.emit("streamerInfo", {
     streamerName,
     hashedSeed,
   });
 }
 
-export function emitPaymentRecieved(newDonation) {
-  socket.emit("paymentRecieved", newDonation);
+function emitPaymentRecieved(newDonation) {
+  /*newDonation = {
+            subaddress: subaddress,
+            amount: output.amount,
+            donor: donationsInfo.donor,
+            message: donationsInfo.message,
+          }; */
+  socketStreamer.emit("paymentRecieved", newDonation);
 }
 
-export function emitReturnSubaddress(newDonorInfo) {
-  socket.emit("returnSubaddress", newDonorInfo);
+function emitReturnSubaddress(newDonorInfo) {
+  socketStreamer.emit("returnSubaddress", newDonorInfo);
 }
 
 // ===============================================================
@@ -33,14 +50,23 @@ export function emitReturnSubaddress(newDonorInfo) {
 // ===============================================================
 
 // socket.on functions
-export function onPaymentRecieved(callback) {
-  socket.on("paymentRecieved", (newDonation) => {
+function onPaymentRecieved(callback) {
+  /*newDonation = {
+            subaddress: subaddress,
+            amount: output.amount,
+            donor: donationsInfo.donor,
+            message: donationsInfo.message,
+          }; */
+  socketDonator.on("paymentRecieved", (newDonation) => {
     callback(newDonation);
   });
 }
 
 export default {
+  emitGetStreamerConfig,
   emitStreamerInfo,
   emitPaymentRecieved,
   emitReturnSubaddress,
+  onPaymentRecieved,
+  getSubaddress,
 };
