@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function Settings({ config }) {
-  const [streamername, setStreamername] = useState(config.streamername);
+function Settings({ streamerConfig, setStreamerConfig }) {
   return (
     <div>
       <input
-        placeholder={config.streamername}
+        placeholder={streamerConfig.streamerName}
         onChange={(e) => {
-          setStreamername(e.target.value);
-          console.log(streamername);
+          setStreamerConfig(...streamerConfig, (streamerName = e.target.value));
+          console.log(streamerConfig.streamerName);
         }}
       ></input>
     </div>
@@ -17,7 +16,8 @@ function Settings({ config }) {
 }
 
 Settings.propTypes = {
-  config: PropTypes.object,
+  streamerConfig: PropTypes.object,
+  setStreamerConfig: PropTypes.func,
 };
 
 export default Settings;

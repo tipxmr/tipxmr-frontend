@@ -10,41 +10,17 @@ import {
   Donate,
   CreateWallet,
   OpenWallet,
-  Wallet,
   Animation,
   Dashboard,
   Disclaimer,
   FAQ,
 } from "./components";
-import { configs } from "eslint-plugin-prettier";
-
-let config = {
-  streamername: "AlexAnarcho",
-  username: "alexanarcho",
-  account: {
-    basic: true,
-    advanced: true,
-    premium: true,
-  },
-  stream: {
-    secondprice: 0.00043,
-    fontcolor: "#F23456",
-    minamount: 0.00043,
-    gifs: true,
-    goal: 1,
-    goalprogress: 0,
-    goalreached: false,
-    charlimit: 1000,
-    sound: "/src/sounds/crocodile.mp3",
-  },
-};
 
 function App() {
   const flexfull = {
     flex: "1 0 100%",
   };
 
-  const [hashedSeed, setHashedSeed] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
@@ -202,7 +178,7 @@ function App() {
               />
             </Route>
             <Route path="/animation" exact>
-              <Animation config={config} />
+              <Animation streamerConfig={streamerConfig} />
             </Route>
             <Route path="/dashboard">
               <Dashboard
@@ -220,7 +196,8 @@ function App() {
                   primaryAddress,
                   percentageSynced,
                 }}
-                config={config}
+                streamerConfig={streamerConfig}
+                setStreamerConfig={setStreamerConfig}
               />
             </Route>
             <Route path="/disclaimer">
