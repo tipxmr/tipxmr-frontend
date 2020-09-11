@@ -4,22 +4,8 @@ import InputField from "../dump_components/InputField";
 import Savebutton from "../dump_components/Savebutton";
 
 function Settings({ streamerConfig, setStreamerConfig }) {
-  // TODO state for every config option
-  const [displayName, setDisplayName] = useState(streamerConfig.displayName);
-  const [streamURLS, setStreamURLS] = useState(streamerConfig.streamURLS);
-  const [restoreHeight, setRestoreHeight] = useState(
-    streamerConfig.restoreHeight
-  );
-  const [profilePicture, setProfilePicture] = useState(
-    streamerConfig.profilePicture
-  );
-  // const [displayName, setDisplayName] = useState(streamerConfig.displayName);
-  // const [displayName, setDisplayName] = useState(streamerConfig.displayName);
-  // const [displayName, setDisplayName] = useState(streamerConfig.displayName);
-
-  function handleChange(e) {
-    //
-  }
+  // copy complete state so useEffect is not triggered
+  const [proxyState, setProxyState] = useState({ ...streamerConfig });
 
   function updateStreamerConfig() {
     // TODO read states and update streamerConfig object
@@ -35,26 +21,34 @@ function Settings({ streamerConfig, setStreamerConfig }) {
         <InputField
           configKey="displayName"
           labelName="Change your display name"
-          placeholderName={displayName}
+          placeholderName={proxyState.displayName}
           fieldType="text"
+          stateSetter={setProxyState}
+          baseState={proxyState}
         />
         <InputField
           configKey="streamURLS.twitch"
           labelName="Set URL to your stream"
-          placeholderName={streamURLS.twitch}
+          placeholderName={proxyState.streamURLS.twitch}
           fieldType="text"
+          stateSetter={setProxyState}
+          baseState={proxyState}
         />
         <InputField
           configKey="restoreHeight"
           labelName="Restore Height for Wallet"
-          placeholderName={restoreHeight}
+          placeholderName={proxyState.restoreHeight}
           fieldType="text"
+          stateSetter={setProxyState}
+          baseState={proxyState}
         />
         <InputField
           configKey="profilePicture"
           labelName="Change your profile picture"
-          placeholderName={profilePicture}
+          placeholderName={proxyState.profilePicture}
           fieldType="image"
+          stateSetter={setProxyState}
+          baseState={proxyState}
         />
       </div>
       <Savebutton />

@@ -1,8 +1,20 @@
 import React from "react";
 
-function InputField({ labelName, configKey, placeholderName, fieldType }) {
+function InputField({
+  labelName,
+  configKey,
+  placeholderName,
+  fieldType,
+  stateSetter,
+  baseState,
+}) {
   function handleChange(e) {
-    // TODO: handle the change in field
+    const value = e.target.value;
+    stateSetter({
+      ...baseState,
+      [configKey]: value,
+    });
+    console.log(baseState.configKey);
   }
 
   return (
