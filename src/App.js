@@ -17,6 +17,27 @@ import {
   FAQ,
 } from "./components";
 
+let config = {
+  streamername: "AlexAnarcho",
+  username: "alexanarcho",
+  account: {
+    basic: true,
+    advanced: true,
+    premium: true,
+  },
+  stream: {
+    secondprice: 0.00043,
+    fontcolor: "#F23456",
+    minamount: 0.00043,
+    gifs: true,
+    goal: 1,
+    goalprogress: 0,
+    goalreached: false,
+    charlimit: 1000,
+    sound: "/src/sounds/crocodile.mp3",
+  },
+};
+
 function App() {
   const flexfull = {
     flex: "1 0 100%",
@@ -116,7 +137,6 @@ function App() {
         setIsSyncActive(false);
       });
   }
-
   // Connection to backend
   useEffect(() => {
     if (wallet !== null) {
@@ -195,7 +215,7 @@ function App() {
               />
             </Route>
             <Route path="/animation" exact>
-              <Animation />
+              <Animation config={config} />
             </Route>
             <Route path="/dashboard">
               <Dashboard
@@ -213,6 +233,7 @@ function App() {
                   primaryAddress,
                   percentageSynced,
                 }}
+                config={config}
               />
             </Route>
             <Route path="/disclaimer">
