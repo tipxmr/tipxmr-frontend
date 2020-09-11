@@ -15,16 +15,9 @@ function Donate({ displayName, hashedSeed, onlineStatus }) {
   const [message, setMessage] = useState(null);
 
   function getSubaddress() {
-    socket.emit("getSubaddress", {
-      displayName: displayName,
-      hashedSeed: hashedSeed,
-      donor: donor,
-      message: message,
-    });
+    socketio.emitGetSubaddress(displayName, hashedSeed, donor, message);
 
-    socket.on("returnSubaddress", (data) => {
-      setSubaddress(data.subaddress);
-    });
+    socketio.onReturnSubaddress(setSubaddress);
   }
 
   return (
@@ -42,7 +35,7 @@ function Donate({ displayName, hashedSeed, onlineStatus }) {
         ) : null}
         {showPayment ? (
           <Payment
-            streamerName={streamerName}
+            displayName={displayName}
             donor={donor}
             message={message}
             subaddress={subaddress}

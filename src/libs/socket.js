@@ -1,3 +1,4 @@
+import { call } from "file-loader";
 import io from "socket.io-client";
 const socketDonator = io("ws://localhost:3000/donator");
 const socketStreamer = io("ws://localhost:3000/streamer");
@@ -51,6 +52,10 @@ function emitReturnSubaddress(newDonorInfo) {
 // ===============================================================
 
 // socket.on functions
+function onReturnSubaddress(callback) {
+  socketDonator.on("returnSubaddress", (data) => callback(data.subaddress));
+}
+
 function onPaymentRecieved(callback) {
   /*newDonation = {
             subaddress: subaddress,
@@ -63,6 +68,16 @@ function onPaymentRecieved(callback) {
   });
 }
 
+// socket.emit functions
+function emitGetSubaddress(displayName, hashedSeed, donor, message) {
+  socketDonator.emit("getSubaddress", {
+    displayName,
+    hashedSeed,
+    donor,
+    message,
+  });
+}
+
 export default {
   emitGetStreamerConfig,
   onRecieveStreamerConfig,
@@ -70,6 +85,8 @@ export default {
   emitStreamerInfo,
   emitPaymentRecieved,
   emitReturnSubaddress,
+  onReturnSubaddress,
   onPaymentRecieved,
   onGetSubaddress,
+  emitGetSubaddress,
 };

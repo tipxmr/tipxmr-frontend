@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../libs/monero";
 
-function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
+function Payment({ displayName, donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
@@ -50,7 +50,7 @@ function Payment({ streamerName, donor, message, subaddress, getSubaddress }) {
 }
 // Payment property types
 Payment.propTypes = {
-  streamerName: PropTypes.string,
+  displayName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
   subaddress: PropTypes.string,
