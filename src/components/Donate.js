@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
 import socketio from "../libs/socket";
+import { useParams } from "react-router-dom";
 
-function Donate(props) {
+function Donate() {
+  let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -18,7 +19,7 @@ function Donate(props) {
 
   useEffect(() => {
     // Get Streamer Info from Backend
-    const userName = displayName.toLocaleLowerCase();
+    console.log("Username: ", userName);
   }, []);
 
   function getSubaddress() {

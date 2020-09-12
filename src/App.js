@@ -186,7 +186,7 @@ function App() {
             <Route path="/" exact>
               <Start />
             </Route>
-            <Route path="/donate" exact>
+            <Route path="/donate/:userName">
               <Donate />
             </Route>
             <Route path="/createwallet" exact>
