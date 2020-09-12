@@ -6,7 +6,7 @@ function IsOnlineBadge({ isOnline }) {
     return (
       <button
         type="button"
-        className="mx-auto bg-green-600 text-white p-2 rounded leading-none flex items-center"
+        className="pointer-events-none mx-auto bg-green-600 text-white p-2 rounded leading-none flex items-center"
       >
         online
       </button>
@@ -17,7 +17,7 @@ function IsOnlineBadge({ isOnline }) {
     return (
       <button
         type="button"
-        className="mx-auto bg-red-600 text-white p-2 rounded leading-none flex items-center"
+        className="pointer-events-none mx-auto bg-red-600 text-white p-2 rounded leading-none flex items-center"
       >
         offline
       </button>
