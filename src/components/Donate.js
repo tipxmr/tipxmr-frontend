@@ -11,22 +11,26 @@ function Donate() {
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const [displayName, setDisplayName] = useState("AlexAnarcho");
-  const [onlineStatus, setOnlineStatus] = useState(false);
+  const [streamer, setStreamer] = useState({
+    displayName: "loading",
+    userName: "loading",
+    isOnline: false,
+  });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
     // Get Streamer Info from Backend
-    console.log("Username: ", userName);
+    socketio.emitGetStreamer(userName);
+    socketio.onRecieveStreamerFromBackend(setStreamer);
   }, []);
 
   function getSubaddress() {
     socketio.emitGetSubaddress(
-      displayName,
-      userName,
-      hashedSeed,
+      streamer.displayName,
+      streamer.userName,
+      streamer.hashedSeed,
       donor,
       message
     );
@@ -43,13 +47,13 @@ function Donate() {
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
-            displayName={displayName}
-            onlineStatus={onlineStatus}
+            displayName={streamer.displayName}
+            isOnline={streamer.isOnline}
           />
         ) : null}
         {showPayment ? (
           <Payment
-            displayName={displayName}
+            displayName={streamer.displayName}
             donor={donor}
             message={message}
             subaddress={subaddress}
