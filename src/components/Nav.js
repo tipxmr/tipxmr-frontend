@@ -25,7 +25,7 @@ function Nav() {
               Start
             </Link>
             <Link
-              to="/donate"
+              to="/donate/alexanarcho"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
             >
               Donate

@@ -72,10 +72,6 @@ function OpenWallet({
   }, [seed]);
 
   useEffect(() => {
-    console.log("Hashed Seed:", walletVariables.hashedSeed);
-  }, [walletVariables.hashedSeed]);
-
-  useEffect(() => {
     if (walletVariables.wallet !== null) {
       monerojs
         .getPrimaryAddress(walletVariables.wallet)

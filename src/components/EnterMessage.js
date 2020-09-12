@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import IsOnlineBadge from "./IsOnlineBadge";
 
 function EnterMessage({
   setDonor,
@@ -7,6 +8,7 @@ function EnterMessage({
   setShowEnterMessage,
   setShowPayment,
   displayName,
+  isOnline,
 }) {
   return (
     <div className="flex flex-grow justify-center">
@@ -20,6 +22,7 @@ function EnterMessage({
             💸
           </span>
         </h2>
+        <IsOnlineBadge isOnline={isOnline} />
         <input
           type="text"
           align="middle"
@@ -39,7 +42,7 @@ function EnterMessage({
         />
         <div className="w-full flex justify-center">
           <button
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="mt-4 bg-xmrorange-lighter hover:bg-xmrorange-darker text-white font-bold py-2 px-4 rounded-full"
             onClick={() => {
               setShowEnterMessage(false);
               setShowPayment(true);
@@ -58,5 +61,6 @@ EnterMessage.propTypes = {
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
   displayName: PropTypes.string,
+  isOnline: PropTypes.bool,
 };
 export default EnterMessage;

@@ -150,11 +150,11 @@ function App() {
   useEffect(() => {
     if (wallet !== null) {
       socketio.emitStreamerInfo(streamerConfig);
-      socketio.onGetSubaddress((data) => {
+      socketio.onCreateSubaddress((data) => {
         monerojs.createSubaddress(wallet).then((subaddress) => {
           const newDonorInfo = { ...data, subaddress: subaddress };
           setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-          socketio.emitReturnSubaddress(newDonorInfo);
+          socketio.emitSubaddressToBackend(newDonorInfo);
           console.log("created Subaddress for:", newDonorInfo);
         });
       });
@@ -186,12 +186,8 @@ function App() {
             <Route path="/" exact>
               <Start />
             </Route>
-            <Route path="/donate" exact>
-              <Donate
-                displayName={streamerConfig.displayName}
-                hashedSeed={streamerConfig.hashedSeed}
-                onlineStatus={streamerConfig.online}
-              />
+            <Route path="/donate/:userName">
+              <Donate />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
