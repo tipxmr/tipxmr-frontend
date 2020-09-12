@@ -15,6 +15,7 @@ function Donate() {
     displayName: "loading",
     userName: "loading",
     isOnline: false,
+    hashedSeed: "",
   });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);

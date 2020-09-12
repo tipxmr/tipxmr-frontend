@@ -53,6 +53,7 @@ function emitSubaddressToBackend(newDonorInfo) {
 // socket.on functions
 function onRecieveStreamerFromBackend(callback) {
   socketDonator.on("recieveStreamer", (streamer) => {
+    console.log("Streamer isch do", streamer);
     callback(streamer);
   });
 }
