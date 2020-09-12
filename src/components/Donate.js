@@ -1,23 +1,36 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
 import socketio from "../libs/socket";
 
-function Donate({ displayName, hashedSeed, onlineStatus }) {
+function Donate(props) {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [displayName, setDisplayName] = useState("AlexAnarcho");
+  const [onlineStatus, setOnlineStatus] = useState(false);
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
 
-  function getSubaddress() {
-    socketio.emitGetSubaddress(displayName, hashedSeed, donor, message);
+  useEffect(() => {
+    // Get Streamer Info from Backend
+    const userName = displayName.toLocaleLowerCase();
+  }, []);
 
-    socketio.onReturnSubaddress(setSubaddress);
+  function getSubaddress() {
+    socketio.emitGetSubaddress(
+      displayName,
+      userName,
+      hashedSeed,
+      donor,
+      message
+    );
+
+    socketio.onSubaddressToDonator(setSubaddress);
   }
 
   return (
@@ -47,9 +60,5 @@ function Donate({ displayName, hashedSeed, onlineStatus }) {
     </div>
   );
 }
-Donate.propTypes = {
-  displayName: PropTypes.string,
-  hashedSeed: PropTypes.string,
-  onlineStatus: PropTypes.bool,
-};
+
 export default Donate;

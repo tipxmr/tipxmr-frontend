@@ -8,8 +8,8 @@ const socketStreamer = io("ws://localhost:3000/streamer");
 // ===============================================================
 
 // socket.on functions
-function onGetSubaddress(callback) {
-  socketStreamer.on("getSubaddress", (data) => {
+function onCreateSubaddress(callback) {
+  socketStreamer.on("createSubaddress", (data) => {
     callback(data);
   });
 }
@@ -43,8 +43,8 @@ function emitPaymentRecieved(newDonation) {
   socketStreamer.emit("paymentRecieved", newDonation);
 }
 
-function emitReturnSubaddress(newDonorInfo) {
-  socketStreamer.emit("returnSubaddress", newDonorInfo);
+function emitSubaddressToBackend(newDonorInfo) {
+  socketStreamer.emit("subaddressToBackend", newDonorInfo);
 }
 
 // ===============================================================
@@ -52,8 +52,8 @@ function emitReturnSubaddress(newDonorInfo) {
 // ===============================================================
 
 // socket.on functions
-function onReturnSubaddress(callback) {
-  socketDonator.on("returnSubaddress", (data) => callback(data.subaddress));
+function onSubaddressToDonator(callback) {
+  socketDonator.on("subaddressToDonator", (data) => callback(data.subaddress));
 }
 
 function onPaymentRecieved(callback) {
@@ -69,9 +69,10 @@ function onPaymentRecieved(callback) {
 }
 
 // socket.emit functions
-function emitGetSubaddress(displayName, hashedSeed, donor, message) {
+function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
   socketDonator.emit("getSubaddress", {
     displayName,
+    userName,
     hashedSeed,
     donor,
     message,
@@ -84,9 +85,9 @@ export default {
   emitUpdateStreamerConfig,
   emitStreamerInfo,
   emitPaymentRecieved,
-  emitReturnSubaddress,
-  onReturnSubaddress,
+  emitSubaddressToBackend,
+  onSubaddressToDonator,
   onPaymentRecieved,
-  onGetSubaddress,
+  onCreateSubaddress,
   emitGetSubaddress,
 };
