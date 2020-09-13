@@ -9,6 +9,7 @@ const socketStreamer = io("ws://localhost:3000/streamer");
 // socket.on functions
 function onCreateSubaddress(callback) {
   socketStreamer.on("createSubaddress", (data) => {
+    console.log("I have to create a subbaddress now");
     callback(data);
   });
 }
@@ -53,7 +54,6 @@ function emitSubaddressToBackend(newDonorInfo) {
 // socket.on functions
 function onRecieveStreamerFromBackend(callback) {
   socketDonator.on("recieveStreamer", (streamer) => {
-    console.log("Streamer isch do", streamer);
     callback(streamer);
   });
 }
@@ -102,4 +102,5 @@ export default {
   onPaymentRecieved,
   onCreateSubaddress,
   emitGetSubaddress,
+  socketStreamer,
 };

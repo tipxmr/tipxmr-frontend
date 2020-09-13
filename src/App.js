@@ -149,7 +149,9 @@ function App() {
   // as soon as wallet is loaded
   useEffect(() => {
     if (wallet !== null) {
+      // after login send streamer info
       socketio.emitStreamerInfo(streamerConfig);
+      // listen for new request of subaddress generation
       socketio.onCreateSubaddress((data) => {
         monerojs.createSubaddress(wallet).then((subaddress) => {
           const newDonorInfo = { ...data, subaddress: subaddress };

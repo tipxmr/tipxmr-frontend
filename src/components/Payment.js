@@ -7,6 +7,7 @@ function Payment({ displayName, donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
+    console.log("useEffect then getSubaddress()");
     getSubaddress();
   }, []);
 
