@@ -2,7 +2,6 @@ const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
 import QRCode from "qrcode";
-require("dotenv").config();
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
