@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
 
-function Animation({ config }) {
+function Animation({ streamerConfig }) {
   // in milliseconds, one second costs 0.00043 xmr
-  const timeout = 1000 / config.stream.secondprice;
-  const goalprogress = config.stream.goalprogress;
-  const sound = config.stream.sound;
-  const goal = config.stream.goal;
-  const fontcolor = config.stream.fontcolor;
+  const timeout = 1000 / streamerConfig.animationSettings.secondprice;
+  const goalprogress = streamerConfig.animationSettings.goalprogress;
+  const sound = streamerConfig.animationSettings.sound;
+  const goal = streamerConfig.animationSettings.goal;
+  const fontcolor = streamerConfig.animationSettings.fontcolor;
   const [donor, setDonor] = useState("AlexAnarcho");
   const [amount, setAmount] = useState(0.0172);
   const [message, setMessage] = useState("Testing things out");
@@ -59,7 +59,7 @@ function Animation({ config }) {
 }
 
 Animation.propTypes = {
-  config: PropTypes.object,
+  streamerConfig: PropTypes.object,
 };
 
 export default Animation;
