@@ -4,7 +4,6 @@ import Overview from "./Overview";
 import PropTypes from "prop-types";
 import Wallet from "../Wallet";
 import Settings from "./Settings";
-import Animation from "../Animation";
 import AnimationSettings from "./AnimationSettings";
 
 function Dashboard({
@@ -33,7 +32,7 @@ function Dashboard({
     );
   } else if (dashcomponent === "animation") {
     subcomponent = (
-      <Animation
+      <AnimationSettings
         streamerConfig={streamerConfig}
         setStreamerConfig={setStreamerConfig}
       />

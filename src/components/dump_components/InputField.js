@@ -18,7 +18,7 @@ function InputField({
   }
 
   return (
-    <div className="m-4 w-1/4 text-center">
+    <div className="m-4 w-1/4 text-center flex flex-grow">
       <label className="mb-2">
         {labelName}:<br />
         <input
