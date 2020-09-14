@@ -4,11 +4,11 @@ import { useTransition, animated } from "react-spring";
 
 function Animation({ streamerConfig }) {
   // in milliseconds, one second costs 0.00043 xmr
-  const timeout = 1000 / streamerConfig.animationSettings.secondprice;
-  const goalprogress = streamerConfig.animationSettings.goalprogress;
+  const timeout = 1000 / streamerConfig.animationSettings.secondPrice;
+  const fontcolor = streamerConfig.animationSettings.fontColor;
+  const goalprogress = streamerConfig.animationSettings.goalProgress;
   const sound = streamerConfig.animationSettings.sound;
   const goal = streamerConfig.animationSettings.goal;
-  const fontcolor = streamerConfig.animationSettings.fontcolor;
   const [donor, setDonor] = useState("AlexAnarcho");
   const [amount, setAmount] = useState(0.0172);
   const [message, setMessage] = useState("Testing things out");
