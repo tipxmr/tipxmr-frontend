@@ -3,21 +3,13 @@ import PropTypes from "prop-types";
 import Animation from "../Animation";
 import Savebutton from "../dump_components/Savebutton";
 import InputField from "../dump_components/InputField";
+import CheckboxField from "../dump_components/CheckboxField";
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
-  // secondPrice
-  // fontColor
   // fontSize (Dropdown)
-  // minAmount
-  // gifs (on/off)
-  // fontShadow (On/Off)
-  // showGoal (on/off)
   // gifsMinAmount
-  // goal:
   // charLimit
-  // sound (upload)
-  // bgImg (upload)
   return (
     <div className="h-full text-xmrgray-darker">
       <div className="mx-auto">
@@ -25,7 +17,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           Change your Animation:
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <InputField
             configKey="secondPrice"
             labelName="The price of 1 second (in XMR)"
@@ -33,6 +25,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             fieldType="text"
             stateSetter={setProxyState}
             baseState={proxyState}
+            className="col-span-1"
           />
           <InputField
             configKey="fontColor"
@@ -58,41 +51,47 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             stateSetter={setProxyState}
             baseState={proxyState}
           />
-          <InputField
+          <CheckboxField
             configKey="showGoal"
             labelName="Show your goal in Animation?"
-            placeholderName={proxyState.animationSettings.showGoal}
-            fieldType="checkbox"
+            defaultChecked={proxyState.animationSettings.showGoal}
             stateSetter={setProxyState}
             baseState={proxyState}
           />
-          <InputField
+          <CheckboxField
             configKey="gifs"
             labelName="Allow users to send gifs"
-            placeholderName={proxyState.animationSettings.gifs}
-            fieldType="checkbox"
+            defaultChecked={proxyState.animationSettings.gifs}
             stateSetter={setProxyState}
             baseState={proxyState}
           />
-          <InputField
+          <CheckboxField
             configKey="fontShadow"
             labelName="Turn on text shadow"
-            placeholderName={proxyState.animationSettings.fontShadow}
-            fieldType="checkbox"
+            defaultChecked={proxyState.animationSettings.fontShadow}
             stateSetter={setProxyState}
             baseState={proxyState}
           />
           <InputField
-            configKey="goal"
-            labelName="Set a donation goal for your stream (in XMR)"
-            placeholderName={proxyState.animationSettings.showGoal}
-            fieldType="checkbox"
+            configKey="sound"
+            labelName="Upload a custom MP3 for donations"
+            placeholderName={proxyState.animationSettings.sound}
+            fieldType="file"
+            stateSetter={setProxyState}
+            baseState={proxyState}
+          />
+          <InputField
+            configKey="bgImg"
+            labelName="Upload custom background image for donations"
+            placeholderName={proxyState.animationSettings.bgImg}
+            fieldType="file"
             stateSetter={setProxyState}
             baseState={proxyState}
           />
         </div>
+
+        <Savebutton />
       </div>
-      <Savebutton />
     </div>
   );
 }

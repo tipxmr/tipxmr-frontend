@@ -2,7 +2,7 @@ import React from "react";
 
 function Savebutton() {
   return (
-    <button className="p-2 rounded border-2 border-xmrgray-darker bg-xmrorange-default">
+    <button className="py-2 px-8 rounded border-2 bg-xmrorange text-white flex justify-center mx-auto">
       Save
     </button>
   );
