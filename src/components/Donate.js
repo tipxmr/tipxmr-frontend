@@ -1,33 +1,42 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import Success from "./Success";
-import io from "socket.io-client";
+import socketio from "../libs/socket";
+import { useParams } from "react-router-dom";
 
-function Donate({ streamerName, hashedSeed, onlineStatus }) {
+function Donate() {
+  let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [streamer, setStreamer] = useState({
+    displayName: "loading",
+    userName: "loading",
+    isOnline: false,
+    hashedSeed: "",
+  });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const socket = io("ws://localhost:3000");
+  useEffect(() => {
+    // Get Streamer Info from Backend
+    socketio.emitGetStreamer(userName);
+    socketio.onRecieveStreamerFromBackend(setStreamer);
+  }, []);
 
   function getSubaddress() {
-    socket.on("connect", () => {
-      socket.emit("getSubaddress", {
-        streamerName: streamerName,
-        hashedSeed: hashedSeed,
-        donor: donor,
-        message: message,
-      });
-      socket.on("returnSubaddress", (data) => {
-        setSubaddress(data.subaddress);
-      });
-    });
+    socketio.emitGetSubaddress(
+      streamer.displayName,
+      streamer.userName,
+      streamer.hashedSeed,
+      donor,
+      message
+    );
+
+    socketio.onSubaddressToDonator(setSubaddress);
   }
 
   return (
@@ -39,13 +48,13 @@ function Donate({ streamerName, hashedSeed, onlineStatus }) {
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
-            streamerName={streamerName}
-            onlineStatus={onlineStatus}
+            displayName={streamer.displayName}
+            isOnline={streamer.isOnline}
           />
         ) : null}
         {showPayment ? (
           <Payment
-            streamerName={streamerName}
+            displayName={streamer.displayName}
             donor={donor}
             message={message}
             subaddress={subaddress}
@@ -57,9 +66,5 @@ function Donate({ streamerName, hashedSeed, onlineStatus }) {
     </div>
   );
 }
-Donate.propTypes = {
-  streamerName: PropTypes.string,
-  hashedSeed: PropTypes.string,
-  onlineStatus: PropTypes.bool,
-};
+
 export default Donate;

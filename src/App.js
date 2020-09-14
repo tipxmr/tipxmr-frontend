@@ -35,6 +35,7 @@ function App() {
     displayName: "AlexAnarcho", // name to show to donator
     userName: "alexanarcho", // lowercase displayName
     isOnline: false, // show if streamer is currently able to recieve payments
+    streamerSocketId: "",
     creationDate: "", // track since when the user is registered
     restoreHeight: 661800,
     profilePicture: "", // allow the user to upload a user avatar
@@ -138,24 +139,24 @@ function App() {
   async function syncWallet() {
     setIsSyncActive(true);
     monerojs
-      .startSyncing(wallet, mwl, streamerConfig.restorheight)
+      .startSyncing(wallet, mwl, streamerConfig.restoreHeight)
       .catch((err) => {
         console.error(err);
         setIsSyncActive(false);
       });
   }
-  // Connection to backend
+
+  // as soon as wallet is loaded
   useEffect(() => {
     if (wallet !== null) {
-      socketio.emitStreamerInfo(
-        streamerConfig.displayname,
-        streamerConfig.hashedseed
-      );
-      socketio.getSubaddress((data) => {
+      // after login send streamer info
+      socketio.emitStreamerInfo(streamerConfig);
+      // listen for new request of subaddress generation
+      socketio.onCreateSubaddress((data) => {
         monerojs.createSubaddress(wallet).then((subaddress) => {
           const newDonorInfo = { ...data, subaddress: subaddress };
           setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-          socketio.emitReturnSubaddress(newDonorInfo);
+          socketio.emitSubaddressToBackend(newDonorInfo);
           console.log("created Subaddress for:", newDonorInfo);
         });
       });
@@ -187,20 +188,17 @@ function App() {
             <Route path="/" exact>
               <Start />
             </Route>
-            <Route path="/donate" exact>
-              <Donate
-                displayName={streamerConfig.displayname}
-                hashedSeed={streamerConfig.hashedseed}
-                onlineStatus={streamerConfig.online}
-              />
+            <Route path="/donate/:userName">
+              <Donate />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
             </Route>
             <Route path="/openwallet" exact>
               <OpenWallet
+                streamerConfig={streamerConfig}
+                setStreamerConfig={setStreamerConfig}
                 walletFunctions={{
-                  setStreamerConfig,
                   setWallet,
                   setPrimaryAddress,
                 }}

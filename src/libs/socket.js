@@ -7,8 +7,9 @@ const socketStreamer = io("ws://localhost:3000/streamer");
 // ===============================================================
 
 // socket.on functions
-function getSubaddress(callback) {
-  socketStreamer.on("getSubaddress", (data) => {
+function onCreateSubaddress(callback) {
+  socketStreamer.on("createSubaddress", (data) => {
+    console.log("I have to create a subbaddress now");
     callback(data);
   });
 }
@@ -28,11 +29,8 @@ function emitUpdateStreamerConfig(streamerConfig) {
   socketStreamer.emit("updateConfig", streamerConfig);
 }
 
-function emitStreamerInfo(streamerName, hashedSeed) {
-  socketStreamer.emit("streamerInfo", {
-    streamerName,
-    hashedSeed,
-  });
+function emitStreamerInfo(streamerConfig) {
+  socketStreamer.emit("streamerInfo", streamerConfig);
 }
 
 function emitPaymentRecieved(newDonation) {
@@ -45,8 +43,8 @@ function emitPaymentRecieved(newDonation) {
   socketStreamer.emit("paymentRecieved", newDonation);
 }
 
-function emitReturnSubaddress(newDonorInfo) {
-  socketStreamer.emit("returnSubaddress", newDonorInfo);
+function emitSubaddressToBackend(newDonorInfo) {
+  socketStreamer.emit("subaddressToBackend", newDonorInfo);
 }
 
 // ===============================================================
@@ -54,6 +52,16 @@ function emitReturnSubaddress(newDonorInfo) {
 // ===============================================================
 
 // socket.on functions
+function onRecieveStreamerFromBackend(callback) {
+  socketDonator.on("recieveStreamer", (streamer) => {
+    callback(streamer);
+  });
+}
+
+function onSubaddressToDonator(callback) {
+  socketDonator.on("subaddressToDonator", (data) => callback(data.subaddress));
+}
+
 function onPaymentRecieved(callback) {
   /*newDonation = {
             subaddress: subaddress,
@@ -66,13 +74,33 @@ function onPaymentRecieved(callback) {
   });
 }
 
+// socket.emit functions
+function emitGetStreamer(userName) {
+  socketDonator.emit("getStreamer", userName);
+}
+
+function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
+  socketDonator.emit("getSubaddress", {
+    displayName,
+    userName,
+    hashedSeed,
+    donor,
+    message,
+  });
+}
+
 export default {
+  emitGetStreamer,
   emitGetStreamerConfig,
   onRecieveStreamerConfig,
   emitUpdateStreamerConfig,
   emitStreamerInfo,
   emitPaymentRecieved,
-  emitReturnSubaddress,
+  emitSubaddressToBackend,
+  onRecieveStreamerFromBackend,
+  onSubaddressToDonator,
   onPaymentRecieved,
-  getSubaddress,
+  onCreateSubaddress,
+  emitGetSubaddress,
+  socketStreamer,
 };
