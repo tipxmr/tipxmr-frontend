@@ -64,21 +64,18 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             labelName="Show your goal in Animation?"
             defaultChecked={proxyState.animationSettings.showGoal}
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <CheckboxField
             name="gifs"
             labelName="Allow users to send gifs"
             defaultChecked={proxyState.animationSettings.gifs}
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <CheckboxField
             name="fontShadow"
             labelName="Turn on text shadow"
             defaultChecked={proxyState.animationSettings.fontShadow}
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <InputField
             name="sound"

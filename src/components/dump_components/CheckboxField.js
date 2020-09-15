@@ -1,12 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-function CheckboxField({
-  labelName,
-  name,
-  defaultChecked,
-  stateSetter,
-  baseState,
-}) {
+function CheckboxField({ labelName, name, defaultChecked, stateSetter }) {
   function handleChange(e) {
     // dont save events in a variable
     stateSetter(e.target.name, e.target.checked);
