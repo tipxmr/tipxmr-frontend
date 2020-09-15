@@ -4,11 +4,14 @@ import InputField from "../dump_components/InputField";
 import FileInput from "../dump_components/FileInput";
 import Button from "../dump_components/Button";
 import FloatInput from "../dump_components/FloatInput";
+import StatBox from "../dump_components/StatBox";
 
 function Settings({ streamerConfig, setStreamerConfig }) {
   // copy complete state so useEffect is not triggered
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
 
+  // currently not in use yet
+  // TODO really update the StreamerConfig
   function setStreamerSettings(key, value) {
     setProxyState((prevState) => ({
       ...prevState,
@@ -21,7 +24,21 @@ function Settings({ streamerConfig, setStreamerConfig }) {
         <div className="text-center text-xl underline mb-4">
           Account Summary
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+          <StatBox
+            boxTitle="Your display name"
+            boxStat={proxyState.displayName}
+          />
+          <StatBox
+            boxTitle="Premium account"
+            boxStat={proxyState.accountTier.premium}
+          />
+          <StatBox boxTitle="Member since" boxStat={proxyState.creationDate} />
+          <StatBox
+            boxTitle="Animation URL"
+            boxStat="https://tipxmr.live/username/animation"
+          />
+        </div>
         <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>

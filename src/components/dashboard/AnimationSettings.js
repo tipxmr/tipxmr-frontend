@@ -97,7 +97,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           />
         </div>
 
-        <Button buttonText="Save" buttonWidth="w-56" />
+        <Button buttonText="Save" />
       </div>
     </div>
   );
