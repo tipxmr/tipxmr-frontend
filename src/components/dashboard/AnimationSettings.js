@@ -4,6 +4,7 @@ import Animation from "../Animation";
 import Savebutton from "../dump_components/Savebutton";
 import InputField from "../dump_components/InputField";
 import CheckboxField from "../dump_components/CheckboxField";
+import Button from "../dump_components/Button";
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
@@ -90,7 +91,10 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           />
         </div>
 
-        <Savebutton />
+        {/* <Savebutton /> */}
+        <div className="w-full">
+          <Button buttonText="Save" color="bg-xmrorange" />
+        </div>
       </div>
     </div>
   );
