@@ -14,7 +14,6 @@ function InputField({
       ...baseState,
       [configKey]: value,
     });
-    console.log(baseState.configKey);
   }
 
   return (

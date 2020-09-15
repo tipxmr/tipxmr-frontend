@@ -8,6 +8,13 @@ import Button from "../dump_components/Button";
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
+  function setAnimationSettings(key, value) {
+    // always previous state
+    setProxyState((prevState) => ({
+      ...prevState,
+      animationSettings: { ...prevState.animationSettings, [key]: value },
+    }));
+  }
   // fontSize (Dropdown)
   // gifsMinAmount
   // charLimit
@@ -20,81 +27,79 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <InputField
-            configKey="secondPrice"
+            name="secondPrice"
             labelName="The price of 1 second (in XMR)"
             placeholderName={proxyState.animationSettings.secondPrice}
             fieldType="text"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
             className="col-span-1"
           />
           <InputField
-            configKey="fontColor"
+            name="fontColor"
             labelName="Hexcode for font color"
             placeholderName={proxyState.animationSettings.fontColor}
             fieldType="color"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <InputField
-            configKey="minAmount"
+            name="minAmount"
             labelName="Minimum amount of a donation (in XMR)"
             placeholderName={proxyState.animationSettings.minAmount}
             fieldType="text"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <InputField
-            configKey="goal"
+            name="goal"
             labelName="Set a donation goal for your stream (in XMR)"
             placeholderName={proxyState.animationSettings.goal}
             fieldType="text"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <CheckboxField
-            configKey="showGoal"
+            name="showGoal"
             labelName="Show your goal in Animation?"
             defaultChecked={proxyState.animationSettings.showGoal}
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <CheckboxField
-            configKey="gifs"
+            name="gifs"
             labelName="Allow users to send gifs"
             defaultChecked={proxyState.animationSettings.gifs}
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <CheckboxField
-            configKey="fontShadow"
+            name="fontShadow"
             labelName="Turn on text shadow"
             defaultChecked={proxyState.animationSettings.fontShadow}
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <InputField
-            configKey="sound"
+            name="sound"
             labelName="Upload a custom MP3 for donations"
             placeholderName={proxyState.animationSettings.sound}
             fieldType="file"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
           <InputField
-            configKey="bgImg"
+            name="bgImg"
             labelName="Upload custom background image for donations"
             placeholderName={proxyState.animationSettings.bgImg}
             fieldType="file"
-            stateSetter={setProxyState}
+            stateSetter={setAnimationSettings}
             baseState={proxyState}
           />
         </div>
 
         {/* <Savebutton /> */}
-        <div className="w-full">
-          <Button buttonText="Save" color="bg-xmrorange" />
-        </div>
+        <Button buttonText="Save" color="bg-xmrorange" />
       </div>
     </div>
   );
