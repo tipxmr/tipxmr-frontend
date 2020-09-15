@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Animation from "../Animation";
 import Savebutton from "../dump_components/Savebutton";
 import InputField from "../dump_components/InputField";
+import FileInput from "../dump_components/FileInput";
 import FloatInput from "../dump_components/FloatInput";
 import CheckboxField from "../dump_components/CheckboxField";
 import Button from "../dump_components/Button";
@@ -28,7 +29,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <InputField
+          <FloatInput
             name="secondPrice"
             labelName="The price of 1 second (in XMR)"
             placeholderName={proxyState.animationSettings.secondPrice}
@@ -41,13 +42,13 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             placeholderName={proxyState.animationSettings.fontColor}
             stateSetter={setAnimationSettings}
           />
-          <InputField
+          <FloatInput
             name="minAmount"
             labelName="Minimum amount of a donation (in XMR)"
             placeholderName={proxyState.animationSettings.minAmount}
             stateSetter={setAnimationSettings}
           />
-          <InputField
+          <FloatInput
             name="goal"
             labelName="Set a donation goal for your stream (in XMR)"
             placeholderName={proxyState.animationSettings.goal}
@@ -72,21 +73,17 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             stateSetter={setAnimationSettings}
           />
           {/* TODO Create a new Component for files */}
-          <InputField
+          <FileInput
             name="sound"
             labelName="Upload a custom MP3 for donations"
             placeholderName={proxyState.animationSettings.sound}
-            fieldType="file"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
-          <InputField
+          <FileInput
             name="bgImg"
             labelName="Upload custom background image for donations"
             placeholderName={proxyState.animationSettings.bgImg}
-            fieldType="file"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
         </div>
 
