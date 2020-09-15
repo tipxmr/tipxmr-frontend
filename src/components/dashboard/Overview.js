@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SyncButton from "./Syncbutton";
+import StatBox from "../dump_components/StatBox";
 
 function Overview() {
   const [isSynced, setIsSynced] = useState(false);
@@ -45,24 +46,10 @@ function Overview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
-          <div className="px-4 py-6">
-            <p>Your Balance</p>
-            <div className="text-4xl my-2">1337 XMR</div>
-          </div>
-        </div>
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
-          <div className="px-4 py-6">
-            <p>Total Donations</p>
-            <div className="text-4xl my-2">420</div>
-          </div>
-        </div>
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
-          <div className="px-4 py-6">
-            <p>Last Month</p>
-            <div className="text-4xl my-2">&#8773; 123 XMR</div>
-          </div>
-        </div>
+        {/* TODO Make the info in the boxes dynamic */}
+        <StatBox boxTitle="Your Balance" boxStat="1337 XMR" />
+        <StatBox boxTitle="Total Donations" boxStat="1337 XMR" />
+        <StatBox boxTitle="Last Month" boxStat="&#8773;1337 XMR" />
       </div>
       <div className="mt-12 mx-auto w-3/4">
         <h2 className="text-3xl text-center my-3">Most recent Donations</h2>

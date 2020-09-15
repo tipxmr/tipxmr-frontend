@@ -19,6 +19,10 @@ function Settings({ streamerConfig, setStreamerConfig }) {
     <div className="h-full text-xmrgray-darker">
       <div>
         <div className="text-center text-xl underline mb-4">
+          Account Summary
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+        <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
