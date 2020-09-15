@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Animation from "../Animation";
 import Savebutton from "../dump_components/Savebutton";
 import InputField from "../dump_components/InputField";
+import FloatInput from "../dump_components/FloatInput";
 import CheckboxField from "../dump_components/CheckboxField";
 import Button from "../dump_components/Button";
 
@@ -15,6 +16,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
       animationSettings: { ...prevState.animationSettings, [key]: value },
     }));
   }
+  console.log(proxyState);
   // fontSize (Dropdown)
   // gifsMinAmount
   // charLimit
@@ -30,34 +32,26 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             name="secondPrice"
             labelName="The price of 1 second (in XMR)"
             placeholderName={proxyState.animationSettings.secondPrice}
-            fieldType="text"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
-            className="col-span-1"
           />
+          {/* TODO Create a new component to pick the color */}
           <InputField
             name="fontColor"
             labelName="Hexcode for font color"
             placeholderName={proxyState.animationSettings.fontColor}
-            fieldType="color"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <InputField
             name="minAmount"
             labelName="Minimum amount of a donation (in XMR)"
             placeholderName={proxyState.animationSettings.minAmount}
-            fieldType="text"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <InputField
             name="goal"
             labelName="Set a donation goal for your stream (in XMR)"
             placeholderName={proxyState.animationSettings.goal}
-            fieldType="text"
             stateSetter={setAnimationSettings}
-            baseState={proxyState}
           />
           <CheckboxField
             name="showGoal"
@@ -77,6 +71,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             defaultChecked={proxyState.animationSettings.fontShadow}
             stateSetter={setAnimationSettings}
           />
+          {/* TODO Create a new Component for files */}
           <InputField
             name="sound"
             labelName="Upload a custom MP3 for donations"
@@ -95,7 +90,6 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           />
         </div>
 
-        {/* <Savebutton /> */}
         <Button buttonText="Save" color="bg-xmrorange" />
       </div>
     </div>
