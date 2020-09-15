@@ -8,7 +8,7 @@ function FileInput({ labelName, name, placeholderName, stateSetter }) {
 
   return (
     <div className="m-4 text-center flex flex-grow border-2 p-6 bg-xmrgray-darker text-white rounded">
-      <div className="mx-auto">
+      <div className="m-auto">
         <label className="m-3">
           {labelName}:<br />
           <input

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Animation from "../Animation";
-import Savebutton from "../dump_components/Savebutton";
 import InputField from "../dump_components/InputField";
 import FileInput from "../dump_components/FileInput";
 import FloatInput from "../dump_components/FloatInput";
@@ -56,7 +54,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           />
           <CheckboxField
             name="showGoal"
-            labelName="Show your goal in Animation?"
+            labelName="Display donation goal in stream"
             defaultChecked={proxyState.animationSettings.showGoal}
             stateSetter={setAnimationSettings}
           />
