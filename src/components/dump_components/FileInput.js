@@ -1,6 +1,7 @@
 import React from "react";
 
-function InputField({ labelName, name, placeholderName, stateSetter }) {
+// TODO Make sure that the file is actually saved (attached to the PouchDB)
+function FileInput({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
     stateSetter(e.target.name, e.target.value);
   }
@@ -13,9 +14,9 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
           <input
             name={name}
             placeholder={placeholderName}
-            type="text"
+            type="file"
             onChange={handleChange}
-            className="w-full min-w-400 border-2 p-1 text-center text-xmrorange border-xmrgray-lighter placeholder-xmrgray-lighter"
+            className="w-full min-w-400 border-2 p-1 text-sm text-center text-xmrorange border-xmrgray-lighter placeholder-xmrgray-lighter"
           ></input>
         </label>
       </div>
@@ -23,4 +24,4 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
   );
 }
 
-export default InputField;
+export default FileInput;

@@ -36,7 +36,7 @@ function App() {
     userName: "alexanarcho", // lowercase displayName
     isOnline: false, // show if streamer is currently able to recieve payments
     streamerSocketId: "",
-    creationDate: "", // track since when the user is registered
+    creationDate: "20.4.2020", // track since when the user is registered
     restoreHeight: 661800,
     profilePicture: "", // allow the user to upload a user avatar
     accountTier: {

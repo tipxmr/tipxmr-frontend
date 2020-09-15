@@ -1,8 +1,8 @@
 import React from "react";
 
-function InputField({ labelName, name, placeholderName, stateSetter }) {
+function FloatInput({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
-    stateSetter(e.target.name, e.target.value);
+    stateSetter(e.target.name, parseFloat(e.target.value));
   }
 
   return (
@@ -23,4 +23,4 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
   );
 }
 
-export default InputField;
+export default FloatInput;

@@ -1,8 +1,9 @@
 import React from "react";
 
-function InputField({ labelName, name, placeholderName, stateSetter }) {
+function CheckboxField({ labelName, name, defaultChecked, stateSetter }) {
   function handleChange(e) {
-    stateSetter(e.target.name, e.target.value);
+    // dont save events in a variable
+    stateSetter(e.target.name, e.target.checked);
   }
 
   return (
@@ -12,10 +13,10 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
           {labelName}:<br />
           <input
             name={name}
-            placeholder={placeholderName}
-            type="text"
+            type="checkbox"
+            defaultChecked={defaultChecked}
             onChange={handleChange}
-            className="w-full min-w-400 border-2 p-1 text-center text-xmrorange border-xmrgray-lighter placeholder-xmrgray-lighter"
+            className="mx-auto border-2 mt-3 w-8 h-8 rounded"
           ></input>
         </label>
       </div>
@@ -23,4 +24,4 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
   );
 }
 
-export default InputField;
+export default CheckboxField;
