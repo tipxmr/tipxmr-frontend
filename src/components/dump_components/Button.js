@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
+// TODO specifiying button width does not have any effect right now
 function Button({
   buttonText,
   bgColor = "bg-xmrorange",
@@ -16,4 +18,5 @@ function Button({
   return <button className={styles}>{buttonText}</button>;
 }
 
+// Button.propTypes =
 export default Button;

@@ -15,7 +15,6 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
       animationSettings: { ...prevState.animationSettings, [key]: value },
     }));
   }
-  console.log(proxyState);
   // fontSize (Dropdown)
   // gifsMinAmount
   // charLimit
@@ -33,6 +32,13 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             placeholderName={proxyState.animationSettings.secondPrice}
             stateSetter={setAnimationSettings}
           />
+          <FloatInput
+            name="charLimit"
+            labelName="Maximum characters allowed for messages"
+            placeholderName={proxyState.animationSettings.charLimit}
+            stateSetter={setAnimationSettings}
+          />
+
           {/* TODO Create a new component to pick the color */}
           <InputField
             name="fontColor"
@@ -64,6 +70,12 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             defaultChecked={proxyState.animationSettings.gifs}
             stateSetter={setAnimationSettings}
           />
+          <FloatInput
+            name="gifsMinAmount"
+            labelName="Minimum amount to send gifs"
+            placeholderName={proxyState.animationSettings.gifsMinAmount}
+            stateSettter={setAnimationSettings}
+          />
           <CheckboxField
             name="fontShadow"
             labelName="Turn on text shadow"
@@ -85,7 +97,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           />
         </div>
 
-        <Button buttonText="Save" color="bg-xmrorange" />
+        <Button buttonText="Save" buttonWidth="w-56" />
       </div>
     </div>
   );

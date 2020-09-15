@@ -17,38 +17,40 @@ function Settings({ streamerConfig, setStreamerConfig }) {
   }
   return (
     <div className="h-full text-xmrgray-darker">
-      <div className="m-3 w-3/4 mx-auto bg-gray-200">Testing</div>
       <div>
         <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>
-        <InputField
-          name="displayName"
-          labelName="Change your display name"
-          placeholderName={proxyState.displayName}
-          stateSetter={setProxyState}
-        />
-        <InputField
-          /* TODO Fix this, nested object in streamerConfig */
-          name="streamURL"
-          labelName="Set URL to your stream"
-          placeholderName={proxyState.streamURLS}
-          stateSetter={setProxyState}
-        />
-        <FloatInput
-          name="restoreHeight"
-          labelName="Restore Height for Wallet"
-          placeholderName={proxyState.restoreHeight}
-          stateSetter={setProxyState}
-        />
-        <FileInput
-          name="profilePicture"
-          labelName="Change your profile picture"
-          placeholderName={proxyState.profilePicture}
-          stateSetter={setProxyState}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <InputField
+            name="displayName"
+            labelName="Change your display name"
+            placeholderName={proxyState.displayName}
+            stateSetter={setProxyState}
+          />
+          <InputField
+            /* TODO Fix this, nested object in streamerConfig */
+            name="streamURL"
+            labelName="Set URL to your stream"
+            placeholderName={proxyState.streamURLS}
+            stateSetter={setProxyState}
+          />
+          <FloatInput
+            name="restoreHeight"
+            labelName="Restore Height for Wallet"
+            placeholderName={proxyState.restoreHeight}
+            stateSetter={setProxyState}
+          />
+          <FileInput
+            name="profilePicture"
+            labelName="Change your profile picture"
+            placeholderName={proxyState.profilePicture}
+            stateSetter={setProxyState}
+          />
+        </div>
+
+        <Button buttonText="Save Settings" />
       </div>
-      <Button />
     </div>
   );
 }
