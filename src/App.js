@@ -21,6 +21,7 @@ function App() {
     flex: "1 0 100%",
   };
 
+  let walletUseEffectDidFire = false;
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
   const [currentBlockheight, setCurrentBlockheight] = useState(null);
@@ -148,7 +149,7 @@ function App() {
 
   // as soon as wallet is loaded
   useEffect(() => {
-    if (wallet !== null) {
+    if (wallet !== null && walletUseEffectDidFire === false) {
       // after login send streamer info
       socketio.emitStreamerInfo(streamerConfig);
       // listen for new request of subaddress generation
@@ -160,8 +161,9 @@ function App() {
           console.log("created Subaddress for:", newDonorInfo);
         });
       });
+      walletUseEffectDidFire = true;
     }
-  }, [wallet]);
+  }, [wallet, walletUseEffectDidFire]);
 
   // handleChange for userConfig
   useEffect(() => {
