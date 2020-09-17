@@ -14,6 +14,7 @@ import {
   Dashboard,
   Disclaimer,
   FAQ,
+  StreamerPage,
 } from "./components";
 
 function App() {
@@ -196,6 +197,11 @@ function App() {
             <Route path="/createwallet" exact>
               <CreateWallet />
             </Route>
+            {/* For testing purposes have a page for all online streamers */}
+            <Route path="/streamerpage" exact>
+              <StreamerPage />
+            </Route>
+
             <Route path="/openwallet" exact>
               <OpenWallet
                 streamerConfig={streamerConfig}
