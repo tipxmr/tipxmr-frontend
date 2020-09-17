@@ -30,6 +30,7 @@ function Donate() {
   }, []);
 
   function paymentConfirmation(confirmation) {
+    console.log("confirmation", confirmation);
     setAmount(confirmation.amount);
     setShowPayment(false);
     setShowSuccess(true);

@@ -38,7 +38,7 @@ function App() {
     isOnline: false, // show if streamer is currently able to recieve payments
     streamerSocketId: "",
     creationDate: "20.4.2020", // track since when the user is registered
-    restoreHeight: 664800,
+    restoreHeight: 667580,
     profilePicture: "", // allow the user to upload a user avatar
     accountTier: {
       basic: true, // only basic functions available for customizations
@@ -147,20 +147,22 @@ function App() {
       });
   }
 
+  function handleOnNewSubaddress(data) {
+    monerojs.createSubaddress(wallet).then((subaddress) => {
+      const newDonorInfo = { ...data, subaddress: subaddress };
+      setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
+      socketio.emitSubaddressToBackend(newDonorInfo);
+      console.log("created Subaddress for:", newDonorInfo);
+    });
+  }
+
   // as soon as wallet is loaded
   useEffect(() => {
     if (wallet !== null && walletUseEffectDidFire === false) {
       // after login send streamer info
       socketio.emitStreamerInfo(streamerConfig);
       // listen for new request of subaddress generation
-      socketio.onCreateSubaddress((data) => {
-        monerojs.createSubaddress(wallet).then((subaddress) => {
-          const newDonorInfo = { ...data, subaddress: subaddress };
-          setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-          socketio.emitSubaddressToBackend(newDonorInfo);
-          console.log("created Subaddress for:", newDonorInfo);
-        });
-      });
+      socketio.onCreateSubaddress(handleOnNewSubaddress);
       walletUseEffectDidFire = true;
     }
   }, [wallet, walletUseEffectDidFire]);
