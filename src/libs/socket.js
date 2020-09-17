@@ -62,15 +62,22 @@ function onSubaddressToDonator(callback) {
   socketDonator.on("subaddressToDonator", (data) => callback(data.subaddress));
 }
 
-function onPaymentRecieved(callback) {
-  /*newDonation = {
+/* function onPaymentRecieved(callback) {
+  newDonation = {
             subaddress: subaddress,
             amount: output.amount,
             donor: donationsInfo.donor,
             message: donationsInfo.message,
-          }; */
+          }; 
   socketDonator.on("paymentRecieved", (newDonation) => {
     callback(newDonation);
+  });
+} */
+
+// donator recieves payment confirmation
+function onPaymentConfirmation(callback) {
+  socketDonator.on("paymentConfirmation", (confirmation) => {
+    callback(confirmation);
   });
 }
 
@@ -99,7 +106,8 @@ export default {
   emitSubaddressToBackend,
   onRecieveStreamerFromBackend,
   onSubaddressToDonator,
-  onPaymentRecieved,
+  //onPaymentRecieved,
+  onPaymentConfirmation,
   onCreateSubaddress,
   emitGetSubaddress,
   socketStreamer,

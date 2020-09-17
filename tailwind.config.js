@@ -11,9 +11,11 @@ module.exports = {
     extend: {
       colors: {
         xmrorange: {
+          lightest: "#FF8000",
           lighter: "#FF7733",
           default: "#F16822",
           darker: "#EB601A",
+          darkest: "#B13A00",
         },
         xmrgray: {
           lighter: "#696969",
