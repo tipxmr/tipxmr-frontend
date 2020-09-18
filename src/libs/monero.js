@@ -9,8 +9,8 @@ export async function createWallet(lang = "English") {
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    serverUri: "http://192.168.0.119:38081",
-    //serverUri: "http://localhost:38081",
+    // serverUri: "http://192.168.0.119:38081",
+    serverUri: "http://localhost:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
@@ -23,10 +23,8 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
-    //serverUri: "http://192.168.0.2:38081",
-    serverUri: "http://192.168.0.119:38081",
-    //serverUri: "http://localhost:38081",
-    //serverUri: "http://stagenet.community.xmr.to:38081",
+    // serverUri: "http://192.168.0.119:38081",
+    serverUri: "http://localhost:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
@@ -56,23 +54,39 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
-export async function startSyncing(wallet, moneroWalletListener, syncHeight) {
+export async function startSyncing(wallet, listeners, syncHeight) {
   await wallet.setSyncHeight(syncHeight); // start sync at block x
-  await wallet.addListener(moneroWalletListener);
+
+  listeners.forEach((listener) => {
+    wallet.addListener(listener);
+  });
+
+  // await wallet.addListener(moneroWalletListener);
   await wallet.startSyncing();
 }
 
 export async function stopSyncing(wallet) {
   await wallet.stopSyncing();
-  await wallet.removeListener(wallet.getListeners()[0]);
+
+  wallet.getListeners().forEach((listener) => {
+    wallet.removeListener(listener);
+  });
+
+  // await wallet.removeListener(wallet.getListeners()[0]);
 }
 
 class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(setPercentageSynced, setCurrentBlockheight, getNewOutput) {
+  constructor(
+    setPercentageSynced,
+    setCurrentBlockheight,
+    getNewOutput,
+    getCurrentDonorInfo
+  ) {
     super();
     this.setPercentageSynced = setPercentageSynced;
     this.getNewOutput = getNewOutput;
     this.setCurrentBlockheight = setCurrentBlockheight;
+    this.getCurrentDonorInfo = getCurrentDonorInfo;
   }
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
     console.log("Syncing Block " + height + " of " + endHeight);
@@ -100,6 +114,26 @@ class MyWalletListener extends monerojs.MoneroWalletListener {
   }
 }
 
+class IncomingLockedTxListener extends monerojs.MoneroWalletListener {
+  constructor(handleTx) {
+    super();
+    this.handleTx = handleTx;
+  }
+
+  onOutputReceived(output) {
+    if (
+      output.state.tx.state.inTxPool &&
+      output.state.tx.state.isLocked &&
+      output.state.tx.state.isIncoming
+    ) {
+      this.handleTx({
+        subaddressIndex: output.getSubaddressIndex(),
+        amount: output.getAmount(),
+      });
+    }
+  }
+}
+
 export async function generateQrCode(subaddress) {
   return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
 }
@@ -116,4 +150,5 @@ export default {
   stopSyncing,
   MyWalletListener,
   generateQrCode,
+  IncomingLockedTxListener,
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import SyncButton from "./Syncbutton";
-import StatBox from "../dump_components/StatBox";
+
+import SyncButton from "../../components/Syncbutton";
+import StatBox from "../../components/dump_components/StatBox";
 
 function Overview() {
   const [isSynced, setIsSynced] = useState(false);

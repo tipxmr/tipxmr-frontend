@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
-import Progressbar from "./Progressbar";
-import SyncButton from "./dashboard/Syncbutton";
+
+import monerojs from "../../libs/monero";
+
+import Progressbar from "../../components/Progressbar";
+import SyncButton from "../../components/Syncbutton";
 
 function Wallet({ walletFunctions, walletVariables }) {
   const [isSynced, setIsSynced] = useState(false);
-  let syncedbutton;
-  if (isSynced) {
-    syncedbutton = <SyncButton synced={true} />;
-  } else {
-    syncedbutton = <SyncButton synced={false} />;
-  }
 
   function syncHandler(e) {
     if (walletVariables.isSyncActive) {
@@ -38,7 +34,7 @@ function Wallet({ walletFunctions, walletVariables }) {
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-        {syncedbutton}
+        <SyncButton synced={isSynced} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

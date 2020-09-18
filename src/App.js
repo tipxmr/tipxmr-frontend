@@ -28,6 +28,8 @@ function App() {
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
 
+  const [tx, setTx] = useState(null);
+
   const [streamerConfig, setStreamerConfig] = useState({
     hashedSeed: "", // acts as password for login
     displayName: "AlexAnarcho", // name to show to donator
@@ -134,10 +136,16 @@ function App() {
     getNewOutput
   );
 
+  const incomingTxListener = new monerojs.IncomingLockedTxListener(setTx);
+
   async function syncWallet() {
     setIsSyncActive(true);
     monerojs
-      .startSyncing(wallet, mwl, streamerConfig.restoreHeight)
+      .startSyncing(
+        wallet,
+        [mwl, incomingTxListener],
+        streamerConfig.restoreHeight
+      )
       .catch((err) => {
         console.error(err);
         setIsSyncActive(false);

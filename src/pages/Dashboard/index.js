@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import monerologo from "../../images/monero-symbol.png";
-import Overview from "./Overview";
+import React from "react";
 import PropTypes from "prop-types";
-import Wallet from "../Wallet";
+import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
+
+import monerologo from "../../images/monero-symbol.png";
+
+import Overview from "./Overview";
+import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
-
-import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
 
 function Dashboard({
   walletFunctions,

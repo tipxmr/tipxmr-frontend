@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputField from "../dump_components/InputField";
-import FileInput from "../dump_components/FileInput";
-import FloatInput from "../dump_components/FloatInput";
-import CheckboxField from "../dump_components/CheckboxField";
-import Button from "../dump_components/Button";
+
+import InputField from "../../components/dump_components/InputField";
+import FileInput from "../../components/dump_components/FileInput";
+import FloatInput from "../../components/dump_components/FloatInput";
+import CheckboxField from "../../components/dump_components/CheckboxField";
+import Button from "../../components/dump_components/Button";
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
