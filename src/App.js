@@ -8,6 +8,7 @@ import {
   Footer,
   Start,
   Donate,
+  Login,
   CreateWallet,
   OpenWallet,
   Animation,
@@ -17,10 +18,6 @@ import {
 } from "./components";
 
 function App() {
-  const flexfull = {
-    flex: "1 0 100%",
-  };
-
   let walletUseEffectDidFire = false;
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
@@ -188,12 +185,15 @@ function App() {
       <Router>
         <Header />
         <div className="flex-auto flex flex-col">
-          <div className="flex" style={flexfull}>
+          <div className="flex flex-full">
             <Route path="/" exact>
               <Start />
             </Route>
             <Route path="/donate/:userName">
               <Donate />
+            </Route>
+            <Route>
+              <Login />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />

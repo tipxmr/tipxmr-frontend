@@ -4,6 +4,7 @@ export { default as Start } from "./Start";
 export { default as Payment } from "./Payment";
 export { default as Donate } from "./Donate";
 export { default as Success } from "./Success";
+export { default as Login } from "./Login";
 export { default as CreateWallet } from "./CreateWallet";
 export { default as OpenWallet } from "./OpenWallet";
 export { default as Wallet } from "./Wallet";
