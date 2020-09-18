@@ -3,18 +3,19 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket";
 
+import { Header, Footer } from "./components";
+
 import {
-  Header,
-  Footer,
-  Start,
-  Donate,
   CreateWallet,
   OpenWallet,
   Animation,
   Dashboard,
+  Login,
+  Donate,
+  Start,
   Disclaimer,
   FAQ,
-} from "./components";
+} from "./pages";
 
 function App() {
   const flexfull = {
