@@ -13,6 +13,28 @@ function Wallet({ walletFunctions, walletVariables }) {
     syncedbutton = <SyncButton synced={false} />;
   }
 
+  function syncHandler(e) {
+    if (walletVariables.isSyncActive) {
+      monerojs.stopSyncing(walletVariables.wallet);
+      walletFunctions.setIsSyncActive(false);
+      setIsSynced(false);
+    } else {
+      walletFunctions.syncWallet();
+      checkIsSynced();
+    }
+  }
+
+  function checkIsSynced() {
+    if (walletVariables.percentageSynced > 99.9) {
+      setIsSynced(true);
+    } else {
+      setIsSynced(false);
+    }
+  }
+  useEffect(() => {
+    checkIsSynced();
+  }, [walletVariables.percentageSynced]);
+
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
@@ -39,6 +61,7 @@ function Wallet({ walletFunctions, walletVariables }) {
               <Progressbar
                 percentage={walletVariables.percentageSynced}
                 isSyncActive={walletVariables.isSyncActive}
+                isSynced={isSynced}
               />
             </div>
           </div>
@@ -46,14 +69,7 @@ function Wallet({ walletFunctions, walletVariables }) {
       </div>
       <div className="mt-12 mx-auto w-3/4">
         <button
-          onClick={() => {
-            if (walletVariables.isSyncActive) {
-              monerojs.stopSyncing(walletVariables.wallet);
-              walletFunctions.setIsSyncActive(false);
-            } else {
-              walletFunctions.syncWallet();
-            }
-          }}
+          onClick={syncHandler}
           className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded"
         >
           {walletVariables.isSyncActive ? "Stop Sync" : "Start Sync"}

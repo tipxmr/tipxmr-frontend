@@ -18,14 +18,10 @@ import {
 } from "./pages";
 
 function App() {
-  const flexfull = {
-    flex: "1 0 100%",
-  };
-
   let walletUseEffectDidFire = false;
   const [wallet, setWallet] = useState(null);
   const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [currentBlockheight, setCurrentBlockheight] = useState(null);
+  const [currentSyncBlockheight, setCurrentSyncBlockheight] = useState(null);
   const [percentageSynced, setPercentageSynced] = useState(0);
   const [isSyncActive, setIsSyncActive] = useState(false);
   const [donorInfo, setDonorInfo] = useState([]);
@@ -39,7 +35,7 @@ function App() {
     isOnline: false, // show if streamer is currently able to recieve payments
     streamerSocketId: "",
     creationDate: "20.4.2020", // track since when the user is registered
-    restoreHeight: 661800,
+    restoreHeight: 667580,
     profilePicture: "", // allow the user to upload a user avatar
     accountTier: {
       basic: true, // only basic functions available for customizations
@@ -134,7 +130,7 @@ function App() {
 
   const mwl = new monerojs.MyWalletListener(
     setPercentageSynced,
-    setCurrentBlockheight,
+    setCurrentSyncBlockheight,
     getNewOutput
   );
 
@@ -148,20 +144,22 @@ function App() {
       });
   }
 
+  function handleOnNewSubaddress(data) {
+    monerojs.createSubaddress(wallet).then((subaddress) => {
+      const newDonorInfo = { ...data, subaddress: subaddress };
+      setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
+      socketio.emitSubaddressToBackend(newDonorInfo);
+      console.log("created Subaddress for:", newDonorInfo);
+    });
+  }
+
   // as soon as wallet is loaded
   useEffect(() => {
     if (wallet !== null && walletUseEffectDidFire === false) {
       // after login send streamer info
       socketio.emitStreamerInfo(streamerConfig);
       // listen for new request of subaddress generation
-      socketio.onCreateSubaddress((data) => {
-        monerojs.createSubaddress(wallet).then((subaddress) => {
-          const newDonorInfo = { ...data, subaddress: subaddress };
-          setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-          socketio.emitSubaddressToBackend(newDonorInfo);
-          console.log("created Subaddress for:", newDonorInfo);
-        });
-      });
+      socketio.onCreateSubaddress(handleOnNewSubaddress);
       walletUseEffectDidFire = true;
     }
   }, [wallet, walletUseEffectDidFire]);
@@ -178,21 +176,24 @@ function App() {
   // New Block is added to the chain
   useEffect(() => {
     console.log(
-      "New Block (" + currentBlockheight + ") added to the blockchain."
+      "New Block (" + currentSyncBlockheight + ") added to the blockchain."
     );
-  }, [currentBlockheight]);
+  }, [currentSyncBlockheight]);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
         <Header />
         <div className="flex-auto flex flex-col">
-          <div className="flex" style={flexfull}>
+          <div className="flex flex-full">
             <Route path="/" exact>
               <Start />
             </Route>
             <Route path="/donate/:userName">
               <Donate />
+            </Route>
+            <Route>
+              <Login />
             </Route>
             <Route path="/createwallet" exact>
               <CreateWallet />
