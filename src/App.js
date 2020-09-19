@@ -3,6 +3,8 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket";
 
+import * as WalletContext from "./context/wallet";
+
 import {
   Header,
   Footer,
@@ -27,6 +29,9 @@ function App() {
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
+
+  const [customWallet, dispatch] = WalletContext.useWallet();
+  console.log("customWallet", customWallet);
 
   const [streamerConfig, setStreamerConfig] = useState({
     hashedSeed: "", // acts as password for login
@@ -82,6 +87,20 @@ function App() {
       ],
     },
   });
+
+  // FIXME: move wallet handling into context completely
+  useEffect(() => {
+    dispatch({ type: "SET_WALLET", wallet });
+  }, [wallet]);
+
+  useEffect(() => {
+    if (streamerConfig && streamerConfig.restoreHeight) {
+      dispatch({
+        type: "SET_RESTORE_HEIGHT",
+        restoreHeight: streamerConfig.restoreHeight,
+      });
+    }
+  }, [streamerConfig.restoreHeight]);
 
   /* Example for donorInfo object: {
     donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
@@ -180,6 +199,26 @@ function App() {
     );
   }, [currentSyncBlockheight]);
 
+  function getWalletFunctions() {
+    return {
+      setStreamerConfig,
+      setIsSyncActive,
+      syncWallet,
+      setWallet,
+      setPrimaryAddress,
+    };
+  }
+
+  function getWalletVariables() {
+    return {
+      isSyncActive,
+      streamerConfig,
+      wallet,
+      primaryAddress,
+      percentageSynced,
+    };
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
@@ -202,11 +241,8 @@ function App() {
               <OpenWallet
                 streamerConfig={streamerConfig}
                 setStreamerConfig={setStreamerConfig}
-                walletFunctions={{
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{ streamerConfig, wallet, primaryAddress }}
+                walletFunctions={getWalletFunctions()}
+                walletVariables={getWalletVariables()}
               />
             </Route>
             <Route path="/animation" exact>
@@ -214,20 +250,8 @@ function App() {
             </Route>
             <Route path="/dashboard">
               <Dashboard
-                walletFunctions={{
-                  setStreamerConfig,
-                  setIsSyncActive,
-                  syncWallet,
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{
-                  isSyncActive,
-                  streamerConfig,
-                  wallet,
-                  primaryAddress,
-                  percentageSynced,
-                }}
+                walletFunctions={getWalletFunctions()}
+                walletVariables={getWalletVariables()}
                 streamerConfig={streamerConfig}
                 setStreamerConfig={setStreamerConfig}
               />

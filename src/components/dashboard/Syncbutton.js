@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
 function Syncbutton({ synced }) {
-  if (synced) {
-    return (
-      <div className="rounded p-3 bg-green-500 w-full">You are up to date</div>
-    );
-  }
   return (
-    <div className="rounded p-3 bg-red-500 w-full">
-      Your wallet still needs to catch up
+    <div
+      className={clsx("rounded", "p-3", "w-full", {
+        "bg-green-500": synced,
+        "bg-red-500": !synced,
+      })}
+    >
+      {synced ? "You are up to date" : "Your wallet still needs to catch up"}
     </div>
   );
 }

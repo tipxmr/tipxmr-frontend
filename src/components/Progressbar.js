@@ -1,36 +1,66 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Progressbar({ percentage, isSyncActive, isSynced }) {
+function Status({ isActive, isDone }) {
+  let status = "";
+
+  if (isActive) {
+    if (isDone) {
+      status = "sync completed";
+    } else {
+      status = "syncing";
+    }
+  } else {
+    status = "sync stopped";
+  }
+
+  return (
+    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-xmrorange-darkest bg-xmrorange-lightest">
+      {status}
+    </span>
+  );
+}
+
+function Percentage({ value }) {
+  return (
+    <span className="text-xs font-semibold inline-block text-xmrorange-darker">
+      {value}%
+    </span>
+  );
+}
+
+function Progress({ value }) {
+  const barStyles = { width: value + "%" };
+
+  return (
+    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-xmrorange-lightest">
+      <div
+        style={barStyles}
+        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-xmrorange-darkest"
+      ></div>
+    </div>
+  );
+}
+
+function ProgressIndicator({ percentage, isSyncActive, isSynced }) {
   return (
     <div className="relative pt-1">
       <div className="flex mb-2 items-center justify-between">
         <div>
-          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-xmrorange-darkest bg-xmrorange-lightest">
-            {isSyncActive && isSynced ? "sync completed" : null}
-            {isSyncActive && !isSynced ? "syncing" : null}
-            {!isSyncActive ? "sync stopped" : null}
-          </span>
+          <Status isActive={isSyncActive} isDone={isSynced} />
         </div>
         <div className="text-right">
-          <span className="text-xs font-semibold inline-block text-xmrorange-darker">
-            {percentage}%
-          </span>
+          <Percentage value={percentage} />
         </div>
       </div>
-      <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-xmrorange-lightest">
-        <div
-          style={{ width: percentage + "%" }}
-          className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-xmrorange-darkest"
-        ></div>
-      </div>
+      <Progress value={percentage} />
     </div>
   );
 }
-Progressbar.propTypes = {
+ProgressIndicator.propTypes = {
   percentage: PropTypes.number,
   isSyncActive: PropTypes.bool,
   isSynced: PropTypes.bool,
 };
 
-export default Progressbar;
+export default ProgressIndicator;

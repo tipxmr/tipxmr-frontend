@@ -1,44 +1,30 @@
-import React, { useEffect, useState } from "react";
-import monerojs from "../libs/monero";
-import PropTypes from "prop-types";
+import React from "react";
 import Progressbar from "./Progressbar";
 import SyncButton from "./dashboard/Syncbutton";
 
-function Wallet({ walletFunctions, walletVariables }) {
-  const [isSynced, setIsSynced] = useState(false);
-  let syncedbutton;
-  if (isSynced) {
-    syncedbutton = <SyncButton synced={true} />;
-  } else {
-    syncedbutton = <SyncButton synced={false} />;
-  }
+import { useWalletSynchronisation } from "../context/wallet";
 
-  function syncHandler(e) {
-    if (walletVariables.isSyncActive) {
-      monerojs.stopSyncing(walletVariables.wallet);
-      walletFunctions.setIsSyncActive(false);
-      setIsSynced(false);
+function Wallet() {
+  const {
+    isActive,
+    isDone,
+    progress,
+    start,
+    stop,
+  } = useWalletSynchronisation();
+
+  function onClick() {
+    if (isActive) {
+      stop();
     } else {
-      walletFunctions.syncWallet();
-      checkIsSynced();
+      start();
     }
   }
-
-  function checkIsSynced() {
-    if (walletVariables.percentageSynced > 99.9) {
-      setIsSynced(true);
-    } else {
-      setIsSynced(false);
-    }
-  }
-  useEffect(() => {
-    checkIsSynced();
-  }, [walletVariables.percentageSynced]);
 
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-        {syncedbutton}
+        <SyncButton synced={isDone} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -59,9 +45,9 @@ function Wallet({ walletFunctions, walletVariables }) {
             <p>Sync Status</p>
             <div className="text-4xl my-2">
               <Progressbar
-                percentage={walletVariables.percentageSynced}
-                isSyncActive={walletVariables.isSyncActive}
-                isSynced={isSynced}
+                percentage={progress}
+                isSyncActive={isActive}
+                isSynced={isDone}
               />
             </div>
           </div>
@@ -69,10 +55,10 @@ function Wallet({ walletFunctions, walletVariables }) {
       </div>
       <div className="mt-12 mx-auto w-3/4">
         <button
-          onClick={syncHandler}
+          onClick={onClick}
           className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded"
         >
-          {walletVariables.isSyncActive ? "Stop Sync" : "Start Sync"}
+          {isActive ? "Stop Sync" : "Start Sync"}
         </button>
         <h2 className="text-3xl text-center my-3">Transaction History</h2>
         {/* Dynamische Tabelle nach dieser Anleitung */}
@@ -92,10 +78,6 @@ function Wallet({ walletFunctions, walletVariables }) {
   );
 }
 
-// Defining property types
-Wallet.propTypes = {
-  walletFunctions: PropTypes.object,
-  walletVariables: PropTypes.object,
-};
+Wallet.propTypes = {};
 
 export default Wallet;
