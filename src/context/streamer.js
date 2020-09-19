@@ -1,10 +1,59 @@
-import React, { createContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+
+// use to log previous and next value
+// function useStateWithCallback(initialState, callback) {
+//   const [state, setState] = useState(initialState);
+
+//   useEffect(() => callback(state), [state, callback]);
+
+//   return [state, setState];
+// }
+
+function usePrevious(value) {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return ref.current;
+}
+
+const isProduction = () => process.env.NODE_ENV === "production";
+const isDevelopment = () => process.env.NODE_ENV === "development";
+
+function useStateWithPrevious(initialState) {
+  const [state, setState] = useState({ value: initialState, label: "" });
+  // const [state, setState] = useState(initialState);
+  // const previous = usePrevious(state.value);
+
+  function setStateWithLabel(newValue, label) {
+    setState((oldState) => ({
+      value: newValue(oldState.value),
+      label,
+    }));
+  }
+
+  if (isDevelopment()) {
+    // console.log(state.label, previous, state.value);
+  }
+
+  return [state.value, setStateWithLabel];
+}
 
 const StreamerStateContext = createContext();
 const StreamerUpdateContext = createContext();
 
 function StreamerProvider({ children }) {
-  const [state, setState] = useState();
+  const [state, setState] = useStateWithPrevious({ count: 1 });
 
   return (
     <StreamerStateContext.Provider value={state}>
@@ -43,6 +92,14 @@ function useStreamer() {
   return [useStreamerState(), useStreamerUpdate()];
 }
 
+// function increment(update) {
+//   update(({ count }) => ({ count: count + 1 }), "increment");
+// }
+
+// function decrement(update) {
+//   update(({ count }) => ({ count: count - 1 }), "decrement");
+// }
+
 function updateRestoreHeight(update, restoreHeight) {
   update((streamer) => ({
     ...streamer,
@@ -67,7 +124,14 @@ function updateAnimationSettings(update, animationSettings) {
   }));
 }
 
-export { StreamerProvider, useStreamerState, useStreamerUpdate, useStreamer };
+export {
+  StreamerProvider,
+  useStreamerState,
+  useStreamerUpdate,
+  useStreamer,
+  // increment,
+  // decrement,
+};
 
 // restoreHeight
 // hashedSeed
