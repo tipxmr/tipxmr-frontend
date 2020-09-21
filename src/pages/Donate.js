@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import EnterMessage from "./EnterMessage";
-import Payment from "./Payment";
-import Success from "./Success";
-import socketio from "../libs/socket";
 import { useParams } from "react-router-dom";
+
+import EnterMessage from "../components/EnterMessage";
+import Payment from "../components/Payment";
+import Success from "../components/Success";
+import socketio from "../libs/socket";
 
 function Donate() {
   let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [amount, setAmount] = useState(null);
 
   const [streamer, setStreamer] = useState({
     displayName: "loading",
@@ -25,7 +27,15 @@ function Donate() {
     // Get Streamer Info from Backend
     socketio.emitGetStreamer(userName);
     socketio.onRecieveStreamerFromBackend(setStreamer);
+    socketio.onPaymentConfirmation(paymentConfirmation);
   }, []);
+
+  function paymentConfirmation(confirmation) {
+    console.log("confirmation", confirmation);
+    setAmount(confirmation.amount);
+    setShowPayment(false);
+    setShowSuccess(true);
+  }
 
   function getSubaddress() {
     socketio.emitGetSubaddress(
@@ -35,7 +45,6 @@ function Donate() {
       donor,
       message
     );
-
     socketio.onSubaddressToDonator(setSubaddress);
   }
 
@@ -61,7 +70,14 @@ function Donate() {
             getSubaddress={getSubaddress}
           />
         ) : null}
-        {showSuccess ? <Success /> : null}
+        {showSuccess ? (
+          <Success
+            displayName={streamer.displayName}
+            donor={donor}
+            message={message}
+            amount={amount}
+          />
+        ) : null}
       </div>
     </div>
   );

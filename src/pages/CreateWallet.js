@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
-import Loading from "./Loading";
+
+import Loading from "../components/Loading";
+import monerojs from "../libs/monero";
 
 const defaultStateSeed = "";
 const languages = [
