@@ -44,13 +44,12 @@ function App() {
       advanced: true, // more customisations
       premium: true, // all customisations available
     },
-    streamURLS: {
-      // stream urls to display on the streamers donation site
-      // only 4 examples, more options can be added later on
-      twitch: "mydirtyhobby.com",
-      youtube: "",
-      chaturbate: "",
-      dLive: "",
+    stream: {
+      url: "mydirtyhobby.com",
+      platform: "twitch",
+      language: "🇩🇪",
+      description: "I am a great streamer.",
+      category: "politics",
     },
     animationSettings: {
       secondPrice: 0.00043, // XMR price of a second of display time
@@ -85,6 +84,8 @@ function App() {
     },
   });
 
+  // For testing the streamerPage
+  const testArray = [streamerConfig];
   /* Example for donorInfo object: {
     donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
     donor: "Grischa"
@@ -206,6 +207,12 @@ function App() {
             <Route path="/createwallet" exact>
               <CreateWallet />
             </Route>
+            {/* For testing purposes have a page for all online streamers */}
+            <Route path="/streamerpage" exact>
+              {/* Pass an array of streamer objects */}
+              <StreamerPage testArray={testArray} />
+            </Route>
+
             <Route path="/openwallet" exact>
               <OpenWallet
                 streamerConfig={streamerConfig}
