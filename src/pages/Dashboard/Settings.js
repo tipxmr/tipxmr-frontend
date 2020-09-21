@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import InputField from "../../components/dump_components/InputField";
-import FileInput from "../../components/dump_components/FileInput";
-import Button from "../../components/dump_components/Button";
-import FloatInput from "../../components/dump_components/FloatInput";
-import StatBox from "../../components/dump_components/StatBox";
+import {
+  InputField,
+  FileInput,
+  Button,
+  FloatInput,
+  StatBox,
+} from "../../components";
 
 function Settings({ streamerConfig, setStreamerConfig }) {
   // copy complete state so useEffect is not triggered
