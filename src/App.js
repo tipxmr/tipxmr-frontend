@@ -15,6 +15,7 @@ import {
   Start,
   Disclaimer,
   FAQ,
+  StreamerPage,
 } from "./pages";
 
 function App() {
