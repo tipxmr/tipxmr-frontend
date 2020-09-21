@@ -1,5 +1,5 @@
 import React from "react";
-import StreamerCard from "./dump_components/StreamerCard";
+import { StreamerCard } from "../components";
 import PropTypes from "prop-types";
 
 function StreamerPage({ testArray }) {

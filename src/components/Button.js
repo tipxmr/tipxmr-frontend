@@ -14,7 +14,7 @@ function Button({
     buttonWidth +
     " " +
     textSize +
-    " mx-auto flex justify-center mt-4 py-2 px-8 h-auto rounded text-white border-xmrgray border-2 hover:bg-xmrorange-darker hover:border-white";
+    " mx-auto flex justify-center mt-4 hover:bg-xmrorange-darker text-white rounded-full py-2 px-8 h-auto";
   return <button className={styles}>{buttonText}</button>;
 }
 
