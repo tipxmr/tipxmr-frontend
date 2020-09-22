@@ -1,5 +1,5 @@
 import React from "react";
-import Faqblock from "../components/dump_components/Faqblock";
+import { Faqblock } from "../components";
 
 const faqs = [
   {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import Loading from "../components/Loading";
+import { Loading } from "../components";
 import monerojs from "../libs/monero";
 
 // component for successful wallet unlock
@@ -32,9 +32,9 @@ function OpenWallet({
   // styles for seed text box depending on the seed validation
   const stylesTextBoxOptions = {
     valid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-green-600 p-5",
+      "my-10 text-xmrgray-darker text-justify border-4 border-dashed rounded border-green-600 p-5",
     invalid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-red-600 p-5",
+      "my-10 text-xmrgray-darker text-justify border-4 border-dashed rounded border-red-600 p-5",
   };
 
   const textBoxStyles = { resize: "none" };

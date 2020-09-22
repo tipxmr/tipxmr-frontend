@@ -1,22 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "../components";
 
 function Start() {
   return (
-    <div className="flex flex-grow justify-center">
-      <div className="my-auto">
-        <Link to="/createwallet">
-          <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 mx-8 py-2 px-4 rounded">
-            Create new wallet
-          </button>
-        </Link>
+    <div className="flex flex-grow justify-around m-auto">
+      <Link to="/createwallet">
+        <Button buttonText="Create new wallet" buttonWidth="w-80" />
+      </Link>
 
-        <Link to="/openwallet">
-          <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 mx-8 py-2 px-4 rounded">
-            Open existing wallet
-          </button>
-        </Link>
-      </div>
+      <Link to="/openwallet">
+        <Button buttonText="Open existing wallet" buttonWidth="w-80" />
+      </Link>
     </div>
   );
 }

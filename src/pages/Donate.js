@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import EnterMessage from "../components/EnterMessage";
-import Payment from "../components/Payment";
-import Success from "../components/Success";
+import { EnterMessage, Payment, Success } from "../components";
 import socketio from "../libs/socket";
 
 function Donate() {

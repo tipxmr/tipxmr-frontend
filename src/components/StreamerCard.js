@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaTwitch, FaYoutube } from "react-icons/fa";
-import tipxmr from "../../images/tipxmr-button.png";
+import tipxmr from "../images/tipxmr-button.png";
 
 const iconLookup = {
   youtube: FaYoutube,
