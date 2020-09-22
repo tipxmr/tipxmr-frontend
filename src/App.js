@@ -6,7 +6,7 @@ import socketio from "./libs/socket";
 
 import * as WalletContext from "./context/wallet";
 
-import { Header, Footer, Logout, PrivateRoute } from "./components";
+import { Header, Footer, PrivateRoute } from "./components";
 import {
   Animation,
   Dashboard,
@@ -15,6 +15,7 @@ import {
   Disclaimer,
   FAQ,
   StreamerPage,
+  Logout,
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
