@@ -104,6 +104,11 @@ export async function generateQrCode(subaddress) {
   return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
 }
 
+export function isValidMnemoicLength(seed) {
+  const words = seed.split(" ").filter((word) => word.length);
+  return words.length === 25;
+}
+
 export default {
   createWallet,
   openWalletFromSeed,
@@ -116,4 +121,5 @@ export default {
   stopSyncing,
   MyWalletListener,
   generateQrCode,
+  isValidMnemoicLength,
 };
