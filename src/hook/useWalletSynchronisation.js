@@ -143,10 +143,14 @@ export function useWalletSynchronisation() {
   }, []);
 
   useEffect(() => {
-    wallet.wallet.addListener(listenerRef.current);
+    if (wallet.wallet) {
+      wallet.wallet.addListener(listenerRef.current);
+    }
 
     return () => {
-      wallet.wallet.removeListener(listenerRef.current);
+      if (wallet.wallet) {
+        wallet.wallet.removeListener(listenerRef.current);
+      }
     };
   }, [wallet.wallet]);
 
