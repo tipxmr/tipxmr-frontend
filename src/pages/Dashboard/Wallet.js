@@ -1,7 +1,6 @@
 import React from "react";
-import Progressbar from "./Progressbar";
-import SyncButton from "./dashboard/Syncbutton";
 
+import { Progressbar, SyncBanner } from "../../components";
 import useWalletSynchronisation from "../hook/useWalletSynchronisation";
 
 function Wallet() {
@@ -24,7 +23,7 @@ function Wallet() {
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-        <SyncButton synced={isDone} />
+        <SyncBanner synced={isDone} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

@@ -6,8 +6,7 @@ import clsx from "clsx";
 import { useStreamer, updateHashedSeed } from "../context/streamer";
 import { useWallet, openWalletFromSeed } from "../context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
-
-import Loading from "./Loading";
+import { Loading } from "../components";
 
 // component for successful wallet unlock
 function WalletUnlocked() {

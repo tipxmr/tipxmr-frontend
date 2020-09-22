@@ -56,48 +56,25 @@ export function getMnemonicHash(seed) {
   return Hex.stringify(sha256(seed));
 }
 
-export async function startSyncing(wallet, moneroWalletListener, syncHeight) {
+export async function startSyncing(wallet, listeners, syncHeight) {
   await wallet.setSyncHeight(syncHeight); // start sync at block x
-  await wallet.addListener(moneroWalletListener);
+
+  listeners.forEach((listener) => {
+    wallet.addListener(listener);
+  });
+
+  // await wallet.addListener(moneroWalletListener);
   await wallet.startSyncing();
 }
 
 export async function stopSyncing(wallet) {
   await wallet.stopSyncing();
-  await wallet.removeListener(wallet.getListeners()[0]);
-}
 
-class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(setPercentageSynced, setCurrentBlockheight, getNewOutput) {
-    super();
-    this.setPercentageSynced = setPercentageSynced;
-    this.getNewOutput = getNewOutput;
-    this.setCurrentBlockheight = setCurrentBlockheight;
-  }
-  onSyncProgress(height, startHeight, endHeight, percentDone, message) {
-    console.log("Syncing Block " + height + " of " + endHeight);
-    this.setPercentageSynced(
-      Math.round(
-        ((height - startHeight + 1) / (endHeight - startHeight)) * 1000
-      ) / 10.0
-    ); // Round to one decimal
-  }
-  onOutputReceived(output) {
-    if (
-      output.state.tx.state.inTxPool &&
-      output.state.tx.state.isLocked &&
-      output.state.tx.state.isIncoming
-    ) {
-      console.dir("monerojs: onOutputReceived", output);
-      this.getNewOutput({
-        subaddressIndex: output.getSubaddressIndex(),
-        amount: output.getAmount(),
-      });
-    }
-  }
-  onNewBlock(height) {
-    this.setCurrentBlockheight(height);
-  }
+  wallet.getListeners().forEach((listener) => {
+    wallet.removeListener(listener);
+  });
+
+  // await wallet.removeListener(wallet.getListeners()[0]);
 }
 
 export async function generateQrCode(subaddress) {

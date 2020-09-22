@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import IsOnlineBadge from "./IsOnlineBadge";
+import { Button } from "./";
 
 function EnterMessage({
   setDonor,
@@ -41,15 +42,13 @@ function EnterMessage({
           }}
         />
         <div className="w-full flex justify-center">
-          <button
-            className="mt-4 bg-xmrorange-lighter hover:bg-xmrorange-darker text-white font-bold py-2 px-4 rounded-full"
+          <Button
+            buttonText="Submit"
             onClick={() => {
               setShowEnterMessage(false);
               setShowPayment(true);
             }}
-          >
-            Submit
-          </button>
+          />
         </div>
       </div>
     </div>

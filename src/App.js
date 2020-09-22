@@ -7,7 +7,7 @@ import socketio from "./libs/socket";
 import * as WalletContext from "./context/wallet";
 
 import { Header, Footer, Logout, PrivateRoute } from "./components";
-import { Animation, Dashboard, Login, Donate, Disclaimer, FAQ } from "./pages";
+import { Animation, Dashboard, Login, Donate, Disclaimer, FAQ, StreamerPage } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
 
@@ -35,13 +35,12 @@ function App() {
       advanced: true, // more customisations
       premium: true, // all customisations available
     },
-    streamURLS: {
-      // stream urls to display on the streamers donation site
-      // only 4 examples, more options can be added later on
-      twitch: "mydirtyhobby.com",
-      youtube: "",
-      chaturbate: "",
-      dLive: "",
+    stream: {
+      url: "mydirtyhobby.com",
+      platform: "twitch",
+      language: "🇩🇪",
+      description: "I am a great streamer.",
+      category: "politics",
     },
     animationSettings: {
       secondPrice: 0.00043, // XMR price of a second of display time
@@ -75,6 +74,8 @@ function App() {
       ],
     },
   });
+
+  const testArray = [streamerConfig];
 
   useEffect(() => {
     if (streamerConfig && streamerConfig.restoreHeight) {
@@ -162,10 +163,14 @@ function App() {
               <Donate />
             </Route>
             <Route path="/login">
-              <Login
+            <Login
                 streamerConfig={streamerConfig}
                 setStreamerConfig={setStreamerConfig}
               />
+            </Route>
+            <Route path="/streamerpage" exact>
+              {/* Pass an array of streamer objects */}
+              <StreamerPage testArray={testArray} />
             </Route>
             <Route path="/animation" exact>
               <Animation streamerConfig={streamerConfig} />

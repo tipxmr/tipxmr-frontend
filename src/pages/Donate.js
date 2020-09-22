@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import EnterMessage from "./EnterMessage";
-import Payment from "./Payment";
-import Success from "./Success";
-import socketio from "../libs/socket";
 import { useParams } from "react-router-dom";
+
+import { EnterMessage, Payment, Success } from "../components";
+import socketio from "../libs/socket";
 
 function Donate() {
   let { userName } = useParams();
