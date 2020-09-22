@@ -23,5 +23,13 @@ function Button({
   );
 }
 
+Button.propTypes = {
+  buttonText: PropTypes.string,
+  bgColor: PropTypes.string,
+  buttonWidth: PropTypes.string,
+  textSize: PropTypes.string,
+  onClickFunc: PropTypes.func,
+};
+
 // Button.propTypes =
 export default Button;

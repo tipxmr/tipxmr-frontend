@@ -4,16 +4,14 @@ import { Button } from "../components";
 
 function Start() {
   return (
-    <div className="flex flex-grow justify-center">
-      <div className="my-auto">
-        <Link to="/createwallet">
-          <Button buttonText="Create new Wallet" buttonWidth="w-80" />
-        </Link>
+    <div className="flex flex-grow justify-around m-auto">
+      <Link to="/createwallet">
+        <Button buttonText="Create new wallet" buttonWidth="w-80" />
+      </Link>
 
-        <Link to="/openwallet">
-          <Button buttonText="Open existing wallet" buttonWidth="w-80" />
-        </Link>
-      </div>
+      <Link to="/openwallet">
+        <Button buttonText="Open existing wallet" buttonWidth="w-80" />
+      </Link>
     </div>
   );
 }
