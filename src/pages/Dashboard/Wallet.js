@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import monerojs from "../../libs/monero";
 
-import { Progressbar, SyncButton } from "../../components";
+import { Progressbar, SyncBanner } from "../../components";
 
 function Wallet({ walletFunctions, walletVariables }) {
   const [isSynced, setIsSynced] = useState(false);

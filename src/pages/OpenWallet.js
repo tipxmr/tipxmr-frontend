@@ -32,9 +32,9 @@ function OpenWallet({
   // styles for seed text box depending on the seed validation
   const stylesTextBoxOptions = {
     valid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-green-600 p-5",
+      "my-10 text-xmrgray-darker text-justify border-4 border-dashed rounded border-green-600 p-5",
     invalid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-red-600 p-5",
+      "my-10 text-xmrgray-darker text-justify border-4 border-dashed rounded border-red-600 p-5",
   };
 
   const textBoxStyles = { resize: "none" };
