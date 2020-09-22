@@ -1,35 +1,31 @@
 import React, { useState } from "react";
+import clsx from "clsx";
 
-function Faqblock({ faq, style }) {
+function Faqblock({ faq }) {
   const [isOpen, setIsOpen] = useState(false);
   function createAnswerMarkup(answer) {
     return { __html: answer };
   }
 
   function Question(question) {
-    if (isOpen === true) {
-      return (
-        <div className="p-4 pl-8 text-xl text-white flex justify-between">
-          <p>{question}</p>
-          <span
-            role="img"
-            aria-label="arrow up"
-            className="transition duration-500 ease-in-out transform rotate-180"
-          >
-            🔼
-          </span>
-        </div>
-      );
-    } else {
-      return (
-        <div className="p-4 pl-8 text-xl text-white flex justify-between">
-          <p>{question}</p>
-          <span role="img" aria-label="arrow down">
-            🔽
-          </span>
-        </div>
-      );
-    }
+    const arrowStyles = clsx([
+      "transition",
+      "transform",
+      "duration-500",
+      "ease-in-out",
+      {
+        "rotate-180": isOpen,
+      },
+    ]);
+
+    return (
+      <div className="p-4 pl-8 text-xl text-white flex justify-between">
+        <p>{question}</p>
+        <span role="img" aria-label="arrow" className={arrowStyles}>
+          🔽
+        </span>
+      </div>
+    );
   }
 
   function Answer(answer) {
