@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import monerojs from "../libs/monero";
 import PropTypes from "prop-types";
+import clsx from "clsx";
+
+import { useStreamer, updateHashedSeed } from "../context/streamer";
+import { useWallet, openWalletFromSeed } from "../context/wallet";
+import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
+
 import Loading from "./Loading";
 
 // component for successful wallet unlock
-function WalletUnlocked({ primaryAddress }) {
+function WalletUnlocked() {
   return (
     <div id="wallet-successful-opened">
       <p>Wallet unlocked 🔓</p>
-      <p>Your primary address: {primaryAddress}</p>
       <Link to="/dashboard">
         <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded">
           Login
@@ -18,76 +22,35 @@ function WalletUnlocked({ primaryAddress }) {
     </div>
   );
 }
-WalletUnlocked.propTypes = {
-  primaryAddress: PropTypes.string,
-};
+WalletUnlocked.propTypes = {};
 
-function OpenWallet({
-  streamerConfig,
-  setStreamerConfig,
-  walletFunctions,
-  walletVariables,
-}) {
-  // styles for seed text box depending on the seed validation
-  const stylesTextBoxOptions = {
-    valid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-green-600 p-5",
-    invalid:
-      "my-10 text-xmrgray-darker text-justify border-4 border-dashed border-red-600 p-5",
-  };
-
-  const textBoxStyles = { resize: "none" };
-
-  // states
+function OpenWallet({ streamerConfig, setStreamerConfig }) {
   const [seed, setSeed] = useState("Enter your seed");
-  const [isSeedValid, setIsSeedValid] = useState(false);
-  const [textBoxStyle, setTextBoxStyle] = useState(
-    stylesTextBoxOptions.invalid
-  );
-  const [isLoading, setIsLoading] = useState(false);
+  const [wallet, dispatch] = useWallet();
+
+  const { isLoading } = wallet;
+  const isWalletOpen = wallet.wallet && !wallet.error;
+
+  console.log("wallet", wallet);
+
+  // const [streamerState, streamerUpdate] = useStreamer();
+  // streamerUpdate((previousStreamer) => ({ ...previousStreamer, hashedSeed }));
+  // updateHashedSeed(streamerUpdate, hashedSeed);
 
   // monitors the input text area of the seed
   useEffect(() => {
     // if 25 words are reached
-    if (seed.split(" ").length === 25) {
+    if (isValidMnemoicLength(seed)) {
       console.log("25 words reached");
-      const hashedSeed = monerojs.getMnemonicHash(seed);
+      const hashedSeed = getMnemonicHash(seed);
       setStreamerConfig({
         ...streamerConfig,
         hashedSeed: hashedSeed,
       });
-      setIsLoading(true);
-      monerojs
-        .openWalletFromSeed(seed)
-        .then(walletFunctions.setWallet)
-        .then(() => setIsSeedValid(true))
-        .then(() => setIsLoading(false))
-        .catch(() => {
-          setIsSeedValid(false);
-          console.error("Failed to open wallet.");
-        });
-    } else {
-      setIsSeedValid(false);
+
+      openWalletFromSeed(dispatch, seed);
     }
   }, [seed]);
-
-  useEffect(() => {
-    if (walletVariables.wallet !== null) {
-      monerojs
-        .getPrimaryAddress(walletVariables.wallet)
-        .then(walletFunctions.setPrimaryAddress);
-    }
-  }, [walletVariables.wallet]);
-
-  useEffect(() => {
-    console.log("Primary Address:", walletVariables.primaryAddress);
-  }, [walletVariables.primaryAddress]);
-
-  useEffect(() => {
-    isSeedValid
-      ? setTextBoxStyle(stylesTextBoxOptions.valid)
-      : setTextBoxStyle(stylesTextBoxOptions.invalid);
-  }, [isSeedValid]);
 
   function handleChange(e) {
     setSeed(e.target.value);
@@ -102,20 +65,31 @@ function OpenWallet({
       <div className="my-auto text-center">
         <h2 className="text-center text-2xl">Enter your seed ⌨️</h2>
         <textarea
-          className={textBoxStyle}
+          className={clsx(
+            [
+              "my-10",
+              "text-xmrgray-darker",
+              "text-justify",
+              "border-4",
+              "border-dashed",
+              "p-5",
+            ],
+            {
+              "border-green-600": isWalletOpen,
+              "border-red-600": !isWalletOpen,
+            }
+          )}
           id="seed"
           name="seed"
           rows="4"
           cols="50"
           value={seed}
-          style={textBoxStyles}
+          style={{ resize: "none" }}
           onChange={handleChange}
           onFocus={handleFocus}
         />
         {isLoading ? <Loading text="Opening your wallet" /> : null}
-        {isSeedValid ? (
-          <WalletUnlocked primaryAddress={walletVariables.primaryAddress} />
-        ) : null}
+        {isWalletOpen ? <WalletUnlocked /> : null}
       </div>
     </div>
   );

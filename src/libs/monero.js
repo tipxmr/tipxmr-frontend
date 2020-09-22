@@ -9,6 +9,7 @@ export async function createWallet(lang = "English") {
     networkType: "stagenet",
     language: lang,
     password: "pass123",
+    // serverUri: "http://192.168.0.119:38081",
     serverUri: "http://localhost:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
@@ -23,6 +24,7 @@ export async function openWalletFromSeed(seed) {
     mnemonic: seed,
     password: "pass123",
     //serverUri: "http://192.168.0.2:38081",
+    // serverUri: "http://192.168.0.119:38081",
     serverUri: "http://localhost:38081",
     //serverUri: "http://stagenet.community.xmr.to:38081",
     serverUsername: "superuser",
@@ -55,7 +57,7 @@ export function getMnemonicHash(seed) {
 }
 
 export async function startSyncing(wallet, moneroWalletListener, syncHeight) {
-  await wallet.setSyncHeight(syncHeight);
+  await wallet.setSyncHeight(syncHeight); // start sync at block x
   await wallet.addListener(moneroWalletListener);
   await wallet.startSyncing();
 }
@@ -102,6 +104,11 @@ export async function generateQrCode(subaddress) {
   return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
 }
 
+export function isValidMnemoicLength(seed) {
+  const words = seed.split(" ").filter((word) => word.length);
+  return words.length === 25;
+}
+
 export default {
   createWallet,
   openWalletFromSeed,
@@ -114,4 +121,5 @@ export default {
   stopSyncing,
   MyWalletListener,
   generateQrCode,
+  isValidMnemoicLength,
 };

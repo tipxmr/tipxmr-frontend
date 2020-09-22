@@ -1,6 +1,13 @@
 module.exports = {
   purge: [],
   theme: {
+    flex: {
+      1: "1 1 0%",
+      auto: "1 1 auto",
+      initial: "0 1 auto",
+      none: "none",
+      full: "1 0 100%",
+    },
     fontFamily: {
       sans: ["MoneroGothic"],
       serif: ["MoneroGothic"],
@@ -11,9 +18,11 @@ module.exports = {
     extend: {
       colors: {
         xmrorange: {
+          lightest: "#FF8000",
           lighter: "#FF7733",
           default: "#F16822",
           darker: "#EB601A",
+          darkest: "#B13A00",
         },
         xmrgray: {
           lighter: "#696969",
@@ -23,6 +32,8 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    opacity: ["disabled"],
+  },
   plugins: [],
 };

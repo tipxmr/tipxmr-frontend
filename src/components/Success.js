@@ -1,9 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-function Success() {
-  const streamerName = "StreamerName";
-  const amount = "1337";
-  const message = "This is an example message";
+function Success({ displayName, donor, message, amount }) {
   return (
     <div className="flex flex-grow justify-center">
       <div className="text-center my-auto">
@@ -18,12 +16,12 @@ function Success() {
             🙏
           </span>
         </h2>
-        <h2>We got it!</h2>
+        <h2>We got it, {donor}!</h2>
         <h3>The payment was successful</h3>
         <div className="font-normal mt-6 border-t-4 border-dotted">
           <h2 className="pt-6">
-            You sent <span className="font-black">{amount} XMR</span> to{" "}
-            <span className="font-black">{streamerName}</span>{" "}
+            You sent <span className="font-black">{amount} XMR</span> to
+            <span className="font-black">{displayName}</span>{" "}
           </h2>
           <h2>with the message:</h2>
           <h2 className="pt-4 italic">{message}</h2>
@@ -32,5 +30,10 @@ function Success() {
     </div>
   );
 }
-
+Success.propTypes = {
+  displayName: PropTypes.string,
+  message: PropTypes.string,
+  donor: PropTypes.string,
+  amount: PropTypes.number,
+};
 export default Success;

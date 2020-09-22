@@ -10,6 +10,7 @@ function Donate() {
   const [showEnterMessage, setShowEnterMessage] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [amount, setAmount] = useState(null);
 
   const [streamer, setStreamer] = useState({
     displayName: "loading",
@@ -25,7 +26,15 @@ function Donate() {
     // Get Streamer Info from Backend
     socketio.emitGetStreamer(userName);
     socketio.onRecieveStreamerFromBackend(setStreamer);
+    socketio.onPaymentConfirmation(paymentConfirmation);
   }, []);
+
+  function paymentConfirmation(confirmation) {
+    console.log("confirmation", confirmation);
+    setAmount(confirmation.amount);
+    setShowPayment(false);
+    setShowSuccess(true);
+  }
 
   function getSubaddress() {
     socketio.emitGetSubaddress(
@@ -35,7 +44,6 @@ function Donate() {
       donor,
       message
     );
-
     socketio.onSubaddressToDonator(setSubaddress);
   }
 
@@ -61,7 +69,14 @@ function Donate() {
             getSubaddress={getSubaddress}
           />
         ) : null}
-        {showSuccess ? <Success /> : null}
+        {showSuccess ? (
+          <Success
+            displayName={streamer.displayName}
+            donor={donor}
+            message={message}
+            amount={amount}
+          />
+        ) : null}
       </div>
     </div>
   );

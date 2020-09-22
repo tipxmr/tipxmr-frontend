@@ -62,6 +62,7 @@ let configBase = {
   resolve: {
     alias: {
       fs: "html5-fs",
+      "~": path.resolve(__dirname, "src"),
     },
     extensions: [".js", ".jsx", ".css", ".json", "otf", "ttf", "eot", "svg"],
     modules: ["node_modules"],
