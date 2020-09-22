@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 
-import { SyncButton, StatBox } from "../../components";
+import { SyncBanner, StatBox } from "../../components";
 
 function Overview() {
   const [isSynced, setIsSynced] = useState(false);
-  let syncedbutton;
-  if (isSynced) {
-    syncedbutton = <SyncButton synced={true} />;
-  } else {
-    syncedbutton = <SyncButton synced={false} />;
-  }
 
   const [data, setData] = useState([
     {
@@ -42,7 +36,7 @@ function Overview() {
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-        {syncedbutton}
+        <SyncBanner synced={isSynced} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

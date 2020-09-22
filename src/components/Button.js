@@ -7,6 +7,7 @@ function Button({
   bgColor = "bg-xmrorange",
   buttonWidth = "w-40",
   textSize = "text-xl",
+  onClickFunc = "",
 }) {
   const styles =
     bgColor +
@@ -15,7 +16,11 @@ function Button({
     " " +
     textSize +
     " mx-auto flex justify-center mt-4 hover:bg-xmrorange-darker text-white rounded-full py-2 px-8 h-auto";
-  return <button className={styles}>{buttonText}</button>;
+  return (
+    <button className={styles} onClick={onClickFunc}>
+      {buttonText}
+    </button>
+  );
 }
 
 // Button.propTypes =
