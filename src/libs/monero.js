@@ -96,7 +96,6 @@ export default {
   getMnemonicHash,
   startSyncing,
   stopSyncing,
-  MyWalletListener,
   generateQrCode,
   isValidMnemoicLength,
 };

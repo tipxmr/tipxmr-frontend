@@ -4,7 +4,7 @@ import { FaSpinner } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 import monerojs from "../libs/monero";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 
 const defaultStateSeed = "";
 const languages = [

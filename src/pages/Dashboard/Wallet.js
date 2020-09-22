@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Progressbar, SyncBanner } from "../../components";
-import useWalletSynchronisation from "../hook/useWalletSynchronisation";
+import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 
 function Wallet() {
   const {
