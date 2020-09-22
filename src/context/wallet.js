@@ -1,51 +1,32 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, useContext } from "react";
 import PropTypes from "prop-types";
-import { MoneroWalletListener } from "monero-javascript";
 
-// class IncomingLockedTxListener extends MoneroWalletListener {
-class SynchronisationListener extends MoneroWalletListener {
-  constructor(onProgress) {
-    super();
-    this.onProgress = onProgress;
-  }
-
-  onSyncProgress(height, startHeight, endHeight, percentDone, message) {
-    this.onProgress(height, startHeight, endHeight, percentDone, message);
-  }
-
-  // onOutputReceived(output) {
-  //   if (
-  //     output.state.tx.state.inTxPool &&
-  //     output.state.tx.state.isLocked &&
-  //     output.state.tx.state.isIncoming
-  //   ) {
-  //     this.handleTx({
-  //       subaddressIndex: output.getSubaddressIndex(),
-  //       amount: output.getAmount(),
-  //     });
-  //   }
-  // }
-}
+import useThunkReducer from "../hook/useThunkReducer";
+import monerojs from "../libs/monero";
 
 const WalletStateContext = createContext();
 const WalletDispatchContext = createContext();
 
 function walletReducer(state, action) {
   switch (action.type) {
+    case "OPEN_WALLET":
+      return { ...state, isLoading: true };
+
+    case "CREATE_WALLET":
+      return { ...state, isLoading: true };
+
     case "SET_WALLET":
-      return { ...state, wallet: action.wallet };
-      case "SET_RESTORE_HEIGHT":
-        return { ...state, restoreHeight: action.restoreHeight };
-    // case "increment":
-    //   return { count: state.count + 1 };
-    // case "decrement":
-    //   return { count: state.count - 1 };
+      return { ...state, wallet: action.wallet, isLoading: false };
+
+    case "CLEAR_WALLET":
+      return { ...state, wallet: null };
+
+    case "SET_RESTORE_HEIGHT":
+      return { ...state, restoreHeight: action.restoreHeight };
+
+    case "ERROR":
+      return { ...state, error: action.error, isLoading: false };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -58,7 +39,6 @@ const withLogger = (reducer) => (state, action) => {
   const nextState = reducer(state, action);
 
   if (isDevelopment()) {
-    // TODO: format properly
     console.log(action.type, state, nextState);
   }
 
@@ -66,7 +46,16 @@ const withLogger = (reducer) => (state, action) => {
 };
 
 function WalletProvider({ children }) {
-  const [state, dispatch] = useReducer(walletReducer, {});
+  const initialState = {
+    restoreHeight: 0,
+    wallet: null,
+    error: null,
+    isLoading: false,
+  };
+  const [state, dispatch] = useThunkReducer(
+    withLogger(walletReducer),
+    initialState
+  );
 
   return (
     <WalletStateContext.Provider value={state}>
@@ -105,84 +94,51 @@ function useWallet() {
   return [useWalletState(), useWalletDispatch()];
 }
 
-function useWalletSynchronisation() {
-  const wallet = useWalletState();
-  const [isActive, setIsActive] = useState(false);
-  const [isDone, setIsDone] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  function onProgress(height, startHeight, endHeight, percentDone, message) {
-    // const percentage = Math.floor(percentDone * 100);
-    const percentage =
-      Math.round(
-        ((height - startHeight + 1) / (endHeight - startHeight)) * 1000
-      ) / 10.0;
-    setProgress(percentage);
-
-    if (percentDone === 1) {
-      setIsDone(true);
-    }
-    // console.log("percentDone", percentDone, Math.floor(percentDone * 100), percentDone === 1);
-  }
-
-  async function start() {
-    setIsDone(false);
-    setIsActive(true);
-    await wallet.wallet.setSyncHeight(wallet.restoreHeight);
-    await wallet.wallet.startSyncing();
-  }
-
-  async function stop() {
-    await wallet.wallet.stopSyncing();
-    setIsActive(true);
-  }
-
-  useEffect(() => {
-    const listener = new SynchronisationListener(onProgress);
-
-    if (wallet.wallet) {
-      wallet.wallet.addListener(listener);
-    }
-
-    return () => {
-      if (wallet.wallet) {
-        wallet.wallet.removeListener(listener);
-      }
-    };
-  });
-
-  return { start, stop, isActive, isDone, progress };
+function openWalletFromSeed(dispatch, seed) {
+  dispatch({ type: "OPEN_WALLET" });
+  monerojs
+    .openWalletFromSeed(seed)
+    .then((wallet) => {
+      dispatch({ type: "SET_WALLET", wallet });
+    })
+    .catch((error) => {
+      dispatch({ type: "ERROR", error });
+    });
 }
 
-// async function updateWallet(dispatch) {
-//   dispatch({ type: "start" });
-//   dispatch({ type: "finish" });
-//   dispatch({ type: "fail" });
-// }
+function createWallet(dispatch, language) {
+  dispatch({ type: "CREATE_WALLET" });
+  monerojs
+    .createWallet(language)
+    .then((wallet) => {
+      dispatch({ type: "SET_WALLET", wallet });
+    })
+    .catch((error) => {
+      dispatch({ type: "ERROR", error });
+    });
+}
 
-// function increment(dispatch) {
-//   dispatch({ type: "increment" });
-// }
+function closeWallet() {
+  return (dispatch, getState) => {
+    const { wallet } = getState();
 
-// function decrement(dispatch) {
-//   dispatch({ type: "decrement" });
-// }
+    const closeRequests = wallet
+      .getListeners()
+      .map((listener) => wallet.removeListener(listener));
+
+    Promise.all(closeRequests)
+      .then(() => wallet.close())
+      .then(() => dispatch({ type: "CLEAR_WALLET" }))
+      .catch(() => dispatch({ type: "CLEAR_WALLET" }));
+  };
+}
 
 export {
   WalletProvider,
   useWalletState,
   useWalletDispatch,
   useWallet,
-  useWalletSynchronisation,
-  // increment,
-  // decrement,
+  openWalletFromSeed,
+  createWallet,
+  closeWallet,
 };
-
-// walletVariables={{ streamerConfig, wallet, primaryAddress }}
-//  walletVariables={{ isSyncActive, streamerConfig, wallet, primaryAddress, percentageSynced, }}
-
-// walletVariables.wallet
-// walletVariables.wallet
-// walletVariables.wallet
-// walletVariables.primaryAddress
-// walletVariables.primaryAddress
