@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import monerojs from "../libs/monero";
 import Loading from "../components/Loading";
+import { Button } from "../components";
 
 const defaultStateSeed = "";
 const languages = [
@@ -167,6 +168,15 @@ function CreateWallet() {
             ) : null}
             Login
           </button>
+
+          <Button
+            buttonWidth="w-auto"
+            disabled={isLoading}
+            loading={isLoading}
+            rounded="rounded"
+          >
+            Login
+          </Button>
         </Link>
       </div>
     </div>

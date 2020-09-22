@@ -43,12 +43,13 @@ function EnterMessage({
         />
         <div className="w-full flex justify-center">
           <Button
-            buttonText="Submit"
             onClick={() => {
               setShowEnterMessage(false);
               setShowPayment(true);
             }}
-          />
+          >
+            Submit
+          </Button>
         </div>
       </div>
     </div>
