@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import { useMeasure } from "react-use";
 import clsx from "clsx";
-import { FcExpand } from "react-icons/fc";
+import { TiArrowDownThick } from "react-icons/ti";
+import { IconContext } from "react-icons";
 
 function Faqblock({ question, children }) {
   // answer show on isOpen
@@ -18,6 +19,7 @@ function Faqblock({ question, children }) {
       "transform",
       "duration-200",
       "ease-in-out",
+      "white",
       {
         "rotate-180": isOpen, // magic happens here
       },
@@ -26,7 +28,7 @@ function Faqblock({ question, children }) {
     return (
       <div className="p-4 pl-8 text-xl text-white flex justify-between">
         <p>{question}</p>
-        <FcExpand className={arrowStyles} />
+        <TiArrowDownThick className={arrowStyles} color="white" size="1.5em" />
       </div>
     );
   }
