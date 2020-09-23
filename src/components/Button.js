@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { FaSpinner } from "react-icons/fa";
 import clsx from "clsx";
 
-// TODO specifiying button width does not have any effect right now
 function Button({
   children,
   bgColor = "bg-xmrorange",
@@ -21,7 +20,7 @@ function Button({
     "mx-auto",
     "flex",
     "justify-center",
-    "hover:bg-xmrorange-darker",
+    "hover:bg-xmrorange -darker",
     "text-white",
     rounded,
     "py-2",
