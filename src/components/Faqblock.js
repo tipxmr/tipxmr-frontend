@@ -1,49 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSpring, animated } from "react-spring";
+import { useMeasure } from "react-use";
 import clsx from "clsx";
+import { TiArrowDownThick } from "react-icons/ti";
+import { IconContext } from "react-icons";
 
-function Faqblock({ faq }) {
+function Faqblock({ question, children }) {
+  // answer show on isOpen
   const [isOpen, setIsOpen] = useState(false);
-  function createAnswerMarkup(answer) {
-    return { __html: answer };
-  }
+  const defaultHeight = "1px";
+  const [contentHeight, setContentHeight] = useState(defaultHeight);
+  const [ref, { height }] = useMeasure();
 
+  // --- QUESTION ---
   function Question(question) {
     const arrowStyles = clsx([
       "transition",
       "transform",
-      "duration-500",
+      "duration-200",
       "ease-in-out",
+      "white",
       {
-        "rotate-180": isOpen,
+        "rotate-180": isOpen, // magic happens here
       },
     ]);
 
     return (
       <div className="p-4 pl-8 text-xl text-white flex justify-between">
         <p>{question}</p>
-        <span role="img" aria-label="arrow" className={arrowStyles}>
-          🔽
-        </span>
+        <TiArrowDownThick className={arrowStyles} color="white" size="1.5em" />
       </div>
     );
   }
 
+  // --- ANSWER ---
   function Answer(answer) {
     return (
-      <div
-        dangerouslySetInnerHTML={createAnswerMarkup(answer)}
+      <animated.div
+        style={expand}
         className="p-4 border-4 border-xmrgray-lighter bg-gray-200 border-t-0"
-      ></div>
+      >
+        <div ref={ref}>{children}</div>
+      </animated.div>
     );
   }
+
+  // Answer animation
+  const expand = useSpring({
+    config: { friction: 10 },
+    height: isOpen ? `${contentHeight + 30}px` : defaultHeight,
+  }); // adding a little extra space for the height of the answer
+
+  useEffect(() => {
+    // Set initial height
+    setContentHeight(height);
+
+    // Add resize event listener
+    window.addEventListener("resize", setContentHeight(height));
+
+    // Clean up
+    return window.removeEventListener("resize", setContentHeight(height));
+  }, [height]);
 
   return (
     <div
       onClick={() => setIsOpen(!isOpen)}
       className="bg-xmrgray-lighter my-3 transition duration-500"
     >
-      {Question(faq.question)}
-      {isOpen ? Answer(faq.answer) : ""}
+      {Question(question)}
+      {isOpen ? Answer(children) : ""}
     </div>
   );
 }
