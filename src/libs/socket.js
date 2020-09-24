@@ -39,6 +39,8 @@ function emitPaymentRecieved(newDonation) {
             amount: output.amount,
             donor: donationsInfo.donor,
             message: donationsInfo.message,
+            userName: donationsInfo.userName,
+            displayName: donationsInfo.displayName,
           }; */
   socketStreamer.emit("paymentRecieved", newDonation);
 }
@@ -61,18 +63,6 @@ function onRecieveStreamerFromBackend(callback) {
 function onSubaddressToDonator(callback) {
   socketDonator.on("subaddressToDonator", (data) => callback(data.subaddress));
 }
-
-/* function onPaymentRecieved(callback) {
-  newDonation = {
-            subaddress: subaddress,
-            amount: output.amount,
-            donor: donationsInfo.donor,
-            message: donationsInfo.message,
-          }; 
-  socketDonator.on("paymentRecieved", (newDonation) => {
-    callback(newDonation);
-  });
-} */
 
 // donator recieves payment confirmation
 function onPaymentConfirmation(callback) {

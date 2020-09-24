@@ -26,7 +26,7 @@ function Donate() {
     socketio.emitGetStreamer(userName);
     socketio.onRecieveStreamerFromBackend(setStreamer);
     socketio.onPaymentConfirmation(paymentConfirmation);
-  }, []);
+  }, [userName]);
 
   function paymentConfirmation(confirmation) {
     console.log("confirmation", confirmation);

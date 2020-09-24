@@ -112,9 +112,12 @@ function App() {
         if (donationsInfo !== undefined) {
           const newDonation = {
             subaddress: subaddress,
-            amount: output.amount,
+            amount: parseFloat(output.amount) / Math.pow(10, 12), // convert Bigint to Int
             donor: donationsInfo.donor,
             message: donationsInfo.message,
+            donatorSocketId: donationsInfo.donatorSocketId,
+            userName: donationsInfo.userName,
+            displayName: donationsInfo.displayName,
           };
           console.log("New Donation:", newDonation);
           setDonationsQueue((previousArray) => [...previousArray, newDonation]);
