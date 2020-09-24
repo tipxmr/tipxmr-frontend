@@ -15,5 +15,8 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true
+  },
+  "settings": {
+    "import/resolver": "webpack"
   }
 }
