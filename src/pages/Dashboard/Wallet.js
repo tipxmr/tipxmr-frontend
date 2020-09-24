@@ -1,7 +1,8 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Progressbar, SyncBanner } from "../../components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
+import { useWalletState } from "../../context/wallet";
+import monerojs from "../../libs/monero";
 
 function Wallet() {
   const {
@@ -12,6 +13,10 @@ function Wallet() {
     stop,
   } = useWalletSynchronisation();
 
+  const wallet = useWalletState();
+
+  const [tableData, setTableData] = useState(null);
+
   function onClick() {
     if (isActive) {
       stop();
@@ -19,6 +24,41 @@ function Wallet() {
       start();
     }
   }
+
+  async function fillTable(txs) {
+    // amount, height, date, confirmations, incoming/outgoing
+    const data = await txs
+      .slice(0)
+      .reverse() // because table should show newest tx first
+      .map((tx, index) => {
+        const { height, timestamp } = tx.state.block.state;
+        const { numConfirmations, isIncoming } = tx.state;
+        let amount = null;
+        const date = new Date(timestamp * 1000).toLocaleString();
+        if (isIncoming) {
+          amount = tx.state.incomingTransfers[0].state.amount;
+          amount = parseFloat(amount) / Math.pow(10, 12);
+        } else {
+          amount = tx.state.outgoingTransfers[0].state.amount;
+          amount = parseFloat(amount) / Math.pow(10, 12);
+        }
+        return (
+          <tr key={index}>
+            <td className="border px-4 py-2">{amount} XMR</td>
+            <td className="border px-4 py-2">{height}</td>
+            <td className="border px-4 py-2">{date}</td>
+            <td className="border px-4 py-2">{numConfirmations}</td>
+          </tr>
+        );
+      });
+    setTableData(data);
+  }
+
+  useEffect(() => {
+    if (isDone) {
+      monerojs.getTxs(wallet.wallet).then(fillTable);
+    }
+  }, [isDone, wallet.wallet]);
 
   return (
     <div className="h-full">
@@ -60,7 +100,6 @@ function Wallet() {
           {isActive ? "Stop Sync" : "Start Sync"}
         </button>
         <h2 className="text-3xl text-center my-3">Transaction History</h2>
-        {/* Dynamische Tabelle nach dieser Anleitung */}
         <table className="table-auto border-4 mx-auto">
           <thead>
             <tr className="text-xl">
@@ -70,7 +109,7 @@ function Wallet() {
               <th className="px-4 py-2">Confirmations</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>{tableData}</tbody>
         </table>
       </div>
     </div>

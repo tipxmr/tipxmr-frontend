@@ -77,6 +77,13 @@ export async function stopSyncing(wallet) {
   // await wallet.removeListener(wallet.getListeners()[0]);
 }
 
+export async function getTxs(walletWasm) {
+  const query = {
+    isConfirmed: true,
+  };
+  return await walletWasm.getTxs(query);
+}
+
 export async function generateQrCode(subaddress) {
   return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
 }
@@ -96,6 +103,7 @@ export default {
   getMnemonicHash,
   startSyncing,
   stopSyncing,
+  getTxs,
   generateQrCode,
   isValidMnemoicLength,
 };
