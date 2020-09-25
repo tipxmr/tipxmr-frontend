@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket";
 
-import { Header, Footer } from "./components";
+import * as WalletContext from "./context/wallet";
 
+import { Header, Footer, PrivateRoute } from "./components";
 import {
-  CreateWallet,
-  OpenWallet,
   Animation,
   Dashboard,
   Login,
   Donate,
-  Start,
   Disclaimer,
   FAQ,
   StreamerPage,
+  Logout,
 } from "./pages";
 
+import useIncomingTransaction from "./hook/useIncomingTransaction";
+
 function App() {
+  useIncomingTransaction(onIncomingTransaction);
+
   let walletUseEffectDidFire = false;
-  const [wallet, setWallet] = useState(null);
-  const [primaryAddress, setPrimaryAddress] = useState(null);
-  const [currentSyncBlockheight, setCurrentSyncBlockheight] = useState(null);
-  const [percentageSynced, setPercentageSynced] = useState(0);
-  const [isSyncActive, setIsSyncActive] = useState(false);
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
 
-  const [tx, setTx] = useState(null);
+  const [customWallet, dispatch] = WalletContext.useWallet();
 
   const [streamerConfig, setStreamerConfig] = useState({
     hashedSeed: "", // acts as password for login
@@ -85,10 +84,23 @@ function App() {
     },
   });
 
+  useEffect(() => {
+    if (streamerConfig && streamerConfig.restoreHeight) {
+      dispatch({
+        type: "SET_RESTORE_HEIGHT",
+        restoreHeight: streamerConfig.restoreHeight,
+      });
+    }
+  }, [streamerConfig.restoreHeight]);
+
+  function onIncomingTransaction(tx) {
+    getNewOutput(tx);
+  }
+
   function getNewOutput(output) {
     console.log("getNewOutput aufgerufen, output:", output);
     monerojs
-      .getSubaddress(wallet, output.subaddressIndex)
+      .getSubaddress(customWallet.wallet, output.subaddressIndex)
       .then((subaddress) => {
         console.log("Donation an diese Subaddresse:", subaddress);
         console.log("donorInfo:", donorInfo);
@@ -98,9 +110,12 @@ function App() {
         if (donationsInfo !== undefined) {
           const newDonation = {
             subaddress: subaddress,
-            amount: output.amount,
+            amount: parseFloat(output.amount) / Math.pow(10, 12), // convert Bigint to Int
             donor: donationsInfo.donor,
             message: donationsInfo.message,
+            donatorSocketId: donationsInfo.donatorSocketId,
+            userName: donationsInfo.userName,
+            displayName: donationsInfo.displayName,
           };
           console.log("New Donation:", newDonation);
           setDonationsQueue((previousArray) => [...previousArray, newDonation]);
@@ -120,30 +135,8 @@ function App() {
       });
   }
 
-  const mwl = new monerojs.MyWalletListener(
-    setPercentageSynced,
-    setCurrentSyncBlockheight,
-    getNewOutput
-  );
-
-  const incomingTxListener = new monerojs.IncomingLockedTxListener(setTx);
-
-  async function syncWallet() {
-    setIsSyncActive(true);
-    monerojs
-      .startSyncing(
-        wallet,
-        [mwl, incomingTxListener],
-        streamerConfig.restoreHeight
-      )
-      .catch((err) => {
-        console.error(err);
-        setIsSyncActive(false);
-      });
-  }
-
   function handleOnNewSubaddress(data) {
-    monerojs.createSubaddress(wallet).then((subaddress) => {
+    monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
       const newDonorInfo = { ...data, subaddress: subaddress };
       setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
       socketio.emitSubaddressToBackend(newDonorInfo);
@@ -153,30 +146,19 @@ function App() {
 
   // as soon as wallet is loaded
   useEffect(() => {
-    if (wallet !== null && walletUseEffectDidFire === false) {
+    if (customWallet.wallet && walletUseEffectDidFire === false) {
       // after login send streamer info
       socketio.emitStreamerInfo(streamerConfig);
       // listen for new request of subaddress generation
       socketio.onCreateSubaddress(handleOnNewSubaddress);
       walletUseEffectDidFire = true;
     }
-  }, [wallet, walletUseEffectDidFire]);
+  }, [customWallet.wallet, walletUseEffectDidFire]);
 
   // handleChange for userConfig
   useEffect(() => {
     socketio.emitUpdateStreamerConfig(streamerConfig);
   }, [streamerConfig]);
-
-  useEffect(() => {
-    console.log("isSyncActive: ", isSyncActive);
-  }, [isSyncActive]);
-
-  // New Block is added to the chain
-  useEffect(() => {
-    console.log(
-      "New Block (" + currentSyncBlockheight + ") added to the blockchain."
-    );
-  }, [currentSyncBlockheight]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -185,61 +167,37 @@ function App() {
         <div className="flex-auto flex flex-col">
           <div className="flex flex-full">
             <Route path="/" exact>
-              <Start />
+              <Redirect to="/dashboard" />
             </Route>
             <Route path="/donate/:userName">
               <Donate />
             </Route>
-            <Route>
-              <Login />
-            </Route>
-            <Route path="/createwallet" exact>
-              <CreateWallet />
-            </Route>
-            {/* For testing purposes have a page for all online streamers */}
-            <Route path="/streamerpage" exact>
-              <StreamerPage />
-            </Route>
-
-            <Route path="/openwallet" exact>
-              <OpenWallet
+            <Route path="/login">
+              <Login
                 streamerConfig={streamerConfig}
                 setStreamerConfig={setStreamerConfig}
-                walletFunctions={{
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{ streamerConfig, wallet, primaryAddress }}
               />
+            </Route>
+            <Route path="/streamerpage" exact>
+              <StreamerPage />
             </Route>
             <Route path="/animation" exact>
               <Animation streamerConfig={streamerConfig} />
             </Route>
-            <Route path="/dashboard">
+            <PrivateRoute path="/dashboard">
               <Dashboard
-                walletFunctions={{
-                  setStreamerConfig,
-                  setIsSyncActive,
-                  syncWallet,
-                  setWallet,
-                  setPrimaryAddress,
-                }}
-                walletVariables={{
-                  isSyncActive,
-                  streamerConfig,
-                  wallet,
-                  primaryAddress,
-                  percentageSynced,
-                }}
                 streamerConfig={streamerConfig}
                 setStreamerConfig={setStreamerConfig}
               />
-            </Route>
+            </PrivateRoute>
             <Route path="/disclaimer">
               <Disclaimer />
             </Route>
             <Route path="/faq">
               <FAQ />
+            </Route>
+            <Route path="/logout">
+              <Logout />
             </Route>
           </div>
         </div>

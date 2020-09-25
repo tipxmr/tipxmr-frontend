@@ -1,13 +1,22 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+
 import "./styles.css";
+
+import App from "./App";
+
+import { StreamerProvider } from "./context/streamer";
+import { WalletProvider } from "./context/wallet";
 
 const root = document.getElementById("root");
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <StrictMode>
+    <WalletProvider>
+      <StreamerProvider>
+        <App />
+      </StreamerProvider>
+    </WalletProvider>
+  </StrictMode>,
   root
 );

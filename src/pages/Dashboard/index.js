@@ -9,12 +9,7 @@ import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
 
-function Dashboard({
-  walletFunctions,
-  walletVariables,
-  streamerConfig,
-  setStreamerConfig,
-}) {
+function Dashboard({ streamerConfig, setStreamerConfig }) {
   const { path, url } = useRouteMatch();
 
   return (
@@ -37,8 +32,11 @@ function Dashboard({
               <li className="mb-6">
                 <Link to={`${url}/settings`}>Settings</Link>
               </li>
-              <li>
+              <li className="mb-6">
                 <Link to={`${url}/animation`}>Animation</Link>
+              </li>
+              <li className="mb-6">
+                <Link to="/logout">Logout</Link>
               </li>
             </ul>
           </div>
@@ -52,10 +50,7 @@ function Dashboard({
           <Overview />
         </Route>
         <Route path={`${path}/wallet`}>
-          <Wallet
-            walletFunctions={walletFunctions}
-            walletVariables={walletVariables}
-          />
+          <Wallet />
         </Route>
         <Route path={`${path}/settings`}>
           <Settings
@@ -75,8 +70,6 @@ function Dashboard({
 }
 // Defining property types
 Dashboard.propTypes = {
-  walletFunctions: PropTypes.object,
-  walletVariables: PropTypes.object,
   streamerConfig: PropTypes.object,
   setStreamerConfig: PropTypes.func,
 };

@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 
 const StreamerStateContext = createContext();
 const StreamerUpdateContext = createContext();
@@ -43,6 +44,13 @@ function useStreamer() {
   return [useStreamerState(), useStreamerUpdate()];
 }
 
+function updateMultiple(update, values) {
+  update((streamer) => ({
+    ...streamer,
+    ...values,
+  }));
+}
+
 function updateRestoreHeight(update, restoreHeight) {
   update((streamer) => ({
     ...streamer,
@@ -67,13 +75,10 @@ function updateAnimationSettings(update, animationSettings) {
   }));
 }
 
-export { StreamerProvider, useStreamerState, useStreamerUpdate, useStreamer };
-
-// restoreHeight
-// hashedSeed
-
-// animationSettings.secondPrice
-// animationSettings.fontColor
-// animationSettings.goalProgress
-// animationSettings.sound
-// animationSettings.goal
+export {
+  StreamerProvider,
+  useStreamerState,
+  useStreamerUpdate,
+  useStreamer,
+  updateHashedSeed,
+};

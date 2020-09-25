@@ -1,19 +1,61 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext } from "react";
+import PropTypes from "prop-types";
+
+import useThunkReducer from "../hook/useThunkReducer";
+import monerojs from "../libs/monero";
 
 const WalletStateContext = createContext();
 const WalletDispatchContext = createContext();
 
 function walletReducer(state, action) {
   switch (action.type) {
-    case "":
-      return {};
+    case "OPEN_WALLET":
+      return { ...state, isLoading: true };
+
+    case "CREATE_WALLET":
+      return { ...state, isLoading: true };
+
+    case "SET_WALLET":
+      return { ...state, wallet: action.wallet, isLoading: false };
+
+    case "CLEAR_WALLET":
+      return { ...state, wallet: null };
+
+    case "SET_RESTORE_HEIGHT":
+      return { ...state, restoreHeight: action.restoreHeight };
+
+    case "ERROR":
+      return { ...state, error: action.error, isLoading: false };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
+const isProduction = () => process.env.NODE_ENV === "production";
+const isDevelopment = () => process.env.NODE_ENV === "development";
+
+const withLogger = (reducer) => (state, action) => {
+  const nextState = reducer(state, action);
+
+  if (isDevelopment()) {
+    console.log(action.type, state, nextState);
+  }
+
+  return nextState;
+};
+
 function WalletProvider({ children }) {
-  const [state, dispatch] = useReducer(walletReducer, {});
+  const initialState = {
+    restoreHeight: 0,
+    wallet: null,
+    error: null,
+    isLoading: false,
+  };
+  const [state, dispatch] = useThunkReducer(
+    withLogger(walletReducer),
+    initialState
+  );
 
   return (
     <WalletStateContext.Provider value={state}>
@@ -49,22 +91,54 @@ function useWalletDispatch() {
 }
 
 function useWallet() {
-  return [useCountState(), useCountDispatch()];
+  return [useWalletState(), useWalletDispatch()];
 }
 
-async function updateWallet(dispatch) {
-  dispatch({ type: "start" });
-  dispatch({ type: "finish" });
-  dispatch({ type: "fail" });
+function openWalletFromSeed(dispatch, seed) {
+  dispatch({ type: "OPEN_WALLET" });
+  monerojs
+    .openWalletFromSeed(seed)
+    .then((wallet) => {
+      dispatch({ type: "SET_WALLET", wallet });
+    })
+    .catch((error) => {
+      dispatch({ type: "ERROR", error });
+    });
 }
 
-export { WalletProvider, useWalletState, useWalletDispatch, useWallet };
+function createWallet(dispatch, language) {
+  dispatch({ type: "CREATE_WALLET" });
+  monerojs
+    .createWallet(language)
+    .then((wallet) => {
+      dispatch({ type: "SET_WALLET", wallet });
+    })
+    .catch((error) => {
+      dispatch({ type: "ERROR", error });
+    });
+}
 
-// walletVariables={{ streamerConfig, wallet, primaryAddress }}
-//  walletVariables={{ isSyncActive, streamerConfig, wallet, primaryAddress, percentageSynced, }}
+function closeWallet() {
+  return (dispatch, getState) => {
+    const { wallet } = getState();
 
-// walletVariables.wallet
-// walletVariables.wallet
-// walletVariables.wallet
-// walletVariables.primaryAddress
-// walletVariables.primaryAddress
+    const closeRequests = wallet
+      .getListeners()
+      .map((listener) => wallet.removeListener(listener));
+
+    Promise.all(closeRequests)
+      .then(() => wallet.close())
+      .then(() => dispatch({ type: "CLEAR_WALLET" }))
+      .catch(() => dispatch({ type: "CLEAR_WALLET" }));
+  };
+}
+
+export {
+  WalletProvider,
+  useWalletState,
+  useWalletDispatch,
+  useWallet,
+  openWalletFromSeed,
+  createWallet,
+  closeWallet,
+};

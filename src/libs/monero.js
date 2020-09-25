@@ -23,8 +23,10 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
+    //serverUri: "http://192.168.0.2:38081",
     // serverUri: "http://192.168.0.119:38081",
     serverUri: "http://localhost:38081",
+    //serverUri: "http://stagenet.community.xmr.to:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
@@ -75,67 +77,20 @@ export async function stopSyncing(wallet) {
   // await wallet.removeListener(wallet.getListeners()[0]);
 }
 
-class MyWalletListener extends monerojs.MoneroWalletListener {
-  constructor(
-    setPercentageSynced,
-    setCurrentBlockheight,
-    getNewOutput,
-    getCurrentDonorInfo
-  ) {
-    super();
-    this.setPercentageSynced = setPercentageSynced;
-    this.getNewOutput = getNewOutput;
-    this.setCurrentBlockheight = setCurrentBlockheight;
-    this.getCurrentDonorInfo = getCurrentDonorInfo;
-  }
-  onSyncProgress(height, startHeight, endHeight, percentDone, message) {
-    console.log("Syncing Block " + height + " of " + endHeight);
-    this.setPercentageSynced(
-      Math.round(
-        ((height - startHeight + 1) / (endHeight - startHeight)) * 1000
-      ) / 10.0
-    ); // Round to one decimal
-  }
-  onOutputReceived(output) {
-    if (
-      output.state.tx.state.inTxPool &&
-      output.state.tx.state.isLocked &&
-      output.state.tx.state.isIncoming
-    ) {
-      console.dir("monerojs: onOutputReceived", output);
-      this.getNewOutput({
-        subaddressIndex: output.getSubaddressIndex(),
-        amount: output.getAmount(),
-      });
-    }
-  }
-  onNewBlock(height) {
-    this.setCurrentBlockheight(height);
-  }
-}
-
-class IncomingLockedTxListener extends monerojs.MoneroWalletListener {
-  constructor(handleTx) {
-    super();
-    this.handleTx = handleTx;
-  }
-
-  onOutputReceived(output) {
-    if (
-      output.state.tx.state.inTxPool &&
-      output.state.tx.state.isLocked &&
-      output.state.tx.state.isIncoming
-    ) {
-      this.handleTx({
-        subaddressIndex: output.getSubaddressIndex(),
-        amount: output.getAmount(),
-      });
-    }
-  }
+export async function getTxs(walletWasm) {
+  const query = {
+    // isConfirmed: true,
+  };
+  return await walletWasm.getTxs(query);
 }
 
 export async function generateQrCode(subaddress) {
   return await QRCode.toDataURL(subaddress, { errorCorrectionLevel: "L" });
+}
+
+export function isValidMnemoicLength(seed) {
+  const words = seed.split(" ").filter((word) => word.length);
+  return words.length === 25;
 }
 
 export default {
@@ -148,7 +103,7 @@ export default {
   getMnemonicHash,
   startSyncing,
   stopSyncing,
-  MyWalletListener,
+  getTxs,
   generateQrCode,
-  IncomingLockedTxListener,
+  isValidMnemoicLength,
 };

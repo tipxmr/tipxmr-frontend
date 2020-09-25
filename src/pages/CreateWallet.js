@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-import Loading from "../components/Loading";
 import monerojs from "../libs/monero";
+import Loading from "../components/Loading";
+import { Button } from "../components";
 
 const defaultStateSeed = "";
 const languages = [
+  "Dutch",
   "English",
-  "German",
-  "French",
   "Esperanto",
-  "Spanish",
-  "Russian",
+  "French",
+  "German",
   "Italian",
   "Japanese",
-  "Dutch",
   "Portuguese",
+  "Russian",
+  "Spanish",
 ];
 
 function convertFlag(language) {
@@ -35,7 +37,7 @@ function convertFlag(language) {
       return "🇮🇹";
     case "Japanese":
       return "🇯🇵";
-    case "Protuguese":
+    case "Portuguese":
       return "🇵🇹";
     case "Dutch":
       return "🇳🇱";
@@ -44,9 +46,9 @@ function convertFlag(language) {
   }
 }
 
-function LanguageSelector({ languages, onChange }) {
+function LanguageSelector({ languages, language, onChange }) {
   // Build list of language items, alphabetically sorted
-  const languageItems = Array.from(languages.sort()).map((language) => {
+  const languageItems = languages.map((language) => {
     return (
       <option key={language} value={language}>
         {convertFlag(language) + " " + language}
@@ -65,7 +67,7 @@ function LanguageSelector({ languages, onChange }) {
       <select
         id="languages"
         name="languages"
-        defaultValue="English"
+        value={language}
         onChange={onChange}
         className="ml-4 p-2 block appearance-none w-full bg-gray-200 border border-orange-400 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
       >
@@ -76,44 +78,39 @@ function LanguageSelector({ languages, onChange }) {
 }
 // Defining property types
 LanguageSelector.propTypes = {
+  language: PropTypes.string,
   languages: PropTypes.array,
   onChange: PropTypes.func,
 };
 
+const defaultLanguage = languages[1];
+
 function CreateWallet() {
   // states
-  const [language, setLanguage] = useState("English");
-  const [seed, setSeed] = useState(defaultStateSeed);
+  const [language, setLanguage] = useState(defaultLanguage);
+  const [seed, setSeed] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // this useEffect gets triggered, when render() is executed
+  function createWallet(lang) {
+    setIsLoading(true);
+    monerojs
+      .createWallet(lang)
+      .then(monerojs.getMnemonic)
+      .then(setSeed)
+      .then(() => setIsLoading(false));
+  }
+
   useEffect(() => {
-    // but our code gets only executed, when there is still the default value of the uninitialized seed
-    // TODO: Refactor these into one
-    if (seed === defaultStateSeed) {
-      setIsLoading(true);
-      monerojs
-        .createWallet("English")
-        .then(monerojs.getMnemonic)
-        .then(setSeed)
-        .then(() => setIsLoading(false));
-    }
+    createWallet(defaultLanguage);
   }, []);
 
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
-    if (seed !== defaultStateSeed) {
-      setIsLoading(true);
-      monerojs
-        .createWallet(language)
-        .then(monerojs.getMnemonic)
-        .then(setSeed)
-        .then(() => setIsLoading(false));
-    }
+    createWallet(language);
   }, [language]);
 
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
-  async function onChange(event) {
+  function onChange(event) {
     setLanguage(event.target.value);
   }
 
@@ -128,6 +125,7 @@ function CreateWallet() {
         </h2>
         <div className="mx-auto w-1/2 md:w-1/4 mt-10">
           <LanguageSelector
+            language={language}
             languages={languages}
             onChange={onChange}
             align="middle"
@@ -161,9 +159,24 @@ function CreateWallet() {
         </div>
 
         <Link to="/openwallet">
-          <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold py-2 px-4 rounded mt-15">
+          <button
+            disabled={isLoading}
+            className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold py-2 px-4 rounded mt-15 disabled:opacity-75"
+          >
+            {isLoading ? (
+              <FaSpinner className="inline mr-2 animate-spin" />
+            ) : null}
             Login
           </button>
+
+          <Button
+            buttonWidth="w-auto"
+            disabled={isLoading}
+            loading={isLoading}
+            rounded="rounded"
+          >
+            Login
+          </Button>
         </Link>
       </div>
     </div>

@@ -21,7 +21,7 @@ function Success({ displayName, donor, message, amount }) {
         <div className="font-normal mt-6 border-t-4 border-dotted">
           <h2 className="pt-6">
             You sent <span className="font-black">{amount} XMR</span> to
-            <span className="font-black">{displayName}</span>{" "}
+            <span className="font-black">{" " + displayName}</span>{" "}
           </h2>
           <h2>with the message:</h2>
           <h2 className="pt-4 italic">{message}</h2>

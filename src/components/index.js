@@ -16,3 +16,4 @@ export { default as Button } from "./Button";
 export { default as Progressbar } from "./Progressbar";
 export { default as SyncBanner } from "./SyncBanner";
 export { default as EnterMessage } from "./EnterMessage";
+export { default as PrivateRoute } from "./PrivateRoute";

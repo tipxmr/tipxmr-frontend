@@ -1,52 +1,106 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-
+import { Progressbar, SyncBanner } from "../../components";
+import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
+import { useWalletState } from "../../context/wallet";
 import monerojs from "../../libs/monero";
 
-import { Progressbar, SyncBanner } from "../../components";
+function Wallet() {
+  const {
+    isActive,
+    isDone,
+    progress,
+    start,
+    stop,
+  } = useWalletSynchronisation();
 
-function Wallet({ walletFunctions, walletVariables }) {
-  const [isSynced, setIsSynced] = useState(false);
+  const wallet = useWalletState();
 
-  function syncHandler(e) {
-    if (walletVariables.isSyncActive) {
-      monerojs.stopSyncing(walletVariables.wallet);
-      walletFunctions.setIsSyncActive(false);
-      setIsSynced(false);
+  const [tableData, setTableData] = useState(null);
+  const [totalTransactions, setTotalTransactions] = useState(0);
+  const [lockedBalance, setLockedBalance] = useState(0);
+  const [unlockedBalance, setUnlockedBalance] = useState(0);
+
+  function onClick() {
+    if (isActive) {
+      stop();
     } else {
-      walletFunctions.syncWallet();
-      checkIsSynced();
+      start();
     }
   }
 
-  function checkIsSynced() {
-    if (walletVariables.percentageSynced > 99.9) {
-      setIsSynced(true);
-    } else {
-      setIsSynced(false);
-    }
+  async function fillTable(txs) {
+    // amount, height, date, confirmations, incoming/outgoing
+    const data = await txs
+      .slice(0)
+      .reverse() // because table should show newest tx first
+      .map((tx, index) => {
+        const { height, timestamp } = tx.state.block.state;
+        const { numConfirmations, isIncoming } = tx.state;
+        let amount = null;
+        const date = new Date(timestamp * 1000).toLocaleString();
+        if (isIncoming) {
+          amount = tx.state.incomingTransfers[0].state.amount;
+          amount = parseFloat(amount) / Math.pow(10, 12);
+        } else {
+          amount = tx.state.outgoingTransfers[0].state.amount;
+          amount = parseFloat(amount) / Math.pow(10, 12);
+        }
+        return (
+          <tr key={index}>
+            <td className="border px-4 py-2">{amount} XMR</td>
+            <td className="border px-4 py-2">{height}</td>
+            <td className="border px-4 py-2">{date}</td>
+            <td className="border px-4 py-2">{numConfirmations}</td>
+          </tr>
+        );
+      });
+    setTableData(data);
   }
+
   useEffect(() => {
-    checkIsSynced();
-  }, [walletVariables.percentageSynced]);
+    if (isDone) {
+      // get all transactions
+      monerojs.getTxs(wallet.wallet).then((txs) => {
+        // fill the table with data
+        fillTable(txs);
+        // Set number of total transactions
+        setTotalTransactions(txs.length);
+        // Set unlocked Balance
+        wallet.wallet
+          .getUnlockedBalance()
+          .then((bigInt) => {
+            return parseFloat(bigInt) / Math.pow(10, 12);
+          })
+          .then(setUnlockedBalance);
+        // Set locked Balance
+        wallet.wallet
+          .getBalance()
+          .then((bigInt) => {
+            return parseFloat(bigInt) / Math.pow(10, 12);
+          })
+          .then(setLockedBalance);
+      });
+    }
+  }, [isDone, wallet.wallet]);
 
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
-        <SyncButton synced={isSynced} />
+        <SyncBanner synced={isDone} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Your Balance</p>
-            <div className="text-4xl my-2">1337 XMR</div>
+            <div className="text-2xl my-2">unlocked: {unlockedBalance} XMR</div>
+            <div className="text-2xl my-2">locked: {lockedBalance} XMR</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Total Transactions</p>
-            <div className="text-4xl my-2">420</div>
+            <div className="text-6xl my-2">{totalTransactions}</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
@@ -54,9 +108,9 @@ function Wallet({ walletFunctions, walletVariables }) {
             <p>Sync Status</p>
             <div className="text-4xl my-2">
               <Progressbar
-                percentage={walletVariables.percentageSynced}
-                isSyncActive={walletVariables.isSyncActive}
-                isSynced={isSynced}
+                percentage={progress}
+                isSyncActive={isActive}
+                isSynced={isDone}
               />
             </div>
           </div>
@@ -64,13 +118,12 @@ function Wallet({ walletFunctions, walletVariables }) {
       </div>
       <div className="mt-12 mx-auto w-3/4">
         <button
-          onClick={syncHandler}
+          onClick={onClick}
           className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded"
         >
-          {walletVariables.isSyncActive ? "Stop Sync" : "Start Sync"}
+          {isActive ? "Stop Sync" : "Start Sync"}
         </button>
         <h2 className="text-3xl text-center my-3">Transaction History</h2>
-        {/* Dynamische Tabelle nach dieser Anleitung */}
         <table className="table-auto border-4 mx-auto">
           <thead>
             <tr className="text-xl">
@@ -80,17 +133,13 @@ function Wallet({ walletFunctions, walletVariables }) {
               <th className="px-4 py-2">Confirmations</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>{tableData}</tbody>
         </table>
       </div>
     </div>
   );
 }
 
-// Defining property types
-Wallet.propTypes = {
-  walletFunctions: PropTypes.object,
-  walletVariables: PropTypes.object,
-};
+Wallet.propTypes = {};
 
 export default Wallet;

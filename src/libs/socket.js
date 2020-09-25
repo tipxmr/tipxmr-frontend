@@ -40,6 +40,8 @@ function emitPaymentRecieved(newDonation) {
             amount: output.amount,
             donor: donationsInfo.donor,
             message: donationsInfo.message,
+            userName: donationsInfo.userName,
+            displayName: donationsInfo.displayName,
           }; */
   socketStreamer.emit("paymentRecieved", newDonation);
 }
