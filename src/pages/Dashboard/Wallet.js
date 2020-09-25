@@ -17,6 +17,7 @@ function Wallet() {
 
   const [tableData, setTableData] = useState(null);
   const [totalTransactions, setTotalTransactions] = useState(0);
+  const [lockedBalance, setLockedBalance] = useState(0);
   const [unlockedBalance, setUnlockedBalance] = useState(0);
 
   function onClick() {
@@ -64,13 +65,20 @@ function Wallet() {
         fillTable(txs);
         // Set number of total transactions
         setTotalTransactions(txs.length);
-        // Set Balance
+        // Set unlocked Balance
         wallet.wallet
           .getUnlockedBalance()
           .then((bigInt) => {
             return parseFloat(bigInt) / Math.pow(10, 12);
           })
           .then(setUnlockedBalance);
+        // Set locked Balance
+        wallet.wallet
+          .getBalance()
+          .then((bigInt) => {
+            return parseFloat(bigInt) / Math.pow(10, 12);
+          })
+          .then(setLockedBalance);
       });
     }
   }, [isDone, wallet.wallet]);
@@ -85,13 +93,14 @@ function Wallet() {
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Your Balance</p>
-            <div className="text-4xl my-2">unlocked: {unlockedBalance} XMR</div>
+            <div className="text-2xl my-2">unlocked: {unlockedBalance} XMR</div>
+            <div className="text-2xl my-2">locked: {lockedBalance} XMR</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Total Transactions</p>
-            <div className="text-4xl my-2">{totalTransactions}</div>
+            <div className="text-6xl my-2">{totalTransactions}</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
