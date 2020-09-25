@@ -26,13 +26,14 @@ Donations are accepted on a 0-conf basis, meaning they will be queued up to disp
 
 It is surprising how easy paying with Monero actually is. Much easier than paying with PayPal or a bank. Also, way more private and cheaper.
 
-# Getting Started
-
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install the dependencies for TipXMR.
 
 ```bash
+git clone https://github.com/hundehausen/tipxmr-backend.git
+npm install
+npm start
 git clone https://github.com/hundehausen/tipxmr.git
 npm install
 npm start
