@@ -2,7 +2,7 @@ import React from "react";
 
 function InputField({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
-    stateSetter(e.target.name, e.target.value);
+    stateSetter(e.target.value);
   }
 
   return (

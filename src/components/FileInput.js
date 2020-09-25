@@ -3,7 +3,7 @@ import React from "react";
 // TODO Make sure that the file is actually saved (attached to the PouchDB)
 function FileInput({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
-    stateSetter(e.target.name, e.target.value);
+    stateSetter(e.target.value);
   }
 
   return (

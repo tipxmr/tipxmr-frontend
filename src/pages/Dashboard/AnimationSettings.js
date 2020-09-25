@@ -7,7 +7,9 @@ import {
   FloatInput,
   CheckboxField,
   Button,
-} from "../../components";
+  DropdownField,
+} from "~/components";
+const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
@@ -18,6 +20,54 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
       animationSettings: { ...prevState.animationSettings, [key]: value },
     }));
   }
+  // TODO separate states for all settings
+  const [secondPrice, setSecondPrice] = useState(
+    streamerConfig.animationSettings.secondPrice
+  );
+  const [charLimit, setCharLimit] = useState(
+    streamerConfig.animationSettings.charLimit
+  );
+  const [fontColor, setFontColor] = useState(
+    streamerConfig.animationSettings.fontColor
+  );
+  const [minAmount, setMinAmount] = useState(
+    streamerConfig.animationSettings.minAmount
+  );
+  const [goal, setGoal] = useState(streamerConfig.animationSettings.goal);
+  const [showGoal, setShowGoal] = useState(
+    streamerConfig.animationSettings.showGoal
+  );
+  const [gifs, setGifs] = useState(streamerConfig.animationSettings.gifs);
+  const [gifsMinAmount, setGifsMinAmount] = useState(
+    streamerConfig.animationSettings.gifsMinAmount
+  );
+
+  const [fontShadow, setFontShadow] = useState(
+    streamerConfig.animationSettings.fontShadow
+  );
+  const [sound, setSound] = useState(streamerConfig.animationSettings.sound);
+  const [bgImg, setBgImg] = useState(streamerConfig.animationSettings.bgImg);
+  const [fontSize, setFontSize] = useState(
+    streamerConfig.animationSettings.fontSize
+  );
+
+  function submit() {
+    console.log(
+      gifsMinAmount,
+      secondPrice,
+      charLimit,
+      fontColor,
+      minAmount,
+      goal,
+      showGoal,
+      gifs,
+      fontShadow,
+      sound,
+      bgImg
+    );
+  }
+  // TODO onSubmit function on button to log
+
   // fontSize (Dropdown)
   // gifsMinAmount
   // charLimit
@@ -32,75 +82,80 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           <FloatInput
             name="secondPrice"
             labelName="The price of 1 second (in XMR)"
-            placeholderName={proxyState.animationSettings.secondPrice}
-            stateSetter={setAnimationSettings}
+            placeholderName={secondPrice}
+            stateSetter={setSecondPrice}
           />
           <FloatInput
             name="charLimit"
             labelName="Maximum characters allowed for messages"
-            placeholderName={proxyState.animationSettings.charLimit}
-            stateSetter={setAnimationSettings}
+            placeholderName={charLimit}
+            stateSetter={setCharLimit}
           />
 
           {/* TODO Create a new component to pick the color */}
           <InputField
             name="fontColor"
             labelName="Hexcode for font color"
-            placeholderName={proxyState.animationSettings.fontColor}
-            stateSetter={setAnimationSettings}
+            placeholderName={fontColor}
+            stateSetter={setFontColor}
           />
           <FloatInput
             name="minAmount"
             labelName="Minimum amount of a donation (in XMR)"
-            placeholderName={proxyState.animationSettings.minAmount}
-            stateSetter={setAnimationSettings}
+            placeholderName={minAmount}
+            stateSetter={setMinAmount}
           />
           <FloatInput
             name="goal"
             labelName="Set a donation goal for your stream (in XMR)"
-            placeholderName={proxyState.animationSettings.goal}
-            stateSetter={setAnimationSettings}
+            placeholderName={goal}
+            stateSetter={setGoal}
           />
           <CheckboxField
             name="showGoal"
             labelName="Display donation goal in stream"
-            defaultChecked={proxyState.animationSettings.showGoal}
-            stateSetter={setAnimationSettings}
+            defaultChecked={showGoal}
+            stateSetter={setShowGoal}
           />
           <CheckboxField
             name="gifs"
             labelName="Allow users to send gifs"
-            defaultChecked={proxyState.animationSettings.gifs}
-            stateSetter={setAnimationSettings}
+            defaultChecked={gifs}
+            stateSetter={setGifs}
           />
           <FloatInput
             name="gifsMinAmount"
             labelName="Minimum amount to send gifs"
-            placeholderName={proxyState.animationSettings.gifsMinAmount}
-            stateSettter={setAnimationSettings}
+            placeholderName={gifsMinAmount}
+            stateSetter={setGifsMinAmount}
           />
           <CheckboxField
             name="fontShadow"
             labelName="Turn on text shadow"
-            defaultChecked={proxyState.animationSettings.fontShadow}
-            stateSetter={setAnimationSettings}
+            defaultChecked={fontShadow}
+            stateSetter={setFontShadow}
           />
           {/* TODO Create a new Component for files */}
           <FileInput
             name="sound"
             labelName="Upload a custom MP3 for donations"
-            placeholderName={proxyState.animationSettings.sound}
-            stateSetter={setAnimationSettings}
+            placeholderName={sound}
+            stateSetter={setSound}
           />
           <FileInput
             name="bgImg"
             labelName="Upload custom background image for donations"
-            placeholderName={proxyState.animationSettings.bgImg}
-            stateSetter={setAnimationSettings}
+            placeholderName={bgImg}
+            stateSetter={setBgImg}
+          />
+          <DropdownField
+            options={fontSizeOptions}
+            labelText="Select a font size"
+            selected={fontSize}
+            stateStter={setFontSize}
           />
         </div>
-
-        <Button buttonText="Save" />
+        <Button onClick={() => submit()}>Save</Button>
       </div>
     </div>
   );
