@@ -1,3 +1,4 @@
+import { call } from "file-loader";
 import io from "socket.io-client";
 const socketDonator = io("ws://localhost:3000/donator");
 const socketStreamer = io("ws://localhost:3000/streamer");
@@ -71,6 +72,13 @@ function onPaymentConfirmation(callback) {
   });
 }
 
+function onGetOnlineStreamer(callback) {
+  socketDonator.on("emitOnlineStreamers", (onlineStreamers) => {
+    console.log("online Streamers:", onlineStreamers);
+    callback(onlineStreamers);
+  });
+}
+
 // socket.emit functions
 function emitGetStreamer(userName) {
   socketDonator.emit("getStreamer", userName);
@@ -86,6 +94,10 @@ function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
   });
 }
 
+function emitGetOnlineStreamers() {
+  socketDonator.emit("getOnlineStreamers");
+}
+
 export default {
   emitGetStreamer,
   emitGetStreamerConfig,
@@ -96,9 +108,10 @@ export default {
   emitSubaddressToBackend,
   onRecieveStreamerFromBackend,
   onSubaddressToDonator,
-  //onPaymentRecieved,
   onPaymentConfirmation,
   onCreateSubaddress,
+  onGetOnlineStreamer,
   emitGetSubaddress,
+  emitGetOnlineStreamers,
   socketStreamer,
 };

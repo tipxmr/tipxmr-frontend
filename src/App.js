@@ -84,8 +84,6 @@ function App() {
     },
   });
 
-  const testArray = [streamerConfig];
-
   useEffect(() => {
     if (streamerConfig && streamerConfig.restoreHeight) {
       dispatch({
@@ -181,8 +179,7 @@ function App() {
               />
             </Route>
             <Route path="/streamerpage" exact>
-              {/* Pass an array of streamer objects */}
-              <StreamerPage testArray={testArray} />
+              <StreamerPage />
             </Route>
             <Route path="/animation" exact>
               <Animation streamerConfig={streamerConfig} />
