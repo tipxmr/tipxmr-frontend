@@ -1,5 +1,9 @@
 # TipXMR - The Livestream Tip Bot for OBS
 
+<p align="center">
+  <img width="1000" height="200" src="https://raw.githubusercontent.com/hundehausen/tipxmr/Readme/src/images/tipxmr-live.png">
+</p>
+
 TipXMR is a web based application that let's you accept donations in your livestream.
 
 ## The Goal
@@ -54,7 +58,7 @@ For the streamer the process is as follows:
 - Tipxmr.live will generate a seed in your browser :clipboard:
 - Go to the settings and enter your streaming URL :tv:
 - Customize your other settings such as colors and donation goals :wrench:
-- Use our animation URL that we provide and use it as browser input source in [OBS](https://obsproject.com/) :computer:
+- Use our animation URL that we provide and use it as browser input source in [OBS](https://obsproject.com/) :fireworks:
 - Keep your browser open to recieve donations :money_with_wings:
 
 ## Who we are
