@@ -79,7 +79,7 @@ export async function stopSyncing(wallet) {
 
 export async function getTxs(walletWasm) {
   const query = {
-    isConfirmed: true,
+    // isConfirmed: true,
   };
   return await walletWasm.getTxs(query);
 }

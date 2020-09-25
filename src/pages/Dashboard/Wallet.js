@@ -16,6 +16,8 @@ function Wallet() {
   const wallet = useWalletState();
 
   const [tableData, setTableData] = useState(null);
+  const [totalTransactions, setTotalTransactions] = useState(0);
+  const [unlockedBalance, setUnlockedBalance] = useState(0);
 
   function onClick() {
     if (isActive) {
@@ -56,7 +58,20 @@ function Wallet() {
 
   useEffect(() => {
     if (isDone) {
-      monerojs.getTxs(wallet.wallet).then(fillTable);
+      // get all transactions
+      monerojs.getTxs(wallet.wallet).then((txs) => {
+        // fill the table with data
+        fillTable(txs);
+        // Set number of total transactions
+        setTotalTransactions(txs.length);
+        // Set Balance
+        wallet.wallet
+          .getUnlockedBalance()
+          .then((bigInt) => {
+            return parseFloat(bigInt) / Math.pow(10, 12);
+          })
+          .then(setUnlockedBalance);
+      });
     }
   }, [isDone, wallet.wallet]);
 
@@ -70,13 +85,13 @@ function Wallet() {
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Your Balance</p>
-            <div className="text-4xl my-2">1337 XMR</div>
+            <div className="text-4xl my-2">unlocked: {unlockedBalance} XMR</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
             <p>Total Transactions</p>
-            <div className="text-4xl my-2">420</div>
+            <div className="text-4xl my-2">{totalTransactions}</div>
           </div>
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
