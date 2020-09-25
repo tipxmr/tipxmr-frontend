@@ -12,6 +12,9 @@ function StreamIcon({ type }) {
   const Icon = iconLookup[type];
   return <Icon />;
 }
+StreamIcon.propTypes = {
+  type: PropTypes.oneOf(["youtube", "twitch"]),
+};
 
 function Funding({ streamer }) {
   if (streamer.showGoal === true) {
@@ -27,6 +30,10 @@ function Funding({ streamer }) {
   }
   return <p>Something went wrong</p>;
 }
+Funding.propTypes = {
+  streamer: PropTypes.object,
+};
+
 function StreamerCard({ streamer }) {
   return (
     <div className="mx-4">

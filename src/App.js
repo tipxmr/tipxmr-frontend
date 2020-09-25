@@ -85,18 +85,6 @@ function App() {
     },
   });
 
-  // For testing the streamerPage
-  const testArray = [streamerConfig];
-  /* Example for donorInfo object: {
-    donatorSocketId: "5NXW3Rj1eKRqjE9sAAOw"
-    donor: "Grischa"
-    hashedSeed: null
-    message: "Test 6"
-    displayName: "MoneroMumble"
-    subaddress: "76ABPQ3e2GmVAkDf7BQwXcFb3QCfwG2osQpJo8J3WVVoa4ZrXzPxoEm9fPq7nHdFJMZ32q7B5qGNbBJCiaSBzSAJ1wgFwJi"
-    }
-    */
-
   function getNewOutput(output) {
     console.log("getNewOutput aufgerufen, output:", output);
     monerojs
@@ -210,8 +198,7 @@ function App() {
             </Route>
             {/* For testing purposes have a page for all online streamers */}
             <Route path="/streamerpage" exact>
-              {/* Pass an array of streamer objects */}
-              <StreamerPage testArray={testArray} />
+              <StreamerPage />
             </Route>
 
             <Route path="/openwallet" exact>

@@ -1,3 +1,4 @@
+import { call } from "file-loader";
 import io from "socket.io-client";
 const socketDonator = io("ws://localhost:3000/donator");
 const socketStreamer = io("ws://localhost:3000/streamer");
@@ -62,22 +63,17 @@ function onSubaddressToDonator(callback) {
   socketDonator.on("subaddressToDonator", (data) => callback(data.subaddress));
 }
 
-/* function onPaymentRecieved(callback) {
-  newDonation = {
-            subaddress: subaddress,
-            amount: output.amount,
-            donor: donationsInfo.donor,
-            message: donationsInfo.message,
-          }; 
-  socketDonator.on("paymentRecieved", (newDonation) => {
-    callback(newDonation);
-  });
-} */
-
 // donator recieves payment confirmation
 function onPaymentConfirmation(callback) {
   socketDonator.on("paymentConfirmation", (confirmation) => {
     callback(confirmation);
+  });
+}
+
+function onGetOnlineStreamer(callback) {
+  socketDonator.on("emitOnlineStreamers", (onlineStreamers) => {
+    console.log("online Streamers:", onlineStreamers);
+    callback(onlineStreamers);
   });
 }
 
@@ -96,6 +92,10 @@ function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
   });
 }
 
+function emitGetOnlineStreamers() {
+  socketDonator.emit("getOnlineStreamers");
+}
+
 export default {
   emitGetStreamer,
   emitGetStreamerConfig,
@@ -106,9 +106,10 @@ export default {
   emitSubaddressToBackend,
   onRecieveStreamerFromBackend,
   onSubaddressToDonator,
-  //onPaymentRecieved,
   onPaymentConfirmation,
   onCreateSubaddress,
+  onGetOnlineStreamer,
   emitGetSubaddress,
+  emitGetOnlineStreamers,
   socketStreamer,
 };
