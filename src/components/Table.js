@@ -16,7 +16,11 @@ function Table({ headers, data }) {
             })}
           </tr>
         </thead>
-        <tbody>{tableData}</tbody>
+        <tbody>
+          {data.map((value, index) => {
+            return <tr key={index}>value</tr>;
+          })}
+        </tbody>
       </table>
     </div>
   );
