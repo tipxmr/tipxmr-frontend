@@ -29,16 +29,16 @@ function Payment({ displayName, donor, message, subaddress, getSubaddress }) {
 
   return (
     <div className="flex flex-grow justify-center text-center">
-      <div className="text-center my-auto">
+      <div className="px-3 text-center my-auto">
         <span className="text-2xl">
           Hey {donor}, send any amount of Monero (XMR) to
         </span>
         <br />
         <img className="mx-auto w-400px h-auto" src={qrcode} alt="qr code" />
         <a href={"monero:" + subaddress} onClick={handleClick}>
-          <pre className="text-center overlfow-x-auto text-xs">
+          <div className="text-center overlfow-x-auto break-all text-xs">
             {subaddress}
-          </pre>
+          </div>
         </a>
         <h2 className="mt-4">Your Message will be:</h2>
         <span className="italic">{message}</span>

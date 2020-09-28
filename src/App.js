@@ -45,8 +45,8 @@ function App() {
     },
     stream: {
       url: "mydirtyhobby.com",
-      platform: "twitch",
-      language: "🇩🇪",
+      platform: "Twitch", // capital letter
+      language: "German", // capital letter
       description: "I am a great streamer.",
       category: "politics",
     },

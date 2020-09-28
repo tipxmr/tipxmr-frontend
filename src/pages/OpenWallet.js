@@ -24,7 +24,10 @@ function WalletUnlocked() {
 WalletUnlocked.propTypes = {};
 
 function OpenWallet({ streamerConfig, setStreamerConfig }) {
-  const [seed, setSeed] = useState("Enter your seed");
+  // hardcoding test seed
+  const [seed, setSeed] = useState(
+    "byline initiate pizza rift saucepan toilet gills oscar younger evolved degrees wounded sewage grunt enjoy adept humid rash foes roster quote island dormant enough rift"
+  );
   const [wallet, dispatch] = useWallet();
 
   const { isLoading } = wallet;
