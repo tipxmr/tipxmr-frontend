@@ -43,6 +43,12 @@ function Nav() {
               Dashboard
             </Link>
             <Link
+              to="/streamerpage"
+              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              Who is online?
+            </Link>
+            <Link
               to="/faq"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
             >

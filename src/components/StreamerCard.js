@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FaTwitch, FaYoutube } from "react-icons/fa";
 import tipxmr from "../images/tipxmr-button.png";
+import { Link } from "react-router-dom";
 
 const iconLookup = {
   youtube: FaYoutube,
@@ -28,7 +29,7 @@ function Funding({ streamer }) {
       </div>
     );
   }
-  return <p>Something went wrong</p>;
+  return null;
 }
 Funding.propTypes = {
   streamer: PropTypes.object,
@@ -57,18 +58,19 @@ function StreamerCard({ streamer }) {
             <p className="p-2">{streamer.stream.description}</p>
 
             <Funding streamer={streamer} />
-            <div className="flex justify-end">
+            <div className="flex justify-center">
               <span className="px-2 py-1 text-xs tracking-wide rounded-full bg-xmrgray-darker text-gray-200">
                 #{streamer.stream.category}
               </span>
             </div>
           </div>
           <div className="text-center w-full mx-auto my-auto text-gray-700">
-            {/* Link to the streamers tipxmr live donation mask */}
-            <img
-              src={tipxmr}
-              className="mx-auto h-auto w-32 shadow-md rounded transform hover:scale-110"
-            />
+            <Link to={"/donate/" + streamer.userName}>
+              <img
+                src={tipxmr}
+                className="mx-auto h-auto w-32 shadow-md rounded transform hover:scale-110"
+              />
+            </Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { call } from "file-loader";
 import io from "socket.io-client";
 const socketDonator = io("ws://localhost:3000/donator");
 const socketStreamer = io("ws://localhost:3000/streamer");
