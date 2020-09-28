@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket";
