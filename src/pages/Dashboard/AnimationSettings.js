@@ -12,24 +12,14 @@ import { useStreamer, updateAnimationSettings } from "../../context/streamer";
 
 function AnimationSettings() {
   const [streamerConfig, updateStreamerConfig] = useStreamer();
-  // ----- Old state Setting; most likely not needed anymore-----
-  // const [proxyState, setProxyState] = useState({ ...streamerConfig });
-  // function setAnimationSettings(key, value) {
-  //   // always previous state
-  //   setProxyState((prevState) => ({
-  //     ...prevState,
-  //     animationSettings: { ...prevState.animationSettings, [key]: value },
-  //   }));
-  // }
+
   const [secondPrice, setSecondPrice] = useState(
     streamerConfig.animationSettings.secondPrice
   );
   const [charLimit, setCharLimit] = useState(
     streamerConfig.animationSettings.charLimit
   );
-  const [fontColor, setFontColor] = useState(
-    streamerConfig.animationSettings.fontColor
-  );
+
   const [minAmount, setMinAmount] = useState(
     streamerConfig.animationSettings.minAmount
   );
@@ -41,15 +31,17 @@ function AnimationSettings() {
   const [gifsMinAmount, setGifsMinAmount] = useState(
     streamerConfig.animationSettings.gifsMinAmount
   );
-
+  const [fontSize, setFontSize] = useState(
+    streamerConfig.animationSettings.fontSize
+  );
+  const [fontColor, setFontColor] = useState(
+    streamerConfig.animationSettings.fontColor
+  );
   const [fontShadow, setFontShadow] = useState(
     streamerConfig.animationSettings.fontShadow
   );
   const [sound, setSound] = useState(streamerConfig.animationSettings.sound);
   const [bgImg, setBgImg] = useState(streamerConfig.animationSettings.bgImg);
-  const [fontSize, setFontSize] = useState(
-    streamerConfig.animationSettings.fontSize
-  );
 
   const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
@@ -58,12 +50,13 @@ function AnimationSettings() {
       gifsMinAmount,
       secondPrice,
       charLimit,
+      fontSize,
       fontColor,
+      fontShadow,
       minAmount,
       goal,
       showGoal,
       gifs,
-      fontShadow,
       sound,
       bgImg,
     };
