@@ -8,7 +8,7 @@ import {
   Button,
   DropdownField,
 } from "~/components";
-import { useStreamer } from "../../context/streamer";
+import { useStreamer, updateAnimationSettings } from "../../context/streamer";
 
 function AnimationSettings() {
   const [streamerConfig, updateStreamerConfig] = useStreamer();
