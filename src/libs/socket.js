@@ -48,6 +48,10 @@ function emitSubaddressToBackend(newDonorInfo) {
   socketStreamer.emit("subaddressToBackend", newDonorInfo);
 }
 
+function emitUpdateOnlineStatus(hashedSeed, newOnlineStatus) {
+  socketStreamer.emit("updateOnlineStatus", { hashedSeed, newOnlineStatus });
+}
+
 // ===============================================================
 // Donator Functions
 // ===============================================================
@@ -101,6 +105,7 @@ export default {
   emitGetStreamerConfig,
   onRecieveStreamerConfig,
   emitUpdateStreamerConfig,
+  emitUpdateOnlineStatus,
   emitStreamerInfo,
   emitPaymentRecieved,
   emitSubaddressToBackend,

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Progressbar, SyncBanner } from "../../components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
+import { useStreamer } from "../../context/streamer";
 import monerojs from "../../libs/monero";
+import socketio from "../../libs/socket";
 
 function Wallet() {
   const {
@@ -14,6 +16,7 @@ function Wallet() {
   } = useWalletSynchronisation();
 
   const wallet = useWalletState();
+  const [streamerConfig, updateStreamerConfig] = useStreamer();
 
   const [tableData, setTableData] = useState(null);
   const [totalTransactions, setTotalTransactions] = useState(0);
@@ -80,8 +83,13 @@ function Wallet() {
           })
           .then(setLockedBalance);
       });
+      // set Online status to true
+      socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, true);
+    } else {
+      // set Online status to false
+      socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, false);
     }
-  }, [isDone, wallet.wallet]);
+  }, [isDone, wallet.wallet, streamerConfig.hashedSeed]);
 
   return (
     <div className="h-full">
