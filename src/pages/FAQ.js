@@ -1,6 +1,6 @@
 import React from "react";
 import { Faqblock } from "../components";
-import { faqs } from "~/pages/faqdata";
+import { faqs } from "~/data/faqdata";
 
 function FAQ() {
   return (

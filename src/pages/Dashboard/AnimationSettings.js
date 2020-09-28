@@ -9,18 +9,17 @@ import {
   Button,
   DropdownField,
 } from "~/components";
-const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
 function AnimationSettings({ streamerConfig, setStreamerConfig }) {
-  const [proxyState, setProxyState] = useState({ ...streamerConfig });
-  function setAnimationSettings(key, value) {
-    // always previous state
-    setProxyState((prevState) => ({
-      ...prevState,
-      animationSettings: { ...prevState.animationSettings, [key]: value },
-    }));
-  }
-  // TODO separate states for all settings
+  // ----- Old state Setting; most likely not needed anymore-----
+  // const [proxyState, setProxyState] = useState({ ...streamerConfig });
+  // function setAnimationSettings(key, value) {
+  //   // always previous state
+  //   setProxyState((prevState) => ({
+  //     ...prevState,
+  //     animationSettings: { ...prevState.animationSettings, [key]: value },
+  //   }));
+  // }
   const [secondPrice, setSecondPrice] = useState(
     streamerConfig.animationSettings.secondPrice
   );
@@ -51,7 +50,11 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
     streamerConfig.animationSettings.fontSize
   );
 
+  const fontSizeOptions = ["small", "medium", "large", "extra large"];
+
   function submit() {
+    // for testing purposes only
+    // TODO Send information to the backend
     console.log(
       gifsMinAmount,
       secondPrice,
@@ -66,11 +69,6 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
       bgImg
     );
   }
-  // TODO onSubmit function on button to log
-
-  // fontSize (Dropdown)
-  // gifsMinAmount
-  // charLimit
   return (
     <div className="h-full text-xmrgray-darker">
       <div className="mx-auto">
@@ -78,6 +76,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
           Change your Animation:
         </div>
 
+        <form></form>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <FloatInput
             name="secondPrice"
@@ -135,7 +134,6 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
             defaultChecked={fontShadow}
             stateSetter={setFontShadow}
           />
-          {/* TODO Create a new Component for files */}
           <FileInput
             name="sound"
             labelName="Upload a custom MP3 for donations"

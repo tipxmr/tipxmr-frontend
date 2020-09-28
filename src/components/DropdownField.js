@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-// default value for dropdown
-
 function DropdownField({ options, labelText, stateSetter, selected }) {
-  // Build list of language items, alphabetically sorted
-  // add some eyecandy to the option
-
   const menuItems = options.map((option) => {
     return (
       <option key={option} value={option}>
@@ -35,7 +30,7 @@ function DropdownField({ options, labelText, stateSetter, selected }) {
     </div>
   );
 }
-// Defining property types
+
 DropdownField.propTypes = {
   options: PropTypes.array,
   labelText: PropTypes.string,
