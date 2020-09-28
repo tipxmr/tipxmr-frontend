@@ -15,12 +15,11 @@ function onCreateSubaddress(callback) {
 }
 
 function onRecieveStreamerConfig(callback) {
-  socketStreamer.on("recieveStreamerConfig", (streamerConfig) => {
-    callback(streamerConfig);
+  socketStreamer.on("recieveStreamerConfig", (requestedStreamerConfig) => {
+    callback(requestedStreamerConfig);
   });
 }
 
-// socket.emit functions
 function emitGetStreamerConfig(hashedSeed) {
   socketStreamer.emit("getStreamerConfig", hashedSeed);
 }

@@ -39,6 +39,7 @@ function OpenWallet() {
     if (isValidMnemoicLength(seed)) {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
+      console.log("hashedSeed:", hashedSeed);
       updateHashedSeed(streamerUpdate, hashedSeed);
       openWalletFromSeed(dispatch, seed);
     }
