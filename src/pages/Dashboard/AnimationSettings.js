@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import {
   InputField,
@@ -9,26 +8,18 @@ import {
   Button,
   DropdownField,
 } from "~/components";
+import { useStreamer, updateAnimationSettings } from "../../context/streamer";
 
-function AnimationSettings({ streamerConfig, setStreamerConfig }) {
-  // ----- Old state Setting; most likely not needed anymore-----
-  // const [proxyState, setProxyState] = useState({ ...streamerConfig });
-  // function setAnimationSettings(key, value) {
-  //   // always previous state
-  //   setProxyState((prevState) => ({
-  //     ...prevState,
-  //     animationSettings: { ...prevState.animationSettings, [key]: value },
-  //   }));
-  // }
+function AnimationSettings() {
+  const [streamerConfig, updateStreamerConfig] = useStreamer();
+
   const [secondPrice, setSecondPrice] = useState(
     streamerConfig.animationSettings.secondPrice
   );
   const [charLimit, setCharLimit] = useState(
     streamerConfig.animationSettings.charLimit
   );
-  const [fontColor, setFontColor] = useState(
-    streamerConfig.animationSettings.fontColor
-  );
+
   const [minAmount, setMinAmount] = useState(
     streamerConfig.animationSettings.minAmount
   );
@@ -40,34 +31,36 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const [gifsMinAmount, setGifsMinAmount] = useState(
     streamerConfig.animationSettings.gifsMinAmount
   );
-
+  const [fontSize, setFontSize] = useState(
+    streamerConfig.animationSettings.fontSize
+  );
+  const [fontColor, setFontColor] = useState(
+    streamerConfig.animationSettings.fontColor
+  );
   const [fontShadow, setFontShadow] = useState(
     streamerConfig.animationSettings.fontShadow
   );
   const [sound, setSound] = useState(streamerConfig.animationSettings.sound);
   const [bgImg, setBgImg] = useState(streamerConfig.animationSettings.bgImg);
-  const [fontSize, setFontSize] = useState(
-    streamerConfig.animationSettings.fontSize
-  );
 
   const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   function submit() {
-    // for testing purposes only
-    // TODO Send information to the backend
-    console.log(
+    const newAnimationSettings = {
       gifsMinAmount,
       secondPrice,
       charLimit,
+      fontSize,
       fontColor,
+      fontShadow,
       minAmount,
       goal,
       showGoal,
       gifs,
-      fontShadow,
       sound,
-      bgImg
-    );
+      bgImg,
+    };
+    updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
   }
   return (
     <div className="h-full text-xmrgray-darker">
@@ -158,9 +151,5 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
     </div>
   );
 }
-AnimationSettings.propTypes = {
-  streamerConfig: PropTypes.object,
-  setStreamerConfig: PropTypes.func,
-};
 
 export default AnimationSettings;

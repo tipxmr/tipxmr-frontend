@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
 
 import monerologo from "../../images/monero-symbol.png";
@@ -9,7 +8,7 @@ import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
 
-function Dashboard({ streamerConfig, setStreamerConfig }) {
+function Dashboard() {
   const { path, url } = useRouteMatch();
 
   return (
@@ -53,25 +52,14 @@ function Dashboard({ streamerConfig, setStreamerConfig }) {
           <Wallet />
         </Route>
         <Route path={`${path}/settings`}>
-          <Settings
-            streamerConfig={streamerConfig}
-            setStreamerConfig={setStreamerConfig}
-          />
+          <Settings />
         </Route>
         <Route path={`${path}/animation`}>
-          <AnimationSettings
-            streamerConfig={streamerConfig}
-            setStreamerConfig={setStreamerConfig}
-          />
+          <AnimationSettings />
         </Route>
       </div>
     </div>
   );
 }
-// Defining property types
-Dashboard.propTypes = {
-  streamerConfig: PropTypes.object,
-  setStreamerConfig: PropTypes.func,
-};
 
 export default Dashboard;

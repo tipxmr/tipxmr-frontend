@@ -21,13 +21,10 @@ function WalletUnlocked() {
     </div>
   );
 }
-WalletUnlocked.propTypes = {};
 
-function OpenWallet({ streamerConfig, setStreamerConfig }) {
-  // hardcoding test seed
-  const [seed, setSeed] = useState(
-    "byline initiate pizza rift saucepan toilet gills oscar younger evolved degrees wounded sewage grunt enjoy adept humid rash foes roster quote island dormant enough rift"
-  );
+function OpenWallet() {
+  const [seed, setSeed] = useState("Enter your seed");
+
   const [wallet, dispatch] = useWallet();
 
   const { isLoading } = wallet;
@@ -35,9 +32,7 @@ function OpenWallet({ streamerConfig, setStreamerConfig }) {
 
   console.log("wallet", wallet);
 
-  // const [streamerState, streamerUpdate] = useStreamer();
-  // streamerUpdate((previousStreamer) => ({ ...previousStreamer, hashedSeed }));
-  // updateHashedSeed(streamerUpdate, hashedSeed);
+  const [streamerState, streamerUpdate] = useStreamer();
 
   // monitors the input text area of the seed
   useEffect(() => {
@@ -45,11 +40,8 @@ function OpenWallet({ streamerConfig, setStreamerConfig }) {
     if (isValidMnemoicLength(seed)) {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
-      setStreamerConfig({
-        ...streamerConfig,
-        hashedSeed: hashedSeed,
-      });
-
+      console.log("hashedSeed:", hashedSeed);
+      updateHashedSeed(streamerUpdate, hashedSeed);
       openWalletFromSeed(dispatch, seed);
     }
   }, [seed]);
@@ -96,13 +88,5 @@ function OpenWallet({ streamerConfig, setStreamerConfig }) {
     </div>
   );
 }
-
-// Defining property types
-OpenWallet.propTypes = {
-  streamerConfig: PropTypes.object,
-  setStreamerConfig: PropTypes.func,
-  walletFunctions: PropTypes.object,
-  walletVariables: PropTypes.object,
-};
 
 export default OpenWallet;
