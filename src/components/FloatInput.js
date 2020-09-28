@@ -2,7 +2,7 @@ import React from "react";
 
 function FloatInput({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
-    stateSetter(e.target.name, parseFloat(e.target.value));
+    stateSetter(parseFloat(e.target.value));
   }
 
   return (
