@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { updateStreamer, useStreamer } from "../../context/streamer";
 
 import {
   InputField,
@@ -25,7 +26,8 @@ const languageOptions = [
   "Spanish",
 ];
 
-function Settings({ streamerConfig, setStreamerConfig }) {
+function Settings() {
+  const [streamerConfig, updateStreamerConfig] = useStreamer();
   // copy complete state so useEffect is not triggered
   const [proxyState, setProxyState] = useState({ ...streamerConfig });
 
@@ -58,19 +60,21 @@ function Settings({ streamerConfig, setStreamerConfig }) {
   );
 
   function submit() {
-    // submit all the states
-    console.log(
-      isPremium,
+    const newStreamerConfig = {
+      accountTier: { premium: isPremium },
       displayName,
       creationDate,
-      url,
-      platform,
-      language,
-      description,
-      category,
+      stream: {
+        url,
+        platform,
+        description,
+        language,
+        category,
+      },
       restoreHeight,
-      profilePicture
-    );
+      profilePicture,
+    };
+    updateStreamer(updateStreamerConfig, newStreamerConfig);
   }
 
   return (

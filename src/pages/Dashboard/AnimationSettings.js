@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import {
   InputField,
@@ -9,8 +8,10 @@ import {
   Button,
   DropdownField,
 } from "~/components";
+import { useStreamer } from "../../context/streamer";
 
-function AnimationSettings({ streamerConfig, setStreamerConfig }) {
+function AnimationSettings() {
+  const [streamerConfig, updateStreamerConfig] = useStreamer();
   // ----- Old state Setting; most likely not needed anymore-----
   // const [proxyState, setProxyState] = useState({ ...streamerConfig });
   // function setAnimationSettings(key, value) {
@@ -53,9 +54,7 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
   const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   function submit() {
-    // for testing purposes only
-    // TODO Send information to the backend
-    console.log(
+    const newAnimationSettings = {
       gifsMinAmount,
       secondPrice,
       charLimit,
@@ -66,8 +65,9 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
       gifs,
       fontShadow,
       sound,
-      bgImg
-    );
+      bgImg,
+    };
+    updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
   }
   return (
     <div className="h-full text-xmrgray-darker">
@@ -158,9 +158,5 @@ function AnimationSettings({ streamerConfig, setStreamerConfig }) {
     </div>
   );
 }
-AnimationSettings.propTypes = {
-  streamerConfig: PropTypes.object,
-  setStreamerConfig: PropTypes.func,
-};
 
 export default AnimationSettings;

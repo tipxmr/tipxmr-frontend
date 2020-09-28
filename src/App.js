@@ -56,13 +56,22 @@ function App() {
   ]);
 
   useEffect(() => {
-    if (streamerConfig && streamerConfig.restoreHeight) {
+    if (
+      streamerConfig &&
+      streamerConfig.restoreHeight &&
+      customWallet.restoreHeight != streamerConfig.restoreHeight
+    ) {
       dispatch({
         type: "SET_RESTORE_HEIGHT",
         restoreHeight: streamerConfig.restoreHeight,
       });
     }
-  }, [streamerConfig, dispatch, streamerConfig.restoreHeight]);
+  }, [
+    streamerConfig,
+    dispatch,
+    streamerConfig.restoreHeight,
+    customWallet.restoreHeight,
+  ]);
 
   function onIncomingTransaction(tx) {
     getNewOutput(tx);
@@ -115,11 +124,6 @@ function App() {
     });
   }
 
-  // handleChange for userConfig
-  /*   useEffect(() => {
-    //socketio.emitUpdateStreamerConfig(streamerConfig);
-  }, [streamerConfig]); */
-
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
@@ -139,10 +143,10 @@ function App() {
               <StreamerPage />
             </Route>
             <Route path="/animation" exact>
-              <Animation streamerConfig={streamerConfig} />
+              <Animation />
             </Route>
             <PrivateRoute path="/dashboard">
-              <Dashboard streamerConfig={streamerConfig} />
+              <Dashboard />
             </PrivateRoute>
             <Route path="/disclaimer">
               <Disclaimer />
