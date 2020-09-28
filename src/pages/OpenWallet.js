@@ -24,6 +24,7 @@ function WalletUnlocked() {
 
 function OpenWallet() {
   const [seed, setSeed] = useState("Enter your seed");
+
   const [wallet, dispatch] = useWallet();
 
   const { isLoading } = wallet;
