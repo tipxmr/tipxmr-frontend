@@ -5,7 +5,7 @@ const StreamerStateContext = createContext();
 const StreamerUpdateContext = createContext();
 
 function StreamerProvider({ children }) {
-  const [state, setState] = useState();
+  const [state, setState] = useState({});
 
   return (
     <StreamerStateContext.Provider value={state}>

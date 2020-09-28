@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket";
@@ -18,33 +18,42 @@ import {
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
+import { useStreamer } from "./context/streamer";
 
 function App() {
   useIncomingTransaction(onIncomingTransaction);
 
-  let walletUseEffectDidFire = false;
+  const walletUseEffectDidFire = useRef(false);
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
 
   const [customWallet, dispatch] = WalletContext.useWallet();
 
-  const [streamerConfig, setStreamerConfig] = useState(null);
+  const [streamerConfig, updateStreamerConfig] = useStreamer();
+  console.log("streamerConfig", streamerConfig);
 
   // as soon as wallet is loaded
   useEffect(() => {
-    if (customWallet.wallet && walletUseEffectDidFire === false) {
-      // after login send streamer info
-      // socketio.emitStreamerInfo(streamerConfig);
+    if (customWallet.wallet && walletUseEffectDidFire.current === false) {
       // after login send hashed seed, so the backend checks if user exists
       // backend will return either a default streamer config
       // or an existing streamer config
-      socketio.emitHashedSeed(customWallet.wallet.hashedSeed);
-      // listen for new request of subaddress generation
-      socketio.onCreateSubaddress(handleOnNewSubaddress);
-      walletUseEffectDidFire = true;
+      if (streamerConfig.hashedSeed) {
+        socketio.emitGetStreamerConfig(streamerConfig.hashedSeed);
+        socketio.onRecieveStreamerConfig(updateStreamerConfig);
+        // listen for new request of subaddress generation
+        socketio.onCreateSubaddress(handleOnNewSubaddress);
+      }
+      walletUseEffectDidFire.current = true;
     }
-  }, [customWallet.wallet, walletUseEffectDidFire]);
+  }, [
+    customWallet.wallet,
+    walletUseEffectDidFire,
+    handleOnNewSubaddress,
+    streamerConfig.hashedSeed,
+    updateStreamerConfig,
+  ]);
 
   useEffect(() => {
     if (streamerConfig && streamerConfig.restoreHeight) {
@@ -53,7 +62,7 @@ function App() {
         restoreHeight: streamerConfig.restoreHeight,
       });
     }
-  }, [streamerConfig.restoreHeight]);
+  }, [streamerConfig, dispatch, streamerConfig.restoreHeight]);
 
   function onIncomingTransaction(tx) {
     getNewOutput(tx);
@@ -107,9 +116,9 @@ function App() {
   }
 
   // handleChange for userConfig
-  useEffect(() => {
+  /*   useEffect(() => {
     //socketio.emitUpdateStreamerConfig(streamerConfig);
-  }, [streamerConfig]);
+  }, [streamerConfig]); */
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -124,10 +133,7 @@ function App() {
               <Donate />
             </Route>
             <Route path="/login">
-              <Login
-                streamerConfig={streamerConfig}
-                setStreamerConfig={setStreamerConfig}
-              />
+              <Login />
             </Route>
             <Route path="/streamerpage" exact>
               <StreamerPage />
@@ -136,10 +142,7 @@ function App() {
               <Animation streamerConfig={streamerConfig} />
             </Route>
             <PrivateRoute path="/dashboard">
-              <Dashboard
-                streamerConfig={streamerConfig}
-                setStreamerConfig={setStreamerConfig}
-              />
+              <Dashboard streamerConfig={streamerConfig} />
             </PrivateRoute>
             <Route path="/disclaimer">
               <Disclaimer />

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link, useRouteMatch, Route } from "react-router-dom";
 import { CreateWallet, OpenWallet } from "./";
 
-function Login({ streamerConfig, setStreamerConfig }) {
+function Login() {
   const { path, url } = useRouteMatch();
 
   return (
@@ -27,10 +27,7 @@ function Login({ streamerConfig, setStreamerConfig }) {
         <CreateWallet />
       </Route>
       <Route path={`${path}/open`}>
-        <OpenWallet
-          streamerConfig={streamerConfig}
-          setStreamerConfig={setStreamerConfig}
-        />
+        <OpenWallet />
       </Route>
     </Fragment>
   );
