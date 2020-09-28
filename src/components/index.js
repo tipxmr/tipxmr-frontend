@@ -17,3 +17,4 @@ export { default as SyncBanner } from "./SyncBanner";
 export { default as EnterMessage } from "./EnterMessage";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as DropdownField } from "./DropdownField";
+export { default as Toggle } from "./Toggle";

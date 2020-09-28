@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { EnterMessage, Payment, Success } from "../components";
+import { EnterMessage, Payment, Success, Button, Toggle } from "~/components";
 import socketio from "../libs/socket";
+
+// TODO Implement the toggle livestream view in donte page
+// TODO Button to toggle
+// TODO Column layout for livestream and donation mask
 
 function Donate() {
   let { userName } = useParams();
@@ -46,9 +50,31 @@ function Donate() {
     socketio.onSubaddressToDonator(setSubaddress);
   }
 
+  const [showLivestream, setShowLivestream] = useState(false);
+
   return (
-    <div className="flex flex-grow justify-center">
-      <div className="my-auto">
+    <div className="flex flex-grow justify-center items-center relative">
+      {showLivestream ? (
+        <div className="flex-4 h-full">
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/5qap5aO4i9A"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      ) : null}
+      <div className="flex-2">
+        <div className="absolute top-0 right-0 m-3">
+          <Toggle
+            isChecked={showLivestream}
+            onClick={() => setShowLivestream(!showLivestream)}
+          >
+            Zeig Livestream
+          </Toggle>
+        </div>
         {showEnterMessage ? (
           <EnterMessage
             setDonor={setDonor}
