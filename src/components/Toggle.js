@@ -3,7 +3,6 @@ import clsx from "clsx";
 
 function Toggle({ isChecked, onClick, children }) {
   const toggleStyles = clsx(
-    // "toggle-checkbox", // not sure if it is needed
     "absolute",
     "block",
     "w-6",
@@ -15,7 +14,6 @@ function Toggle({ isChecked, onClick, children }) {
     "cursor-pointer",
     {
       "right-0": isChecked,
-      // "border-color: #68D391": isChecked,
       "border-green-400": isChecked,
     }
   );
@@ -32,7 +30,7 @@ function Toggle({ isChecked, onClick, children }) {
   );
   return (
     <div>
-      <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+      <div className="relative block w-10 mx-auto align-middle select-none transition duration-200 ease-in">
         <input
           type="checkbox"
           name="toggle"
@@ -42,8 +40,8 @@ function Toggle({ isChecked, onClick, children }) {
         />
         <label for="toggle" className={labelStyles}></label>
       </div>
-      <label for="toggle" className="text-xs text-gray-700">
-        {isChecked}
+      <label for="toggle" className="text-xs text-gray-700 block">
+        {children}
       </label>
     </div>
   );

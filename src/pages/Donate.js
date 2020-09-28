@@ -72,7 +72,7 @@ function Donate() {
             isChecked={showLivestream}
             onClick={() => setShowLivestream(!showLivestream)}
           >
-            Zeig Livestream
+            Watch the stream
           </Toggle>
         </div>
         {showEnterMessage ? (
