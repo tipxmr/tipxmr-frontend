@@ -35,7 +35,7 @@ function Flags({ languages }) {
 function CategoryCard({ name, numStreamers, languages, pictureLink }) {
   return (
     <div className="mx-4">
-      <Link to={`/${name}`}>
+      <Link to={`/categories/${name}`}>
         <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
           <img
             className="w-full h-56 object-cover object-center"
