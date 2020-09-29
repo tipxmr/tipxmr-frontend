@@ -14,6 +14,7 @@ import {
   Disclaimer,
   FAQ,
   StreamerPage,
+  StreamerNotFound,
   Logout,
 } from "./pages";
 
@@ -142,6 +143,11 @@ function App() {
             <Route path="/streamerpage" exact>
               <StreamerPage />
             </Route>
+            {/* remove later on, just for testing */}
+            <Route path="/streamernotfound" exact>
+              <StreamerNotFound />
+            </Route>
+
             <Route path="/animation" exact>
               <Animation />
             </Route>
