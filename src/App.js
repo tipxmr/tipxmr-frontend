@@ -16,6 +16,7 @@ import {
   StreamerPage,
   StreamerNotFound,
   NotFound404,
+  Categories,
   Logout,
 } from "./pages";
 
@@ -150,6 +151,9 @@ function App() {
             </Route>
             <Route path="/404" exact>
               <NotFound404 />
+            </Route>
+            <Route path="/categories" exact>
+              <Categories />
             </Route>
 
             <Route path="/animation" exact>
