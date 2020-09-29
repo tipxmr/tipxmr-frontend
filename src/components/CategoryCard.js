@@ -32,29 +32,29 @@ function Flags({ languages }) {
   return <div className="flex justify-center text-xl">{flags}</div>;
 }
 
-function CategoryCard({ name, numStreamers, languages }) {
+function CategoryCard({ name, numStreamers, languages, pictureLink }) {
   return (
     <div className="mx-4">
-      <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
-        <img
-          className="w-full h-56 object-cover object-center"
-          src="https://i.imgur.com/PW3XO3u.jpg"
-          alt="avatar"
-        />
-        <div className="py-4 px-6">
-          <a href="">
+      <Link to={`/${name}`}>
+        <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
+          <img
+            className="w-full h-56 object-cover object-center"
+            src={pictureLink}
+            alt="avatar"
+          />
+          <div className="py-4 px-6">
             <div className="flex justify-center items-center transform hover:scale-110">
               <h1 className="mx-5 text-2xl text-xmrgray-darker">#{name}</h1>
             </div>
-          </a>
-          <div className="p-3 my-4 rounded bg-gray-200 text-xmrgray-darker shadow-md">
-            <p className="p-2 text-center">
-              <span className="text-xl">{numStreamers}</span> online
-            </p>
-            <Flags languages={languages} />
+            <div className="p-3 my-4 rounded bg-gray-200 text-xmrgray-darker shadow-md">
+              <p className="p-2 text-center">
+                <span className="text-xl">{numStreamers}</span> online
+              </p>
+              <Flags languages={languages} />
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

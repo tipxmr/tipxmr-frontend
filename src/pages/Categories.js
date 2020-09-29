@@ -11,6 +11,7 @@ function Categories() {
   // hardcoded numStreamers, change later
   const [numStreamers, setNumStreamers] = useState(2);
   const [languages, setLanguages] = useState(["German", "English", "French"]);
+  const pictureLink = "https://i.imgur.com/8rU7ruv.jpeg";
   // TODO implement category pictures
   return (
     <div className="w-3/4 mx-auto">
@@ -27,6 +28,7 @@ function Categories() {
               key={category}
               numStreamers={numStreamers}
               languages={languages}
+              pictureLink={pictureLink}
             />
           );
         })}
