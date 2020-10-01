@@ -47,7 +47,7 @@ function CategoryCard({ name, numStreamers, languages, pictureLink }) {
               <h1 className="mx-5 text-2xl text-xmrgray-darker">#{name}</h1>
             </div>
             <div className="p-3 my-4 rounded bg-gray-200 text-xmrgray-darker shadow-md">
-              <p className="p-2 text-center">
+              <p className="text-center text-sm">
                 <span className="text-xl">{numStreamers}</span> online
               </p>
               <Flags languages={languages} />

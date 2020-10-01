@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { StreamerCard } from "../components";
+import { StreamerCard, CategoryNav } from "~/components";
 import socketio from "../libs/socket";
 
 function StreamerPage() {
+  const [categories, setCategories] = useState([
+    "all",
+    "gaming",
+    "politics",
+    "talk",
+    "entertainment",
+    "XXX",
+  ]);
+  // hardcoded numStreamers, change later
+  const [numStreamers, setNumStreamers] = useState(2);
+  const [languages, setLanguages] = useState(["German", "English", "French"]);
+  const pictureLink = "https://i.imgur.com/8rU7ruv.jpeg";
+  // TODO implement category pictures
+  const [activeCategory, setActiveCategory] = useState("all");
+
   const [onlineStreamers, setOnlineStreamers] = useState(null);
   useEffect(() => {
     socketio.emitGetOnlineStreamers();
@@ -20,9 +35,14 @@ function StreamerPage() {
   }
   return (
     <div className="w-3/4 mx-auto mt-3">
-      <h2 className="underline text-center text-2xl mb-4">
-        Streaming right now
-      </h2>
+      <div className="my-3">
+        <CategoryNav
+          activeCategory={activeCategory}
+          stateSetter={setActiveCategory}
+          categories={categories}
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3">
         {renderStreamerCards()}
       </div>
