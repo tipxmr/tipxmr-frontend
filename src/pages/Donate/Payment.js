@@ -7,9 +7,8 @@ function Payment({ donor, message, subaddress, getSubaddress }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
-    console.log("useEffect then getSubaddress()");
     getSubaddress();
-  }, []);
+  }, [getSubaddress]);
 
   // generete QR Code on subaddress change
   useEffect(() => {
