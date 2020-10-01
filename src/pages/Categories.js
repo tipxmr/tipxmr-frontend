@@ -7,7 +7,6 @@ function Categories() {
     "gaming",
     "politics",
     "talk",
-    "entertainment",
     "XXX",
   ]);
   // hardcoded numStreamers, change later

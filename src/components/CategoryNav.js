@@ -2,11 +2,14 @@
 // CategoryNav renders all NavItems and styles active category
 import React from "react";
 import clsx from "clsx";
+import tipxmr from "~/images/tipxmr-button.png";
 
 function NavItem({ children, activeCategory, stateSetter }) {
   const pillStyle = clsx(
-    "inline-block",
+    // "inline-block",
     "rounded",
+    "text-xs",
+    "m-1",
     "py-1",
     "px-3",
     "transition",
@@ -41,20 +44,31 @@ function NavItem({ children, activeCategory, stateSetter }) {
 
 function CategoryNav({ activeCategory, categories, stateSetter }) {
   return (
-    <div className="border-b pb-2">
-      <ul className="flex justify-around items-center">
-        {categories.map((category) => {
-          return (
-            <NavItem
-              key={category}
-              activeCategory={activeCategory}
-              stateSetter={stateSetter}
-            >
-              {category}
-            </NavItem>
-          );
-        })}
-      </ul>
+    <div class="h-full flex flex-grow bg-gray-200">
+      {/*<!-- container -->*/}
+
+      <aside class="flex flex-col items-center align-middle bg-gray-200 text-gray-700 shadow h-full">
+        {/*<!-- Side Nav Bar-->*/}
+
+        <div class="h-16 flex items-center w-full mb-5">
+          <img src={tipxmr} className="w-24 mx-3 rounded" />
+        </div>
+
+        {/*<!-- Items Section -->*/}
+        <ul className="space-y-5">
+          {categories.map((category) => {
+            return (
+              <NavItem
+                key={category}
+                activeCategory={activeCategory}
+                stateSetter={stateSetter}
+              >
+                {category}
+              </NavItem>
+            );
+          })}
+        </ul>
+      </aside>
     </div>
   );
 }
