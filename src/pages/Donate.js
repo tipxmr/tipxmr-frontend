@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { EnterMessage, Payment, Success, Button, Toggle } from "~/components";
+import {
+  EnterMessage,
+  Payment,
+  Success,
+  Button,
+  Toggle,
+  StreamerNotFound,
+} from "~/components";
 import socketio from "../libs/socket";
 
 // TODO Implement the toggle livestream view in donte page
@@ -10,9 +17,10 @@ import socketio from "../libs/socket";
 
 function Donate() {
   let { userName } = useParams();
-  const [showEnterMessage, setShowEnterMessage] = useState(true);
+  const [showEnterMessage, setShowEnterMessage] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showStreamerNotFound, setShowStreamerNotFound] = useState(false);
   const [amount, setAmount] = useState(null);
 
   const [streamer, setStreamer] = useState({
@@ -31,6 +39,21 @@ function Donate() {
     socketio.onRecieveStreamerFromBackend(setStreamer);
     socketio.onPaymentConfirmation(paymentConfirmation);
   }, [userName]);
+
+  useEffect(() => {
+    console.log("streamer", streamer);
+    if (streamer === 0) {
+      setShowStreamerNotFound(true);
+      setShowPayment(false);
+      setShowSuccess(false);
+      setShowEnterMessage(false);
+    } else {
+      setShowStreamerNotFound(false);
+      setShowPayment(false);
+      setShowSuccess(false);
+      setShowEnterMessage(true);
+    }
+  }, [streamer]);
 
   function paymentConfirmation(confirmation) {
     console.log("confirmation", confirmation);
@@ -60,7 +83,7 @@ function Donate() {
             width="100%"
             height="100%"
             src="https://www.youtube.com/embed/5qap5aO4i9A"
-            frameborder="0"
+            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
@@ -102,6 +125,7 @@ function Donate() {
             amount={amount}
           />
         ) : null}
+        {showStreamerNotFound ? <StreamerNotFound /> : null}
       </div>
     </div>
   );

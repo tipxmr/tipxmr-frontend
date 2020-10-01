@@ -38,9 +38,9 @@ function Toggle({ isChecked, onClick, children }) {
           className={toggleStyles}
           onClick={onClick}
         />
-        <label for="toggle" className={labelStyles}></label>
+        <label htmlFor="toggle" className={labelStyles}></label>
       </div>
-      <label for="toggle" className="text-xs text-gray-700 block">
+      <label htmlFor="toggle" className="text-xs text-gray-700 block">
         {children}
       </label>
     </div>
