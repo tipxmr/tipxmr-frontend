@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BiUpsideDown } from "react-icons/bi";
-import { Link } from "react-router-dom";
-
 function StreamerNotFound() {
   return (
     <div className="flex flex-grow justify-center">
