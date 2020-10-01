@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import {
-  EnterMessage,
-  Payment,
-  Success,
-  Button,
-  Toggle,
-  StreamerNotFound,
-} from "~/components";
-import socketio from "../libs/socket";
+import { Button, Toggle } from "~/components";
+import EnterMessage from "./EnterMessage";
+import Payment from "./Payment";
+import StreamerNotFound from "./StreamerNotFound";
+import Success from "./Success";
+
+import socketio from "../../libs/socket";
 
 // TODO Implement the toggle livestream view in donte page
 // TODO Button to toggle
@@ -130,5 +128,4 @@ function Donate() {
     </div>
   );
 }
-
 export default Donate;

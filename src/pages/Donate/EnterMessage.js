@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IsOnlineBadge from "./IsOnlineBadge";
-import { Button } from "./";
+import { IsOnlineBadge, Button } from "~/components";
 
 function EnterMessage({
   setDonor,
