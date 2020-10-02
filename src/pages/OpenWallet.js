@@ -23,7 +23,7 @@ function WalletUnlocked() {
 }
 
 function OpenWallet() {
-  const [seed, setSeed] = useState("Enter your seed");
+  const [seed, setSeed] = useState("");
 
   const [wallet, dispatch] = useWallet();
 
@@ -78,6 +78,7 @@ function OpenWallet() {
           name="seed"
           rows="4"
           cols="50"
+          placeholder="Open your wallet by entering your 25 seed words..."
           value={seed}
           style={{ resize: "none" }}
           onChange={handleChange}
