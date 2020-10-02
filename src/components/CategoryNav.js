@@ -7,7 +7,7 @@ import tipxmr from "~/images/tipxmr-button.png";
 function NavItem({ children, activeCategory, stateSetter }) {
   const pillStyle = clsx(
     "rounded",
-    "text-xs",
+    "text-sm",
     "m-1",
     "py-1",
     "px-3",
@@ -50,7 +50,7 @@ function CategoryNav({ activeCategory, categories, stateSetter }) {
         {/*<!-- Side Nav Bar-->*/}
 
         <div className="h-16 flex items-center w-full mb-5 px-3">
-          <p className="text-sm underline">Categories</p>
+          <p className="underline">Categories</p>
         </div>
 
         {/*<!-- Items Section -->*/}

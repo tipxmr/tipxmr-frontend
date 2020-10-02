@@ -13,29 +13,29 @@ function Dashboard() {
 
   return (
     <div className="flex flex-grow">
-      <nav className="px-4 bg-gray-900 w-32 justify-between flex flex-col">
+      <nav className="px-4 bg-xmrgray-darker w-32 justify-between flex flex-col">
         <div className="items-center">
           <div className="py-4 flex-grow">
             <img
               src={monerologo}
-              className="rounded-full transform transition ease-in-out duration-500 hover:scale-125 hover:rotate-360 w-auto h-10 mb-3 m-auto"
+              className="rounded-full bg-white transform transition ease-in-out duration-500 hover:scale-125 hover:rotate-360 w-auto h-10 mb-3 m-auto"
             />
           </div>
           <div className="mt-10 text-white">
-            <ul>
-              <li className="mb-6">
+            <ul className="space-y-5">
+              <li>
                 <Link to={`${url}/overview`}>Overview</Link>
               </li>
-              <li className="mb-6">
+              <li>
                 <Link to={`${url}/wallet`}>Wallet</Link>
               </li>
-              <li className="mb-6">
+              <li>
                 <Link to={`${url}/settings`}>Settings</Link>
               </li>
-              <li className="mb-6">
+              <li>
                 <Link to={`${url}/animation`}>Animation</Link>
               </li>
-              <li className="mb-6">
+              <li>
                 <Link to="/logout">Logout</Link>
               </li>
             </ul>
