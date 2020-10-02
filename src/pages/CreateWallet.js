@@ -131,8 +131,6 @@ function CreateWallet() {
             align="middle"
           />
         </div>
-        {/* TODO: we might be able to simply cut this p tag */}
-        {/* <p className="mt-4">{language} seed:</p> */}
         <textarea
           className="mt-10 outline-none text-xmrgray-darker text-justify border-4 border-dashed border-xmrorange-lighter p-5"
           id="seed"
@@ -158,13 +156,8 @@ function CreateWallet() {
           </em>
         </div>
 
-        <Link to="/openwallet">
-          <Button
-            buttonWidth="w-auto"
-            disabled={isLoading}
-            loading={isLoading}
-            /* rounded="rounded" */
-          >
+        <Link to="/login/open">
+          <Button buttonWidth="w-auto" disabled={isLoading} loading={isLoading}>
             Login
           </Button>
         </Link>
