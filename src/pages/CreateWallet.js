@@ -134,7 +134,7 @@ function CreateWallet() {
         {/* TODO: we might be able to simply cut this p tag */}
         {/* <p className="mt-4">{language} seed:</p> */}
         <textarea
-          className="mt-10 text-xmrgray-darker text-justify border-4 border-dashed border-xmrorange-lighter p-5"
+          className="mt-10 outline-none text-xmrgray-darker text-justify border-4 border-dashed border-xmrorange-lighter p-5"
           id="seed"
           name="seed"
           rows="4"

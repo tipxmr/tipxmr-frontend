@@ -67,6 +67,7 @@ function OpenWallet() {
               "border-4",
               "border-dashed",
               "p-5",
+              "outline-none",
             ],
             {
               "border-green-600": isWalletOpen,
