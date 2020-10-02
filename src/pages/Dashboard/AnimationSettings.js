@@ -143,7 +143,7 @@ function AnimationSettings() {
             options={fontSizeOptions}
             labelText="Select a font size"
             selected={fontSize}
-            stateStter={setFontSize}
+            stateSetter={setFontSize}
           />
         </div>
         <Button onClick={() => submit()}>Save</Button>

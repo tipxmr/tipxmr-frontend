@@ -77,21 +77,27 @@ function Settings() {
     updateStreamer(updateStreamerConfig, newStreamerConfig);
   }
 
+  let tier;
+  if (isPremium) {
+    tier = "premium";
+  } else {
+    tier = "basic";
+  }
   return (
     <div className="h-full text-xmrgray-darker">
       <div>
-        {/* <div className="text-center text-xl underline mb-4"> */}
-        {/*   Account Summary */}
-        {/* </div> */}
-        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5"> */}
-        {/*   <StatBox boxTitle="Your display name" boxStat={displayName} /> */}
-        {/*   <StatBox boxTitle="Premium account" boxStat={isPremium} /> */}
-        {/*   <StatBox boxTitle="Member since" boxStat={creationDate} /> */}
-        {/*   <StatBox */}
-        {/*     boxTitle="Animation URL" */}
-        {/*     boxStat="https://tipxmr.live/username/animation" */}
-        {/*   /> */}
-        {/* </div> */}
+        <div className="text-center text-xl underline mb-4">
+          Account Summary
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+          <StatBox boxTitle="Your display name" boxStat={displayName} />
+          <StatBox boxTitle="Premium account" boxStat={tier} />
+          <StatBox boxTitle="Member since" boxStat={creationDate} />
+          <StatBox
+            boxTitle="Animation URL"
+            boxStat="https:tipxmr.live/username/animation"
+          />
+        </div>
         <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>

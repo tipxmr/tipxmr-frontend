@@ -5,7 +5,7 @@ import { faqs } from "~/data/faqdata";
 function FAQ() {
   return (
     <div className="flex flex-grow justify-center">
-      <div className="my-auto w-1/2">
+      <div className="my-auto w-5/6 lg:w-1/2">
         <div>
           <h2 className="text-3xl text-center underline mb-4">
             Frequently Asked Questions
