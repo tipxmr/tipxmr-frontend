@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="text-white text-sm bg-xmrgray-lighter w-full py-3">
-      <div className="flex justify-around">
+      <div className="flex flex-col items-center sm:flex-row sm:justify-around">
         <Link to="/disclaimer" className="hover:text-xmrorange">
           Disclaimer
         </Link>
