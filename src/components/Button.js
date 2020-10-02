@@ -6,7 +6,7 @@ import clsx from "clsx";
 function Button({
   children,
   bgColor = "bg-xmrorange",
-  buttonWidth = "w-40",
+  buttonWidth = "w-auto",
   textSize = "text-xl",
   onClick = () => {},
   disabled = false,
@@ -27,6 +27,7 @@ function Button({
     "h-auto",
     "disabled:opacity-75",
     "disabled:cursor-not-allowed",
+    "focus:outline-none",
   ]);
 
   return (

@@ -3,6 +3,7 @@
 import React from "react";
 import clsx from "clsx";
 import tipxmr from "~/images/tipxmr-button.png";
+import { Button } from "~/components";
 
 function NavItem({ children, activeCategory, stateSetter }) {
   const pillStyle = clsx(

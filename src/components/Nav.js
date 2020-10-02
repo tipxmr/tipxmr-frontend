@@ -6,12 +6,12 @@ function Nav() {
   return (
     <nav className="text-white">
       <div className="flex flex-grow justify-around self-center items-center">
-        <div className="flex-1">
+        <div className="flex-1 pr-8">
           <Link to="/">
             <img
               src={logo}
               alt="tipxmr logo"
-              className="w-64 transform hover:scale-105 pr-8"
+              className="w-64 transform hover:scale-105 shadow-lg"
             />
           </Link>
         </div>
