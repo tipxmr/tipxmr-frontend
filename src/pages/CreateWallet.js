@@ -159,16 +159,6 @@ function CreateWallet() {
         </div>
 
         <Link to="/openwallet">
-          <button
-            disabled={isLoading}
-            className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold py-2 px-4 rounded mt-15 disabled:opacity-75"
-          >
-            {isLoading ? (
-              <FaSpinner className="inline mr-2 animate-spin" />
-            ) : null}
-            Login
-          </button>
-
           <Button
             buttonWidth="w-auto"
             disabled={isLoading}
