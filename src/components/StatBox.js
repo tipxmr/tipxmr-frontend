@@ -13,7 +13,8 @@ function StatBox({ boxTitle, boxStat }) {
 }
 
 StatBox.propTypes = {
-  boxTitle: PropTypes.str,
+  boxTitle: PropTypes.string,
+  boxStat: PropTypes.string,
 
   // cannot really include the boxStat since it may be a string or a number (float)
 };

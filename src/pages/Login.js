@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link, useRouteMatch, Route } from "react-router-dom";
 import { CreateWallet, OpenWallet } from "./";
+import { Button } from "~/components";
 
 function Login() {
   const { path, url } = useRouteMatch();
@@ -8,19 +9,13 @@ function Login() {
   return (
     <Fragment>
       <Route path={path} exact>
-        <div className="flex flex-grow justify-center">
-          <div className="my-auto">
-            <Link to={`${url}/create`}>
-              <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 mx-8 py-2 px-4 rounded">
-                Create new wallet
-              </button>
-            </Link>
-            <Link to={`${url}/open`}>
-              <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 mx-8 py-2 px-4 rounded">
-                Open existing wallet
-              </button>
-            </Link>
-          </div>
+        <div className="flex flex-grow flex-col space-y-5 md:space-y-0 md:flex-row justify-around place-self-center">
+          <Link to={`${url}/create`}>
+            <Button>Create new wallet</Button>
+          </Link>
+          <Link to={`${url}/open`}>
+            <Button>Open existing wallet</Button>
+          </Link>
         </div>
       </Route>
       <Route path={`${path}/create`}>

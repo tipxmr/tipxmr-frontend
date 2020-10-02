@@ -3,12 +3,12 @@
 import React from "react";
 import clsx from "clsx";
 import tipxmr from "~/images/tipxmr-button.png";
+import { Button } from "~/components";
 
 function NavItem({ children, activeCategory, stateSetter }) {
   const pillStyle = clsx(
-    // "inline-block",
     "rounded",
-    "text-xs",
+    "text-sm",
     "m-1",
     "py-1",
     "px-3",
@@ -44,14 +44,14 @@ function NavItem({ children, activeCategory, stateSetter }) {
 
 function CategoryNav({ activeCategory, categories, stateSetter }) {
   return (
-    <div class="h-full flex flex-grow bg-gray-200">
+    <div className="h-full flex flex-grow bg-gray-200">
       {/*<!-- container -->*/}
 
-      <aside class="flex flex-col items-center align-middle bg-gray-200 text-gray-700 shadow h-full">
+      <aside className="flex flex-col items-center align-middle bg-gray-200 text-gray-700 shadow h-full">
         {/*<!-- Side Nav Bar-->*/}
 
-        <div class="h-16 flex items-center w-full mb-5">
-          <img src={tipxmr} className="w-24 mx-3 rounded" />
+        <div className="h-16 flex items-center w-full mb-5 px-3">
+          <p className="underline">Categories</p>
         </div>
 
         {/*<!-- Items Section -->*/}

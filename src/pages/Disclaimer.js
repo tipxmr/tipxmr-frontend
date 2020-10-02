@@ -2,8 +2,8 @@ import React from "react";
 
 function Disclaimer() {
   return (
-    <div className="w-3/4 mt-3 mx-auto">
-      <div className="w-1/2 mx-auto my-8">
+    <div className="w-3/4 my-3 mx-auto">
+      <div className="mx-auto my-8">
         <h2 className="text-2xl text-center my-3">Introduction & Disclaimer</h2>
         <p className="text-sm text-center">
           Monero (XMR) is a cryptocurrency, in many ways similiar to Bitcoin.
@@ -15,8 +15,8 @@ function Disclaimer() {
           required to be able to use it. Just like most drivers don't understand
           the internals of the combustion engine.
         </p>
-        <div className="border-4 border-xmrorange my-3 p-5 text-center text-xmrorange-darker">
-          <p className="text-xl text-center">Important:</p>
+        <div className="border-4 border-xmrorange my-8 p-5 shadow-xl rounded text-center text-xmrorange-darker">
+          <p className="text-2xl text-center">Important:</p>
           <p className="text-lg ">
             At no point in time tipxmr.live has access to your Monero. We cannot
             spend it and we cannot guarantee it's safety. While the Monero

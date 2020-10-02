@@ -6,12 +6,11 @@ import clsx from "clsx";
 function Button({
   children,
   bgColor = "bg-xmrorange",
-  buttonWidth = "w-40",
+  buttonWidth = "w-auto",
   textSize = "text-xl",
   onClick = () => {},
   disabled = false,
   loading = false,
-  rounded = "rounded-full",
 }) {
   const styles = clsx([
     bgColor,
@@ -22,12 +21,13 @@ function Button({
     "justify-center",
     "hover:bg-xmrorange-darker",
     "text-white",
-    rounded,
+    "rounded",
     "py-2",
     "px-4",
     "h-auto",
     "disabled:opacity-75",
     "disabled:cursor-not-allowed",
+    "focus:outline-none",
   ]);
 
   return (

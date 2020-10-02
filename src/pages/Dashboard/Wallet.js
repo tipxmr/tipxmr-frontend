@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, SyncBanner } from "../../components";
+import { Progressbar, SyncBanner, Button } from "~/components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useStreamer } from "../../context/streamer";
@@ -113,7 +113,7 @@ function Wallet() {
         </div>
         <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
           <div className="px-4 py-6">
-            <p>Sync Status</p>
+            <p>Wallet Sync</p>
             <div className="text-4xl my-2">
               <Progressbar
                 percentage={progress}
@@ -121,17 +121,16 @@ function Wallet() {
                 isSynced={isDone}
               />
             </div>
+            <Button
+              onClick={onClick}
+              className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold rounded"
+            >
+              {isActive ? "Stop Sync" : "Start Sync"}
+            </Button>
           </div>
         </div>
       </div>
       <div className="mt-12 mx-auto w-3/4">
-        <button
-          onClick={onClick}
-          className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded"
-        >
-          {isActive ? "Stop Sync" : "Start Sync"}
-        </button>
-        <h2 className="text-3xl text-center my-3">Transaction History</h2>
         <table className="table-auto border-4 mx-auto">
           <thead>
             <tr className="text-xl">
