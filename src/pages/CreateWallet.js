@@ -163,7 +163,7 @@ function CreateWallet() {
             buttonWidth="w-auto"
             disabled={isLoading}
             loading={isLoading}
-            rounded="rounded"
+            /* rounded="rounded" */
           >
             Login
           </Button>

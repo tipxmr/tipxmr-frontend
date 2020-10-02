@@ -11,7 +11,6 @@ function Button({
   onClick = () => {},
   disabled = false,
   loading = false,
-  rounded = "rounded-full",
 }) {
   const styles = clsx([
     bgColor,
@@ -22,7 +21,7 @@ function Button({
     "justify-center",
     "hover:bg-xmrorange-darker",
     "text-white",
-    rounded,
+    "rounded",
     "py-2",
     "px-4",
     "h-auto",
