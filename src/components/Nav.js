@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../images/tipxmr-live.png";
+import logo from "~/images/tipxmr-live.png";
 
 function Nav() {
   return (
     <nav className="text-white">
-      <div className="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
         <div className="flex justify-between items-center">
           <div className="mb-3 md:mb-0">
             <Link to="/">
@@ -16,14 +16,16 @@ function Nav() {
               />
             </Link>
           </div>
-          {/* Mobile menu button */}
         </div>
-        {/* Mobile Menu open: "block", Menu closed: "hidden" */}
-        <div className="md:flex items-center">
-          <div className="flex flex-col md:flex-row md:mx-6">
-            <Link to="/" className="my-1 md:my-0 md:mx-3 hover:text-xmrorange">
-              Start
+        <div className="flex items-center">
+          <div className="flex flex-col md:flex-row mx-6">
+            <Link
+              to="/streamerpage"
+              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
+            >
+              Streams
             </Link>
+            {/*Should be removed later on since acccessed through streams*/}
             <Link
               to="/donate/alexanarcho"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
@@ -36,18 +38,10 @@ function Nav() {
             >
               Animation
             </Link>
-            <Link
-              to="/dashboard"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              Dashboard
+            <Link to="/" className="my-1 md:my-0 md:mx-3 hover:text-xmrorange">
+              Account
             </Link>
-            <Link
-              to="/streamerpage"
-              className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
-            >
-              Who is online?
-            </Link>
+
             <Link
               to="/faq"
               className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
