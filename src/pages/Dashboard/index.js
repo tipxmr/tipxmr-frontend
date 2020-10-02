@@ -13,12 +13,13 @@ function Dashboard() {
 
   return (
     <div className="flex flex-grow">
-      <nav className="bg-gray-900 w-32 justify-between flex flex-col">
-        <div className="mt-10 pl-4">
-          <div className="w-full mx-auto">
-            <Link to={`${url}/overview`}>
-              <img src={monerologo} className="rounded-full w-auto h-10 mb-3" />
-            </Link>
+      <nav className="px-4 bg-gray-900 w-32 justify-between flex flex-col">
+        <div className="items-center">
+          <div className="py-4 flex-grow">
+            <img
+              src={monerologo}
+              className="rounded-full transform transition ease-in-out duration-500 hover:scale-125 hover:rotate-360 w-auto h-10 mb-3 m-auto"
+            />
           </div>
           <div className="mt-10 text-white">
             <ul>

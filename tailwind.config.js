@@ -33,6 +33,9 @@ module.exports = {
           darker: "#404040",
         },
       },
+      rotate: {
+        360: "359deg",
+      },
     },
   },
   variants: {
