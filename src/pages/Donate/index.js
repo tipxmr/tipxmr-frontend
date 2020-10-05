@@ -9,10 +9,6 @@ import Success from "./Success";
 
 import socketio from "../../libs/socket_donator";
 
-// TODO Implement the toggle livestream view in donte page
-// TODO Button to toggle
-// TODO Column layout for livestream and donation mask
-
 function Donate() {
   let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(false);
