@@ -7,7 +7,7 @@ import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 
-import socketio from "../../libs/socket";
+import socketio from "../../libs/socket_donator";
 
 // TODO Implement the toggle livestream view in donte page
 // TODO Button to toggle

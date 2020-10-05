@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "~/images/tipxmr-live.png";
+import ProfilePicture from "./ProfilePicture";
 
 function Nav() {
   return (
@@ -15,7 +16,7 @@ function Nav() {
             />
           </Link>
         </div>
-        <div className="flex flex-2 flex-grow flex-col md:flex-row text-right sm:text-center md:justify-around lg:text-xl">
+        <div className="flex flex-2 flex-grow flex-col md:flex-row text-right sm:text-center md:justify-around lg:text-xl items-center">
           <Link
             to="/streamerpage"
             className="my-1 md:my-0 md:mx-3 hover:text-xmrorange"
@@ -36,7 +37,7 @@ function Nav() {
             Animation
           </Link>
           <Link to="/" className="my-1 md:my-0 md:mx-3 hover:text-xmrorange">
-            Account
+            <ProfilePicture />
           </Link>
         </div>
       </div>

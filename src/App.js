@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
-import socketio from "./libs/socket";
+import socketio from "./libs/socket_streamer";
 
 import * as WalletContext from "./context/wallet";
 
@@ -19,6 +19,7 @@ import {
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
 import { useStreamer } from "./context/streamer";
+import { FaTruckMonster } from "react-icons/fa";
 
 function App() {
   useIncomingTransaction(onIncomingTransaction);
@@ -74,7 +75,12 @@ function App() {
   ]);
 
   useEffect(() => {
-    if (streamerConfig !== null) {
+    if (
+      streamerConfig !== null &&
+      customWallet.wallet &&
+      walletUseEffectDidFire.current === true
+    ) {
+      console.log("streamer updated, sent to backend");
       socketio.emitUpdateStreamerConfig(streamerConfig);
     }
   }, [streamerConfig]);

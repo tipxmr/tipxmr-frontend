@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // TODO Make sure that the file is actually saved (attached to the PouchDB)
 function FileInput({
@@ -35,5 +36,12 @@ function FileInput({
     </div>
   );
 }
-
+FileInput.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string,
+  placeholderName: PropTypes.string,
+  stateSetter: PropTypes.func,
+  accept: PropTypes.string,
+  maxFilesize: PropTypes.number,
+};
 export default FileInput;
