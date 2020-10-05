@@ -19,6 +19,7 @@ import {
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
 import { useStreamer } from "./context/streamer";
+import { FaTruckMonster } from "react-icons/fa";
 
 function App() {
   useIncomingTransaction(onIncomingTransaction);
@@ -74,7 +75,11 @@ function App() {
   ]);
 
   useEffect(() => {
-    if (streamerConfig !== null) {
+    if (
+      streamerConfig !== null &&
+      customWallet.wallet &&
+      walletUseEffectDidFire.current === true
+    ) {
       console.log("streamer updated, sent to backend");
       socketio.emitUpdateStreamerConfig(streamerConfig);
     }
