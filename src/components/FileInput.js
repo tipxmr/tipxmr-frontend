@@ -1,9 +1,20 @@
 import React from "react";
 
 // TODO Make sure that the file is actually saved (attached to the PouchDB)
-function FileInput({ labelName, name, placeholderName, stateSetter }) {
+function FileInput({
+  labelName,
+  name,
+  placeholderName,
+  stateSetter,
+  accept,
+  maxFilesize,
+}) {
   function handleChange(e) {
-    stateSetter(e.target.value);
+    const file = e.target.files[0];
+    if (file.size < maxFilesize) {
+      console.log("new File: ", file);
+      stateSetter(URL.createObjectURL(file));
+    }
   }
 
   return (
@@ -15,6 +26,7 @@ function FileInput({ labelName, name, placeholderName, stateSetter }) {
             name={name}
             placeholder={placeholderName}
             type="file"
+            accept={accept}
             onChange={handleChange}
             className="w-full min-w-400 border-2 p-1 text-sm text-center text-xmrorange border-xmrgray-lighter placeholder-xmrgray-lighter"
           ></input>

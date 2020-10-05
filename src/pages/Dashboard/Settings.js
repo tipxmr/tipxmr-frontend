@@ -132,6 +132,8 @@ function Settings() {
           <FileInput
             name="profilePicture"
             labelName="Change your profile picture"
+            accept=".jpg, .jpeg, .png"
+            maxFilesize={300 * 1024}
             placeholderName={profilePicture}
             stateSetter={setProfilePicture}
           />

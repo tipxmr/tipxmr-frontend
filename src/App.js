@@ -73,6 +73,12 @@ function App() {
     customWallet.restoreHeight,
   ]);
 
+  useEffect(() => {
+    if (streamerConfig !== null) {
+      socketio.emitUpdateStreamerConfig(streamerConfig);
+    }
+  }, [streamerConfig]);
+
   function onIncomingTransaction(tx) {
     getNewOutput(tx);
   }
