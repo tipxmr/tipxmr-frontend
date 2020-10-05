@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StreamerCard, CategoryNav } from "~/components";
-import socketio from "../libs/socket";
+import socketio from "../libs/socket_donator";
 
 // TODO render the category page with a filter
 function StreamerPage() {

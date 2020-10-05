@@ -4,7 +4,7 @@ import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useStreamer } from "../../context/streamer";
 import monerojs from "../../libs/monero";
-import socketio from "../../libs/socket";
+import socketio from "../../libs/socket_streamer";
 
 function Wallet() {
   const {

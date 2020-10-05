@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
-import socketio from "./libs/socket";
+import socketio from "./libs/socket_streamer";
 
 import * as WalletContext from "./context/wallet";
 
@@ -75,6 +75,7 @@ function App() {
 
   useEffect(() => {
     if (streamerConfig !== null) {
+      console.log("streamer updated, sent to backend");
       socketio.emitUpdateStreamerConfig(streamerConfig);
     }
   }, [streamerConfig]);
