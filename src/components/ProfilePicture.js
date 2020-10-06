@@ -3,18 +3,19 @@ import { useStreamer, useStreamerState } from "../context/streamer";
 
 function ProfilePicture() {
   const { profilePicture } = useStreamerState();
+  console.log("pic", profilePicture);
   if (profilePicture) {
     return (
-      <div>
+      <div className="flex">
         <img
           src={profilePicture}
-          alt="Account"
-          className="h-16 w-16 rounded-full mx-auto"
+          alt="Profile Picture"
+          className="h-10 w-10 rounded-full mx-auto bg-white"
         />
       </div>
     );
   } else {
-    return "Account";
+    return <div className="flex">"Account"</div>;
   }
 }
 
