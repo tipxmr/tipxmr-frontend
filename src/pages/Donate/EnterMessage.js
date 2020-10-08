@@ -41,6 +41,25 @@ function EnterMessage({
   charLimit,
   charPrice,
 }) {
+  const CoinpaprikaAPI = require("@coinpaprika/api-nodejs-client");
+
+  const client = new CoinpaprikaAPI();
+
+  const [usdPrice, setUsdPrice] = useState();
+
+  useEffect(() => {
+    client
+      .getAllTickers()
+      .then((pairs) => {
+        return pairs.filter((pair) => pair.id === "xmr-monero");
+      })
+      .then((xmrPair) => {
+        setUsdPrice(xmrPair[0].quotes.USD.price);
+      })
+      .catch(console.error);
+  }, []);
+
+  const [usdConvert, setUsdConvert] = useState(0);
   const inputStyles = clsx([
     "block m-4 p-2 border border-gray-600 w-2/3 mx-auto text-center rounded",
   ]);
@@ -54,9 +73,14 @@ function EnterMessage({
     setSeconds(seconds);
     setTotal(total);
   }
+
   useEffect(() => {
     setTotal(secondPrice * seconds + message.length * charPrice);
   }, [message, seconds]);
+
+  useEffect(() => {
+    setUsdConvert((usdPrice * total).toFixed(2));
+  }, [total, usdPrice]);
 
   return (
     <div className="flex flex-grow justify-center">
@@ -102,14 +126,15 @@ function EnterMessage({
           <div className="w-3/5 mx-auto m-4  text-gray-600">
             {secondPrice ? (
               <div className="flex items-center justify-center">
-                <p className="tracking-tight mr-3">Show message for</p>{" "}
+                <p className="tracking-tight mr-3">Showtime: </p>{" "}
                 <Counter count={seconds} setCount={setSeconds} />
                 <p className="tracking-tight ml-3">seconds</p>
               </div>
             ) : null}
 
             <div className="my-3">
-              <p className="tracking-tight text-xs">Total cost:</p> {total} XMR
+              <p className="tracking-tight text-xs">Total cost:</p>{" "}
+              {total.toFixed(5)} XMR = {usdConvert} $
             </div>
           </div>
         </div>
