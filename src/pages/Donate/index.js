@@ -69,6 +69,9 @@ function Donate() {
 
   const [showLivestream, setShowLivestream] = useState(false);
 
+  // for testing extended-donations
+  streamer.secondPrice = 0.00043;
+  const [total, setTotal] = useState(0);
   return (
     <div className="flex flex-grow justify-center items-center relative">
       {showLivestream ? (
@@ -100,6 +103,9 @@ function Donate() {
             setShowPayment={setShowPayment}
             displayName={streamer.displayName}
             isOnline={streamer.isOnline}
+            secondPrice={streamer.secondPrice}
+            total={total}
+            setTotal={setTotal}
           />
         ) : null}
         {showPayment ? (
@@ -109,6 +115,7 @@ function Donate() {
             message={message}
             subaddress={subaddress}
             getSubaddress={getSubaddress}
+            total={total}
           />
         ) : null}
         {showSuccess ? (
