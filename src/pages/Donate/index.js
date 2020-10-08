@@ -25,7 +25,7 @@ function Donate() {
   });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Get Streamer Info from Backend
@@ -73,6 +73,7 @@ function Donate() {
   streamer.secondPrice = 0.00043;
   const [total, setTotal] = useState(0);
   streamer.charLimit = 1000;
+  streamer.charPrice = 0.00043;
   // const []
 
   return (
@@ -111,6 +112,7 @@ function Donate() {
             setTotal={setTotal}
             message={message}
             charLimit={streamer.charLimit}
+            charPrice={streamer.charPrice}
           />
         ) : null}
         {showPayment ? (
