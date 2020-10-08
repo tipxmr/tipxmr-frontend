@@ -3,6 +3,29 @@ import PropTypes from "prop-types";
 import { IsOnlineBadge, Button } from "~/components";
 import clsx from "clsx";
 
+function MessageArea({ message, setMessage, charLimit }) {
+  const textBoxStyle = clsx([
+    "flex flex-grow p-2 mx-3 border border-gray-600 rounded",
+  ]);
+  console.log(message);
+  return (
+    <div className="flex flex-grow relative h-32">
+      <textarea
+        type="text"
+        className={textBoxStyle}
+        placeholder="Enter your message here..."
+        /* message={message} */
+        onChange={(e) => {
+          setMessage(e.target.value);
+        }}
+      />
+      <p className="bottom-0 right-0 absolute text-gray-600 px-4">
+        {message ? message.length + "/" + charLimit : null}
+      </p>
+    </div>
+  );
+}
+
 function EnterMessage({
   setDonor,
   setMessage,
@@ -13,9 +36,11 @@ function EnterMessage({
   secondPrice,
   total,
   setTotal,
+  message,
+  charLimit,
 }) {
   const inputStyles = clsx([
-    "block w-2/3 mx-auto m-4 p-2 border border-gray-600 text-center",
+    "block m-4 p-2 border border-gray-600 w-2/3 mx-auto text-center rounded",
   ]);
 
   // test-values
@@ -41,44 +66,43 @@ function EnterMessage({
           </span>
         </h2>
         <IsOnlineBadge isOnline={isOnline} />
-        <input
-          type="text"
-          align="middle"
-          className={inputStyles}
-          placeholder="Your Name"
-          onChange={(e) => {
-            setDonor(e.target.value);
-          }}
-        />
-        <input
-          type="text"
-          className={inputStyles}
-          placeholder="Your Message"
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        />
-        {secondPrice ? (
-          <div className="mx-auto">
-            <input
-              type="text"
-              className={inputStyles}
-              placeholder="How many seconds should your message show?"
-              onChange={calcTotal}
-            />
-            <div className="w-3/5 mx-auto text-sm text-gray-600 text-right">
-              <p>
-                <span className="tracking-tight text-xs">Showtime:</span>{" "}
-                {seconds} seconds
-              </p>
+        <div className="flex flex-col text-center">
+          <input
+            type="text"
+            align="middle"
+            className={inputStyles}
+            placeholder="Your Name"
+            onChange={(e) => {
+              setDonor(e.target.value);
+            }}
+          />
+          <MessageArea
+            message={message}
+            setMessage={setMessage}
+            charLimit={charLimit}
+          />
+          {secondPrice ? (
+            <div className="flex flex-col">
+              <input
+                type="text"
+                className={inputStyles}
+                placeholder="Showtime in seconds"
+                onChange={calcTotal}
+              />
+              <div className="w-3/5 mx-auto text-sm text-gray-600 text-right">
+                <p>
+                  <span className="tracking-tight text-xs">Showtime:</span>{" "}
+                  {seconds} seconds
+                </p>
 
-              <p>
-                <span className="tracking-tight text-xs">Total cost:</span>{" "}
-                {total} XMR
-              </p>
+                <p>
+                  <span className="tracking-tight text-xs">Total cost:</span>{" "}
+                  {total} XMR
+                </p>
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
         <div className="mt-4 w-full flex justify-center">
           <Button
             onClick={() => {

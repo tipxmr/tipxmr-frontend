@@ -72,6 +72,9 @@ function Donate() {
   // for testing extended-donations
   streamer.secondPrice = 0.00043;
   const [total, setTotal] = useState(0);
+  streamer.charLimit = 1000;
+  // const []
+
   return (
     <div className="flex flex-grow justify-center items-center relative">
       {showLivestream ? (
@@ -106,6 +109,8 @@ function Donate() {
             secondPrice={streamer.secondPrice}
             total={total}
             setTotal={setTotal}
+            message={message}
+            charLimit={streamer.charLimit}
           />
         ) : null}
         {showPayment ? (
