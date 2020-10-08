@@ -3,21 +3,19 @@ import PropTypes from "prop-types";
 import { IsOnlineBadge, Button, Counter } from "~/components";
 import clsx from "clsx";
 
-function MessageArea({ message, setMessage, charLimit, calcTotal }) {
+function MessageArea({ message, setMessage, charLimit }) {
   const textBoxStyle = clsx([
     "flex flex-grow p-2 mx-3 border border-gray-600 rounded",
   ]);
-  console.log(message);
+
   return (
     <div className="flex flex-grow relative h-32 mx-3">
       <textarea
         type="text"
         className={textBoxStyle}
         placeholder="Enter your message here..."
-        /* message={message} */
         onChange={(e) => {
           setMessage(e.target.value);
-          calcTotal;
         }}
       />
       <p className="bottom-0 right-0 absolute text-gray-600 text-xs tracking-tight px-4">
@@ -42,12 +40,17 @@ function EnterMessage({
   charPrice,
 }) {
   const CoinpaprikaAPI = require("@coinpaprika/api-nodejs-client");
-
   const client = new CoinpaprikaAPI();
-
   const [usdPrice, setUsdPrice] = useState();
+  const [usdConvert, setUsdConvert] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
+  const inputStyles = clsx([
+    "block m-4 p-2 border border-gray-600 w-2/3 mx-auto text-center rounded",
+  ]);
 
   useEffect(() => {
+    // Get MoneroPrice as number
     client
       .getAllTickers()
       .then((pairs) => {
@@ -58,21 +61,6 @@ function EnterMessage({
       })
       .catch(console.error);
   }, []);
-
-  const [usdConvert, setUsdConvert] = useState(0);
-  const inputStyles = clsx([
-    "block m-4 p-2 border border-gray-600 w-2/3 mx-auto text-center rounded",
-  ]);
-
-  // test-values
-  const [seconds, setSeconds] = useState(0);
-
-  function calcTotal(e) {
-    const seconds = e.target.value;
-    const total = secondPrice * seconds + message.length * charPrice;
-    setSeconds(seconds);
-    setTotal(total);
-  }
 
   useEffect(() => {
     setTotal(secondPrice * seconds + message.length * charPrice);
@@ -108,21 +96,8 @@ function EnterMessage({
           <MessageArea
             message={message}
             setMessage={setMessage}
-            calcTotal={calcTotal}
             charLimit={charLimit}
           />
-          {/* {secondPrice ? ( */}
-          {
-            // ) : /* <input */
-            /*   type="text" */
-            /*   className={inputStyles} */
-            /*   placeholder="Showtime in seconds" */
-            /*   onChange={(e) => { */
-            /*     setSeconds(e.target.value); */
-            /*   }} */
-            /* /> */
-            /* null} */
-          }
           <div className="w-3/5 mx-auto m-4  text-gray-600">
             {secondPrice ? (
               <div className="flex items-center justify-center">
@@ -159,5 +134,11 @@ EnterMessage.propTypes = {
   setShowPayment: PropTypes.func,
   displayName: PropTypes.string,
   isOnline: PropTypes.bool,
+  secondPrice: PropTypes.number,
+  total: PropTypes.number,
+  setTotal: PropTypes.func,
+  message: PropTypes.string,
+  charLimit: PropTypes.number,
+  charPrice: PropTypes.number,
 };
 export default EnterMessage;

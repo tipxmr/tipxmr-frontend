@@ -22,10 +22,20 @@ function Donate() {
     userName: "loading",
     isOnline: false,
     hashedSeed: "",
+    charLimit: 1000,
+    secondPrice: 0.00043,
+    charPrice: 0.00043,
   });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState("");
+  const [showLivestream, setShowLivestream] = useState(false);
+  const [total, setTotal] = useState(0);
+
+  // for testing
+  const charPrice = 0.0004;
+  const secondPrice = 0.0004;
+  const charLimit = 100;
 
   useEffect(() => {
     // Get Streamer Info from Backend
@@ -67,15 +77,6 @@ function Donate() {
     socketio.onSubaddressToDonator(setSubaddress);
   }
 
-  const [showLivestream, setShowLivestream] = useState(false);
-
-  // for testing extended-donations
-  streamer.secondPrice = 0.00043;
-  const [total, setTotal] = useState(0);
-  streamer.charLimit = 1000;
-  streamer.charPrice = 0.00043;
-  // const []
-
   return (
     <div className="flex flex-grow justify-center items-center relative">
       {showLivestream ? (
@@ -107,12 +108,12 @@ function Donate() {
             setShowPayment={setShowPayment}
             displayName={streamer.displayName}
             isOnline={streamer.isOnline}
-            secondPrice={streamer.secondPrice}
+            secondPrice={secondPrice}
+            charLimit={charLimit}
+            charPrice={charPrice}
             total={total}
             setTotal={setTotal}
             message={message}
-            charLimit={streamer.charLimit}
-            charPrice={streamer.charPrice}
           />
         ) : null}
         {showPayment ? (

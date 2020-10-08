@@ -48,7 +48,7 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
           {subaddress}
         </div>
       </a>
-      <div className="max-w-md border-4 border- rounded shadow-lg bg-gray-200 my-6 p-3">
+      <div className="border-4 rounded shadow-lg bg-gray-200 my-6 p-6">
         <h2 className={grayTextStyle}>Your message: </h2>
         <span className="text-left">{message}</span>
       </div>
@@ -58,11 +58,11 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
 }
 // Payment property types
 Payment.propTypes = {
-  displayName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
   subaddress: PropTypes.string,
   getSubaddress: PropTypes.func,
+  total: PropTypes.func,
 };
 
 export default Payment;
