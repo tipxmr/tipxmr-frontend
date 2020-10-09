@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Toggle } from "~/components";
+import { Button, Toggle, InfoHover } from "~/components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
@@ -135,6 +135,13 @@ function Donate() {
           />
         ) : null}
         {showStreamerNotFound ? <StreamerNotFound /> : null}
+        <div className="m-2 absolute bottom-0 right-0">
+          <InfoHover
+            displayName={streamer.displayName}
+            secondPrice={secondPrice}
+            charPrice={charPrice}
+          />
+        </div>
       </div>
     </div>
   );
