@@ -1,6 +1,6 @@
-# TipXMR - The Livestream Tip Bot for OBS
-
 <img width="100" src="src/images/tipxmr-live.png">
+
+# TipXMR - The Livestream Tip Bot for OBS
 
 TipXMR is a web based application that let's you accept donations in your livestream.
 
