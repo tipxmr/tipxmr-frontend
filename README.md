@@ -1,4 +1,4 @@
-<img width="100" src="src/images/tipxmr-live.png">
+<img width="200" src="src/images/tipxmr-live.png">
 
 # TipXMR - The Livestream Tip Bot for OBS
 
