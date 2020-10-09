@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "~/libs/monero";
+import clsx from "clsx";
 
-function Payment({ donor, message, subaddress, getSubaddress }) {
+function Payment({ donor, message, subaddress, getSubaddress, total }) {
   const [qrcode, setQrcode] = useState("");
 
   useEffect(() => {
@@ -28,35 +29,40 @@ function Payment({ donor, message, subaddress, getSubaddress }) {
     e.nativeEvent.stopImmediatePropagation();
   }
 
+  const grayTextStyle = clsx(["text-2xl text-gray-600"]);
+
   return (
-    <div className="flex flex-grow justify-center text-center">
-      <div className="px-3 text-center my-auto">
-        <span className="text-2xl">
-          Hey {donor}, send any amount of Monero (XMR) to
-        </span>
-        <br />
-        <img className="mx-auto w-400px h-auto" src={qrcode} alt="qr code" />
-        <a href={"monero:" + subaddress} onClick={handleClick}>
-          <div className="text-center overlfow-x-auto break-all text-xs">
-            {subaddress}
-          </div>
-        </a>
-        <h2 className="mt-4">Your Message will be:</h2>
-        <span className="italic">{message}</span>
-        <div className="flex justify-center mt-6">
-          <ReactLoading type="spinningBubbles" color="#F16822" />
-        </div>
+    <div className="flex flex-grow flex-col justify-center items-center text-center">
+      <div className="m-4">
+        {total ? (
+          <span className={grayTextStyle}>Please transfer {total} XMR to </span>
+        ) : (
+          <span className={grayTextStyle}>
+            Please transfer any amount of XMR to
+          </span>
+        )}
       </div>
+      <img className="w-400px h-auto" src={qrcode} alt="qr code" />
+      <a href={"monero:" + subaddress} onClick={handleClick}>
+        <div className="overlfow-x-auto break-all tracking-tight text-xs px-3">
+          {subaddress}
+        </div>
+      </a>
+      <div className="border-4 rounded shadow-lg bg-gray-200 my-6 p-6">
+        <h2 className={grayTextStyle}>Your message: </h2>
+        <span className="text-left">{message}</span>
+      </div>
+      <ReactLoading type="spinningBubbles" color="#F16822" />
     </div>
   );
 }
 // Payment property types
 Payment.propTypes = {
-  displayName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
   subaddress: PropTypes.string,
   getSubaddress: PropTypes.func,
+  total: PropTypes.func,
 };
 
 export default Payment;

@@ -9,10 +9,6 @@ import Success from "./Success";
 
 import socketio from "../../libs/socket_donator";
 
-// TODO Implement the toggle livestream view in donte page
-// TODO Button to toggle
-// TODO Column layout for livestream and donation mask
-
 function Donate() {
   let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(false);
@@ -26,10 +22,20 @@ function Donate() {
     userName: "loading",
     isOnline: false,
     hashedSeed: "",
+    charLimit: 1000,
+    secondPrice: 0.00043,
+    charPrice: 0.00043,
   });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
+  const [showLivestream, setShowLivestream] = useState(false);
+  const [total, setTotal] = useState(0);
+
+  // for testing
+  const charPrice = 0.0004;
+  const secondPrice = 0.0004;
+  const charLimit = 100;
 
   useEffect(() => {
     // Get Streamer Info from Backend
@@ -71,8 +77,6 @@ function Donate() {
     socketio.onSubaddressToDonator(setSubaddress);
   }
 
-  const [showLivestream, setShowLivestream] = useState(false);
-
   return (
     <div className="flex flex-grow justify-center items-center relative">
       {showLivestream ? (
@@ -104,6 +108,12 @@ function Donate() {
             setShowPayment={setShowPayment}
             displayName={streamer.displayName}
             isOnline={streamer.isOnline}
+            secondPrice={secondPrice}
+            charLimit={charLimit}
+            charPrice={charPrice}
+            total={total}
+            setTotal={setTotal}
+            message={message}
           />
         ) : null}
         {showPayment ? (
@@ -113,6 +123,7 @@ function Donate() {
             message={message}
             subaddress={subaddress}
             getSubaddress={getSubaddress}
+            total={total}
           />
         ) : null}
         {showSuccess ? (

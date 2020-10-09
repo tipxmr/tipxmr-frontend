@@ -18,3 +18,4 @@ export { default as Toggle } from "./Toggle";
 export { default as CategoryCard } from "./CategoryCard";
 export { default as CategoryNav } from "./CategoryNav";
 export { default as IsOnlineBadge } from "./IsOnlineBadge";
+export { default as Counter } from "./Counter";
