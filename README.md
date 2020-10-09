@@ -4,6 +4,8 @@
 
 TipXMR is a web based application that let's you accept donations in your livestream.
 
+[Our CCS Funding Campaign](https://ccs.getmonero.org/proposals/tipxmr.live.html)
+
 ## The Goal
 
 We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their live streams and display some information about the donor.
