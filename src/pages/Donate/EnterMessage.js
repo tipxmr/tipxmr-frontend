@@ -98,7 +98,7 @@ function EnterMessage({
             setMessage={setMessage}
             charLimit={charLimit}
           />
-          <div className="w-3/5 mx-auto m-4  text-gray-600">
+          <div className="w-3/5 mx-auto m-4 text-gray-600">
             {secondPrice ? (
               <div className="flex items-center justify-center">
                 <p className="tracking-tight mr-3">Showtime: </p>{" "}
