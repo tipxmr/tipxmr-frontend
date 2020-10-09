@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { IsOnlineBadge, Button, Counter, InfoHover } from "~/components";
+import { IsOnlineBadge, Button, Counter } from "~/components";
 import clsx from "clsx";
 
 function MessageArea({ message, setMessage, charLimit }) {

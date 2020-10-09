@@ -57,7 +57,7 @@ function InfoHover({ displayName, secondPrice, charPrice }) {
       onMouseLeave={() => setIsShown(false)}
     >
       <Answer isOpen={isShown} />
-      <FiInfo className="ml-auto" />
+      <FiInfo className="ml-auto text-gray-700" />
     </div>
   );
 }
