@@ -32,7 +32,7 @@ function InfoHover({ displayName, secondPrice, charPrice }) {
     return (
       <animated.div style={expand} className="overflow-hidden">
         <div
-          className="p-4 bg-gray-200 shadow-lg tracking-tight text-gray-600 text-sm"
+          className="p-4 bg-gray-200 rounded shadow-lg tracking-tight text-gray-600 text-sm"
           ref={ref}
         >
           <p className="uppercase text-center">
