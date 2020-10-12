@@ -13,7 +13,7 @@ function IsOnlineBadge({ isOnline }) {
         "rounded",
         "leading-none",
         {
-          "bg-green-600": isOnline,
+          "bg-green-500": isOnline,
           "bg-red-600": !isOnline,
         },
       ])}
