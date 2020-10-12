@@ -84,9 +84,9 @@ function EnterMessage({
           <IsOnlineBadge isOnline={isOnline} />
           {/* </div> */}
           {/* <div className="flex-1"> */}
-          {/* <a href={stream.url}> */}
-          <BsDisplay size="1.2em" color="text-gray-700" />
-          {/* </a> */}
+          <a href={stream.url}>
+            <BsDisplay size="1.2em" color="text-gray-700" />
+          </a>
           {/* </div> */}
         </div>
         <div className="flex flex-col text-center">
