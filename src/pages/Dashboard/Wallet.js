@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, SyncBanner, Button } from "~/components";
+import { Progressbar, SyncBanner, Button, InputField } from "~/components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useStreamer } from "../../context/streamer";
@@ -17,11 +17,14 @@ function Wallet() {
 
   const wallet = useWalletState();
   const [streamerConfig, updateStreamerConfig] = useStreamer();
-
   const [tableData, setTableData] = useState(null);
   const [totalTransactions, setTotalTransactions] = useState(0);
   const [lockedBalance, setLockedBalance] = useState(0);
   const [unlockedBalance, setUnlockedBalance] = useState(0);
+  // withdraw states
+  const [isValidAddress, setIsValidAddress] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [isValidAmount, setIsValidAmount] = useState(false);
 
   function onClick() {
     if (isActive) {
@@ -91,6 +94,35 @@ function Wallet() {
     }
   }, [isDone, wallet.wallet, streamerConfig.hashedSeed]);
 
+  // Withdraw
+  function handleAddressChange(event) {
+    const withdrawAddress = event.target.value;
+    setIsValidAddress(monerojs.isValidAddress(withdrawAddress.trim()));
+  }
+
+  function handleWithdrawAllButton() {
+    setWithdrawAmount(unlockedBalance);
+    amountValidation(unlockedBalance);
+  }
+
+  function handleWithdrawAmountChange(event) {
+    const amount = parseFloat(event.target.value);
+    setWithdrawAmount(amount);
+    amountValidation(amount);
+  }
+
+  function amountValidation(amount) {
+    if (amount <= 0) {
+      setIsValidAmount(false);
+      console.error("Withdraw amount is 0 or negative");
+    } else if (amount > unlockedBalance) {
+      setIsValidAmount(false);
+      console.error("Withdraw amount is greater than unlocked balance");
+    } else {
+      setIsValidAmount(true);
+    }
+  }
+
   return (
     <div className="h-full">
       <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
@@ -127,6 +159,36 @@ function Wallet() {
             >
               {isActive ? "Stop Sync" : "Start Sync"}
             </Button>
+          </div>
+        </div>
+        <div className="col-span-3">
+          <div className="flex flex-col justify-center p-4 rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+            <div className="flex-1">
+              <p>Withdraw</p>
+            </div>
+            <div className="flex flex-1 flex-row items-center m-4">
+              <label htmlFor="withdrawAmount">Amount</label>
+              <input
+                className="m-5"
+                type="number"
+                min="0.000001"
+                mac={unlockedBalance}
+                step="0.000000000001"
+                value={withdrawAmount}
+                name="withdrawAmount"
+                onChange={(event) => handleWithdrawAmountChange(event)}
+              ></input>
+              XMR
+              <Button onClick={handleWithdrawAllButton}>All</Button>
+              <label htmlFor="withdrawAddress">Address</label>
+              <input
+                className="m-5"
+                type="text"
+                name="withdrawAddress"
+                onChange={(event) => handleAddressChange(event)}
+              ></input>
+              <Button disabled={!isValidAddress || !isValidAmount}>Send</Button>
+            </div>
           </div>
         </div>
       </div>

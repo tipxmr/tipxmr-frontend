@@ -42,20 +42,6 @@ function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
     userName,
     displayName,
     hashedSeed,
-    isOnline,
-    secondPrice,
-    charPrice,
-    charLimit,
-    minAmount,
-    gifsMinAmount,
-    goalProgress,
-    goal,
-    goalReached,
-    streamUrl,
-    streamPlatform,
-    streamLanguage,
-    streamDescription,
-    streamCategory,
   });
 }
 

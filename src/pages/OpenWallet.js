@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 
 import { useStreamer, updateHashedSeed } from "../context/streamer";
 import { useWallet, openWalletFromSeed } from "../context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
-import { Loading } from "../components";
-
-// component for successful wallet unlock
-function WalletUnlocked() {
-  return (
-    <div id="wallet-successful-opened">
-      <p>Wallet unlocked 🔓</p>
-      <Link to="/dashboard">
-        <button className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold my-16 py-2 px-4 rounded">
-          Login
-        </button>
-      </Link>
-    </div>
-  );
-}
+import { Button, Loading } from "../components";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("");
@@ -85,7 +70,12 @@ function OpenWallet() {
           onFocus={handleFocus}
         />
         {isLoading ? <Loading text="Opening your wallet" /> : null}
-        {isWalletOpen ? <WalletUnlocked /> : null}
+
+        <Link to="/dashboard">
+          <Button disabled={!isWalletOpen} loading={isLoading}>
+            Login
+          </Button>
+        </Link>
       </div>
     </div>
   );

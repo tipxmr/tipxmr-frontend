@@ -19,7 +19,6 @@ import {
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
 import { useStreamer } from "./context/streamer";
-import { FaTruckMonster } from "react-icons/fa";
 
 function App() {
   useIncomingTransaction(onIncomingTransaction);

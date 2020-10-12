@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function InputField({ labelName, name, placeholderName, stateSetter }) {
   function handleChange(e) {
@@ -22,5 +23,11 @@ function InputField({ labelName, name, placeholderName, stateSetter }) {
     </div>
   );
 }
+InputField.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string,
+  placeholderName: PropTypes.string,
+  stateSetter: PropTypes.func,
+};
 
 export default InputField;

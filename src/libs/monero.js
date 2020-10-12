@@ -93,6 +93,36 @@ export function isValidMnemoicLength(seed) {
   return words.length === 25;
 }
 
+export function isValidAddress(address) {
+  // as long as monero-javascript doesn't provide a good validation, tipxmr uses own version
+  // return monerojs.MoneroUtils.isValidAddress(address);
+  if (typeof address === "string") {
+    if (address.length === 95) {
+      if (monerojs.GenUtils.isBase58(address)) {
+        console.log("Address valid");
+        return true;
+      } else {
+        console.error("Address not in base58 format");
+      }
+    } else {
+      console.error("Address not 95 characters");
+    }
+  } else {
+    console.error("Address not a string");
+  }
+  return false;
+}
+
+async function createTx(wallet, address, amount) {
+  return await wallet.createTx({
+    accountIndex: 0,
+    address,
+    amount: amount * Math.pow(10, 12),
+    relay: true, // relay the transaction to the network
+    priority: monerojs.MoneroTxPriority.UNIMPORTANT,
+  });
+}
+
 export default {
   createWallet,
   openWalletFromSeed,
@@ -106,4 +136,5 @@ export default {
   getTxs,
   generateQrCode,
   isValidMnemoicLength,
+  isValidAddress,
 };
