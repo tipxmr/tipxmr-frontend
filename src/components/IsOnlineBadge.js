@@ -12,8 +12,6 @@ function IsOnlineBadge({ isOnline }) {
         "p-2",
         "rounded",
         "leading-none",
-        "flex",
-        "items-center",
         {
           "bg-green-600": isOnline,
           "bg-red-600": !isOnline,

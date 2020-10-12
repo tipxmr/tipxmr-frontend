@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { IsOnlineBadge, Button, Counter } from "~/components";
+import { Button, Counter } from "~/components";
 import clsx from "clsx";
 import { BsDisplay } from "react-icons/bs";
 
@@ -32,14 +32,17 @@ function EnterMessage({
   setShowEnterMessage,
   setShowPayment,
   displayName,
-  isOnline,
   secondPrice,
   total,
   setTotal,
   message,
   charLimit,
   charPrice,
-  stream,
+  streamUrl,
+  streamPlatform,
+  streamLanguage,
+  streamDescription,
+  streamCategory,
 }) {
   const [usdPrice, setUsdPrice] = useState();
   const usdConvert = (usdPrice * total).toFixed(2);
@@ -66,7 +69,6 @@ function EnterMessage({
   //   setUsdConvert((usdPrice * total).toFixed(2));
   // }, [total, usdPrice]);
 
-  console.log("streamer-stream", stream);
   return (
     <div className="flex flex-grow justify-center">
       <div className="my-auto">
@@ -80,14 +82,10 @@ function EnterMessage({
           </span>
         </h2>
         <div className="flex flex-row justify-around items-center">
-          {/* <div className="flex-1"> */}
-          <IsOnlineBadge isOnline={isOnline} />
-          {/* </div> */}
-          {/* <div className="flex-1"> */}
-          <a href={stream.url}>
+          <span className="text-xl">{streamLanguage}</span>
+          <a href={streamUrl}>
             <BsDisplay size="1.2em" color="text-gray-700" />
           </a>
-          {/* </div> */}
         </div>
         <div className="flex flex-col text-center">
           <input
