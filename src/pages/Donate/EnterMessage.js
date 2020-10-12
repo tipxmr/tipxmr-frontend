@@ -83,6 +83,10 @@ function EnterMessage({
         </h2>
         <div className="flex flex-row justify-around items-center">
           <span className="text-xl">{streamLanguage}</span>
+          <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker text-gray-200">
+            #{streamCategory}
+          </span>
+
           <a href={streamUrl}>
             <BsDisplay size="1.2em" color="text-gray-700" />
           </a>
@@ -137,7 +141,6 @@ EnterMessage.propTypes = {
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
   displayName: PropTypes.string,
-  isOnline: PropTypes.bool,
   secondPrice: PropTypes.number,
   total: PropTypes.number,
   setTotal: PropTypes.func,
