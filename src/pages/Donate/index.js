@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Toggle, InfoHover } from "~/components";
+import { IsOnlineBadge, Button, Toggle, InfoHover } from "~/components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
@@ -22,20 +22,26 @@ function Donate() {
     userName: "loading",
     isOnline: false,
     hashedSeed: "",
-    charLimit: 1000,
-    secondPrice: 0.00043,
-    charPrice: 0.00043,
+    charLimit: 0,
+    secondPrice: 0,
+    charPrice: 0,
+    charLimit: 100,
+    minAmount: 0.0004,
+    gifsMinAmount: 0,
+    goalProgress: 0,
+    goal: 1,
+    goalReached: false,
+    streamUrl: "",
+    streamPlatform: "",
+    streamLanguage: "",
+    streamDescription: "",
+    streamCategory: "",
   });
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState("");
   const [showLivestream, setShowLivestream] = useState(false);
   const [total, setTotal] = useState(0);
-
-  // for testing
-  const charPrice = 0.0004;
-  const secondPrice = 0.0004;
-  const charLimit = 100;
 
   useEffect(() => {
     // Get Streamer Info from Backend
@@ -92,13 +98,14 @@ function Donate() {
         </div>
       ) : null}
       <div className="flex-2">
-        <div className="absolute top-0 right-0 m-3">
+        <div className="absolute top-0 right-0 m-3 flex flex-col justify-center">
           <Toggle
             isChecked={showLivestream}
             onClick={() => setShowLivestream(!showLivestream)}
           >
             Watch the stream
           </Toggle>
+          <IsOnlineBadge isOnline={streamer.isOnline} />
         </div>
         {showEnterMessage ? (
           <EnterMessage
@@ -107,13 +114,20 @@ function Donate() {
             setShowEnterMessage={setShowEnterMessage}
             setShowPayment={setShowPayment}
             displayName={streamer.displayName}
-            isOnline={streamer.isOnline}
-            secondPrice={secondPrice}
-            charLimit={charLimit}
-            charPrice={charPrice}
+            secondPrice={streamer.secondPrice}
+            charLimit={streamer.charLimit}
+            charPrice={streamer.charPrice}
+            stream={streamer.stream}
             total={total}
             setTotal={setTotal}
             message={message}
+            goal={streamer.goal}
+            goalReached={streamer.goalReached}
+            streamUrl={streamer.streamUrl}
+            streamPlatform={streamer.streamPlatform}
+            streamLanguage={streamer.streamLanguage}
+            streamDescription={streamer.streamDescription}
+            streamCategory={streamer.streamCategory}
           />
         ) : null}
         {showPayment ? (
@@ -138,8 +152,8 @@ function Donate() {
         <div className="m-2 absolute bottom-0 right-0">
           <InfoHover
             displayName={streamer.displayName}
-            secondPrice={secondPrice}
-            charPrice={charPrice}
+            secondPrice={streamer.secondPrice}
+            charPrice={streamer.charPrice}
           />
         </div>
       </div>

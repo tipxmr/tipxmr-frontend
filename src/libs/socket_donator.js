@@ -37,11 +37,25 @@ function emitGetStreamer(userName) {
 
 function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
   socketDonator.emit("getSubaddress", {
-    displayName,
-    userName,
-    hashedSeed,
     donor,
     message,
+    userName,
+    displayName,
+    hashedSeed,
+    isOnline,
+    secondPrice,
+    charPrice,
+    charLimit,
+    minAmount,
+    gifsMinAmount,
+    goalProgress,
+    goal,
+    goalReached,
+    streamUrl,
+    streamPlatform,
+    streamLanguage,
+    streamDescription,
+    streamCategory,
   });
 }
 

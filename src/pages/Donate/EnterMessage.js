@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { IsOnlineBadge, Button, Counter } from "~/components";
+import { Button, Counter } from "~/components";
 import clsx from "clsx";
+import { BsDisplay } from "react-icons/bs";
 
 function MessageArea({ message, setMessage, charLimit }) {
   const textBoxStyle = clsx([
@@ -31,18 +32,20 @@ function EnterMessage({
   setShowEnterMessage,
   setShowPayment,
   displayName,
-  isOnline,
   secondPrice,
   total,
   setTotal,
   message,
   charLimit,
   charPrice,
+  streamUrl,
+  streamPlatform,
+  streamLanguage,
+  streamDescription,
+  streamCategory,
 }) {
-  const CoinpaprikaAPI = require("@coinpaprika/api-nodejs-client");
-  const client = new CoinpaprikaAPI();
   const [usdPrice, setUsdPrice] = useState();
-  const [usdConvert, setUsdConvert] = useState(0);
+  const usdConvert = (usdPrice * total).toFixed(2);
   const [seconds, setSeconds] = useState(0);
 
   const inputStyles = clsx([
@@ -51,14 +54,10 @@ function EnterMessage({
 
   useEffect(() => {
     // Get MoneroPrice as number
-    client
-      .getAllTickers()
-      .then((pairs) => {
-        return pairs.filter((pair) => pair.id === "xmr-monero");
-      })
-      .then((xmrPair) => {
-        setUsdPrice(xmrPair[0].quotes.USD.price);
-      })
+    fetch("https://api.coinpaprika.com/v1/tickers/xmr-monero?quotes=USD")
+      .then((response) => response.json())
+      .then((res) => res.quotes.USD.price)
+      .then(setUsdPrice)
       .catch(console.error);
   }, []);
 
@@ -66,9 +65,9 @@ function EnterMessage({
     setTotal(secondPrice * seconds + message.length * charPrice);
   }, [message, seconds]);
 
-  useEffect(() => {
-    setUsdConvert((usdPrice * total).toFixed(2));
-  }, [total, usdPrice]);
+  // useEffect(() => {
+  //   setUsdConvert((usdPrice * total).toFixed(2));
+  // }, [total, usdPrice]);
 
   return (
     <div className="flex flex-grow justify-center">
@@ -82,7 +81,16 @@ function EnterMessage({
             💸
           </span>
         </h2>
-        <IsOnlineBadge isOnline={isOnline} />
+        <div className="flex flex-row justify-around items-center">
+          <span className="text-xl">{streamLanguage}</span>
+          <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker text-gray-200">
+            #{streamCategory}
+          </span>
+
+          <a href={streamUrl}>
+            <BsDisplay size="1.2em" color="text-gray-700" />
+          </a>
+        </div>
         <div className="flex flex-col text-center">
           <input
             type="text"
@@ -133,7 +141,6 @@ EnterMessage.propTypes = {
   setShowEnterMessage: PropTypes.func,
   setShowPayment: PropTypes.func,
   displayName: PropTypes.string,
-  isOnline: PropTypes.bool,
   secondPrice: PropTypes.number,
   total: PropTypes.number,
   setTotal: PropTypes.func,
