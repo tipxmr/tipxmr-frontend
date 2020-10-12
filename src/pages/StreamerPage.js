@@ -50,9 +50,7 @@ function StreamerPage() {
         categories={categories}
       />
 
-      <div className="">
-        <div className="">{renderStreamerCards()}</div>
-      </div>
+      <div>{renderStreamerCards()}</div>
     </div>
   );
 }

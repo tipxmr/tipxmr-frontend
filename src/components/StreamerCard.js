@@ -38,12 +38,14 @@ Funding.propTypes = {
 function StreamerCard({ streamer }) {
   return (
     <div className="mx-4">
-      <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
-        <img
-          className="w-full h-56 object-cover object-center"
-          src="https://i.imgur.com/PW3XO3u.jpg"
-          alt="avatar"
-        />
+      <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-4">
+        <div className="flex flex-grow justify-center">
+          <img
+            className="object-cover object-center"
+            src="https://i.imgur.com/PW3XO3u.jpg"
+            alt="avatar"
+          />
+        </div>
         <div className="py-4 px-6">
           <a href={streamer.stream.url}>
             <div className="flex justify-center items-center transform hover:scale-110">
