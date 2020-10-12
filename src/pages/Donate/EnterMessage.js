@@ -81,7 +81,7 @@ function EnterMessage({
             💸
           </span>
         </h2>
-        <div className="flex flex-row justify-around items-center">
+        <div className="flex flex-row justify-evenly items-center">
           <span className="text-xl">{streamLanguage}</span>
           <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker text-gray-200">
             #{streamCategory}

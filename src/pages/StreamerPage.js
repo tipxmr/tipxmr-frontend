@@ -29,24 +29,29 @@ function StreamerPage() {
   function renderStreamerCards() {
     if (onlineStreamers) {
       return onlineStreamers.map((streamer) => {
-        console.log("Streamer:", streamer);
-        return <StreamerCard key={streamer.displayName} streamer={streamer} />;
+        if (activeCategory === streamer.stream.category) {
+          return (
+            <StreamerCard key={streamer.displayName} streamer={streamer} />
+          );
+        } else if (activeCategory === "all") {
+          return (
+            <StreamerCard key={streamer.displayName} streamer={streamer} />
+          );
+        }
       });
     }
     return null;
   }
   return (
-    <div>
+    <div className="flex">
       <CategoryNav
         activeCategory={activeCategory}
         stateSetter={setActiveCategory}
         categories={categories}
       />
 
-      <div className="w-3/4 mx-auto mt-3">
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          {renderStreamerCards()}
-        </div>
+      <div className="">
+        <div className="">{renderStreamerCards()}</div>
       </div>
     </div>
   );

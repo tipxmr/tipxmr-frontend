@@ -1,5 +1,5 @@
 import React from "react";
-import { useStreamer, useStreamerState } from "../context/streamer";
+import { useStreamerState } from "../context/streamer";
 
 function ProfilePicture() {
   const streamer = useStreamerState();
