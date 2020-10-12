@@ -8,7 +8,6 @@ function IsOnlineBadge({ isOnline }) {
       type="button"
       className={clsx([
         "pointer-events-none",
-        "mx-auto",
         "text-white",
         "p-2",
         "rounded",

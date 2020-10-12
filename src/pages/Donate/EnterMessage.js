@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { IsOnlineBadge, Button, Counter } from "~/components";
 import clsx from "clsx";
+import { BsDisplay } from "react-icons/bs";
 
 function MessageArea({ message, setMessage, charLimit }) {
   const textBoxStyle = clsx([
@@ -38,11 +39,10 @@ function EnterMessage({
   message,
   charLimit,
   charPrice,
+  stream,
 }) {
-  const CoinpaprikaAPI = require("@coinpaprika/api-nodejs-client");
-  const client = new CoinpaprikaAPI();
   const [usdPrice, setUsdPrice] = useState();
-  const [usdConvert, setUsdConvert] = useState(0);
+  const usdConvert = (usdPrice * total).toFixed(2);
   const [seconds, setSeconds] = useState(0);
 
   const inputStyles = clsx([
@@ -51,14 +51,10 @@ function EnterMessage({
 
   useEffect(() => {
     // Get MoneroPrice as number
-    client
-      .getAllTickers()
-      .then((pairs) => {
-        return pairs.filter((pair) => pair.id === "xmr-monero");
-      })
-      .then((xmrPair) => {
-        setUsdPrice(xmrPair[0].quotes.USD.price);
-      })
+    fetch("https://api.coinpaprika.com/v1/tickers/xmr-monero?quotes=USD")
+      .then((response) => response.json())
+      .then((res) => res.quotes.USD.price)
+      .then(setUsdPrice)
       .catch(console.error);
   }, []);
 
@@ -66,10 +62,11 @@ function EnterMessage({
     setTotal(secondPrice * seconds + message.length * charPrice);
   }, [message, seconds]);
 
-  useEffect(() => {
-    setUsdConvert((usdPrice * total).toFixed(2));
-  }, [total, usdPrice]);
+  // useEffect(() => {
+  //   setUsdConvert((usdPrice * total).toFixed(2));
+  // }, [total, usdPrice]);
 
+  console.log("streamer-stream", stream);
   return (
     <div className="flex flex-grow justify-center">
       <div className="my-auto">
@@ -82,7 +79,16 @@ function EnterMessage({
             💸
           </span>
         </h2>
-        <IsOnlineBadge isOnline={isOnline} />
+        <div className="flex flex-row justify-around items-center">
+          {/* <div className="flex-1"> */}
+          <IsOnlineBadge isOnline={isOnline} />
+          {/* </div> */}
+          {/* <div className="flex-1"> */}
+          {/* <a href={stream.url}> */}
+          <BsDisplay size="1.2em" color="text-gray-700" />
+          {/* </a> */}
+          {/* </div> */}
+        </div>
         <div className="flex flex-col text-center">
           <input
             type="text"
