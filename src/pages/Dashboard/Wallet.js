@@ -172,7 +172,7 @@ function Wallet() {
               <div className="flex flex-1 flex-row items-center m-4">
                 <label htmlFor="withdrawAmount">Amount</label>
                 <input
-                  className="m-5 text-xmrgray-darker bg-gray-200"
+                  className="m-5 text-xmrgray-darker bg-gray-200 p-2 rounded"
                   type="number"
                   min="0.000001"
                   max={unlockedBalance}
@@ -185,7 +185,7 @@ function Wallet() {
                 <Button onClick={handleWithdrawAllButton}>All</Button>
                 <label htmlFor="withdrawAddress">Address</label>
                 <input
-                  className="m-5 text-xmrgray-darker bg-gray-200"
+                  className="m-5 text-xmrgray-darker bg-gray-200 p-2 rounded"
                   type="text"
                   name="withdrawAddress"
                   onChange={(event) => handleAddressChange(event)}

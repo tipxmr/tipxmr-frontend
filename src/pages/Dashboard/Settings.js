@@ -12,7 +12,7 @@ import {
 } from "~/components";
 
 const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
-const platformOptions = ["Twitch", "YouTube", "Chaturbate"];
+const platformOptions = ["twitch", "youtube", "chaturbate"];
 const languageOptions = [
   "Dutch",
   "English",

@@ -50,7 +50,7 @@ function StreamerPage() {
         categories={categories}
       />
 
-      <div className="bg-xmrgray-darker">{renderStreamerCards()}</div>
+      <div className="bg-xmrgray-darker m-16">{renderStreamerCards()}</div>
     </div>
   );
 }
