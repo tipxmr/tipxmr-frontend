@@ -39,9 +39,7 @@ function Settings() {
       [key]: value,
     }));
   }
-  const [isPremium, setIsPremium] = useState(
-    streamerConfig.accountTier.premium
-  );
+  const [isPremium, setIsPremium] = useState(streamerConfig.isPremium);
   const [displayName, setDisplayName] = useState(streamerConfig.displayName);
   const [creationDate, setCreationDate] = useState(streamerConfig.creationDate);
   const [url, setUrl] = useState(streamerConfig.stream.url);
@@ -61,7 +59,7 @@ function Settings() {
 
   function submit() {
     const newStreamerConfig = {
-      accountTier: { premium: isPremium },
+      isPremium,
       displayName,
       creationDate,
       stream: {

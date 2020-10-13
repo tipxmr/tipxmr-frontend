@@ -12,8 +12,8 @@ function Dashboard() {
   const { path, url } = useRouteMatch();
 
   return (
-    <div className="flex flex-grow">
-      <nav className="px-4 bg-xmrgray-darker w-32 justify-between flex flex-col">
+    <div className="flex flex-grow bg-xmrgray-darker shadow-inner-xl">
+      <nav className="px-4 w-32 justify-between flex flex-col">
         <div className="items-center">
           <div className="py-4 flex-grow">
             <img
@@ -42,7 +42,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
-      <div className="px-16 py-4 text-gray-700 bg-gray-200 w-full ">
+      <div className="px-16 py-4 text-gray-700 w-full ">
         <Route exact path={path}>
           <Redirect to={`${path}/overview`} />
         </Route>

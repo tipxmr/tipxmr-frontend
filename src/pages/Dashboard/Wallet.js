@@ -124,26 +124,26 @@ function Wallet() {
   }
 
   return (
-    <div className="h-full">
-      <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
+    <div className="h-full text-gray-200">
+      <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center ">
         <SyncBanner synced={isDone} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
           <div className="px-4 py-6">
             <p>Your Balance</p>
             <div className="text-2xl my-2">unlocked: {unlockedBalance} XMR</div>
             <div className="text-2xl my-2">locked: {lockedBalance} XMR</div>
           </div>
         </div>
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
           <div className="px-4 py-6">
             <p>Total Transactions</p>
             <div className="text-6xl my-2">{totalTransactions}</div>
           </div>
         </div>
-        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+        <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
           <div className="px-4 py-6">
             <p>Wallet Sync</p>
             <div className="text-4xl my-2">
@@ -162,17 +162,17 @@ function Wallet() {
           </div>
         </div>
         <div className="col-span-3">
-          <div className="flex flex-col justify-center p-4 rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+          <div className="flex flex-col justify-center p-4 rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
             <div className="flex-1">
-              <p>Withdraw</p>
+              <p>Send funds to another wallet</p>
             </div>
             <div className="flex flex-1 flex-row items-center m-4">
               <label htmlFor="withdrawAmount">Amount</label>
               <input
-                className="m-5"
+                className="m-5 text-xmrgray-darker bg-gray-200"
                 type="number"
                 min="0.000001"
-                mac={unlockedBalance}
+                max={unlockedBalance}
                 step="0.000000000001"
                 value={withdrawAmount}
                 name="withdrawAmount"
@@ -182,7 +182,7 @@ function Wallet() {
               <Button onClick={handleWithdrawAllButton}>All</Button>
               <label htmlFor="withdrawAddress">Address</label>
               <input
-                className="m-5"
+                className="m-5 text-xmrgray-darker bg-gray-200"
                 type="text"
                 name="withdrawAddress"
                 onChange={(event) => handleAddressChange(event)}
@@ -190,20 +190,20 @@ function Wallet() {
               <Button disabled={!isValidAddress || !isValidAmount}>Send</Button>
             </div>
           </div>
+          <div className="mt-12 flex flex-grow justify-center">
+            <table className="table-auto border-4 mx-auto">
+              <thead>
+                <tr className="text-xl">
+                  <th className="px-4 py-2">Amount</th>
+                  <th className="px-4 py-2">Height</th>
+                  <th className="px-4 py-2">Date</th>
+                  <th className="px-4 py-2">Confirmations</th>
+                </tr>
+              </thead>
+              <tbody>{tableData}</tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div className="mt-12 mx-auto w-3/4">
-        <table className="table-auto border-4 mx-auto">
-          <thead>
-            <tr className="text-xl">
-              <th className="px-4 py-2">Amount</th>
-              <th className="px-4 py-2">Height</th>
-              <th className="px-4 py-2">Date</th>
-              <th className="px-4 py-2">Confirmations</th>
-            </tr>
-          </thead>
-          <tbody>{tableData}</tbody>
-        </table>
       </div>
     </div>
   );
