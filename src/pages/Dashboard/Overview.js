@@ -53,7 +53,7 @@ function Overview() {
             <tr className="text-xl">
               <th className="px-4 py-2">Donor</th>
               <th className="px-4 py-2 truncate">Message</th>
-              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2 border-r-4">Amount</th>
             </tr>
           </thead>
           <tbody>
