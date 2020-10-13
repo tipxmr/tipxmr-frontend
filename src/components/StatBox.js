@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
-function StatBox({ boxTitle, boxStat }) {
+function StatBox({ boxTitle, boxStat, textSize = "text-md" }) {
+  const boxStyles = clsx([
+    "rounded",
+    "shadow-lg",
+    "text-center",
+    "text-gray-200",
+  ]);
+  const textStyles = clsx([textSize]);
   return (
-    <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker text-xmrorange-lighter">
+    <div className={boxStyles}>
       <div className="px-4 py-6">
         <p>{boxTitle}</p>
         <div className="text-4xl my-2">{boxStat}</div>

@@ -63,7 +63,7 @@ function AnimationSettings() {
     updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
   }
   return (
-    <div className="h-full text-xmrgray-darker">
+    <div className="h-full text-gray-200">
       <div className="mx-auto">
         <div className="text-center text-xl underline mb-4">
           Change your Animation:

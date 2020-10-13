@@ -29,10 +29,10 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
     e.nativeEvent.stopImmediatePropagation();
   }
 
-  const grayTextStyle = clsx(["text-2xl text-gray-600"]);
+  const grayTextStyle = clsx(["text-2xl"]);
 
   return (
-    <div className="flex flex-grow flex-col justify-center items-center text-center">
+    <div className="flex flex-grow flex-col justify-center items-center text-gray-200 text-center">
       <div className="m-4">
         {total ? (
           <span className={grayTextStyle}>Please transfer {total} XMR to </span>
@@ -48,7 +48,7 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
           {subaddress}
         </div>
       </a>
-      <div className="border-4 rounded shadow-lg bg-gray-200 my-6 p-6">
+      <div className="border-2 border-gray-200 rounded shadow-lg my-6 p-6">
         <h2 className={grayTextStyle}>Your message: </h2>
         <span className="text-left">{message}</span>
       </div>

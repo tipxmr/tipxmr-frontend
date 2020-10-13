@@ -15,7 +15,7 @@ function Status({ isActive, isDone }) {
   }
 
   return (
-    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-xmrorange-darkest bg-xmrorange-lightest">
+    <span className="text-xs text-white font-semibold inline-block py-1 px-2 uppercase rounded-full bg-xmrorange-lightest">
       {status}
     </span>
   );
@@ -23,7 +23,7 @@ function Status({ isActive, isDone }) {
 
 function Percentage({ value }) {
   return (
-    <span className="text-xs font-semibold inline-block text-xmrorange-darker">
+    <span className="text-xs font-semibold inline-block text-green-500">
       {value}%
     </span>
   );
@@ -33,10 +33,10 @@ function Progress({ value }) {
   const barStyles = { width: value + "%" };
 
   return (
-    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-xmrorange-lightest">
+    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
       <div
         style={barStyles}
-        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-xmrorange-darkest"
+        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-xmrorange-lightest"
       ></div>
     </div>
   );

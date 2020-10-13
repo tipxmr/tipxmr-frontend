@@ -47,7 +47,7 @@ function CategoryNav({ activeCategory, categories, stateSetter }) {
     <div className="h-full flex flex-grow bg-gray-200">
       {/*<!-- container -->*/}
 
-      <aside className="flex flex-col items-center align-middle bg-gray-200 text-gray-700 shadow h-full">
+      <aside className="flex flex-col items-center align-middle bg-xmrgray-darker text-gray-200 shadow-xl h-full">
         {/*<!-- Side Nav Bar-->*/}
 
         <div className="h-16 flex items-center w-full mb-5 px-3">

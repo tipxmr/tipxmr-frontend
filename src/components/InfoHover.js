@@ -32,7 +32,7 @@ function InfoHover({ displayName, secondPrice, charPrice }) {
     return (
       <animated.div style={expand} className="overflow-hidden">
         <div
-          className="p-4 bg-gray-200 rounded shadow-lg tracking-tight text-gray-600 text-sm"
+          className="p-4 bg-gray-200 rounded shadow-lg tracking-tight text-xmrgray-darker text-sm"
           ref={ref}
         >
           <p className="uppercase text-center">
@@ -57,7 +57,7 @@ function InfoHover({ displayName, secondPrice, charPrice }) {
       onMouseLeave={() => setIsShown(false)}
     >
       <Answer isOpen={isShown} />
-      <FiInfo className="ml-auto text-gray-700" />
+      <FiInfo className="ml-auto text-gray-200" />
     </div>
   );
 }

@@ -12,7 +12,7 @@ import {
 } from "~/components";
 
 const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
-const platformOptions = ["Twitch", "YouTube", "Chaturbate"];
+const platformOptions = ["twitch", "youtube", "chaturbate"];
 const languageOptions = [
   "Dutch",
   "English",
@@ -39,9 +39,7 @@ function Settings() {
       [key]: value,
     }));
   }
-  const [isPremium, setIsPremium] = useState(
-    streamerConfig.accountTier.premium
-  );
+  const [isPremium, setIsPremium] = useState(streamerConfig.isPremium);
   const [displayName, setDisplayName] = useState(streamerConfig.displayName);
   const [creationDate, setCreationDate] = useState(streamerConfig.creationDate);
   const [url, setUrl] = useState(streamerConfig.stream.url);
@@ -61,7 +59,7 @@ function Settings() {
 
   function submit() {
     const newStreamerConfig = {
-      accountTier: { premium: isPremium },
+      isPremium,
       displayName,
       creationDate,
       stream: {
@@ -77,6 +75,8 @@ function Settings() {
     updateStreamer(updateStreamerConfig, newStreamerConfig);
   }
 
+  const animationUrl = "https://tipxmr.live/" + displayName + "/animation";
+
   let tier;
   if (isPremium) {
     tier = "premium";
@@ -84,18 +84,16 @@ function Settings() {
     tier = "basic";
   }
   return (
-    <div className="h-full text-xmrgray-darker">
-      <div>
-        <div className="text-center text-xl underline mb-4">
-          Account Summary
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+    <div className="flex-grow text-gray-200">
+      <div className="mx-auto">
+        <div className="my-6">
           <StatBox boxTitle="Your display name" boxStat={displayName} />
           <StatBox boxTitle="Premium account" boxStat={tier} />
           <StatBox boxTitle="Member since" boxStat={creationDate} />
           <StatBox
             boxTitle="Animation URL"
-            boxStat="https:tipxmr.live/username/animation"
+            boxStat={animationUrl}
+            smaller={true}
           />
         </div>
         <div className="text-center text-xl underline mb-4">
@@ -109,14 +107,12 @@ function Settings() {
             stateSetter={setDisplayName}
           />
           <InputField
-            /* TODO Fix this, nested object in streamerConfig */
             name="url"
             labelName="Set URL to your stream"
             placeholderName={url}
             stateSetter={setUrl}
           />
           <InputField
-            /* TODO Fix this, nested object in streamerConfig */
             name="description"
             labelName="Give your stream a description"
             placeholderName={description}

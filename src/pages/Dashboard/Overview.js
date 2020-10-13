@@ -34,8 +34,8 @@ function Overview() {
     },
   ]);
   return (
-    <div className="h-full">
-      <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center">
+    <div className="h-full text-gray-200 ">
+      <div className="w-1/2 mx-auto mb-4 text-center">
         <SyncBanner synced={isSynced} />
       </div>
 
@@ -48,12 +48,12 @@ function Overview() {
       <div className="mt-12 mx-auto w-3/4">
         <h2 className="text-3xl text-center my-3">Most recent Donations</h2>
         {/* Dynamische Tabelle nach dieser Anleitung */}
-        <table className="table-auto border-4 mx-auto">
+        <table className="table-auto border-4 overflow-hidden mx-auto">
           <thead>
             <tr className="text-xl">
               <th className="px-4 py-2">Donor</th>
-              <th className="px-4 py-2">Message</th>
-              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2 truncate">Message</th>
+              <th className="px-4 py-2 border-r-4">Amount</th>
             </tr>
           </thead>
           <tbody>

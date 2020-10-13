@@ -2,7 +2,7 @@ import React from "react";
 
 function Disclaimer() {
   return (
-    <div className="w-3/4 my-3 mx-auto">
+    <div className="w-3/4 my-3 mx-auto text-gray-200">
       <div className="mx-auto my-8">
         <h2 className="text-2xl text-center my-3">Introduction & Disclaimer</h2>
         <p className="text-sm text-center">
