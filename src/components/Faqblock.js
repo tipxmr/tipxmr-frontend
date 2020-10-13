@@ -18,7 +18,7 @@ function Question({ question, isOpen }) {
   ]);
 
   return (
-    <div className="p-4 pl-8 text-xl text-white flex justify-between">
+    <div className="p-4 pl-8 text-xl text-gray-200 flex justify-between">
       <p>{question}</p>
       <TiArrowDownThick className={arrowStyles} color="white" size="1.5em" />
     </div>
@@ -51,7 +51,7 @@ function Answer({ children, isOpen }) {
   return (
     <animated.div
       style={expand}
-      className="border-4 border-xmrgray-lighter bg-gray-200 border-t-0 overflow-hidden"
+      className="border-4 border-xmrgray-lighter bg-xmrgray-darker border-t-0 overflow-hidden"
     >
       <div className="p-4" ref={ref}>
         {children}

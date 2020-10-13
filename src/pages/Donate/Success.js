@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function Success({ displayName, donor, message, amount }) {
   return (
-    <div className="flex flex-grow justify-center">
+    <div className="flex flex-grow justify-center text-gray-200">
       <div className="text-center my-auto">
         <h2 className="text-6xl">
           <span role="img" aria-label="Green checkmark">
