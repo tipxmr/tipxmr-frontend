@@ -29,6 +29,8 @@ function Button({
     "disabled:opacity-75",
     "disabled:cursor-not-allowed",
     "focus:outline-none",
+    "transform",
+    "hover:scale-110",
   ]);
 
   return (

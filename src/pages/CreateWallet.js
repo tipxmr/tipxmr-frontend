@@ -50,7 +50,7 @@ function LanguageSelector({ languages, language, onChange }) {
   // Build list of language items, alphabetically sorted
   const languageItems = languages.map((language) => {
     return (
-      <option key={language} value={language}>
+      <option className="bg-xmrgray-darker" key={language} value={language}>
         {convertFlag(language) + " " + language}
       </option>
     );
@@ -59,7 +59,7 @@ function LanguageSelector({ languages, language, onChange }) {
   return (
     <div>
       <label
-        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        className="block uppercase tracking-wide text-xs font-bold mb-2"
         htmlFor="languages"
       >
         Choose a language:
@@ -69,7 +69,7 @@ function LanguageSelector({ languages, language, onChange }) {
         name="languages"
         value={language}
         onChange={onChange}
-        className="ml-4 p-2 block appearance-none w-full bg-gray-200 border border-orange-400 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        className="ml-4 p-2 block appearance-none w-full bg-xmrgray-darker border border-orange-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
       >
         {languageItems}
       </select>
@@ -132,7 +132,7 @@ function CreateWallet() {
           />
         </div>
         <textarea
-          className="mt-10 outline-none text-xmrgray-darker text-justify border-4 border-dashed border-xmrorange-lighter p-5"
+          className="mt-10 select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
           id="seed"
           name="seed"
           rows="4"

@@ -47,12 +47,14 @@ function OpenWallet() {
           className={clsx(
             [
               "my-10",
-              "text-xmrgray-darker",
+              "text-gray-200",
               "text-justify",
               "border-4",
               "border-dashed",
+              "rounded",
               "p-5",
               "outline-none",
+              "bg-xmrgray-darker",
             ],
             {
               "border-green-600": isWalletOpen,
