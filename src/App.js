@@ -139,7 +139,7 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Router>
         <Header />
-        <div className="flex-auto flex flex-col bg-xmrgray-darker">
+        <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
           <div className="flex flex-full">
             <Route path="/" exact>
               <Redirect to="/dashboard" />
