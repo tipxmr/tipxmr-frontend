@@ -13,7 +13,7 @@ function Dashboard() {
 
   return (
     <div className="flex flex-grow bg-xmrgray-darker">
-      <nav className="px-4 flex-1 shadow-xl">
+      <nav className="px-4 flex-1 shadow">
         <div className="items-center">
           <div className="py-4 flex-grow">
             <img
