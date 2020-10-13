@@ -10,6 +10,7 @@ function Toggle({ isChecked, onClick, children }) {
     "rounded-full",
     "bg-white",
     "border-4",
+    "bg-xmrgray-darker",
     "appearance-none",
     "cursor-pointer",
     {
@@ -40,7 +41,7 @@ function Toggle({ isChecked, onClick, children }) {
         />
         <label htmlFor="toggle" className={labelStyles}></label>
       </div>
-      <label htmlFor="toggle" className="text-xs text-gray-700 block">
+      <label htmlFor="toggle" className="text-xs text-gray-200 block">
         {children}
       </label>
     </div>

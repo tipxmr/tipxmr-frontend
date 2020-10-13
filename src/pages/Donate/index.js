@@ -98,14 +98,16 @@ function Donate() {
         </div>
       ) : null}
       <div className="flex-2">
-        <div className="absolute top-0 right-0 m-3 flex flex-col justify-center">
+        <div className="absolute top-0 right-0 m-3 text-gray-200 flex flex-col justify-center">
           <Toggle
             isChecked={showLivestream}
             onClick={() => setShowLivestream(!showLivestream)}
           >
             Watch the stream
           </Toggle>
-          <IsOnlineBadge isOnline={streamer.isOnline} />
+          <div className="mt-3 mx-auto">
+            <IsOnlineBadge isOnline={streamer.isOnline} />
+          </div>
         </div>
         {showEnterMessage ? (
           <EnterMessage

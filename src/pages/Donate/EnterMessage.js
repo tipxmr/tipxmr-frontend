@@ -6,7 +6,7 @@ import { BsDisplay } from "react-icons/bs";
 
 function MessageArea({ message, setMessage, charLimit }) {
   const textBoxStyle = clsx([
-    "flex flex-grow p-2 mx-3 border border-gray-600 rounded",
+    "flex flex-grow p-2 mx-3 border border-gray-200 shadow placeholder-gray-200 bg-xmrgray-darker rounded",
   ]);
 
   return (
@@ -19,7 +19,7 @@ function MessageArea({ message, setMessage, charLimit }) {
           setMessage(e.target.value);
         }}
       />
-      <p className="bottom-0 right-0 absolute text-gray-600 text-xs tracking-tight px-4">
+      <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
         {message ? message.length + "/" + charLimit : null}
       </p>
     </div>
@@ -49,7 +49,7 @@ function EnterMessage({
   const [seconds, setSeconds] = useState(0);
 
   const inputStyles = clsx([
-    "block m-4 p-2 border border-gray-600 w-2/3 mx-auto text-center rounded",
+    "block m-4 p-2 border border-gray-200 bg-xmrgray-darker placeholder-gray-200 w-2/3 mx-auto text-center rounded",
   ]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function EnterMessage({
   // }, [total, usdPrice]);
 
   return (
-    <div className="flex flex-grow justify-center">
+    <div className="flex flex-grow justify-center text-gray-200">
       <div className="my-auto">
         <h2 className="text-center text-3xl">
           <span role="img" aria-label="Green Money">
@@ -83,7 +83,7 @@ function EnterMessage({
         </h2>
         <div className="flex flex-row justify-evenly items-center">
           <span className="text-xl">{streamLanguage}</span>
-          <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker text-gray-200">
+          <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker ">
             #{streamCategory}
           </span>
 
@@ -106,7 +106,7 @@ function EnterMessage({
             setMessage={setMessage}
             charLimit={charLimit}
           />
-          <div className="w-3/5 mx-auto m-4 text-gray-600">
+          <div className="w-3/5 mx-auto m-4 text-gray-200">
             {secondPrice ? (
               <div className="flex items-center justify-center">
                 <p className="tracking-tight mr-3">Showtime: </p>{" "}
