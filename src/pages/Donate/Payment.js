@@ -6,6 +6,7 @@ import clsx from "clsx";
 
 function Payment({ donor, message, subaddress, getSubaddress, total }) {
   const [qrcode, setQrcode] = useState("");
+  const [paymentUri, setPaymentUri] = useState(null);
 
   useEffect(() => {
     if (subaddress === null) {
@@ -15,18 +16,30 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
 
   // generete QR Code on subaddress change
   useEffect(() => {
+    const paymentUri = createPaymentUri();
     async function generateQrCode() {
       if (subaddress !== null) {
-        const qrcode = await monerojs.generateQrCode(subaddress);
+        const qrcode = await monerojs.generateQrCode(paymentUri);
         setQrcode(qrcode);
       }
     }
     generateQrCode();
-  }, [subaddress]);
+  }, [subaddress, createPaymentUri]);
 
   function handleClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
+  }
+
+  function createPaymentUri() {
+    let uri;
+    if (total > 0) {
+      uri = "monero:" + subaddress + "?tx_amount=" + total;
+    } else {
+      uri = "monero:" + subaddress;
+    }
+    setPaymentUri(uri);
+    return uri;
   }
 
   const grayTextStyle = clsx(["text-2xl"]);
@@ -35,7 +48,9 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
     <div className="flex flex-grow flex-col justify-center items-center text-gray-200 text-center">
       <div className="m-4">
         {total ? (
-          <span className={grayTextStyle}>Please transfer {total} XMR to </span>
+          <span className={grayTextStyle}>
+            Please transfer at least {total} XMR to{" "}
+          </span>
         ) : (
           <span className={grayTextStyle}>
             Please transfer any amount of XMR to
@@ -43,7 +58,7 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
         )}
       </div>
       <img className="w-400px h-auto" src={qrcode} alt="qr code" />
-      <a href={"monero:" + subaddress} onClick={handleClick}>
+      <a href={paymentUri} onClick={handleClick}>
         <div className="overlfow-x-auto break-all tracking-tight text-xs px-3">
           {subaddress}
         </div>

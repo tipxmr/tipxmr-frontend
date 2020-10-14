@@ -14,6 +14,7 @@ function MessageArea({ message, setMessage, charLimit }) {
       <textarea
         type="text"
         className={textBoxStyle}
+        maxLength={charLimit}
         placeholder="Enter your message here..."
         onChange={(e) => {
           setMessage(e.target.value);
@@ -25,8 +26,14 @@ function MessageArea({ message, setMessage, charLimit }) {
     </div>
   );
 }
+MessageArea.propTypes = {
+  message: PropTypes.string,
+  setMessage: PropTypes.func,
+  charLimit: PropTypes.number,
+};
 
 function EnterMessage({
+  donor,
   setDonor,
   setMessage,
   setShowEnterMessage,
@@ -92,15 +99,22 @@ function EnterMessage({
           </a>
         </div>
         <div className="flex flex-col text-center">
-          <input
-            type="text"
-            align="middle"
-            className={inputStyles}
-            placeholder="Your Name"
-            onChange={(e) => {
-              setDonor(e.target.value);
-            }}
-          />
+          <div className="flex flex-grow relative mx-3">
+            <input
+              type="text"
+              align="middle"
+              maxLength={15}
+              className={inputStyles}
+              placeholder="Your Name"
+              onChange={(e) => {
+                setDonor(e.target.value);
+              }}
+            />
+            <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
+              {donor ? donor.length + "/15" : null}
+            </p>
+          </div>
+
           <MessageArea
             message={message}
             setMessage={setMessage}
@@ -109,14 +123,14 @@ function EnterMessage({
           <div className="w-3/5 mx-auto m-4 text-gray-200">
             {secondPrice ? (
               <div className="flex items-center justify-center">
-                <p className="tracking-tight mr-3">Showtime: </p>{" "}
+                <p className="tracking-tight mr-3">Showtime: </p>
                 <Counter count={seconds} setCount={setSeconds} />
                 <p className="tracking-tight ml-3">seconds</p>
               </div>
             ) : null}
 
             <div className="my-3">
-              <p className="tracking-tight text-xs">Total cost:</p>{" "}
+              <p className="tracking-tight text-xs">Minimum amount:</p>
               {total.toFixed(5)} XMR = {usdConvert} $
             </div>
           </div>
@@ -136,6 +150,7 @@ function EnterMessage({
   );
 }
 EnterMessage.propTypes = {
+  donor: PropTypes.string,
   setDonor: PropTypes.func,
   setMessage: PropTypes.func,
   setShowEnterMessage: PropTypes.func,
@@ -147,5 +162,10 @@ EnterMessage.propTypes = {
   message: PropTypes.string,
   charLimit: PropTypes.number,
   charPrice: PropTypes.number,
+  streamUrl: PropTypes.string,
+  streamPlatform: PropTypes.string,
+  streamLanguage: PropTypes.string,
+  streamDescription: PropTypes.string,
+  streamCategory: PropTypes.string,
 };
 export default EnterMessage;
