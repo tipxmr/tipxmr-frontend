@@ -25,6 +25,7 @@ function Wallet() {
   const [isValidAddress, setIsValidAddress] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [isValidAmount, setIsValidAmount] = useState(false);
+  const [withdrawAddress, setWithdrawAddress] = useState(null);
 
   function onClick() {
     if (isActive) {
@@ -97,6 +98,7 @@ function Wallet() {
   // Withdraw
   function handleAddressChange(event) {
     const withdrawAddress = event.target.value;
+    setWithdrawAddress(withdrawAddress);
     setIsValidAddress(monerojs.isValidAddress(withdrawAddress.trim()));
   }
 
@@ -121,6 +123,20 @@ function Wallet() {
     } else {
       setIsValidAmount(true);
     }
+  }
+
+  async function withdraw() {
+    console.log("Withdraw request");
+    console.log("Wallet:", wallet);
+    console.log("withdrawAddress:", withdrawAddress);
+    console.log("withdrawAmount:", withdrawAmount);
+    console.log("DeamonHeight:", await wallet.wallet.getDaemonHeight());
+    console.log("WalletHeight:", await wallet.wallet.getHeight());
+    monerojs
+      .createTx(wallet.wallet, withdrawAddress, withdrawAmount)
+      .then((tx) => {
+        console.log("Tx created:", tx);
+      });
   }
 
   return (
@@ -190,7 +206,10 @@ function Wallet() {
                   name="withdrawAddress"
                   onChange={(event) => handleAddressChange(event)}
                 ></input>
-                <Button disabled={!isValidAddress || !isValidAmount}>
+                <Button
+                  disabled={!isValidAddress || !isValidAmount}
+                  onClick={withdraw}
+                >
                   Send
                 </Button>
               </div>
