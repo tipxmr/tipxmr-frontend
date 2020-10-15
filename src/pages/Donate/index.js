@@ -111,6 +111,7 @@ function Donate() {
         </div>
         {showEnterMessage ? (
           <EnterMessage
+            donor={donor}
             setDonor={setDonor}
             setMessage={setMessage}
             setShowEnterMessage={setShowEnterMessage}
