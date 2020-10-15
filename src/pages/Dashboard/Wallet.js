@@ -25,6 +25,7 @@ function Wallet() {
   const [isValidAddress, setIsValidAddress] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [isValidAmount, setIsValidAmount] = useState(false);
+  const [withdrawAddress, setWithdrawAddress] = useState(null);
 
   function onClick() {
     if (isActive) {
@@ -43,16 +44,28 @@ function Wallet() {
         const { height, timestamp } = tx.state.block.state;
         const { numConfirmations, isIncoming } = tx.state;
         let amount = null;
+        let inout = "incoming";
         const date = new Date(timestamp * 1000).toLocaleString();
+        console.log("transfer", tx.state);
         if (isIncoming) {
-          amount = tx.state.incomingTransfers[0].state.amount;
-          amount = parseFloat(amount) / Math.pow(10, 12);
+          amount =
+            parseFloat(tx.state.incomingTransfers[0].state.amount) /
+            Math.pow(10, 12);
+          inout = "incoming";
         } else {
-          amount = tx.state.outgoingTransfers[0].state.amount;
-          amount = parseFloat(amount) / Math.pow(10, 12);
+          amount =
+            parseFloat(tx.state.outgoingTransfer.state.amount) /
+            Math.pow(10, 12);
+          inout = "outgoing";
+          console.log(
+            "tx.state.outgoingTransfer.state.amount",
+            tx.state.outgoingTransfer.state.amount
+          );
+          console.log("amount:", amount);
         }
         return (
           <tr key={index}>
+            <td className="border px-4 py-2">{inout}</td>
             <td className="border px-4 py-2">{amount} XMR</td>
             <td className="border px-4 py-2">{height}</td>
             <td className="border px-4 py-2">{date}</td>
@@ -97,6 +110,7 @@ function Wallet() {
   // Withdraw
   function handleAddressChange(event) {
     const withdrawAddress = event.target.value;
+    setWithdrawAddress(withdrawAddress);
     setIsValidAddress(monerojs.isValidAddress(withdrawAddress.trim()));
   }
 
@@ -121,6 +135,28 @@ function Wallet() {
     } else {
       setIsValidAmount(true);
     }
+  }
+
+  async function withdraw() {
+    console.log("Withdraw request");
+    console.log("Wallet:", wallet);
+    console.log("withdrawAddress:", withdrawAddress);
+    console.log("withdrawAmount:", withdrawAmount);
+    wallet.wallet
+      .getDaemonHeight()
+      .then((daemonHeight) => console.log("DeamonHeight:", daemonHeight));
+    wallet.wallet
+      .getHeight()
+      .then((walletHeight) => console.log("WalletHeight:", walletHeight));
+    monerojs
+      .createTx(wallet.wallet, withdrawAddress, withdrawAmount)
+      .then((tx) => {
+        if (!(tx instanceof Error)) {
+          console.log("Tx created:", tx);
+        } else {
+          console.error("error with tx:", error);
+        }
+      });
   }
 
   return (
@@ -190,7 +226,10 @@ function Wallet() {
                   name="withdrawAddress"
                   onChange={(event) => handleAddressChange(event)}
                 ></input>
-                <Button disabled={!isValidAddress || !isValidAmount}>
+                <Button
+                  disabled={!isValidAddress || !isValidAmount}
+                  onClick={withdraw}
+                >
                   Send
                 </Button>
               </div>
@@ -199,6 +238,7 @@ function Wallet() {
               <table className="table-auto border-4 mx-auto">
                 <thead>
                   <tr className="text-xl">
+                    <th className="px-4 py-2">Type</th>
                     <th className="px-4 py-2">Amount</th>
                     <th className="px-4 py-2">Height</th>
                     <th className="px-4 py-2">Date</th>
