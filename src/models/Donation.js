@@ -3,7 +3,10 @@ const defaults = {
   message: "",
   amount: 0,
   duration: 0,
-  donorSocketId: "",
+  donatorSocketId: "",
+  subaddress: "",
+  userName: "",
+  displayName: "",
 };
 
 function from(options) {
@@ -26,8 +29,20 @@ function setDuration(duration, donation) {
   return Object.assign({}, donation, { duration });
 }
 
-function setDonorSocketId(donorSocketId, donation) {
-  return Object.assign({}, donation, { donorSocketId });
+function setDonatorSocketId(donatorSocketId, donation) {
+  return Object.assign({}, donation, { donatorSocketId });
+}
+
+function setSubaddress(subaddress, donation) {
+  return Object.assign({}, donation, { subaddress });
+}
+
+function setUserName(userName, donation) {
+  return Object.assign({}, donation, { userName });
+}
+
+function setDisplayName(displayName, donation) {
+  return Object.assign({}, donation, { displayName });
 }
 
 export default {
@@ -36,5 +51,8 @@ export default {
   setMessage,
   setAmount,
   setDuration,
-  setDonorSocketId,
+  setDonatorSocketId,
+  setSubaddress,
+  setUserName,
+  setDisplayName,
 };
