@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 function Toggle({ isChecked, onClick, children }) {
   const toggleStyles = clsx(
@@ -47,5 +48,10 @@ function Toggle({ isChecked, onClick, children }) {
     </div>
   );
 }
+Toggle.propTypes = {
+  isChecked: PropTypes.bool,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+};
 
 export default Toggle;
