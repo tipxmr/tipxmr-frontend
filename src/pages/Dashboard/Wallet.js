@@ -63,13 +63,19 @@ function Wallet() {
           );
           console.log("amount:", amount);
         }
+        const cellStyle =
+          inout === "incoming"
+            ? "bg-green-500 border px-4 py-2"
+            : "bg-red-500 border px-4 py-2";
         return (
           <tr key={index}>
-            <td className="border px-4 py-2">{inout}</td>
-            <td className="border px-4 py-2">{amount} XMR</td>
-            <td className="border px-4 py-2">{height}</td>
-            <td className="border px-4 py-2">{date}</td>
-            <td className="border px-4 py-2">{numConfirmations}</td>
+            <td className={cellStyle}>{inout}</td>
+            <td className={cellStyle}>{amount} XMR</td>
+            <td className={cellStyle} title={tx.state.hash}>
+              {height}
+            </td>
+            <td className={cellStyle}>{date}</td>
+            <td className={cellStyle}>{numConfirmations}</td>
           </tr>
         );
       });
@@ -170,10 +176,8 @@ function Wallet() {
           <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
             <div className="px-4 py-6">
               <p>Your Balance</p>
-              <div className="text-2xl my-2">
-                unlocked: {unlockedBalance} XMR
-              </div>
-              <div className="text-2xl my-2">locked: {lockedBalance} XMR</div>
+              <div className="text-2xl my-2">🔓: {unlockedBalance} XMR</div>
+              <div className="text-2xl my-2">🔐: {lockedBalance} XMR</div>
             </div>
           </div>
           <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">

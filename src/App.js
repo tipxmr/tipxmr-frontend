@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
+import Donation from "./models/Donation";
 
 import * as WalletContext from "./context/wallet";
 
@@ -99,7 +100,7 @@ function App() {
           (donationInfo) => donationInfo.subaddress === subaddress
         );
         if (donationsInfo !== undefined) {
-          const newDonation = {
+          const newDonation = Donation.from({
             subaddress: subaddress,
             amount: parseFloat(output.amount) / Math.pow(10, 12), // convert Bigint to Int
             donor: donationsInfo.donor,
@@ -107,7 +108,7 @@ function App() {
             donatorSocketId: donationsInfo.donatorSocketId,
             userName: donationsInfo.userName,
             displayName: donationsInfo.displayName,
-          };
+          });
           console.log("New Donation:", newDonation);
           setDonationsQueue((previousArray) => [...previousArray, newDonation]);
           setDonationsHistory((previousArray) => [
@@ -138,7 +139,8 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
-        <Header />
+        {/* userName in Header is just for easier testing, remove for production */}
+        <Header userName={streamerConfig.userName} />
         <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
           <div className="flex flex-full">
             <Route path="/" exact>

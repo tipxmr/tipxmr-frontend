@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import logo from "~/images/tipxmr-live.png";
 import ProfilePicture from "./ProfilePicture";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
-function Nav() {
+function Nav({ userName }) {
   const linkStyle = clsx([
     "my-1",
     "md:my-0",
@@ -30,7 +31,7 @@ function Nav() {
             Streams
           </Link>
           {/*Should be removed later on since acccessed through streams*/}
-          <Link to="/donate/alexanarcho" className={linkStyle}>
+          <Link to={"/donate/" + userName} className={linkStyle}>
             Donate
           </Link>
           <Link to="/animation" className={linkStyle}>
@@ -44,5 +45,8 @@ function Nav() {
     </nav>
   );
 }
+Nav.propTypes = {
+  userName: PropTypes.string,
+};
 
 export default Nav;

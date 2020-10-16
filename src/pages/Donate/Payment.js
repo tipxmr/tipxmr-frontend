@@ -77,7 +77,7 @@ Payment.propTypes = {
   donor: PropTypes.string,
   subaddress: PropTypes.string,
   getSubaddress: PropTypes.func,
-  total: PropTypes.func,
+  total: PropTypes.number,
 };
 
 export default Payment;
