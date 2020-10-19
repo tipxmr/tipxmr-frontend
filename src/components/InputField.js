@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 
-function InputField({
-  labelName,
-  name,
-  placeholderName,
-  register,
-  errors,
-  required = false,
-}) {
+function InputField({ labelName, name, placeholderName, register, errors }) {
   const [inputValue, setInputValue] = useState(placeholderName);
 
   function handleChange(e) {
@@ -30,8 +23,10 @@ function InputField({
             ref={register}
             className="w-full min-w-400 border-2 p-1 text-center border-xmrgray-lighter text-xmrgray-darker placeholder-xmrgray-lighter"
           ></input>
-          {errors[name]}
         </label>
+        <p className="text-xmrorange mt-2">
+          {errors[name] ? errors[name].message : null}
+        </p>
       </div>
     </div>
   );

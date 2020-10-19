@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 
-function FloatInput({
-  labelName,
-  name,
-  placeholderName,
-  register,
-  errors,
-  required = false,
-}) {
+function FloatInput({ labelName, name, placeholderName, register, errors }) {
   const [float, setFloat] = useState(placeholderName);
   function handleChange(e) {
     setFloat(e.target.value);
@@ -22,11 +15,13 @@ function FloatInput({
             name={name}
             value={float}
             onChange={handleChange}
-            type="text"
+            type="number"
             ref={register}
           ></input>
-          {errors[name]}
         </label>
+        <p className="text-xmrorange mt-2">
+          {errors[name] ? errors[name].message : null}
+        </p>
       </div>
     </div>
   );

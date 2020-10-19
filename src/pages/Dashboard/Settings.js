@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { updateStreamer, useStreamer } from "../../context/streamer";
-
+import { updateStreamer, useStreamer } from "~/context/streamer";
 import {
   InputField,
   FileInput,
@@ -19,7 +18,7 @@ const languageOptions = [
   "English",
   "Esperanto",
   "French",
-  "🇬🇧 German",
+  "German",
   "Italian",
   "Japanese",
   "Portuguese",
@@ -28,45 +27,10 @@ const languageOptions = [
 ];
 
 function Settings() {
-  // useForm makes this redunant most likely
   const [streamerConfig, updateStreamerConfig] = useStreamer();
-  const [isPremium, setIsPremium] = useState(streamerConfig.isPremium);
-  const [creationDate, setCreationDate] = useState(streamerConfig.creationDate);
-  // const [url, setUrl] = useState(streamerConfig.stream.url);
-  const [platform, setPlatform] = useState(streamerConfig.stream.platform);
-  const [language, setLanguage] = useState(streamerConfig.stream.language);
-  const [description, setDescription] = useState(
-    streamerConfig.stream.description
-  );
-  const [category, setCategory] = useState(streamerConfig.stream.category);
-
-  const [restoreHeight, setRestoreHeight] = useState(
-    streamerConfig.restoreHeight
-  );
-  const [profilePicture, setProfilePicture] = useState(
-    streamerConfig.profilePicture
-  );
 
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
-
-  function submit() {
-    const newStreamerConfig = {
-      isPremium,
-      displayName,
-      creationDate,
-      stream: {
-        url,
-        platform,
-        description,
-        language,
-        category,
-      },
-      restoreHeight,
-      profilePicture,
-      // updateStreamer(updateStreamerConfig, newStreamerConfig);
-    };
-  }
 
   // TODO Needs to be fixed and replaced with the actual animation URL
   const animationUrl =
@@ -74,7 +38,6 @@ function Settings() {
 
   const onSubmit = (data) => {
     console.log(data); // data should have everything, just like newStreamerConfig
-    // actually write the new config
     // updateStreamer(updateStreamerConfig, newStreamerConfig);
   };
 
@@ -110,31 +73,38 @@ function Settings() {
               name="displayName"
               labelName="Change your display name"
               placeholderName={streamerConfig.displayName}
-              register={register}
+              register={register({
+                required: { value: true, message: "Cannot be empty" },
+                maxLength: { value: 15, message: "Maximum of 15 characters" },
+                minLength: { value: 3, message: "Minimum of 3 characters" },
+              })}
               errors={errors}
-              required={true}
             />
             <InputField
               name="url"
               labelName="Set URL to your stream"
               placeholderName={streamerConfig.stream.url}
-              register={register}
+              register={register({
+                required: { value: true, message: "Cannot be empty" },
+              })}
               errors={errors}
-              required={true}
             />
             <InputField
               name="description"
               labelName="Give your stream a description"
               placeholderName={streamerConfig.stream.description}
-              register={register}
+              register={register({
+                maxLength: { value: 50, message: "Maximum of 50 characters" },
+              })}
               errors={errors}
-              required={true}
             />
             <FloatInput
               name="restoreHeight"
               labelName="Restore Height for Wallet"
               placeholderName={streamerConfig.restoreHeight}
-              register={register}
+              register={register({
+                min: { value: 0, message: "Cannot be negative" },
+              })}
               errors={errors}
             />
             {/* TODO Option to automatically set new restore height? */}
@@ -143,10 +113,11 @@ function Settings() {
               labelName="Change your profile picture"
               accept=".jpg, .jpeg, .png"
               maxFilesize={300 * 1024}
-              placeholderName={profilePicture}
-              register={register}
+              currentFile={streamerConfig.profilePicture}
+              register={register({
+                max: { value: 307200, message: "Maximum filesize is 300KB" },
+              })}
               errors={errors}
-              required={true}
             />
             <DropdownField
               name="language"
@@ -155,7 +126,6 @@ function Settings() {
               selected={streamerConfig.stream.language}
               register={register}
               errors={errors}
-              required={true}
             />
             <DropdownField
               name="platform"
@@ -164,7 +134,6 @@ function Settings() {
               selected={streamerConfig.stream.platform}
               errors={errors}
               register={register}
-              required={true}
             />
             <DropdownField
               name="category"
@@ -173,7 +142,6 @@ function Settings() {
               selected={streamerConfig.stream.category}
               register={register}
               errors={errors}
-              required={true}
             />
           </div>
           <Button type="submit">Submit</Button>

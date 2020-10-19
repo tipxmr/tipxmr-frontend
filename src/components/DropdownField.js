@@ -8,7 +8,6 @@ function DropdownField({
   selected,
   register,
   errors,
-  required = false,
 }) {
   const [selectedItem, setSelectedItem] = useState(selected);
   const menuItems = options.map((option) => {
@@ -37,6 +36,9 @@ function DropdownField({
         >
           {menuItems}
         </select>
+        <p className="text-xmrorange mt-2">
+          {errors[name] ? errors[name].message : null}
+        </p>
       </div>
     </div>
   );
