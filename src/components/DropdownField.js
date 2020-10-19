@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function DropdownField({ options, labelText, stateSetter, selected }) {
+function DropdownField({
+  name,
+  options,
+  labelText,
+  selected,
+  register,
+  errors,
+  required = false,
+}) {
   const menuItems = options.map((option) => {
     return (
       <option key={option} value={option}>
@@ -11,7 +19,7 @@ function DropdownField({ options, labelText, stateSetter, selected }) {
   });
 
   function handleChange(e) {
-    stateSetter(e.target.value);
+    selected = e.target.value;
   }
   return (
     <div className="m-4 text-center flex flex-grow border-2 p-6 bg-xmrgray-darker text-white rounded">
@@ -19,10 +27,11 @@ function DropdownField({ options, labelText, stateSetter, selected }) {
         <label className="m-3">{labelText}</label>
         <select
           id={options}
-          name={options}
+          name={name}
           value={selected}
           onChange={handleChange}
           className="p-2 block appearance-none w-full bg-gray-200 border border-orange-400 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          ref={register}
         >
           {menuItems}
         </select>
