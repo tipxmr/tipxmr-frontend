@@ -32,7 +32,7 @@ function DropdownField({
           name={name}
           value={selectedItem}
           onChange={handleChange}
-          className="p-2 block appearance-none w-full bg-gray-200 border border-orange-400 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          className="p-2 block appearance-none w-full bg-gray-200 border border-orange-400 text-xmrgray-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           ref={register}
         >
           {menuItems}

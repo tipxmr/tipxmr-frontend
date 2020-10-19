@@ -104,79 +104,78 @@ function Settings() {
         <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>
-        <form
-          className="grid grid-cols-1 md:grid-cols-3 gap-3"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <InputField
-            name="displayName"
-            labelName="Change your display name"
-            placeholderName={streamerConfig.displayName}
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <InputField
-            name="url"
-            labelName="Set URL to your stream"
-            placeholderName={streamerConfig.stream.url}
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <InputField
-            name="description"
-            labelName="Give your stream a description"
-            placeholderName={streamerConfig.stream.description}
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <FloatInput
-            name="restoreHeight"
-            labelName="Restore Height for Wallet"
-            placeholderName={streamerConfig.restoreHeight}
-            register={register}
-            errors={errors}
-          />
-          {/* TODO Option to automatically set new restore height? */}
-          <FileInput
-            name="profilePicture"
-            labelName="Change your profile picture"
-            accept=".jpg, .jpeg, .png"
-            maxFilesize={300 * 1024}
-            placeholderName={profilePicture}
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <DropdownField
-            name="language"
-            options={languageOptions}
-            labelText="Select a language for your stream"
-            selected={streamerConfig.stream.language}
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <DropdownField
-            name="platform"
-            options={platformOptions}
-            labelText="What platform are you streaming on?"
-            selected={streamerConfig.stream.platform}
-            errors={errors}
-            register={register}
-            required={true}
-          />
-          <DropdownField
-            name="category"
-            options={categoryOptions}
-            labelText="What category describes your stream best?"
-            selected={streamerConfig.stream.category}
-            register={register}
-            errors={errors}
-            required={true}
-          />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <InputField
+              name="displayName"
+              labelName="Change your display name"
+              placeholderName={streamerConfig.displayName}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+            <InputField
+              name="url"
+              labelName="Set URL to your stream"
+              placeholderName={streamerConfig.stream.url}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+            <InputField
+              name="description"
+              labelName="Give your stream a description"
+              placeholderName={streamerConfig.stream.description}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+            <FloatInput
+              name="restoreHeight"
+              labelName="Restore Height for Wallet"
+              placeholderName={streamerConfig.restoreHeight}
+              register={register}
+              errors={errors}
+            />
+            {/* TODO Option to automatically set new restore height? */}
+            <FileInput
+              name="profilePicture"
+              labelName="Change your profile picture"
+              accept=".jpg, .jpeg, .png"
+              maxFilesize={300 * 1024}
+              placeholderName={profilePicture}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+            <DropdownField
+              name="language"
+              options={languageOptions}
+              labelText="Select a language for your stream"
+              selected={streamerConfig.stream.language}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+            <DropdownField
+              name="platform"
+              options={platformOptions}
+              labelText="What platform are you streaming on?"
+              selected={streamerConfig.stream.platform}
+              errors={errors}
+              register={register}
+              required={true}
+            />
+            <DropdownField
+              name="category"
+              options={categoryOptions}
+              labelText="What category describes your stream best?"
+              selected={streamerConfig.stream.category}
+              register={register}
+              errors={errors}
+              required={true}
+            />
+          </div>
           <Button type="submit">Submit</Button>
         </form>
       </div>

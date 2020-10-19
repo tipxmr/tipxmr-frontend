@@ -24,12 +24,11 @@ function InputField({
           <input
             id={name}
             name={name}
-            /* placeholder={inputValue} */
             value={inputValue}
             type="text"
             onChange={handleChange}
             ref={register}
-            className="w-full min-w-400 border-2 p-1 text-center border-xmrgray-lighter placeholder-xmrgray-lighter"
+            className="w-full min-w-400 border-2 p-1 text-center border-xmrgray-lighter text-xmrgray-darker placeholder-xmrgray-lighter"
           ></input>
           {errors[name]}
         </label>
