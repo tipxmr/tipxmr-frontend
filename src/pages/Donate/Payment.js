@@ -42,30 +42,28 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
     return uri;
   }
 
-  const grayTextStyle = clsx(["text-2xl"]);
-
   return (
     <div className="flex flex-grow flex-col justify-center items-center text-gray-200 text-center">
       <div className="m-4">
         {total ? (
-          <span className={grayTextStyle}>
+          <span className="text-2xl">
             Please transfer at least {total} XMR to{" "}
           </span>
         ) : (
-          <span className={grayTextStyle}>
-            Please transfer any amount of XMR to
-          </span>
+          <span className="text-2xl">Please transfer any amount of XMR to</span>
         )}
       </div>
       <img className="w-400px h-auto" src={qrcode} alt="qr code" />
       <a href={paymentUri} onClick={handleClick}>
-        <div className="overlfow-x-auto break-all tracking-tight text-xs px-3">
+        <div className="overlfow-x-auto break-all my-3 tracking-tight text-xs px-3">
           {subaddress}
         </div>
       </a>
-      <div className="border-2 border-gray-200 rounded shadow-lg my-6 p-6">
-        <h2 className={grayTextStyle}>Your message: </h2>
-        <span className="text-left">{message}</span>
+      <div className="border-2 border-gray-200 rounded shadow-lg m-6 p-6">
+        <h2>
+          <span className="text-2xl">{donor}</span>, here is your message:{" "}
+        </h2>
+        <span className="text-left text-sm">{message}</span>
       </div>
       <ReactLoading type="spinningBubbles" color="#F16822" />
     </div>

@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // TODO Make sure that the file is actually saved (attached to the PouchDB)
 function FileInput({
   labelName,
   name,
-  placeholderName,
-  stateSetter,
+  currentFile,
   accept,
   maxFilesize,
+  register,
+  errors,
 }) {
+  const [upload, setUpload] = useState(currentFile);
+
   function handleChange(e) {
     const file = e.target.files[0];
     if (file.size < maxFilesize) {
       console.log("new File: ", file);
-      stateSetter(URL.createObjectURL(file));
+      let objectURL = URL.createObjectURL(file);
+      setUpload(objectURL);
     }
   }
 
@@ -25,22 +29,27 @@ function FileInput({
           {labelName}:<br />
           <input
             name={name}
-            placeholder={placeholderName}
+            placeholder={currentFile}
             type="file"
             accept={accept}
             onChange={handleChange}
             className="w-full min-w-400 border-2 p-1 text-sm text-center text-xmrorange border-xmrgray-lighter placeholder-xmrgray-lighter"
+            ref={register}
           ></input>
         </label>
+        <p className="text-xmrorange mt-2">
+          {errors[name] ? errors[name].message : null}
+        </p>
       </div>
     </div>
   );
 }
+
+// TODO Update propTypes
 FileInput.propTypes = {
   labelName: PropTypes.string,
   name: PropTypes.string,
-  placeholderName: PropTypes.string,
-  stateSetter: PropTypes.func,
+  currentFile: PropTypes.string,
   accept: PropTypes.string,
   maxFilesize: PropTypes.number,
 };

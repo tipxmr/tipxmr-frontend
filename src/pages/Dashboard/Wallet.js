@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, SyncBanner, Button, InputField } from "~/components";
+import { Progressbar, SyncBanner, Button } from "~/components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useStreamer } from "../../context/streamer";

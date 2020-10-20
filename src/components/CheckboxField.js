@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
-function CheckboxField({ labelName, name, defaultChecked, stateSetter }) {
+function CheckboxField({ labelName, name, defaultChecked }) {
+  const [isChecked, setIsChecked] = useState(defaultChecked);
+
   function handleChange(e) {
-    // dont save events in a variable
-    stateSetter(e.target.checked);
+    setIsChecked(e.target.checked);
   }
 
   return (

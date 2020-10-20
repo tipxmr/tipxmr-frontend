@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { updateStreamer, useStreamer } from "../../context/streamer";
-
+import { updateStreamer, useStreamer } from "~/context/streamer";
 import {
   InputField,
   FileInput,
@@ -18,7 +18,7 @@ const languageOptions = [
   "English",
   "Esperanto",
   "French",
-  "🇬🇧 German",
+  "German",
   "Italian",
   "Japanese",
   "Portuguese",
@@ -28,70 +28,38 @@ const languageOptions = [
 
 function Settings() {
   const [streamerConfig, updateStreamerConfig] = useStreamer();
-  // copy complete state so useEffect is not triggered
-  const [proxyState, setProxyState] = useState({ ...streamerConfig });
 
-  // currently not in use yet
-  // TODO really update the StreamerConfig
-  function setStreamerSettings(key, value) {
-    setProxyState((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
-  }
-  const [isPremium, setIsPremium] = useState(streamerConfig.isPremium);
-  const [displayName, setDisplayName] = useState(streamerConfig.displayName);
-  const [creationDate, setCreationDate] = useState(streamerConfig.creationDate);
-  const [url, setUrl] = useState(streamerConfig.stream.url);
-  const [platform, setPlatform] = useState(streamerConfig.stream.platform);
-  const [language, setLanguage] = useState(streamerConfig.stream.language);
-  const [description, setDescription] = useState(
-    streamerConfig.stream.description
-  );
-  const [category, setCategory] = useState(streamerConfig.stream.category);
+  // useForm hook
+  const { handleSubmit, register, errors } = useForm();
 
-  const [restoreHeight, setRestoreHeight] = useState(
-    streamerConfig.restoreHeight
-  );
-  const [profilePicture, setProfilePicture] = useState(
-    streamerConfig.profilePicture
-  );
+  // TODO Needs to be fixed and replaced with the actual animation URL
+  const animationUrl =
+    "https://tipxmr.live/" + streamerConfig.displayName + "/animation";
 
-  function submit() {
-    const newStreamerConfig = {
-      isPremium,
-      displayName,
-      creationDate,
-      stream: {
-        url,
-        platform,
-        description,
-        language,
-        category,
-      },
-      restoreHeight,
-      profilePicture,
-    };
-    updateStreamer(updateStreamerConfig, newStreamerConfig);
-  }
+  const onSubmit = (data) => {
+    console.log(data); // data should have everything, just like newStreamerConfig
+    // updateStreamer(updateStreamerConfig, newStreamerConfig);
+  };
 
-  const animationUrl = "https://tipxmr.live/" + displayName + "/animation";
-
-  let tier;
-  if (isPremium) {
-    tier = "premium";
-  } else {
-    tier = "basic";
-  }
   return (
     <div className="flex-grow text-gray-200">
       <div className="mx-auto">
         <div className="my-6">
-          <StatBox boxTitle="Your display name" boxStat={displayName} />
-          <StatBox boxTitle="Premium account" boxStat={tier} />
-          <StatBox boxTitle="Member since" boxStat={creationDate} />
+          {/* TODO fix with display name */}
           <StatBox
-            boxTitle="Animation URL"
+            boxTitle="Your display name"
+            boxStat={streamerConfig.displayName}
+          />
+          <StatBox
+            boxTitle="Account tier:"
+            boxStat={streamerConfig.isPremium ? "premium" : "basic"}
+          />
+          <StatBox
+            boxTitle="Member since"
+            boxStat={streamerConfig.creationDate}
+          />
+          <StatBox
+            boxTitle="Point OBS to this URL"
             boxStat={animationUrl}
             smaller={true}
           />
@@ -99,61 +67,85 @@ function Settings() {
         <div className="text-center text-xl underline mb-4">
           Change your Settings:
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <InputField
-            name="displayName"
-            labelName="Change your display name"
-            placeholderName={displayName}
-            stateSetter={setDisplayName}
-          />
-          <InputField
-            name="url"
-            labelName="Set URL to your stream"
-            placeholderName={url}
-            stateSetter={setUrl}
-          />
-          <InputField
-            name="description"
-            labelName="Give your stream a description"
-            placeholderName={description}
-            stateSetter={setDescription}
-          />
-          <FloatInput
-            name="restoreHeight"
-            labelName="Restore Height for Wallet"
-            placeholderName={restoreHeight}
-            stateSetter={setRestoreHeight}
-          />
-          {/* TODO Option to automatically set new restore height? */}
-          <FileInput
-            name="profilePicture"
-            labelName="Change your profile picture"
-            accept=".jpg, .jpeg, .png"
-            maxFilesize={300 * 1024}
-            placeholderName={profilePicture}
-            stateSetter={setProfilePicture}
-          />
-          <DropdownField
-            options={languageOptions}
-            labelText="Select a language for your stream"
-            stateSetter={setLanguage}
-            selected={language}
-          />
-          <DropdownField
-            options={platformOptions}
-            labelText="What platform are you streaming on?"
-            stateSetter={setPlatform}
-            selected={platform}
-          />
-          <DropdownField
-            options={categoryOptions}
-            labelText="What category describes your stream best?"
-            stateSetter={setCategory}
-            selected={category}
-          />
-        </div>
-
-        <Button onClick={() => submit()}>Save</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <InputField
+              name="displayName"
+              labelName="Change your display name"
+              placeholderName={streamerConfig.displayName}
+              register={register({
+                required: { value: true, message: "Cannot be empty" },
+                maxLength: { value: 15, message: "Maximum of 15 characters" },
+                minLength: { value: 3, message: "Minimum of 3 characters" },
+              })}
+              errors={errors}
+            />
+            <InputField
+              name="url"
+              labelName="Set URL to your stream"
+              placeholderName={streamerConfig.stream.url}
+              register={register({
+                required: { value: true, message: "Cannot be empty" },
+              })}
+              errors={errors}
+            />
+            <InputField
+              name="description"
+              labelName="Give your stream a description"
+              placeholderName={streamerConfig.stream.description}
+              register={register({
+                maxLength: { value: 50, message: "Maximum of 50 characters" },
+              })}
+              errors={errors}
+            />
+            <FloatInput
+              name="restoreHeight"
+              labelName="Restore Height for Wallet"
+              placeholderName={streamerConfig.restoreHeight}
+              register={register({
+                min: { value: 0, message: "Cannot be negative" },
+              })}
+              errors={errors}
+            />
+            {/* TODO Option to automatically set new restore height? */}
+            <FileInput
+              name="profilePicture"
+              labelName="Change your profile picture"
+              accept=".jpg, .jpeg, .png"
+              maxFilesize={300 * 1024}
+              currentFile={streamerConfig.profilePicture}
+              register={register({
+                max: { value: 307200, message: "Maximum filesize is 300KB" },
+              })}
+              errors={errors}
+            />
+            <DropdownField
+              name="language"
+              options={languageOptions}
+              labelText="Select a language for your stream"
+              selected={streamerConfig.stream.language}
+              register={register}
+              errors={errors}
+            />
+            <DropdownField
+              name="platform"
+              options={platformOptions}
+              labelText="What platform are you streaming on?"
+              selected={streamerConfig.stream.platform}
+              errors={errors}
+              register={register}
+            />
+            <DropdownField
+              name="category"
+              options={categoryOptions}
+              labelText="What category describes your stream best?"
+              selected={streamerConfig.stream.category}
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <Button type="submit">Submit</Button>
+        </form>
       </div>
     </div>
   );
