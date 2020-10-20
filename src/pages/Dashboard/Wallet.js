@@ -33,7 +33,8 @@ function Wallet() {
   const [isValidAmount, setIsValidAmount] = useState(false);
   const [withdrawAddress, setWithdrawAddress] = useState(null);
 
-  function onClick() {
+  // start or stop sync
+  function handleSync() {
     if (isActive) {
       stop();
     } else {
@@ -216,7 +217,7 @@ function Wallet() {
                 />
               </div>
               <Button
-                onClick={onClick}
+                onClick={handleSync}
                 className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold rounded"
               >
                 {isActive ? "Stop Sync" : "Start Sync"}

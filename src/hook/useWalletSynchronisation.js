@@ -73,13 +73,18 @@ const withLogger = (reducer) => (state, action) => {
 };
 
 class SynchronisationListener extends MoneroWalletListener {
-  constructor(onProgress) {
+  constructor(onProgress, onBalancesChanged) {
     super();
     this.onProgress = onProgress;
+    this.onBalancesChanged = onBalancesChanged;
   }
 
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
     this.onProgress(height, startHeight, endHeight, percentDone, message);
+  }
+
+  onBalancesChanged(newBalance, newUnlockedBalance) {
+    this.onBalancesChanged(newBalance, newUnlockedBalance);
   }
 }
 
@@ -91,6 +96,10 @@ function synchronisationReducer(state, action) {
       return { ...state, isDone: action.isDone };
     case "SET_PROGRESS":
       return { ...state, progress: action.progress };
+    case "SET_BALANCE":
+      return { ...state, balance: action.balance };
+    case "SET_UNLOCKEDBALANCE":
+      return { ...state, unlockedBalance: action.unlockedBalance };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -101,11 +110,15 @@ const reducer = withLogger(synchronisationReducer);
 export function useWalletSynchronisation() {
   const listenerRef = useRef();
   const progressRef = useRef();
+  const balanceRef = useRef();
+  const unlockedBalanceRef = useRef();
   const wallet = useWalletState();
   const [state, dispatch] = useReducer(reducer, {
     isActive: false,
     isDone: false,
     progress: 0,
+    balance: 0,
+    unlockedBalance: 0,
   });
 
   progressRef.current = state.progress;
@@ -119,6 +132,19 @@ export function useWalletSynchronisation() {
 
     if (percentDone === 1) {
       dispatch({ type: "SET_IS_DONE", isDone: true });
+    }
+  }
+
+  function onBalancesChanged(newBalance, newUnlockedBalance) {
+    if (balanceRef.current !== newBalance) {
+      dispatch({ type: "SET_BALANCE", balance: newBalance });
+    }
+
+    if (unlockedBalanceRef.current !== newUnlockedBalance) {
+      dispatch({
+        type: "SET_ULOCKEDBALANCE",
+        unlockedBalance: newUnlockedBalance,
+      });
     }
   }
 
