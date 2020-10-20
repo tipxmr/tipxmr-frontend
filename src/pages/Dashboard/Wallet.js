@@ -18,7 +18,13 @@ function Wallet() {
   const wallet = useWalletState();
   const [streamerConfig, updateStreamerConfig] = useStreamer();
   const [tableData, setTableData] = useState(null);
+  // transaction states
   const [totalTransactions, setTotalTransactions] = useState(0);
+  const [transactionCounter, setTransactionCounter] = useState({
+    incoming: 0,
+    outgoing: 0,
+  });
+  // balance states
   const [lockedBalance, setLockedBalance] = useState(0);
   const [unlockedBalance, setUnlockedBalance] = useState(0);
   // withdraw states
@@ -52,16 +58,19 @@ function Wallet() {
             parseFloat(tx.state.incomingTransfers[0].state.amount) /
             Math.pow(10, 12);
           inout = "incoming";
+          setTransactionCounter((prevState) => ({
+            ...prevState,
+            incoming: prevState.incoming + 1,
+          }));
         } else {
           amount =
             parseFloat(tx.state.outgoingTransfer.state.amount) /
             Math.pow(10, 12);
           inout = "outgoing";
-          console.log(
-            "tx.state.outgoingTransfer.state.amount",
-            tx.state.outgoingTransfer.state.amount
-          );
-          console.log("amount:", amount);
+          setTransactionCounter((prevState) => ({
+            ...prevState,
+            outgoing: prevState.outgoing + 1,
+          }));
         }
         const cellStyle =
           inout === "incoming"
@@ -183,7 +192,17 @@ function Wallet() {
           <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
             <div className="px-4 py-6">
               <p>Total Transactions</p>
-              <div className="text-6xl my-2">{totalTransactions}</div>
+              <div
+                title={
+                  "Incoming: " +
+                  transactionCounter.incoming +
+                  " Outgoing: " +
+                  transactionCounter.outgoing
+                }
+                className="text-6xl my-2"
+              >
+                {totalTransactions}
+              </div>
             </div>
           </div>
           <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
