@@ -76,7 +76,7 @@ class SynchronisationListener extends MoneroWalletListener {
   constructor(onProgress, onBalancesChanged) {
     super();
     this.onProgress = onProgress;
-    this.onBalancesChanged = onBalancesChanged;
+    this.onBalances = onBalancesChanged;
   }
 
   onSyncProgress(height, startHeight, endHeight, percentDone, message) {
@@ -84,7 +84,9 @@ class SynchronisationListener extends MoneroWalletListener {
   }
 
   onBalancesChanged(newBalance, newUnlockedBalance) {
-    this.onBalancesChanged(newBalance, newUnlockedBalance);
+    const balance = parseFloat(newBalance) / Math.pow(10, 12);
+    const unlockedBalance = parseFloat(newUnlockedBalance) / Math.pow(10, 12);
+    this.onBalances(balance, unlockedBalance);
   }
 }
 
@@ -142,7 +144,7 @@ export function useWalletSynchronisation() {
 
     if (unlockedBalanceRef.current !== newUnlockedBalance) {
       dispatch({
-        type: "SET_ULOCKEDBALANCE",
+        type: "SET_UNLOCKEDBALANCE",
         unlockedBalance: newUnlockedBalance,
       });
     }
@@ -161,7 +163,10 @@ export function useWalletSynchronisation() {
   }
 
   useEffect(() => {
-    listenerRef.current = new SynchronisationListener(onProgress);
+    listenerRef.current = new SynchronisationListener(
+      onProgress,
+      onBalancesChanged
+    );
 
     return () => {
       listenerRef.current = null;
