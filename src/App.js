@@ -108,6 +108,13 @@ function App() {
             donatorSocketId: donationsInfo.donatorSocketId,
             userName: donationsInfo.userName,
             displayName: donationsInfo.displayName,
+            // Total Cost = (SecondPrice * Seconds) + (CharacterPrice * Characters)
+            // Seconds = (TotalCost - (CharacterPrice * Characters)) / SecondPrice
+            duration:
+              (parseFloat(output.amount) / Math.pow(10, 12) -
+                streamerConfig.animationSettings.charPrice *
+                  donationsInfo.message.length) /
+              streamerConfig.animationSettings.secondPrice,
           });
           console.log("New Donation:", newDonation);
           setDonationsQueue((previousArray) => [...previousArray, newDonation]);

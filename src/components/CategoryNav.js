@@ -15,6 +15,7 @@ function NavItem({ children, activeCategory, stateSetter }) {
     "transition",
     "ease-in-out",
     "duration-500",
+    "cursor-pointer",
     {
       border: children === activeCategory,
       "border-xmrorange": children === activeCategory,
