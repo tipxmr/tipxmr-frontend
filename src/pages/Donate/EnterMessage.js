@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Counter } from "~/components";
 import clsx from "clsx";
 import { BsDisplay } from "react-icons/bs";
+import { useForm } from "react-hook-form";
 
 function MessageArea({ message, setMessage, charLimit }) {
   const textBoxStyle = clsx([
@@ -55,9 +56,7 @@ function EnterMessage({
   const usdConvert = (usdPrice * total).toFixed(2);
   const [seconds, setSeconds] = useState(0);
 
-  const inputStyles = clsx([
-    "block m-4 p-2 border border-gray-200 bg-xmrgray-darker placeholder-gray-200 w-2/3 mx-auto text-center rounded",
-  ]);
+  const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     // Get MoneroPrice as number
@@ -75,6 +74,10 @@ function EnterMessage({
   // useEffect(() => {
   //   setUsdConvert((usdPrice * total).toFixed(2));
   // }, [total, usdPrice]);
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="flex flex-grow justify-center text-gray-200">
@@ -98,53 +101,64 @@ function EnterMessage({
             <BsDisplay size="1.2em" color="text-gray-700" />
           </a>
         </div>
-        <div className="flex flex-col text-center">
-          <div className="flex flex-grow relative mx-3">
-            <input
-              type="text"
-              align="middle"
-              maxLength={15}
-              className={inputStyles}
-              placeholder="Your Name"
-              onChange={(e) => {
-                setDonor(e.target.value);
-              }}
-            />
-            <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
-              {donor ? donor.length + "/15" : null}
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col text-center">
+            <div className="flex flex-grow relative mx-3">
+              <input
+                name="donorName"
+                type="text"
+                align="middle"
+                maxLength={15}
+                className="block m-4 p-2 border border-gray-200 bg-xmrgray-darker placeholder-gray-200 w-2/3 mx-auto text-center rounded"
+                placeholder="Your Name"
+                ref={register({
+                  required: "You forgot to put in a name",
+                })}
+                onChange={(e) => {
+                  setDonor(e.target.value);
+                }}
+              />
+              <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
+                {donor ? donor.length + "/15" : null}
+              </p>
+            </div>
+            <p className="text-xmrorange mb-3">
+              {errors.donorName ? "Please enter a name" : null}
             </p>
-          </div>
 
-          <MessageArea
-            message={message}
-            setMessage={setMessage}
-            charLimit={charLimit}
-          />
-          <div className="w-3/5 mx-auto m-4 text-gray-200">
-            {secondPrice ? (
-              <div className="flex items-center justify-center">
-                <p className="tracking-tight mr-3">Showtime: </p>
-                <Counter count={seconds} setCount={setSeconds} />
-                <p className="tracking-tight ml-3">seconds</p>
+            <MessageArea
+              message={message}
+              setMessage={setMessage}
+              charLimit={charLimit}
+            />
+            <div className="w-3/5 mx-auto m-4 text-gray-200">
+              {secondPrice ? (
+                <div className="flex items-center justify-center">
+                  <p className="tracking-tight mr-3">Showtime: </p>
+                  <Counter count={seconds} setCount={setSeconds} />
+                  <p className="tracking-tight ml-3">seconds</p>
+                </div>
+              ) : null}
+
+              <div className="my-3">
+                <p className="tracking-tight text-xs">Minimum amount:</p>
+                {total.toFixed(5)} XMR = {usdConvert} $
               </div>
-            ) : null}
-
-            <div className="my-3">
-              <p className="tracking-tight text-xs">Minimum amount:</p>
-              {total.toFixed(5)} XMR = {usdConvert} $
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center">
-          <Button
-            onClick={() => {
-              setShowEnterMessage(false);
-              setShowPayment(true);
-            }}
-          >
-            Submit
-          </Button>
-        </div>
+          <div className="w-full flex justify-center">
+            <Button
+              /* onClick={() => { */
+              /* setShowEnterMessage(false); */
+              /* setShowPayment(true); */
+              /* }} */
+              type="submit"
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );
