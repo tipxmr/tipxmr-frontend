@@ -149,10 +149,10 @@ function EnterMessage({
           </div>
           <div className="w-full flex justify-center">
             <Button
-              /* onClick={() => { */
-              /* setShowEnterMessage(false); */
-              /* setShowPayment(true); */
-              /* }} */
+              onClick={() => {
+                setShowEnterMessage(false);
+                setShowPayment(true);
+              }}
               type="submit"
             >
               Submit

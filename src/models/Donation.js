@@ -10,7 +10,7 @@ const defaults = {
 };
 
 function from(options) {
-  return Object.assign({}, options, defaults);
+  return Object.assign({}, defaults, options);
 }
 
 function setDonor(donor, donation) {
