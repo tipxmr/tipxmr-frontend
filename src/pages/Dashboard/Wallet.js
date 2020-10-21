@@ -106,7 +106,13 @@ function Wallet() {
       // set Online status to false
       socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, false);
     }
-  }, [isDone, wallet.wallet, streamerConfig.hashedSeed]);
+  }, [
+    isDone,
+    wallet.wallet,
+    streamerConfig.hashedSeed,
+    unlockedBalance,
+    balance,
+  ]);
 
   // Withdraw
   function handleAddressChange(event) {
@@ -236,7 +242,7 @@ function Wallet() {
                   onChange={(event) => handleAddressChange(event)}
                 ></input>
                 <Button
-                  disabled={!isValidAddress || !isValidAmount}
+                  disabled={!isValidAddress || !isValidAmount || !isDone}
                   onClick={withdraw}
                 >
                   Send
