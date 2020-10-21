@@ -5,7 +5,6 @@ import { useWalletState } from "../../context/wallet";
 import { useStreamer } from "../../context/streamer";
 import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
-import { is } from "ramda";
 
 function Wallet() {
   const {
