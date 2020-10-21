@@ -13,6 +13,8 @@ function Wallet() {
     progress,
     start,
     stop,
+    balance,
+    unlockedBalance,
   } = useWalletSynchronisation();
 
   const wallet = useWalletState();
@@ -24,16 +26,14 @@ function Wallet() {
     incoming: 0,
     outgoing: 0,
   });
-  // balance states
-  const [lockedBalance, setLockedBalance] = useState(0);
-  const [unlockedBalance, setUnlockedBalance] = useState(0);
   // withdraw states
   const [isValidAddress, setIsValidAddress] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [isValidAmount, setIsValidAmount] = useState(false);
   const [withdrawAddress, setWithdrawAddress] = useState(null);
 
-  function onClick() {
+  // start or stop sync
+  function handleSync() {
     if (isActive) {
       stop();
     } else {
@@ -99,20 +99,6 @@ function Wallet() {
         fillTable(txs);
         // Set number of total transactions
         setTotalTransactions(txs.length);
-        // Set unlocked Balance
-        wallet.wallet
-          .getUnlockedBalance()
-          .then((bigInt) => {
-            return parseFloat(bigInt) / Math.pow(10, 12);
-          })
-          .then(setUnlockedBalance);
-        // Set locked Balance
-        wallet.wallet
-          .getBalance()
-          .then((bigInt) => {
-            return parseFloat(bigInt) / Math.pow(10, 12);
-          })
-          .then(setLockedBalance);
       });
       // set Online status to true
       socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, true);
@@ -186,7 +172,7 @@ function Wallet() {
             <div className="px-4 py-6">
               <p>Your Balance</p>
               <div className="text-2xl my-2">🔓: {unlockedBalance} XMR</div>
-              <div className="text-2xl my-2">🔐: {lockedBalance} XMR</div>
+              <div className="text-2xl my-2">🔐: {balance} XMR</div>
             </div>
           </div>
           <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
@@ -216,7 +202,7 @@ function Wallet() {
                 />
               </div>
               <Button
-                onClick={onClick}
+                onClick={handleSync}
                 className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold rounded"
               >
                 {isActive ? "Stop Sync" : "Start Sync"}
