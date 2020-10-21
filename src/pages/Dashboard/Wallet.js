@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Progressbar, SyncBanner, Button } from "~/components";
-import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
-import { useWalletState } from "../../context/wallet";
-import { useStreamer } from "../../context/streamer";
-import monerojs from "../../libs/monero";
-import socketio from "../../libs/socket_streamer";
+import useWalletSynchronisation from "~/hook/useWalletSynchronisation";
+import { useWalletState } from "~/context/wallet";
+import { useStreamer } from "~/context/streamer";
+import monerojs from "~/libs/monero";
+import socketio from "~/libs/socket_streamer";
 
 function Wallet() {
   const {
