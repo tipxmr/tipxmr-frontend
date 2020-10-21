@@ -37,8 +37,21 @@ function Settings() {
     "https://tipxmr.live/" + streamerConfig.displayName + "/animation";
 
   const onSubmit = (data) => {
-    console.log(data); // data should have everything, just like newStreamerConfig
-    // updateStreamer(updateStreamerConfig, newStreamerConfig);
+    const newStreamerConfig = {
+      isPremium: streamerConfig.isPremium,
+      displayName: data.displayName,
+      creationDate: streamerConfig.creationDate,
+      stream: {
+        url: data.url,
+        platform: data.platform,
+        language: data.language,
+        description: data.description,
+        category: data.category,
+      },
+      restoreHeight: data.restoreHeight,
+      profilePicture: data.profilePicture,
+    };
+    updateStreamer(updateStreamerConfig, newStreamerConfig);
   };
 
   return (

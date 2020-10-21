@@ -19,8 +19,25 @@ function AnimationSettings() {
   const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   const onSubmit = (data) => {
-    console.log(data);
-    // updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
+    const newAnimationSettings = {
+      secondPrice: data.secondPrice,
+      fontColor: data.fontColor,
+      fontSize: data.fontSize,
+      fontShadow: data.fontShadow,
+      minAmount: data.minAmount,
+      gifs: data.gifs,
+      gifsMinAmount: data.gifsMinAmount,
+      showGoal: data.showGoal,
+      goal: data.goal,
+      goalProgress: data.goalProgress,
+      goalReached: data.goalReached,
+      charLimit: data.charLimit,
+      charPrice: data.charPrice,
+      sound: data.sound,
+      bgImg: data.bgImg,
+    };
+    updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
+    console.log("Update successful", newAnimationSettings);
   };
 
   return (
@@ -49,6 +66,16 @@ function AnimationSettings() {
               })}
               errors={errors}
             />
+            <FloatInput
+              name="charPrice"
+              labelName="The price of 1 character (in XMR)"
+              placeholderName={streamerConfig.animationSettings.charPrice}
+              register={register({
+                min: { value: 0, message: "Cannot be negative" },
+              })}
+              errors={errors}
+            />
+
             <FloatInput
               name="charLimit"
               labelName="Maximum characters allowed for messages"
@@ -93,16 +120,19 @@ function AnimationSettings() {
               name="showGoal"
               labelName="Display donation goal in stream"
               defaultChecked={streamerConfig.animationSettings.showGoal}
+              register={register}
             />
             <CheckboxField
               name="gifs"
               labelName="Allow users to send gifs"
               defaultChecked={streamerConfig.animationSettings.gifs}
+              register={register}
             />
             <CheckboxField
               name="fontShadow"
               labelName="Turn on text shadow"
               defaultChecked={streamerConfig.animationSettings.fontShadow}
+              register={register}
             />
             <FileInput
               name="sound"
