@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import clsx from "clsx";
 
 import { useStreamer, updateHashedSeed } from "../context/streamer";
 import { useWallet, openWalletFromSeed } from "../context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
 import { Button, Loading } from "../components";
+import { Dashboard } from "~/pages/Dashboard/index";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("");
@@ -72,12 +73,7 @@ function OpenWallet() {
           onFocus={handleFocus}
         />
         {isLoading ? <Loading text="Opening your wallet" /> : null}
-
-        <Link to="/dashboard">
-          <Button disabled={!isWalletOpen} loading={isLoading}>
-            Login
-          </Button>
-        </Link>
+        {isWalletOpen ? <Redirect to="/dashboard" /> : null}
       </div>
     </div>
   );
