@@ -1,8 +1,6 @@
 import React from "react";
 import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
-import useWalletSynchronisation from "~/hook/useWalletSynchronisation";
 import monerologo from "../../images/monero-symbol.png";
-import Progressbar from "~/components/Progressbar";
 import Overview from "./Overview";
 import Wallet from "./Wallet";
 import Settings from "./Settings";
@@ -12,7 +10,6 @@ import clsx from "clsx";
 function Dashboard() {
   const { path, url } = useRouteMatch();
   const liStyle = clsx(["transform", "hover:scale-110"]);
-  const { isActive, isDone, progress } = useWalletSynchronisation();
 
   return (
     <div className="flex flex-grow bg-xmrgray-darker">
