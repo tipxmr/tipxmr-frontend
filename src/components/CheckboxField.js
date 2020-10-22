@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function CheckboxField({ labelName, name, defaultChecked }) {
+function CheckboxField({ labelName, name, defaultChecked, register }) {
   const [isChecked, setIsChecked] = useState(defaultChecked);
 
   function handleChange(e) {
@@ -18,6 +18,7 @@ function CheckboxField({ labelName, name, defaultChecked }) {
             defaultChecked={defaultChecked}
             onChange={handleChange}
             className="mx-auto border-2 mt-3 w-8 h-8 rounded"
+            ref={register}
           ></input>
         </label>
       </div>
