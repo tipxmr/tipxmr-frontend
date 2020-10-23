@@ -1,8 +1,12 @@
 import { mergeDeepLeft, omit } from "ramda";
 import { useRecoilCallback } from "recoil";
-import { streamerState } from "./atom";
+import { streamerState, walletState } from "./atom";
 
 export default function createDispatcher() {
+  /////////////////////
+  // Streamer Config //
+  /////////////////////
+
   const updateStreamer = useRecoilCallback(({ set }) => (values) => {
     set(streamerState, (oldStreamer) => {
       return mergeDeepLeft(omit(["profilePicture"], values), oldStreamer);
@@ -33,6 +37,16 @@ export default function createDispatcher() {
       });
     }
   );
+
+  /////////////////////
+  ////// Wallet ///////
+  /////////////////////
+
+  const updateWallet = useRecoilCallback(({ set }) => (values) => {
+    set(walletState, (oldWallet) => {
+      return mergeDeepLeft(values, oldWallet);
+    });
+  });
 
   return {
     updateStreamer,

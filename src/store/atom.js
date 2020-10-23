@@ -5,6 +5,11 @@ export const streamerState = atom({
   default: {},
 });
 
+export const walletState = atom({
+  key: "wallet",
+  default: {},
+});
+
 export const dispatcherState = atom({
   key: "dispatcher",
   default: undefined,
