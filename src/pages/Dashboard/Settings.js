@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { updateStreamer, useStreamer } from "~/context/streamer";
 import {
   InputField,
   FileInput,
   Button,
-  FloatInput,
+  NumberInput,
   StatBox,
   DropdownField,
 } from "~/components";
-import {
-  useRecoilValue,
-  useRecoilCallback,
-  useSetRecoilState,
-  useRecoilState,
-} from "recoil";
+import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { mergeDeepLeft, omit, clone } from "ramda";
 
 const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
 const platformOptions = ["twitch", "youtube", "chaturbate"];
@@ -35,11 +28,10 @@ const languageOptions = [
 ];
 
 function Settings() {
-  const streamer = useRecoilValue(streamerState);
+  const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
 
-  console.log(streamer);
-  const [streamerConfig, updateStreamerConfig] = useStreamer();
+  console.log(streamerConfig);
 
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
@@ -60,11 +52,11 @@ function Settings() {
         description: data.description,
         category: data.category,
       },
-      restoreHeight: data.restoreHeight,
+      restoreHeight: parseInt(data.restoreHeight),
       profilePicture: data.profilePicture,
     };
     dispatcher.updateStreamer(newStreamerConfig);
-    updateStreamer(updateStreamerConfig, newStreamerConfig);
+    //updateStreamer(updateStreamerConfig, newStreamerConfig); // old context
   };
 
   return (
@@ -124,10 +116,11 @@ function Settings() {
               })}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="restoreHeight"
               labelName="Restore Height for Wallet"
               placeholderName={streamerConfig.restoreHeight}
+              numType="integer"
               register={register({
                 min: { value: 0, message: "Cannot be negative" },
               })}

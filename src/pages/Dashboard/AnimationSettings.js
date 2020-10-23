@@ -3,16 +3,17 @@ import { useForm } from "react-hook-form";
 import {
   InputField,
   FileInput,
-  FloatInput,
+  NumberInput,
   CheckboxField,
   Button,
   DropdownField,
 } from "~/components";
-import { useStreamer, updateAnimationSettings } from "~/context/streamer";
+import { useRecoilValue } from "recoil";
+import { dispatcherState, streamerState } from "../../store/atom";
 
 function AnimationSettings() {
-  const [streamerConfig, updateStreamerConfig] = useStreamer();
-
+  const streamerConfig = useRecoilValue(streamerState);
+  const dispatcher = useRecoilValue(dispatcherState);
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
 
@@ -20,23 +21,23 @@ function AnimationSettings() {
 
   const onSubmit = (data) => {
     const newAnimationSettings = {
-      secondPrice: data.secondPrice,
+      secondPrice: parseFloat(data.secondPrice),
       fontColor: data.fontColor,
       fontSize: data.fontSize,
       fontShadow: data.fontShadow,
-      minAmount: data.minAmount,
+      minAmount: parseFloat(data.minAmount),
       gifs: data.gifs,
-      gifsMinAmount: data.gifsMinAmount,
+      gifsMinAmount: parseFloat(data.gifsMinAmount),
       showGoal: data.showGoal,
-      goal: data.goal,
-      goalProgress: streamerConfig.animationSettings.goalProgress,
+      goal: parseFloat(data.goal),
+      goalProgress: parseFloat(streamerConfig.animationSettings.goalProgress),
       goalReached: streamerConfig.animationSettings.goalReached,
-      charLimit: data.charLimit,
-      charPrice: data.charPrice,
+      charLimit: parseInt(data.charLimit),
+      charPrice: parseFloat(data.charPrice),
       sound: data.sound,
       bgImg: data.bgImg,
     };
-    updateAnimationSettings(updateStreamerConfig, newAnimationSettings);
+    dispatcher.updateAnimationSettings(newAnimationSettings);
     console.log("Update successful", newAnimationSettings);
   };
 
@@ -57,7 +58,7 @@ function AnimationSettings() {
               register={register}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="secondPrice"
               labelName="The price of 1 second (in XMR)"
               placeholderName={streamerConfig.animationSettings.secondPrice}
@@ -66,7 +67,7 @@ function AnimationSettings() {
               })}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="charPrice"
               labelName="The price of 1 character (in XMR)"
               placeholderName={streamerConfig.animationSettings.charPrice}
@@ -76,7 +77,7 @@ function AnimationSettings() {
               errors={errors}
             />
 
-            <FloatInput
+            <NumberInput
               name="charLimit"
               labelName="Maximum characters allowed for messages"
               placeholderName={streamerConfig.animationSettings.charLimit}
@@ -89,7 +90,7 @@ function AnimationSettings() {
               })}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="minAmount"
               labelName="Minimum amount of a donation (in XMR)"
               placeholderName={streamerConfig.animationSettings.minAmount}
@@ -98,7 +99,7 @@ function AnimationSettings() {
               })}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="goal"
               labelName="Set a donation goal for your stream (in XMR)"
               placeholderName={streamerConfig.animationSettings.goal}
@@ -107,7 +108,7 @@ function AnimationSettings() {
               })}
               errors={errors}
             />
-            <FloatInput
+            <NumberInput
               name="gifsMinAmount"
               labelName="Minimum amount to send gifs"
               placeholderName={streamerConfig.animationSettings.gifsMinAmount}
