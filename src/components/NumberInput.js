@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 
-function FloatInput({ labelName, name, placeholderName, register, errors }) {
-  const [float, setFloat] = useState(placeholderName);
+function NumberInput({
+  labelName,
+  name,
+  placeholderName,
+  numType = "float",
+  register,
+  errors,
+}) {
+  const [number, setNumber] = useState(placeholderName);
   function handleChange(e) {
-    setFloat(e.target.value);
+    if (numType === "float") {
+      setNumber(parseFloat(e.target.value));
+    } else if (numType === "integer") {
+      setNumber(parseInt(e.target.value));
+    }
   }
   return (
     <div className="m-4 text-center flex flex-grow border-2 p-6 bg-xmrgray-darker text-white rounded">
@@ -13,7 +24,7 @@ function FloatInput({ labelName, name, placeholderName, register, errors }) {
           <input
             className="w-full min-w-400 border-2 p-1 text-center text-xmrgray-darker border-xmrgray-lighter"
             name={name}
-            value={float}
+            value={number}
             onChange={handleChange}
             type="number"
             ref={register}
@@ -27,4 +38,4 @@ function FloatInput({ labelName, name, placeholderName, register, errors }) {
   );
 }
 
-export default FloatInput;
+export default NumberInput;

@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import clsx from "clsx";
-
-import { useStreamer, updateHashedSeed } from "../context/streamer";
 import { useWallet, openWalletFromSeed } from "../context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
-import { Button, Loading } from "../components";
-import { Dashboard } from "~/pages/Dashboard/index";
+import { Loading } from "../components";
+import { useRecoilValue } from "recoil";
+import { dispatcherState } from "../store/atom";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("");
-
+  const dispatcher = useRecoilValue(dispatcherState);
   const [wallet, dispatch] = useWallet();
 
   const { isLoading } = wallet;
   const isWalletOpen = wallet.wallet && !wallet.error;
 
   console.log("wallet", wallet);
-
-  const [streamerState, streamerUpdate] = useStreamer();
 
   // monitors the input text area of the seed
   useEffect(() => {
@@ -27,10 +24,10 @@ function OpenWallet() {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
       console.log("hashedSeed:", hashedSeed);
-      updateHashedSeed(streamerUpdate, hashedSeed);
+      dispatcher.updateHashedSeed(hashedSeed);
       openWalletFromSeed(dispatch, seed);
     }
-  }, [seed]);
+  }, [dispatcher, seed]);
 
   function handleChange(e) {
     setSeed(e.target.value);

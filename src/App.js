@@ -19,9 +19,14 @@ import {
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
-import { useStreamer } from "./context/streamer";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { dispatcherState, streamerState } from "./store/atom";
+import createDispatcher from "./store/dispatcher";
 
 function App() {
+  const setDispatcher = useSetRecoilState(dispatcherState);
+  const dispatcherRef = useRef(createDispatcher());
+
   useIncomingTransaction(onIncomingTransaction);
 
   const walletUseEffectDidFire = useRef(false);
@@ -31,8 +36,13 @@ function App() {
 
   const [customWallet, dispatch] = WalletContext.useWallet();
 
-  const [streamerConfig, updateStreamerConfig] = useStreamer();
+  const streamerConfig = useRecoilValue(streamerState);
   console.log("streamerConfig", streamerConfig);
+  const dispatcher = useRecoilValue(dispatcherState);
+
+  useEffect(() => {
+    setDispatcher(dispatcherRef.current);
+  }, [setDispatcher]);
 
   // as soon as wallet is loaded
   useEffect(() => {
@@ -42,7 +52,8 @@ function App() {
       // or an existing streamer config
       if (streamerConfig.hashedSeed) {
         socketio.emitGetStreamerConfig(streamerConfig.hashedSeed);
-        socketio.onRecieveStreamerConfig(updateStreamerConfig);
+        //socketio.onRecieveStreamerConfig(updateStreamerConfig);
+        socketio.onRecieveStreamerConfig(dispatcher.updateStreamer);
         // listen for new request of subaddress generation
         socketio.onCreateSubaddress(handleOnNewSubaddress);
       }
@@ -53,7 +64,7 @@ function App() {
     walletUseEffectDidFire,
     handleOnNewSubaddress,
     streamerConfig.hashedSeed,
-    updateStreamerConfig,
+    dispatcher,
   ]);
 
   useEffect(() => {
