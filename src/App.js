@@ -20,8 +20,14 @@ import {
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
 import { useStreamer } from "./context/streamer";
+import { useSetRecoilState } from "recoil";
+import { dispatcherState } from "./store/atom";
+import createDispatcher from "./store/dispatcher";
 
 function App() {
+  const setDispatcher = useSetRecoilState(dispatcherState);
+  const dispatcherRef = useRef(createDispatcher());
+
   useIncomingTransaction(onIncomingTransaction);
 
   const walletUseEffectDidFire = useRef(false);
@@ -33,6 +39,10 @@ function App() {
 
   const [streamerConfig, updateStreamerConfig] = useStreamer();
   console.log("streamerConfig", streamerConfig);
+
+  useEffect(() => {
+    setDispatcher(dispatcherRef.current);
+  }, [setDispatcher]);
 
   // as soon as wallet is loaded
   useEffect(() => {

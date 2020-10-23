@@ -10,6 +10,14 @@ import {
   StatBox,
   DropdownField,
 } from "~/components";
+import {
+  useRecoilValue,
+  useRecoilCallback,
+  useSetRecoilState,
+  useRecoilState,
+} from "recoil";
+import { dispatcherState, streamerState } from "../../store/atom";
+import { mergeDeepLeft, omit, clone } from "ramda";
 
 const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
 const platformOptions = ["twitch", "youtube", "chaturbate"];
@@ -27,6 +35,10 @@ const languageOptions = [
 ];
 
 function Settings() {
+  const streamer = useRecoilValue(streamerState);
+  const dispatcher = useRecoilValue(dispatcherState);
+
+  console.log(streamer);
   const [streamerConfig, updateStreamerConfig] = useStreamer();
 
   // useForm hook
@@ -51,6 +63,7 @@ function Settings() {
       restoreHeight: data.restoreHeight,
       profilePicture: data.profilePicture,
     };
+    dispatcher.updateStreamer(newStreamerConfig);
     updateStreamer(updateStreamerConfig, newStreamerConfig);
   };
 
