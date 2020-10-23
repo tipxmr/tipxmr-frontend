@@ -19,7 +19,6 @@ import {
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
-//import { useStreamer } from "./context/streamer";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { dispatcherState, streamerState } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
@@ -37,9 +36,6 @@ function App() {
 
   const [customWallet, dispatch] = WalletContext.useWallet();
 
-  /* const [streamerConfig, updateStreamerConfig] = useStreamer();
-  
- */
   const streamerConfig = useRecoilValue(streamerState);
   console.log("streamerConfig", streamerConfig);
   const dispatcher = useRecoilValue(dispatcherState);

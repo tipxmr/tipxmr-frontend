@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Progressbar, SyncBanner, Button } from "~/components";
 import useWalletSynchronisation from "~/hook/useWalletSynchronisation";
 import { useWalletState } from "~/context/wallet";
-import { useStreamer } from "~/context/streamer";
+import { useRecoilValue } from "recoil";
+import { dispatcherState, streamerState } from "../../store/atom";
 import monerojs from "~/libs/monero";
 import socketio from "~/libs/socket_streamer";
 
@@ -18,7 +19,7 @@ function Wallet() {
   } = useWalletSynchronisation();
 
   const wallet = useWalletState();
-  const [streamerConfig, updateStreamerConfig] = useStreamer();
+  const streamerConfig = useRecoilValue(streamerState);
   const [tableData, setTableData] = useState(null);
   // transaction states
   const [totalTransactions, setTotalTransactions] = useState(0);

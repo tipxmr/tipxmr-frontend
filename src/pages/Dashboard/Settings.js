@@ -56,7 +56,6 @@ function Settings() {
       profilePicture: data.profilePicture,
     };
     dispatcher.updateStreamer(newStreamerConfig);
-    //updateStreamer(updateStreamerConfig, newStreamerConfig); // old context
   };
 
   return (
