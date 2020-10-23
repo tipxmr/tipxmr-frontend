@@ -20,6 +20,7 @@ function AnimationSettings() {
   const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   const onSubmit = (data) => {
+    console.log("data", data);
     const newAnimationSettings = {
       secondPrice: parseFloat(data.secondPrice),
       fontColor: data.fontColor,

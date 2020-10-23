@@ -26,7 +26,10 @@ export default function createDispatcher() {
   const updateAnimationSettings = useRecoilCallback(
     ({ set }) => (animationSettings) => {
       set(streamerState, (oldStreamer) => {
-        return mergeDeepLeft({ animationSettings }, oldStreamer);
+        return mergeDeepLeft(
+          omit(["sound", "bgImg"], animationSettings),
+          oldStreamer
+        );
       });
     }
   );
