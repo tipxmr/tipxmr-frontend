@@ -4,7 +4,7 @@ import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
 import Donation from "./models/Donation";
 
-import * as WalletContext from "./context/wallet";
+/* import * as WalletContext from "./context/wallet"; */
 
 import { Header, Footer, PrivateRoute } from "./components";
 import {
@@ -19,8 +19,14 @@ import {
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { dispatcherState, streamerState } from "./store/atom";
+import useWallet from "./hook/useWallet";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  dispatcherState,
+  streamerState,
+  walletState,
+  restoreHeightState,
+} from "./store/atom";
 import createDispatcher from "./store/dispatcher";
 
 function App() {
@@ -33,8 +39,8 @@ function App() {
   const [donorInfo, setDonorInfo] = useState([]);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
-
-  const [customWallet, dispatch] = WalletContext.useWallet();
+  const [restoreHeight, setRestoreHeight] = useRecoilState(restoreHeightState);
+  const customWallet = useWallet();
 
   const streamerConfig = useRecoilValue(streamerState);
   console.log("streamerConfig", streamerConfig);
@@ -71,19 +77,11 @@ function App() {
     if (
       streamerConfig &&
       streamerConfig.restoreHeight &&
-      customWallet.restoreHeight != streamerConfig.restoreHeight
+      restoreHeight != streamerConfig.restoreHeight
     ) {
-      dispatch({
-        type: "SET_RESTORE_HEIGHT",
-        restoreHeight: streamerConfig.restoreHeight,
-      });
+      setRestoreHeight(streamerConfig.restoreHeight);
     }
-  }, [
-    streamerConfig,
-    dispatch,
-    streamerConfig.restoreHeight,
-    customWallet.restoreHeight,
-  ]);
+  }, [streamerConfig, streamerConfig.restoreHeight, restoreHeight]);
 
   useEffect(() => {
     if (

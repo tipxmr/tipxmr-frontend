@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { MoneroWalletListener } from "monero-javascript";
+import useWallet from "./useWallet";
 
-import { useWalletState } from "../context/wallet";
+/* import { useWalletState } from "../context/wallet"; */
 
 class IncomingTransactionListener extends MoneroWalletListener {
   constructor(onTransaction) {
@@ -24,7 +25,8 @@ class IncomingTransactionListener extends MoneroWalletListener {
 }
 
 export function useIncomingTransaction(cb) {
-  const wallet = useWalletState();
+  /* const wallet = useWalletState(); */
+  const wallet = useWallet();
   const listenerRef = useRef();
   const callbackRef = useRef();
 

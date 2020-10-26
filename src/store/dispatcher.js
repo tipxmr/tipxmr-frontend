@@ -42,12 +42,6 @@ export default function createDispatcher() {
   ////// Wallet ///////
   /////////////////////
 
-  const updateWallet = useRecoilCallback(({ set }) => (values) => {
-    set(walletState, (oldWallet) => {
-      return mergeDeepLeft(values, oldWallet);
-    });
-  });
-
   return {
     updateStreamer,
     updateRestoreHeight,

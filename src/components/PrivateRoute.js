@@ -1,11 +1,12 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useWalletState } from "../context/wallet";
+import useWallet from "../hook/useWallet";
+import { isNil } from "ramda";
 
 function PrivateRoute({ children, ...props }) {
-  const walletState = useWalletState();
-  const isAuthenticated = walletState.wallet;
+  const wallet = useWallet();
+  const isAuthenticated = !isNil(wallet.wallet) && isNil(wallet.error);
 
   return (
     <Route

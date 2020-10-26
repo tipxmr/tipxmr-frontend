@@ -1,8 +1,17 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { MoneroWalletListener } from "monero-javascript";
 import { diff as differ } from "deep-diff";
-
-import { useWalletState } from "../context/wallet";
+import useWallet from "./useWallet";
+import {
+  restoreHeightState,
+  syncIsActiveState,
+  syncIsDoneState,
+  syncProgressState,
+  balanceState,
+  unlockedBalanceState,
+} from "../store/atom";
+import { useRecoilValue, useRecoilState } from "recoil";
+//import { useWalletState } from "../context/wallet";
 
 const isProduction = () => process.env.NODE_ENV === "production";
 const isDevelopment = () => process.env.NODE_ENV === "development";
@@ -90,7 +99,7 @@ class SynchronisationListener extends MoneroWalletListener {
   }
 }
 
-function synchronisationReducer(state, action) {
+/* function synchronisationReducer(state, action) {
   switch (action.type) {
     case "SET_IS_ACTIVE":
       return { ...state, isActive: action.isActive };
@@ -107,59 +116,64 @@ function synchronisationReducer(state, action) {
   }
 }
 
-const reducer = withLogger(synchronisationReducer);
+const reducer = withLogger(synchronisationReducer); */
 
 export function useWalletSynchronisation() {
   const listenerRef = useRef();
   const progressRef = useRef();
   const balanceRef = useRef();
   const unlockedBalanceRef = useRef();
-  const wallet = useWalletState();
-  const [state, dispatch] = useReducer(reducer, {
+  const wallet = useWallet();
+  /* const [state, dispatch] = useReducer(reducer, {
     isActive: false,
     isDone: false,
     progress: 0,
     balance: 0,
     unlockedBalance: 0,
-  });
+  }); */
+  const [isActive, setIsActive] = useRecoilState(syncIsActiveState);
+  const [isDone, setIsDone] = useRecoilState(syncIsDoneState);
+  const [progress, setProgress] = useRecoilState(syncProgressState);
+  const [balance, setBalance] = useRecoilState(balanceState);
+  const [unlockedBalance, setUnlockedBalance] = useRecoilState(
+    unlockedBalanceState
+  );
+  const restoreHeight = useRecoilValue(restoreHeightState);
 
-  progressRef.current = state.progress;
+  progressRef.current = progress;
 
   function onProgress(height, startHeight, endHeight, percentDone, message) {
     const percentage = Math.floor(percentDone * 100);
 
     if (progressRef.current !== percentage) {
-      dispatch({ type: "SET_PROGRESS", progress: percentage });
+      setProgress(percentage);
     }
 
     if (percentDone === 1) {
-      dispatch({ type: "SET_IS_DONE", isDone: true });
+      setIsDone(true);
     }
   }
 
   function onBalancesChanged(newBalance, newUnlockedBalance) {
     if (balanceRef.current !== newBalance) {
-      dispatch({ type: "SET_BALANCE", balance: newBalance });
+      setBalance(newBalance);
     }
 
     if (unlockedBalanceRef.current !== newUnlockedBalance) {
-      dispatch({
-        type: "SET_UNLOCKEDBALANCE",
-        unlockedBalance: newUnlockedBalance,
-      });
+      setUnlockedBalance(newUnlockedBalance);
     }
   }
 
   async function start() {
-    dispatch({ type: "SET_IS_DONE", isDone: false });
-    dispatch({ type: "SET_IS_ACTIVE", isActive: true });
-    await wallet.wallet.setSyncHeight(wallet.restoreHeight);
+    setIsDone(false);
+    setIsActive(true);
+    await wallet.wallet.setSyncHeight(restoreHeight);
     await wallet.wallet.startSyncing();
   }
 
   async function stop() {
     await wallet.wallet.stopSyncing();
-    dispatch({ type: "SET_IS_ACTIVE", isActive: false });
+    setIsActive(false);
   }
 
   useEffect(() => {
@@ -185,7 +199,7 @@ export function useWalletSynchronisation() {
     };
   }, [wallet.wallet]);
 
-  return { ...state, start, stop };
+  return { isActive, isDone, progress, balance, unlockedBalance, start, stop };
 }
 
 export default useWalletSynchronisation;
