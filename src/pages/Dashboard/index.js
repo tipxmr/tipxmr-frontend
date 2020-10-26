@@ -6,6 +6,7 @@ import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
 import clsx from "clsx";
+import TransactionSubscription from "../../components/TransactionSubscription";
 
 function Dashboard() {
   const { path, url } = useRouteMatch();
@@ -42,6 +43,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
+      <TransactionSubscription />
       <div className="flex-7">
         <div className="m-16">
           <Route exact path={path}>

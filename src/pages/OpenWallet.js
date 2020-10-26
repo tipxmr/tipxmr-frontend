@@ -41,7 +41,7 @@ function OpenWallet() {
     e.target.select();
   }
 
-  if (isWalletOpen) {
+  if (isWalletOpen && !isLoading) {
     return <Redirect to="/dashboard" />;
   }
 

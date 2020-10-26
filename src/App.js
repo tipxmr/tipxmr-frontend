@@ -26,17 +26,20 @@ import {
   streamerState,
   walletState,
   restoreHeightState,
+  donorsInfoState,
 } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
+import { useSet } from "react-use";
 
 function App() {
   const setDispatcher = useSetRecoilState(dispatcherState);
   const dispatcherRef = useRef(createDispatcher());
 
-  useIncomingTransaction(onIncomingTransaction);
+  /* useIncomingTransaction(onIncomingTransaction); */
 
   const walletUseEffectDidFire = useRef(false);
-  const [donorInfo, setDonorInfo] = useState([]);
+  //const [donorInfo, setDonorInfo] = useState([]);
+  const setDonorsInfo = useSetRecoilState(donorsInfoState);
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
   const [restoreHeight, setRestoreHeight] = useRecoilState(restoreHeightState);
@@ -52,6 +55,15 @@ function App() {
 
   // as soon as wallet is loaded
   useEffect(() => {
+    function handleOnNewSubaddress(data) {
+      monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
+        const newDonorInfo = { ...data, subaddress: subaddress };
+        /* setDonorInfo((previousArray) => [...previousArray, newDonorInfo]); */
+        setDonorsInfo(newDonorInfo);
+        socketio.emitSubaddressToBackend(newDonorInfo);
+        console.log("created Subaddress for:", newDonorInfo);
+      });
+    }
     if (customWallet.wallet && walletUseEffectDidFire.current === false) {
       // after login send hashed seed, so the backend checks if user exists
       // backend will return either a default streamer config
@@ -68,9 +80,9 @@ function App() {
   }, [
     customWallet.wallet,
     walletUseEffectDidFire,
-    handleOnNewSubaddress,
     streamerConfig.hashedSeed,
     dispatcher,
+    setDonorsInfo,
   ]);
 
   useEffect(() => {
@@ -94,7 +106,7 @@ function App() {
     }
   }, [streamerConfig]);
 
-  function onIncomingTransaction(tx) {
+  /* function onIncomingTransaction(tx) {
     getNewOutput(tx);
   }
 
@@ -141,16 +153,7 @@ function App() {
           socketio.emitPaymentRecieved(newDonation);
         }
       });
-  }
-
-  function handleOnNewSubaddress(data) {
-    monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
-      const newDonorInfo = { ...data, subaddress: subaddress };
-      setDonorInfo((previousArray) => [...previousArray, newDonorInfo]);
-      socketio.emitSubaddressToBackend(newDonorInfo);
-      console.log("created Subaddress for:", newDonorInfo);
-    });
-  }
+  } */
 
   return (
     <div className="flex flex-col min-h-screen">

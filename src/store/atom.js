@@ -32,3 +32,21 @@ export const unlockedBalanceState = atom({
   key: "unlockedBalance",
   default: 0,
 });
+
+//////////////////////////////////
+///////////// Txs  ///////////////
+//////////////////////////////////
+export const donorsInfoState = atom({
+  key: "donorsInfo",
+  default: [],
+});
+
+export const donationsQueueState = atom({
+  key: "donationsQueue",
+  default: [],
+});
+
+export const donationsHistoryState = atom({
+  key: "donationsHistory",
+  default: [],
+});
