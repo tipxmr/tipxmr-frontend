@@ -10,22 +10,29 @@ function useWallet() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   console.log("useWallet wallet:", wallet);
+
+  function handleWallet(w) {
+    setIsLoading(false);
+    setWallet(w);
+  }
+
+  function handleError(e) {
+    setIsLoading(false);
+    setError(e);
+  }
+
+  function handleResult(result) {
+    result.then(handleWallet).catch(handleError);
+  }
+
   function openFromSeed(seed) {
     setIsLoading(true);
-    monerojs
-      .openWalletFromSeed(seed)
-      .then(setWallet)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
+    handleResult(monerojs.openWalletFromSeed(seed));
   }
 
   function create(language) {
     setIsLoading(true);
-    monerojs
-      .createWallet(language)
-      .then(setWallet)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
+    handleResult(monerojs.createWallet(language));
   }
 
   function close() {
