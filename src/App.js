@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
 import Donation from "./models/Donation";
@@ -162,33 +167,38 @@ function App() {
         <Header userName={streamerConfig.userName} />
         <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
           <div className="flex flex-full">
-            <Route path="/" exact>
-              <Redirect to="/dashboard" />
-            </Route>
-            <Route path="/donate/:userName">
-              <Donate />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/streamerpage" exact>
-              <StreamerPage />
-            </Route>
-            <Route path="/animation" exact>
-              <Animation />
-            </Route>
-            <PrivateRoute path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-            <Route path="/disclaimer">
-              <Disclaimer />
-            </Route>
-            <Route path="/faq">
-              <FAQ />
-            </Route>
-            <Route path="/logout">
-              <Logout />
-            </Route>
+            <Switch>
+              <PrivateRoute path="/dashboard">
+                <Dashboard />
+              </PrivateRoute>
+              <Route path="/donate/:userName">
+                <Donate />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/streamerpage" exact>
+                <StreamerPage />
+              </Route>
+              <Route path="/animation" exact>
+                <Animation />
+              </Route>
+              <Route path="/disclaimer">
+                <Disclaimer />
+              </Route>
+              <Route path="/faq">
+                <FAQ />
+              </Route>
+              <Route path="/logout">
+                <Logout />
+              </Route>
+              <Route path="/" exact>
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route>
+                <Redirect to="/" />
+              </Route>
+            </Switch>
           </div>
         </div>
         <Footer />

@@ -15,7 +15,7 @@ function OpenWallet() {
   //const [wallet, dispatch] = useWallet();
   const wallet = useWallet();
 
-  const { isLoading } = wallet;
+  const { isPending, isResolved } = wallet.status;
   const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
 
   console.log("wallet", wallet);
@@ -23,7 +23,7 @@ function OpenWallet() {
   // monitors the input text area of the seed
   useEffect(() => {
     // if 25 words are reached
-    if (isValidMnemoicLength(seed) && !isWalletOpen && !isLoading) {
+    if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
       console.log("hashedSeed:", hashedSeed);
@@ -31,7 +31,7 @@ function OpenWallet() {
       // openWalletFromSeed(dispatch, seed);
       wallet.openFromSeed(seed);
     }
-  }, [dispatcher, isWalletOpen, isLoading, wallet, seed]);
+  }, [dispatcher, isWalletOpen, isPending, wallet, seed]);
 
   function handleChange(e) {
     setSeed(e.target.value);
@@ -41,7 +41,8 @@ function OpenWallet() {
     e.target.select();
   }
 
-  if (isWalletOpen && !isLoading) {
+  if (isWalletOpen && isResolved) {
+    console.log("Redirected");
     return <Redirect to="/dashboard" />;
   }
 
@@ -77,7 +78,7 @@ function OpenWallet() {
           onChange={handleChange}
           onFocus={handleFocus}
         />
-        {isLoading ? <Loading text="Opening your wallet" /> : null}
+        {isPending ? <Loading text="Opening your wallet" /> : null}
       </div>
     </div>
   );
