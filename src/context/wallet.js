@@ -7,58 +7,70 @@ import monerojs from "../libs/monero";
 const WalletStateContext = createContext();
 const WalletDispatchContext = createContext();
 
-function walletReducer(state, action) {
+const actionTypes = {
+  failure: "FAILURE",
+  success: "SUCCESS",
+  go: "GO",
+  reset: "RESET",
+};
+
+function reducer(state, action) {
   switch (action.type) {
-    case "OPEN_WALLET":
-      return { ...state, isLoading: true };
+    case actionTypes.failure: {
+      return {
+        ...state,
+        status: "rejected",
+        error: action.error,
+      };
+    }
 
-    case "CREATE_WALLET":
-      return { ...state, isLoading: true };
+    case actionTypes.success: {
+      return {
+        ...state,
+        status: "resolved",
+        wallet: action.wallet,
+      };
+    }
 
-    case "SET_WALLET":
-      return { ...state, wallet: action.wallet, isLoading: false };
+    case actionTypes.go: {
+      return {
+        ...state,
+        status: "pending",
+      };
+    }
 
-    case "CLEAR_WALLET":
-      return { ...state, wallet: null };
+    case actionTypes.reset: {
+      return { ...state, status: "idle", wallet: null, error: null };
+    }
 
-    case "SET_RESTORE_HEIGHT":
-      return { ...state, restoreHeight: action.restoreHeight };
-
-    case "ERROR":
-      return { ...state, error: action.error, isLoading: false };
-
-    default:
+    default: {
       throw new Error(`Unhandled action type: ${action.type}`);
+    }
   }
 }
 
-const isProduction = () => process.env.NODE_ENV === "production";
-const isDevelopment = () => process.env.NODE_ENV === "development";
-
-const withLogger = (reducer) => (state, action) => {
-  const nextState = reducer(state, action);
-
-  if (isDevelopment()) {
-    console.log(action.type, state, nextState);
-  }
-
-  return nextState;
-};
-
 function WalletProvider({ children }) {
-  const initialState = {
-    restoreHeight: 0,
+  const [state, dispatch] = useThunkReducer(reducer, {
+    status: "idle",
     wallet: null,
     error: null,
-    isLoading: false,
-  };
-  const [state, dispatch] = useThunkReducer(
-    withLogger(walletReducer),
-    initialState
-  );
+  });
+
+  const { status } = state;
+
+  const isLoading = status === "idle" || status === "pending";
+  const isIdle = status === "idle";
+  const isPending = status === "pending";
+  const isResolved = status === "resolved";
+  const isRejected = status === "rejected";
 
   return (
-    <WalletStateContext.Provider value={state}>
+    <WalletStateContext.Provider
+      value={{
+        ...state,
+        status: { isLoading, isIdle, isPending, isResolved, isRejected },
+      }}
+    >
       <WalletDispatchContext.Provider value={dispatch}>
         {children}
       </WalletDispatchContext.Provider>
@@ -94,42 +106,29 @@ function useWallet() {
   return [useWalletState(), useWalletDispatch()];
 }
 
-function openWalletFromSeed(dispatch, seed) {
-  dispatch({ type: "OPEN_WALLET" });
-  monerojs
-    .openWalletFromSeed(seed)
-    .then((wallet) => {
-      dispatch({ type: "SET_WALLET", wallet });
-    })
-    .catch((error) => {
-      dispatch({ type: "ERROR", error });
-    });
+function openFromSeed(seed) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.go });
+    monerojs
+      .openWalletFromSeed(seed)
+      .then((wallet) => dispatch({ type: actionTypes.success, wallet }))
+      .catch((error) => dispatch({ type: actionTypes.failure, error }));
+  };
 }
 
-function createWallet(dispatch, language) {
-  dispatch({ type: "CREATE_WALLET" });
-  monerojs
-    .createWallet(language)
-    .then((wallet) => {
-      dispatch({ type: "SET_WALLET", wallet });
-    })
-    .catch((error) => {
-      dispatch({ type: "ERROR", error });
-    });
+function create(language) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.go });
+    monerojs
+      .createWallet(language)
+      .then((wallet) => dispatch({ type: actionTypes.success, wallet }))
+      .catch((error) => dispatch({ type: actionTypes.failure, error }));
+  };
 }
 
-function closeWallet() {
-  return (dispatch, getState) => {
-    const { wallet } = getState();
-
-    const closeRequests = wallet
-      .getListeners()
-      .map((listener) => wallet.removeListener(listener));
-
-    Promise.all(closeRequests)
-      .then(() => wallet.close())
-      .then(() => dispatch({ type: "CLEAR_WALLET" }))
-      .catch(() => dispatch({ type: "CLEAR_WALLET" }));
+function close() {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.reset });
   };
 }
 
@@ -138,7 +137,7 @@ export {
   useWalletState,
   useWalletDispatch,
   useWallet,
-  openWalletFromSeed,
-  createWallet,
-  closeWallet,
+  openFromSeed,
+  create,
+  close,
 };

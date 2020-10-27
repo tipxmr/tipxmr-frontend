@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
 import monerojs from "~/libs/monero";
 import socketio from "~/libs/socket_streamer";
+//import useWallet from "../../hook/useWallet";
 
 function Wallet() {
   const {

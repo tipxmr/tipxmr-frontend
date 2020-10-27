@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import clsx from "clsx";
-import { useWallet, openWalletFromSeed } from "../context/wallet";
+import { useWallet, openFromSeed } from "../context/wallet";
+//import useWallet from "../hook/useWallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
 import { Loading } from "../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState } from "../store/atom";
+import { isNil } from "ramda";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("");
   const dispatcher = useRecoilValue(dispatcherState);
   const [wallet, dispatch] = useWallet();
+  //const wallet = useWallet();
 
-  const { isLoading } = wallet;
-  const isWalletOpen = wallet.wallet && !wallet.error;
+  const { isPending, isResolved } = wallet.status;
+  const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
 
   console.log("wallet", wallet);
-
+  console.log("isWalletOpen", isWalletOpen);
   // monitors the input text area of the seed
   useEffect(() => {
     // if 25 words are reached
-    if (isValidMnemoicLength(seed)) {
+    if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
       console.log("hashedSeed:", hashedSeed);
       dispatcher.updateHashedSeed(hashedSeed);
-      openWalletFromSeed(dispatch, seed);
+      // openWalletFromSeed(dispatch, seed);
+      dispatch(openFromSeed(seed));
     }
-  }, [dispatcher, seed]);
+  }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
 
   function handleChange(e) {
     setSeed(e.target.value);
@@ -35,6 +39,11 @@ function OpenWallet() {
 
   function handleFocus(e) {
     e.target.select();
+  }
+
+  if (isWalletOpen && isResolved) {
+    console.log("Redirected");
+    return <Redirect to="/dashboard" />;
   }
 
   return (
@@ -69,8 +78,7 @@ function OpenWallet() {
           onChange={handleChange}
           onFocus={handleFocus}
         />
-        {isLoading ? <Loading text="Opening your wallet" /> : null}
-        {isWalletOpen ? <Redirect to="/dashboard" /> : null}
+        {isPending ? <Loading text="Opening your wallet" /> : null}
       </div>
     </div>
   );
