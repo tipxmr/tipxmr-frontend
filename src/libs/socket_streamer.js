@@ -51,6 +51,11 @@ function emitUpdateOnlineStatus(hashedSeed, newOnlineStatus) {
   socketStreamer.emit("updateOnlineStatus", { hashedSeed, newOnlineStatus });
 }
 
+// testing things out, cheers, alex
+function emitGetAnimationConfig(streamerName) {
+  socketStreamer.emit("getAnimationConfig", streamerName);
+}
+
 export default {
   emitGetStreamerConfig,
   onRecieveStreamerConfig,

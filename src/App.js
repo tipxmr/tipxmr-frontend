@@ -170,10 +170,10 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/streamerpage" exact>
+            <Route path="/streamerpage">
               <StreamerPage />
             </Route>
-            <Route path="/animation" exact>
+            <Route path="/animation/:userName">
               <Animation />
             </Route>
             <PrivateRoute path="/dashboard">

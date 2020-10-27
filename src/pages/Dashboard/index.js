@@ -5,6 +5,7 @@ import Overview from "./Overview";
 import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
+import Animation from "~/pages/Animation";
 import clsx from "clsx";
 
 function Dashboard() {
@@ -35,6 +36,11 @@ function Dashboard() {
               <li className={liStyle}>
                 <Link to={`${url}/animation`}>Animation</Link>
               </li>
+
+              <li className={liStyle}>
+                <Link to={`${url}/anima`}>Animation1</Link>
+              </li>
+
               <li className={liStyle}>
                 <Link to="/logout">Logout</Link>
               </li>
@@ -58,6 +64,9 @@ function Dashboard() {
           </Route>
           <Route path={`${path}/animation`}>
             <AnimationSettings />
+          </Route>
+          <Route path={`${path}/anima`}>
+            <Animation />
           </Route>
         </div>
       </div>

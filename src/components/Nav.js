@@ -34,9 +34,6 @@ function Nav({ userName }) {
           <Link to={"/donate/" + userName} className={linkStyle}>
             Donate
           </Link>
-          <Link to="/animation" className={linkStyle}>
-            Animation
-          </Link>
           <Link to="/" className={linkStyle}>
             <ProfilePicture />
           </Link>
