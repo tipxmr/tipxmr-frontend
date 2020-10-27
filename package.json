@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/core": "^7.11.6",
     "@coinpaprika/api-nodejs-client": "^1.2.0",
+    "@hot-loader/react-dom": "^16.14.0",
     "clsx": "^1.1.1",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
@@ -23,6 +24,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.2",
+    "react-hot-loader": "^4.13.0",
     "react-icons": "^3.11.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",

@@ -63,6 +63,7 @@ let configBase = {
     alias: {
       fs: "html5-fs",
       "~": path.resolve(__dirname, "src"),
+      "react-dom": "@hot-loader/react-dom",
     },
     extensions: [".js", ".jsx", ".css", ".json", "otf", "ttf", "eot", "svg"],
     modules: ["node_modules"],
