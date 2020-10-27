@@ -24,7 +24,7 @@ import {
 } from "./pages";
 
 import useIncomingTransaction from "./hook/useIncomingTransaction";
-import useWallet from "./hook/useWallet";
+
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   dispatcherState,
@@ -34,7 +34,7 @@ import {
   donorsInfoState,
 } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
-import { useSet } from "react-use";
+import { useWalletState } from "./context/wallet";
 
 function App() {
   const setDispatcher = useSetRecoilState(dispatcherState);
@@ -48,7 +48,7 @@ function App() {
   const [donationsQueue, setDonationsQueue] = useState([]);
   const [donationsHistory, setDonationsHistory] = useState([]);
   const [restoreHeight, setRestoreHeight] = useRecoilState(restoreHeightState);
-  const customWallet = useWallet();
+  const customWallet = useWalletState();
 
   const streamerConfig = useRecoilValue(streamerState);
   console.log("streamerConfig", streamerConfig);
@@ -64,7 +64,7 @@ function App() {
       monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
         const newDonorInfo = { ...data, subaddress: subaddress };
         /* setDonorInfo((previousArray) => [...previousArray, newDonorInfo]); */
-        setDonorsInfo(newDonorInfo);
+        setDonorsInfo((prevState) => [...prevState, newDonorInfo]);
         socketio.emitSubaddressToBackend(newDonorInfo);
         console.log("created Subaddress for:", newDonorInfo);
       });

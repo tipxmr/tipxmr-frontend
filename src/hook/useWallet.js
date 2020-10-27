@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useRef, useEffect } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { dispatcherState, walletState } from "../store/atom";
 import monerojs from "../libs/monero";
@@ -52,7 +52,12 @@ function useWallet() {
     reason: null,
   });
 
-  const { status, data, reason } = state;
+  const stateRef = useRef(state);
+  const { status, data, reason } = stateRef;
+
+  /*   useEffect(() => {
+    stateRef.current = state;
+  }, [state]); */
 
   const isLoading = status === "idle" || status === "pending";
   const isIdle = status === "idle";
@@ -66,26 +71,20 @@ function useWallet() {
   // const [error, setError] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
 
-  function handleWallet(w) {
-    dispatch({ type: actionTypes.success, data: w });
-  }
-
-  function handleError(e) {
-    dispatch({ type: actionTypes.failure, reason: e });
-  }
-
-  function handleResult(result) {
-    result.then(handleWallet).catch(handleError);
-  }
-
   function openFromSeed(seed) {
     dispatch({ type: actionTypes.go });
-    handleResult(monerojs.openWalletFromSeed(seed));
+    monerojs
+      .openWalletFromSeed(seed)
+      .then((data) => dispatch({ type: actionTypes.success, data }))
+      .catch((reason) => dispatch({ type: actionTypes.failure, reason }));
   }
 
   function create(language) {
     dispatch({ type: actionTypes.go });
-    handleResult(monerojs.createWallet(language));
+    monerojs
+      .createWallet(language)
+      .then((data) => dispatch({ type: actionTypes.success, data }))
+      .catch((reason) => dispatch({ type: actionTypes.failure, reason }));
   }
 
   function close() {

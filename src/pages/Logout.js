@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-/* import { closeWallet, useWalletDispatch } from "../context/wallet"; */
-import useWallet from "../hook/useWallet";
+import { close, useWalletDispatch } from "../context/wallet";
+//import useWallet from "../hook/useWallet";
 
 function Logout() {
-  const wallet = useWallet();
+  const dispatch = useWalletDispatch();
   useEffect(() => {
-    wallet.close();
-  }, [wallet]);
+    dispatch(close());
+  }, [dispatch]);
 
   return <Redirect to="/" />;
 }

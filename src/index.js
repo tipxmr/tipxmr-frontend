@@ -7,16 +7,19 @@ import App from "./App";
 
 import { StreamerProvider } from "./context/streamer";
 import { RecoilRoot } from "recoil";
+import { WalletProvider } from "./context/wallet";
 
 const root = document.getElementById("root");
 
 ReactDOM.render(
   <StrictMode>
-    <StreamerProvider>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
-    </StreamerProvider>
+    <WalletProvider>
+      <StreamerProvider>
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
+      </StreamerProvider>
+    </WalletProvider>
   </StrictMode>,
   root
 );

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { MoneroWalletListener } from "monero-javascript";
 import { diff as differ } from "deep-diff";
-import useWallet from "./useWallet";
+//import useWallet from "./useWallet";
 import {
   restoreHeightState,
   syncIsActiveState,
@@ -11,7 +11,7 @@ import {
   unlockedBalanceState,
 } from "../store/atom";
 import { useRecoilValue, useRecoilState } from "recoil";
-//import { useWalletState } from "../context/wallet";
+import { useWalletState } from "../context/wallet";
 
 const isProduction = () => process.env.NODE_ENV === "production";
 const isDevelopment = () => process.env.NODE_ENV === "development";
@@ -123,7 +123,7 @@ export function useWalletSynchronisation() {
   const progressRef = useRef();
   const balanceRef = useRef();
   const unlockedBalanceRef = useRef();
-  const wallet = useWallet();
+  const wallet = useWalletState();
   /* const [state, dispatch] = useReducer(reducer, {
     isActive: false,
     isDone: false,

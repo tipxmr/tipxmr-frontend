@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { dispatcherState, donorsInfoState } from "../store/atom";
+import { dispatcherState, donorsInfoState, streamerState } from "../store/atom";
 import Donation from "../models/Donation";
-import useWallet from "../hook/useWallet";
 import monerojs from "../libs/monero";
 import useIncomingTransaction from "../hook/useIncomingTransaction";
+import { useWalletState } from "../context/wallet";
+import socketio from "../libs/socket_streamer";
 
 function parseAmount(amount) {
   return parseFloat(amount) / Math.pow(10, 12);
@@ -12,9 +13,11 @@ function parseAmount(amount) {
 
 function TransactionSubscription() {
   useIncomingTransaction(onIncomingTransaction);
+  const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
-  const customWallet = useWallet();
+  const customWallet = useWalletState();
   const donorsInfo = useRecoilValue(donorsInfoState);
+  console.log("donorsInfo", donorsInfo);
 
   function onIncomingTransaction(tx) {
     getNewOutput(tx);
