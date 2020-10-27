@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import clsx from "clsx";
 import { useWallet, openFromSeed } from "../context/wallet";
-//import useWallet from "../hook/useWallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../libs/monero";
 import { Loading } from "../components";
 import { useRecoilValue } from "recoil";
@@ -13,8 +12,6 @@ function OpenWallet() {
   const [seed, setSeed] = useState("");
   const dispatcher = useRecoilValue(dispatcherState);
   const [wallet, dispatch] = useWallet();
-  //const wallet = useWallet();
-
   const { isPending, isResolved } = wallet.status;
   const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
 
@@ -28,7 +25,6 @@ function OpenWallet() {
       const hashedSeed = getMnemonicHash(seed);
       console.log("hashedSeed:", hashedSeed);
       dispatcher.updateHashedSeed(hashedSeed);
-      // openWalletFromSeed(dispatch, seed);
       dispatch(openFromSeed(seed));
     }
   }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);

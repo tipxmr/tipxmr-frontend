@@ -3,10 +3,9 @@ import { Progressbar, SyncBanner, Button } from "~/components";
 import useWalletSynchronisation from "~/hook/useWalletSynchronisation";
 import { useWalletState } from "~/context/wallet";
 import { useRecoilValue } from "recoil";
-import { dispatcherState, streamerState } from "../../store/atom";
+import { streamerState } from "../../store/atom";
 import monerojs from "~/libs/monero";
 import socketio from "~/libs/socket_streamer";
-//import useWallet from "../../hook/useWallet";
 
 function Wallet() {
   const {
@@ -54,7 +53,6 @@ function Wallet() {
         let amount = null;
         let inout = "incoming";
         const date = new Date(timestamp * 1000).toLocaleString();
-        console.log("transfer", tx.state);
         if (isIncoming) {
           amount =
             parseFloat(tx.state.incomingTransfers[0].state.amount) /
@@ -163,7 +161,7 @@ function Wallet() {
         if (!(tx instanceof Error)) {
           console.log("Tx created:", tx);
         } else {
-          console.error("error with tx:", error);
+          console.error("error with tx:", tx);
         }
       });
   }

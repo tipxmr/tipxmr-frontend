@@ -12,10 +12,7 @@ function StreamerPage() {
     "talk",
     "XXX",
   ]);
-  // hardcoded numStreamers, change later
-  const [numStreamers, setNumStreamers] = useState(2);
-  const [languages, setLanguages] = useState(["German", "English", "French"]);
-  const pictureLink = "https://i.imgur.com/8rU7ruv.jpeg";
+
   // TODO implement category pictures
   const [activeCategory, setActiveCategory] = useState("all");
 

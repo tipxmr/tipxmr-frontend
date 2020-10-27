@@ -54,5 +54,4 @@ Button.propTypes = {
   rounded: PropTypes.bool,
 };
 
-// Button.propTypes =
 export default Button;

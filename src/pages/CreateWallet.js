@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaSpinner } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 import monerojs from "../libs/monero";

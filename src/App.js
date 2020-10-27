@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -7,10 +7,6 @@ import {
 } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
-import Donation from "./models/Donation";
-
-/* import * as WalletContext from "./context/wallet"; */
-
 import { Header, Footer, PrivateRoute } from "./components";
 import {
   Animation,
@@ -22,14 +18,10 @@ import {
   StreamerPage,
   Logout,
 } from "./pages";
-
-import useIncomingTransaction from "./hook/useIncomingTransaction";
-
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   dispatcherState,
   streamerState,
-  walletState,
   restoreHeightState,
   donorsInfoState,
 } from "./store/atom";
@@ -37,22 +29,13 @@ import createDispatcher from "./store/dispatcher";
 import { useWalletState } from "./context/wallet";
 
 function App() {
-  const setDispatcher = useSetRecoilState(dispatcherState);
+  const [dispatcher, setDispatcher] = useRecoilState(dispatcherState);
   const dispatcherRef = useRef(createDispatcher());
-
-  /* useIncomingTransaction(onIncomingTransaction); */
-
   const walletUseEffectDidFire = useRef(false);
-  //const [donorInfo, setDonorInfo] = useState([]);
   const setDonorsInfo = useSetRecoilState(donorsInfoState);
-  const [donationsQueue, setDonationsQueue] = useState([]);
-  const [donationsHistory, setDonationsHistory] = useState([]);
   const [restoreHeight, setRestoreHeight] = useRecoilState(restoreHeightState);
   const customWallet = useWalletState();
-
   const streamerConfig = useRecoilValue(streamerState);
-  console.log("streamerConfig", streamerConfig);
-  const dispatcher = useRecoilValue(dispatcherState);
 
   useEffect(() => {
     setDispatcher(dispatcherRef.current);
@@ -63,7 +46,6 @@ function App() {
     function handleOnNewSubaddress(data) {
       monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
         const newDonorInfo = { ...data, subaddress: subaddress };
-        /* setDonorInfo((previousArray) => [...previousArray, newDonorInfo]); */
         setDonorsInfo((prevState) => [...prevState, newDonorInfo]);
         socketio.emitSubaddressToBackend(newDonorInfo);
         console.log("created Subaddress for:", newDonorInfo);
@@ -75,7 +57,6 @@ function App() {
       // or an existing streamer config
       if (streamerConfig.hashedSeed) {
         socketio.emitGetStreamerConfig(streamerConfig.hashedSeed);
-        //socketio.onRecieveStreamerConfig(updateStreamerConfig);
         socketio.onRecieveStreamerConfig(dispatcher.updateStreamer);
         // listen for new request of subaddress generation
         socketio.onCreateSubaddress(handleOnNewSubaddress);
@@ -90,26 +71,16 @@ function App() {
     setDonorsInfo,
   ]);
 
+  // set restore height for wasm wallet
   useEffect(() => {
     if (
       streamerConfig &&
       streamerConfig.restoreHeight &&
-      restoreHeight != streamerConfig.restoreHeight
+      restoreHeight !== streamerConfig.restoreHeight
     ) {
       setRestoreHeight(streamerConfig.restoreHeight);
     }
-  }, [streamerConfig, streamerConfig.restoreHeight, restoreHeight]);
-
-  useEffect(() => {
-    if (
-      streamerConfig !== null &&
-      customWallet.wallet &&
-      walletUseEffectDidFire.current === true
-    ) {
-      console.log("streamer updated, sent to backend");
-      socketio.emitUpdateStreamerConfig(streamerConfig);
-    }
-  }, [streamerConfig]);
+  }, [streamerConfig, restoreHeight, setRestoreHeight]);
 
   return (
     <div className="flex flex-col min-h-screen">
