@@ -111,55 +111,6 @@ function App() {
     }
   }, [streamerConfig]);
 
-  /* function onIncomingTransaction(tx) {
-    getNewOutput(tx);
-  }
-
-  function getNewOutput(output) {
-    console.log("getNewOutput aufgerufen, output:", output);
-    monerojs
-      .getSubaddress(customWallet.wallet, output.subaddressIndex)
-      .then((subaddress) => {
-        console.log("Donation an diese Subaddresse:", subaddress);
-        console.log("donorInfo:", donorInfo);
-        const donationsInfo = donorInfo.find(
-          (donationInfo) => donationInfo.subaddress === subaddress
-        );
-        if (donationsInfo !== undefined) {
-          const newDonation = Donation.from({
-            subaddress: subaddress,
-            amount: parseFloat(output.amount) / Math.pow(10, 12), // convert Bigint to Int
-            donor: donationsInfo.donor,
-            message: donationsInfo.message,
-            donatorSocketId: donationsInfo.donatorSocketId,
-            userName: donationsInfo.userName,
-            displayName: donationsInfo.displayName,
-            // Total Cost = (SecondPrice * Seconds) + (CharacterPrice * Characters)
-            // Seconds = (TotalCost - (CharacterPrice * Characters)) / SecondPrice
-            duration:
-              (parseFloat(output.amount) / Math.pow(10, 12) -
-                streamerConfig.animationSettings.charPrice *
-                  donationsInfo.message.length) /
-              streamerConfig.animationSettings.secondPrice,
-          });
-          console.log("New Donation:", newDonation);
-          setDonationsQueue((previousArray) => [...previousArray, newDonation]);
-          setDonationsHistory((previousArray) => [
-            ...previousArray,
-            newDonation,
-          ]);
-          console.log("donationsInfo:", donationsInfo);
-          return newDonation;
-        }
-        return null;
-      })
-      .then((newDonation) => {
-        if (newDonation !== null && newDonation !== undefined) {
-          socketio.emitPaymentRecieved(newDonation);
-        }
-      });
-  } */
-
   return (
     <div className="flex flex-col min-h-screen">
       <Router>
