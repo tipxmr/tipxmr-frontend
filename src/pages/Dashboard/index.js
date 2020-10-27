@@ -19,6 +19,7 @@ function Dashboard() {
           <div className="py-4 flex-grow">
             <img
               src={monerologo}
+              alt="MoneroLogo"
               className="rounded-full shadow-xl bg-white transform transition ease-in-out duration-500 hover:scale-125 hover:rotate-360 w-auto h-10 mb-3 m-auto"
             />
           </div>
