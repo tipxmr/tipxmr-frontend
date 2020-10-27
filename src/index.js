@@ -1,3 +1,4 @@
+import { hot } from "react-hot-loader/root";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
@@ -11,12 +12,14 @@ import { WalletProvider } from "./context/wallet";
 
 const root = document.getElementById("root");
 
+const HotApp = hot(App);
+
 ReactDOM.render(
   <StrictMode>
     <WalletProvider>
       <StreamerProvider>
         <RecoilRoot>
-          <App />
+          <HotApp />
         </RecoilRoot>
       </StreamerProvider>
     </WalletProvider>
