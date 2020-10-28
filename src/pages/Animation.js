@@ -46,6 +46,7 @@ function Animation() {
   const [time, setTime] = useState(0);
   const [fontColor, setFontColor] = useState(null);
   const [fontSize, setFontSize] = useState(null);
+  const [fontShadow, setFontShadow] = useState(false);
   const [showGoal, setShowGoal] = useState(false);
   const [goalProgress, setGoalProgress] = useState(0);
   const [sound, setSound] = useState(null);
@@ -71,6 +72,7 @@ function Animation() {
       setTime(1000 / animationConfig.secondPrice);
       setFontColor(animationConfig.fontColor);
       setFontSize(animationConfig.fontSize);
+      setFontShadow(animationConfig.fontShadow);
       setShowGoal(animationConfig.showGoal);
       setGoalProgress(animationConfig.goalProgress);
       setSound(animationConfig.sound);
@@ -98,6 +100,9 @@ function Animation() {
   // TODO implement the goal, show only if the config says so
 
   const animationStyle = clsx([fontSize]);
+  const styleObject = {
+    color: fontColor, // textShadow: "2px 2px #000000"
+  };
 
   return (
     <div
@@ -124,7 +129,7 @@ function Animation() {
             item && (
               <animated.div key={key} style={props}>
                 {sound ? <Sound sound={sound} /> : ""}
-                <div className={animationStyle} style={{ color: fontColor }}>
+                <div className={animationStyle} style={styleObject}>
                   <p>
                     {donor} <span className="text-lg">donated</span> {amount}{" "}
                     XMR
