@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import clsx from "clsx";
 
 function Counter({ count, setCount }) {
   // const [count, setCount] = useState(1);

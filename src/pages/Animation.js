@@ -11,6 +11,8 @@ import {
 import clsx from "clsx";
 
 function GoalBar({ goalProgress, goal }) {
+  const percentage = (goalProgress / goal) * 100;
+  const percentageString = percentage + "%";
   const barStyle = clsx([
     "bg-xmrorange",
     "text-xs",
@@ -18,13 +20,15 @@ function GoalBar({ goalProgress, goal }) {
     "py-1",
     "text-center",
     "text-white",
-    { width: (goalProgress / goal) * 100 + "%" },
   ]);
+  console.log("percentage: ", percentageString);
   return (
     <div className="mt-3">
       <div className="w-full">
-        <div className="shadow-lg w-full">
-          <div className={barStyle}>{(goalProgress / goal) * 100}%</div>
+        <div className="shadow-lg w-full bg-gray-700">
+          <div className={barStyle} style={{ width: percentageString }}>
+            {(goalProgress / goal) * 100}%
+          </div>
           {console.log(goalProgress)}
         </div>
       </div>
