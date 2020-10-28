@@ -45,14 +45,17 @@ function Animation() {
   const [animationConfig, setAnimationConfig] = useState();
   const [time, setTime] = useState(0);
   const [fontColor, setFontColor] = useState(null);
+  const [fontSize, setFontSize] = useState(null);
   const [showGoal, setShowGoal] = useState(false);
   const [goalProgress, setGoalProgress] = useState(0);
   const [sound, setSound] = useState(null);
   const [goal, setGoal] = useState(0);
 
-  const [donor, setDonor] = useState("Happy Tipper");
-  const [amount, setAmount] = useState(2);
-  const [message, setMessage] = useState("Testing things out");
+  const [donor, setDonor] = useState("Grischa");
+  const [amount, setAmount] = useState(12);
+  const [message, setMessage] = useState(
+    "Danke Prolex, dass du mir immer wieder den richtigen Weg bei React zeigst!"
+  );
   const [showMessage, setShowMessage] = useState(false);
 
   const percentage = (goalProgress / goal) * 100;
@@ -67,6 +70,7 @@ function Animation() {
     if (animationConfig) {
       setTime(1000 / animationConfig.secondPrice);
       setFontColor(animationConfig.fontColor);
+      setFontSize(animationConfig.fontSize);
       setShowGoal(animationConfig.showGoal);
       setGoalProgress(animationConfig.goalProgress);
       setSound(animationConfig.sound);
@@ -93,6 +97,8 @@ function Animation() {
   // TODO create a template for the most basic donation
   // TODO implement the goal, show only if the config says so
 
+  const animationStyle = clsx([fontSize]);
+
   return (
     <div
       className="mx-auto bg-opacity-0"
@@ -118,10 +124,15 @@ function Animation() {
             item && (
               <animated.div key={key} style={props}>
                 {sound ? <Sound sound={sound} /> : ""}
-                <p>
-                  {donor} donated {amount} XMR
-                </p>
-                <p>{message}</p>
+                <div className={animationStyle} style={{ color: fontColor }}>
+                  <p>
+                    {donor} <span className="text-lg">donated</span> {amount}{" "}
+                    XMR
+                  </p>
+                  <p className="max-w-screen-md text-center text-xl">
+                    {message}
+                  </p>
+                </div>
               </animated.div>
             )
         )}
