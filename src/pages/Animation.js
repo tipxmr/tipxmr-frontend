@@ -10,9 +10,7 @@ import {
 } from "~/libs/socket_animation";
 import clsx from "clsx";
 
-function GoalBar({ goalProgress, goal }) {
-  const percentage = (goalProgress / goal) * 100;
-  const percentageString = percentage + "%";
+function GoalBar({ goalProgress, goal, percentage }) {
   const barStyle = clsx([
     "bg-xmrorange",
     "text-xs",
@@ -20,21 +18,20 @@ function GoalBar({ goalProgress, goal }) {
     "py-1",
     "text-center",
     "text-white",
+    "h-6",
   ]);
-  console.log("percentage: ", percentageString);
   return (
-    <div className="mt-3">
-      <div className="w-full">
-        <div className="shadow-lg w-full bg-gray-700">
-          <div className={barStyle} style={{ width: percentageString }}>
-            {(goalProgress / goal) * 100}%
-          </div>
-          {console.log(goalProgress)}
+    <div className="my-3 w-64 mx-auto">
+      <p className="text-xl text-center">
+        {(goalProgress / goal) * 100}% <span className="text-sm">reached</span>{" "}
+        ({goalProgress}/{goal} XMR)
+      </p>
+
+      <div className="mx-auto">
+        <div className="shadow-lg bg-gray-700">
+          <div className={barStyle} style={{ width: percentage }}></div>
         </div>
       </div>
-      <p className="text-xl">
-        Goal: {goalProgress}/{goal} XMR
-      </p>
     </div>
   );
 }
@@ -57,6 +54,9 @@ function Animation() {
   const [amount, setAmount] = useState(2);
   const [message, setMessage] = useState("Testing things out");
   const [showMessage, setShowMessage] = useState(false);
+
+  const percentage = (goalProgress / goal) * 100;
+  const percentageString = percentage + "%";
 
   useEffect(() => {
     emitGetAnimationConfig(userName);
@@ -95,12 +95,23 @@ function Animation() {
 
   return (
     <div
-      className="flex flex-grow justify-center bg-opacity-0"
+      className="mx-auto bg-opacity-0"
       onClick={() => {
         setShowMessage(!showMessage);
         dismountMessage();
       }}
     >
+      <div>
+        {showGoal ? (
+          <GoalBar
+            goalProgress={goalProgress}
+            goal={goal}
+            percentage={percentageString}
+          />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="my-auto text-4xl text-center">
         {messageTransitions.map(
           ({ item, key, props }) =>
@@ -111,11 +122,6 @@ function Animation() {
                   {donor} donated {amount} XMR
                 </p>
                 <p>{message}</p>
-                {showGoal ? (
-                  <GoalBar goalProgress={goalProgress} goal={goal} />
-                ) : (
-                  ""
-                )}
               </animated.div>
             )
         )}
