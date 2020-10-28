@@ -52,7 +52,6 @@ function Donate() {
   }, [userName]);
 
   useEffect(() => {
-    console.log("streamer", streamer);
     if (streamer === 0) {
       setShowStreamerNotFound(true);
       setShowPayment(false);

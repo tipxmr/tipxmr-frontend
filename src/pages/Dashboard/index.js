@@ -7,6 +7,7 @@ import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
 import Animation from "~/pages/Animation";
 import clsx from "clsx";
+import TransactionSubscription from "../../components/TransactionSubscription";
 
 function Dashboard() {
   const { path, url } = useRouteMatch();
@@ -19,6 +20,7 @@ function Dashboard() {
           <div className="py-4 flex-grow">
             <img
               src={monerologo}
+              alt="MoneroLogo"
               className="rounded-full shadow-xl bg-white transform transition ease-in-out duration-500 hover:scale-125 hover:rotate-360 w-auto h-10 mb-3 m-auto"
             />
           </div>
@@ -48,6 +50,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
+      <TransactionSubscription />
       <div className="flex-7">
         <div className="m-16">
           <Route exact path={path}>

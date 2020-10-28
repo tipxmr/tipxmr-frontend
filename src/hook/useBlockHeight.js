@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MoneroWalletListener } from "monero-javascript";
+import useWallet from "./useWallet";
 
 import { useWalletState } from "../context/wallet";
 
@@ -16,6 +17,7 @@ class BlockHeightListener extends MoneroWalletListener {
 
 export function useBlockHeight() {
   const wallet = useWalletState();
+  //const wallet = useWallet();
   const listenerRef = useRef();
   const [blockHeight, setBlockHeight] = useState(0);
 

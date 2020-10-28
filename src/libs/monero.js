@@ -1,7 +1,7 @@
-const monerojs = require("monero-javascript");
 import sha256 from "crypto-js/sha256";
 import Hex from "crypto-js/enc-hex";
 import QRCode from "qrcode";
+const monerojs = require("monero-javascript");
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
@@ -9,7 +9,6 @@ export async function createWallet(lang = "English") {
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    // serverUri: "http://192.168.0.119:38081",
     serverUri: "http://localhost:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
@@ -23,10 +22,7 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
-    //serverUri: "http://192.168.0.2:38081",
-    // serverUri: "http://192.168.0.119:38081",
     serverUri: "http://localhost:38081",
-    //serverUri: "http://stagenet.community.xmr.to:38081",
     serverUsername: "superuser",
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development

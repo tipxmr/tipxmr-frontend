@@ -1,8 +1,18 @@
-import { mergeDeepLeft, omit } from "ramda";
+import { append, mergeDeepLeft, omit } from "ramda";
 import { useRecoilCallback } from "recoil";
-import { streamerState } from "./atom";
+import {
+  donationsQueueState,
+  donationsHistoryState,
+  streamerState,
+  walletState,
+  donorsInfoState,
+} from "./atom";
 
 export default function createDispatcher() {
+  /////////////////////
+  // Streamer Config //
+  /////////////////////
+
   const updateStreamer = useRecoilCallback(({ set }) => (values) => {
     set(streamerState, (oldStreamer) => {
       return mergeDeepLeft(omit(["profilePicture"], values), oldStreamer);
@@ -34,10 +44,37 @@ export default function createDispatcher() {
     }
   );
 
+  /////////////////////
+  //////// Txs ////////
+  /////////////////////
+
+  const appendToDonationsQueue = useRecoilCallback(({ set }) => (donation) => {
+    set(donationsQueueState, (donations) => {
+      return append(donation, donations);
+    });
+  });
+
+  const appendToDonationsHistory = useRecoilCallback(
+    ({ set }) => (donation) => {
+      set(donationsHistoryState, (donations) => {
+        return append(donation, donations);
+      });
+    }
+  );
+
+  const appendToDonorsInfo = useRecoilCallback(({ set }) => (donation) => {
+    set(donorsInfoState, (donations) => {
+      return append(donation, donations);
+    });
+  });
+
   return {
     updateStreamer,
     updateRestoreHeight,
     updateHashedSeed,
     updateAnimationSettings,
+    appendToDonationsQueue,
+    appendToDonationsHistory,
+    appendToDonorsInfo,
   };
 }

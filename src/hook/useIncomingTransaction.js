@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MoneroWalletListener } from "monero-javascript";
+import useWallet from "./useWallet";
 
 import { useWalletState } from "../context/wallet";
 
@@ -25,6 +26,8 @@ class IncomingTransactionListener extends MoneroWalletListener {
 
 export function useIncomingTransaction(cb) {
   const wallet = useWalletState();
+  //const wallet = useWallet();
+  const walletRef = useRef(wallet);
   const listenerRef = useRef();
   const callbackRef = useRef();
 
@@ -41,24 +44,26 @@ export function useIncomingTransaction(cb) {
   });
 
   useEffect(() => {
+    const currentWallet = walletRef.current.wallet;
     listenerRef.current = new IncomingTransactionListener(onTransaction);
-
+    currentWallet.addListener(listenerRef.current);
     return () => {
+      currentWallet.removeListener(listenerRef.current);
       listenerRef.current = null;
     };
   }, []);
 
-  useEffect(() => {
-    if (wallet.wallet) {
-      wallet.wallet.addListener(listenerRef.current);
+  /*  useEffect(() => {
+    if (walletRef.current.wallet) {
+      walletRef.current.wallet.addListener(listenerRef.current);
     }
 
     return () => {
-      if (wallet.wallet) {
-        wallet.wallet.removeListener(listenerRef.current);
+      if (walletRef.current.wallet) {
+        walletRef.current.wallet.removeListener(listenerRef.current);
       }
     };
-  }, [wallet.wallet]);
+  }, [walletRef.current.wallet]); */
 
   return [];
 }

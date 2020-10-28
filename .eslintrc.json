@@ -3,17 +3,16 @@
     "prettier",
     "prettier/standard",
     "prettier/react",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "react-app"
   ],
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react/prop-types": "error"
   },
   "parser": "babel-eslint",
   "env": {
+    "es2020": true,
     "browser": true
   },
   "settings": {
