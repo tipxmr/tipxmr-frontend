@@ -102,7 +102,7 @@ function App() {
               <Route path="/streamerpage" exact>
                 <StreamerPage />
               </Route>
-              <Route path="/animation" exact>
+              <Route path="/animation/:userName">
                 <Animation />
               </Route>
               <Route path="/disclaimer">

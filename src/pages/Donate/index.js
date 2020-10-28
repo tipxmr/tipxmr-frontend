@@ -17,6 +17,7 @@ function Donate() {
   const [showStreamerNotFound, setShowStreamerNotFound] = useState(false);
   const [amount, setAmount] = useState(null);
 
+  // propably not needed in the donate
   const [streamer, setStreamer] = useState({
     displayName: "loading",
     userName: "loading",

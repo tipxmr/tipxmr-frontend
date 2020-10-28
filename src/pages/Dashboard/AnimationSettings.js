@@ -130,12 +130,13 @@ function AnimationSettings() {
               defaultChecked={streamerConfig.animationSettings.gifs}
               register={register}
             />
-            <CheckboxField
-              name="fontShadow"
-              labelName="Turn on text shadow"
-              defaultChecked={streamerConfig.animationSettings.fontShadow}
-              register={register}
-            />
+            {/* Not really possible */}
+            {/* <CheckboxField */}
+            {/*   name="fontShadow" */}
+            {/*   labelName="Turn on text shadow" */}
+            {/*   defaultChecked={streamerConfig.animationSettings.fontShadow} */}
+            {/*   register={register} */}
+            {/* /> */}
             <FileInput
               name="sound"
               labelName="Upload a custom MP3 for donations"
