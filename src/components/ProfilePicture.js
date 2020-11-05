@@ -14,7 +14,7 @@ function ProfilePicture() {
       </div>
     );
   } else {
-    return <div className="flex">"Account"</div>;
+    return <div className="flex">Login</div>;
   }
 }
 

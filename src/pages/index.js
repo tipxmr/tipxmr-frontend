@@ -11,3 +11,4 @@ export { default as StreamerPage } from "./StreamerPage";
 export { default as Categories } from "./Categories";
 export { default as NotFound404 } from "./NotFound404";
 export { default as Logout } from "./Logout";
+export { default as Landing } from "./Landing";

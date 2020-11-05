@@ -17,6 +17,7 @@ import {
   FAQ,
   StreamerPage,
   Logout,
+  Landing,
 } from "./pages";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -96,6 +97,9 @@ function App() {
               <Route path="/donate/:userName">
                 <Donate />
               </Route>
+              <Route path="/" exact>
+                <Landing />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>
@@ -114,7 +118,7 @@ function App() {
               <Route path="/logout">
                 <Logout />
               </Route>
-              <Route path="/" exact>
+              <Route path="/">
                 <Redirect to="/dashboard" />
               </Route>
               <Route>

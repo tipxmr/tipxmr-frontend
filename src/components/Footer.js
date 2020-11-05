@@ -9,7 +9,7 @@ function Footer() {
     "hover:scale-110",
   ]);
   return (
-    <footer className="text-white text-xs lg:text-sm bg-xmrgray-lighter w-full py-3">
+    <footer className="text-white text-xs lg:text-sm bg-xmrgray-darker w-full py-3">
       <div className="flex flex-col items-center sm:flex-row sm:justify-around">
         <Link to="/disclaimer" className={linkStyle}>
           Disclaimer
