@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
 import { Link, useRouteMatch, Route } from "react-router-dom";
-import { CreateWallet, OpenWallet } from "./";
+import { OpenWallet } from "./";
+import Signup from "~/pages/Signup";
 import { Button } from "~/components";
 
 function Login() {
   const { path, url } = useRouteMatch();
+  console.log("path: ", path);
+  console.log("url: ", url);
 
   return (
     <Fragment>
@@ -19,7 +22,7 @@ function Login() {
         </div>
       </Route>
       <Route path={`${path}/create`}>
-        <CreateWallet />
+        <Signup />
       </Route>
       <Route path={`${path}/open`}>
         <OpenWallet />

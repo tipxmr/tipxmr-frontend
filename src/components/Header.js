@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function Header({ userName }) {
   return (
-    <header className="bg-xmrgray-lighter p-4">
+    <header className="bg-xmrgray-darker p-4">
       <Nav userName={userName} />
     </header>
   );
