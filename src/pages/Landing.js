@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import landingIcon from "~/images/landing-screen.svg";
+import { Link } from "react-router-dom";
 
 function Landing() {
   const textShadow = { "text-shadow": "0px 2px 2px rgba(0, 0, 0, 0.5)" };
@@ -11,7 +12,6 @@ function Landing() {
     "py-2",
     "px-4",
     "rounded",
-    "text-sm",
     "text-white",
     "uppercase",
     "my-4",
@@ -21,7 +21,7 @@ function Landing() {
     "shadow-md",
   ]);
   const containerStyle = clsx([
-    "mt-24",
+    "my-12",
     "flex-1",
     "p-6",
     "mx-3",
@@ -38,6 +38,8 @@ function Landing() {
     "my-4",
     "text-lg",
     "tracking-tight",
+    "leading-tight",
+    "space-y-3",
   ]);
   return (
     <div className="flex flex-1 flex-col bg-xmrgray-darker">
@@ -55,7 +57,10 @@ function Landing() {
       </div>
       <div className="container mx-auto flex w-full justify-around my-6">
         <div className={containerStyle}>
-          <span className="uppercase text-center text-2xl text-xmrorange-lighter">
+          <span
+            className="uppercase text-center text-2xl text-xmrorange-lighter"
+            style={textShadow}
+          >
             For Streamers
           </span>
           <ul className={listStyle}>
@@ -64,31 +69,40 @@ function Landing() {
               goals
             </li>
             <li>
-              Interact with your audience live with text, pictures, gifs & sound
+              Customize your donation settings & interact with your audience
+              live
             </li>
             <li>
-              Build an online presence independent of large video platforms and
-              big brother
+              Pay a flat fee as low as $1 instead of a percentage - more money
+              in your wallet
             </li>
           </ul>
-
-          <a href="#" className={buttonStyle}>
+          <Link to="/login/create" className={buttonStyle}>
             Get started now
-          </a>
+          </Link>
         </div>
+
         <div className={containerStyle}>
-          <span className="uppercase text-center text-2xl text-xmrorange-lighter">
+          <span
+            className="uppercase text-center text-2xl text-xmrorange-lighter"
+            style={textShadow}
+          >
             For Viewers
           </span>
           <ul className={listStyle}>
-            <li>Support your favorite streamers financially with Monero</li>
-            <li>Keep your privacy while interacting with text & gifs</li>
+            <li>
+              Support your favorite streamers financially with Monero, while
+              staying private
+            </li>
+            <li>
+              Fast and easy payments that allow you to use your own existing
+              Monero wallet
+            </li>
             <li>Watch streams right here on the website, no download needed</li>
           </ul>
-
-          <a href="#" className={buttonStyle}>
-            Get started
-          </a>
+          <Link to="/streamerpage" className={buttonStyle}>
+            See who is streaming
+          </Link>
         </div>
       </div>
     </div>
