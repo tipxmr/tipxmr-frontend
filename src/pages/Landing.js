@@ -14,7 +14,7 @@ function Landing() {
     "rounded",
     "text-white",
     "uppercase",
-    "my-4",
+    "mt-4",
     "flex-none",
     "mx-auto",
     "max-w-xs",
