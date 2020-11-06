@@ -56,19 +56,19 @@ function LanguageSelector({ languages, language, onChange }) {
   });
 
   return (
-    <div className="max-w-md">
-      <label
-        className="block uppercase tracking-wide text-xs font-bold mb-2"
+    <div className="text-center mt-4">
+      <span
+        className="uppercase tracking-tight font-bold mb-2"
         htmlFor="languages"
       >
-        Choose a language:
-      </label>
+        Seed language:
+      </span>
       <select
         id="languages"
         name="languages"
         value={language}
         onChange={onChange}
-        className="ml-4 p-2 block appearance-none w-full bg-xmrgray-darker border border-orange-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+        className="ml-4 p-2 appearance-none bg-xmrgray-darker border border-xmrorange py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
       >
         {languageItems}
       </select>
@@ -113,7 +113,6 @@ function CreateWallet() {
     setLanguage(event.target.value);
   }
 
-  // TODO create confirmation box
   const [isChecked, setIsChecked] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -124,11 +123,13 @@ function CreateWallet() {
       setIsDisabled(true);
     }
   }, [isLoading, isChecked]);
+
+  // TODO Verify username input (lenght, does it exist...)
   return (
     <div className="flex flex-row flex-1">
       <div className="flex-1">
-        <h2 className="text-2xl">
-          Create your XMR wallet{" "}
+        <h2 className="text-2xl text-center">
+          Generating your wallet{" "}
           <span role="img" aria-label="wallet">
             👛
           </span>
@@ -141,22 +142,25 @@ function CreateWallet() {
             align="middle"
           />
         </div>
-        <textarea
-          className="mt-10 select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
-          id="seed"
-          name="seed"
-          rows="4"
-          cols="50"
-          value={isLoading ? defaultStateSeed : seed}
-          readOnly
-          style={{ resize: "none" }}
-        />
-
-        <h2 className="text-2xl">Pick your username</h2>
-        <p className="tracking-tight text-sm">
-          This name cannot be changed once chosen
-        </p>
-        <input className="text-xmrgray-darker p-2 m-4 rounded"></input>
+        <div className="flex justify-center mt-3">
+          <textarea
+            className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
+            id="seed"
+            name="seed"
+            rows="4"
+            cols="50"
+            value={isLoading ? defaultStateSeed : seed}
+            readOnly
+            style={{ resize: "none" }}
+          />
+        </div>
+        <div className="text-center mt-10">
+          <h2 className="text-2xl">Pick your username</h2>
+          <input className="text-xmrgray-darker p-2 rounded focus:border-none"></input>
+          <p className="tracking-tight text-xs text-xmrgray-light mt-2">
+            This name cannot be changed once chosen
+          </p>
+        </div>
       </div>
       <div className="flex-1 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
         <div className="text-center">
@@ -172,7 +176,7 @@ function CreateWallet() {
         <p className="text-center text-xl">
           Your seedphrase is the ultimate backup for your Monero wallet.
         </p>
-        <ul className="list-disc leading-tight space-y-3 px-6">
+        <ul className="list-decimal leading-tight space-y-5 px-6">
           <li>Write it down on a piece of paper and store it securely.</li>
           <li>
             Keep your seed secret - whoever knows your seed can spend the coins.
