@@ -2,8 +2,6 @@
 // CategoryNav renders all NavItems and styles active category
 import React from "react";
 import clsx from "clsx";
-import tipxmr from "~/images/tipxmr-button.png";
-import { Button } from "~/components";
 
 function NavItem({ children, activeCategory, stateSetter }) {
   const pillStyle = clsx(
