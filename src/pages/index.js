@@ -12,3 +12,4 @@ export { default as Categories } from "./Categories";
 export { default as NotFound404 } from "./NotFound404";
 export { default as Logout } from "./Logout";
 export { default as Landing } from "./Landing";
+export { default as Signup } from "./Signup";
