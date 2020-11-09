@@ -15,7 +15,7 @@ function Status({ isActive, isDone }) {
   }
 
   return (
-    <span className="text-xs text-white font-semibold inline-block py-1 px-2 uppercase rounded-full bg-xmrorange-lightest">
+    <span className="text-xs text-white font-semibold inline-block py-1 px-2 uppercase rounded-full tracking-tight bg-xmrorange-lightest">
       {status}
     </span>
   );

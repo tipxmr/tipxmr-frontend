@@ -42,7 +42,10 @@ function Toggle({ isChecked, onClick, children }) {
         />
         <label htmlFor="toggle" className={labelStyles}></label>
       </div>
-      <label htmlFor="toggle" className="text-xs text-gray-200 block">
+      <label
+        htmlFor="toggle"
+        className="text-xs text-gray-200 block text-center mt-3"
+      >
         {children}
       </label>
     </div>

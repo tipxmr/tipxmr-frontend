@@ -2,13 +2,14 @@ import React from "react";
 import { StatBox } from "~/components";
 
 export default {
-  title: "StatBox",
+  title: "dumb/StatBox",
   component: StatBox,
 };
 
-const Template = (args) => <StatBox {...args}>Hallo Welt</StatBox>;
+const Template = (args) => <StatBox {...args}></StatBox>;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  primary: true,
+  boxTitle: "Box Title",
+  boxStat: "Box Stat",
 };
