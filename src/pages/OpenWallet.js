@@ -7,6 +7,7 @@ import { Loading } from "../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState } from "../store/atom";
 import { isNil } from "ramda";
+import socket_streamer from "../libs/socket_streamer";
 
 function OpenWallet() {
   const [seed, setSeed] = useState("");
@@ -24,7 +25,16 @@ function OpenWallet() {
       console.log("25 words reached");
       const hashedSeed = getMnemonicHash(seed);
       console.log("hashedSeed:", hashedSeed);
-      dispatcher.updateHashedSeed(hashedSeed);
+      // Login procedure
+      socket_streamer.login(hashedSeed, null, (response) => {
+        console.log("CB response:", response);
+        if (response.type === "success") {
+          dispatcher.updateStreamer(response.data);
+        } else {
+          // 2 cases: userName taken or no userName set
+        }
+      });
+
       dispatch(openFromSeed(seed));
     }
   }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);

@@ -52,16 +52,14 @@ function App() {
         console.log("created Subaddress for:", newDonorInfo);
       });
     }
-    if (customWallet.wallet && walletUseEffectDidFire.current === false) {
-      // after login send hashed seed, so the backend checks if user exists
-      // backend will return either a default streamer config
-      // or an existing streamer config
-      if (streamerConfig.hashedSeed) {
-        socketio.emitGetStreamerConfig(streamerConfig.hashedSeed);
-        socketio.onRecieveStreamerConfig(dispatcher.updateStreamer);
-        // listen for new request of subaddress generation
-        socketio.onCreateSubaddress(handleOnNewSubaddress);
-      }
+    if (
+      streamerConfig.hashedSeed &&
+      customWallet.wallet &&
+      walletUseEffectDidFire.current === false
+    ) {
+      // listen for new request of subaddress generation
+      socketio.onCreateSubaddress(handleOnNewSubaddress);
+
       walletUseEffectDidFire.current = true;
     }
   }, [

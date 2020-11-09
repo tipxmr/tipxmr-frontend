@@ -31,7 +31,7 @@ function Settings() {
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
 
-  console.log(streamerConfig);
+  console.log("streamerConfig", streamerConfig);
 
   // useForm hook
   const { handleSubmit, register, errors } = useForm();

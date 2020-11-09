@@ -13,22 +13,19 @@ function onCreateSubaddress(callback) {
   });
 }
 
-function onRecieveStreamerConfig(callback) {
-  socketStreamer.on("recieveStreamerConfig", (requestedStreamerConfig) => {
-    callback(requestedStreamerConfig);
+async function login(hashedSeed, userName = null, callback) {
+  socketStreamer.emit("login", { hashedSeed, userName }, (response) => {
+    if (response.type === "success") {
+      callback(response);
+    } else {
+      console.error(response);
+      callback(response);
+    }
   });
-}
-
-function emitGetStreamerConfig(hashedSeed) {
-  socketStreamer.emit("getStreamerConfig", hashedSeed);
 }
 
 function emitUpdateStreamerConfig(streamerConfig) {
   socketStreamer.emit("updateConfig", streamerConfig);
-}
-
-function emitStreamerInfo(streamerConfig) {
-  socketStreamer.emit("streamerInfo", streamerConfig);
 }
 
 function emitPaymentRecieved(newDonation) {
@@ -57,11 +54,9 @@ function emitGetAnimationConfig(streamerName) {
 }
 
 export default {
-  emitGetStreamerConfig,
-  onRecieveStreamerConfig,
   emitUpdateStreamerConfig,
   emitUpdateOnlineStatus,
-  emitStreamerInfo,
+  login,
   emitPaymentRecieved,
   emitSubaddressToBackend,
   onCreateSubaddress,
