@@ -3,6 +3,7 @@ import "~/styles.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { WalletProvider } from "~/context/wallet";
 import { StreamerProvider } from "~/context/streamer";
+import { RecoilRoot } from "recoil";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -10,12 +11,16 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <WalletProvider>
-      <StreamerProvider>
-        <Router>
-          <Story />
-        </Router>
-      </StreamerProvider>
-    </WalletProvider>
+    <div className="bg-xmrgray">
+      <WalletProvider>
+        <StreamerProvider>
+          <RecoilRoot>
+            <Router>
+              <Story />
+            </Router>
+          </RecoilRoot>
+        </StreamerProvider>
+      </WalletProvider>
+    </div>
   ),
 ];

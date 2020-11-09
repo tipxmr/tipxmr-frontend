@@ -1,12 +1,12 @@
 import React from "react";
-import { Animation } from "~/components";
+import { Animation } from "~/pages";
 
 export default {
-  title: "Animation",
+  title: "pages/Animation",
   component: Animation,
 };
 
-const Template = (args) => <Animation {...args}>Hallo Welt</Animation>;
+const Template = (args) => <Animation {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
