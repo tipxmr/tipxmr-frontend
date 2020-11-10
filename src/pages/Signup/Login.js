@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useWallet, openFromSeed } from "~/context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "~/libs/monero";
 import { useRecoilValue } from "recoil";
-import { dispatcherState } from "~/store/atom";
+import { streamerState, dispatcherState } from "../../store/atom";
 import { isNil } from "ramda";
 import socket_streamer from "~/libs/socket_streamer";
 import monerojs from "~/libs/monero";
@@ -109,20 +109,22 @@ function Login() {
   const [seed, setSeed] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const dispatcher = useRecoilValue(dispatcherState);
+  const streamer = useRecoilValue(streamerState);
   const [wallet, dispatch] = useWallet();
   const { isPending, isResolved } = wallet.status;
   const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
   const [creationMode, setCreationMode] = useState(false);
   const [userNameNotSet, setUserNameNotSet] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  function createWallet(lang) {
-    setIsLoading(true);
-    monerojs
-      .createWallet(lang)
-      .then(monerojs.getMnemonic)
-      .then(setSeed)
-      .then(() => setIsLoading(false));
-  }
+  useEffect(() => {
+    if (isChecked && !isLoading) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isLoading, isChecked]);
 
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
@@ -151,26 +153,33 @@ function Login() {
     }
   }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
 
+  // Das streamer.restoreHeight, weil er erst weiterleiten soll,
+  // wenn die Streamer Config vom Backend gesendet wurde
+  if (isWalletOpen && isResolved && streamer.restoreHeight) {
+    console.log("Redirected");
+    return <Redirect to="/dashboard" />;
+  }
+
+  function createWallet(lang) {
+    setIsLoading(true);
+    monerojs
+      .createWallet(lang)
+      .then(monerojs.getMnemonic)
+      .then(setSeed)
+      .then(() => setIsLoading(false));
+  }
+
   function handleCreateWallet() {
     setCreationMode(true);
     createWallet(language);
   }
 
+  function createAccount() {}
+
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
   function handleLanguageChange(event) {
     setLanguage(event.target.value);
   }
-
-  const [isChecked, setIsChecked] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  useEffect(() => {
-    if (isChecked && !isLoading) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [isLoading, isChecked]);
 
   // TODO Verify username input (lenght, does it exist...)
   return (
@@ -250,15 +259,14 @@ function Login() {
               own security
             </p>
           </div>
-          <Link to="/login/open">
-            <Button
-              buttonWidth="w-auto"
-              disabled={isDisabled}
-              loading={isLoading}
-            >
-              Create Account
-            </Button>
-          </Link>
+          <Button
+            buttonWidth="w-auto"
+            disabled={isDisabled}
+            loading={isLoading}
+            onClick={createAccount}
+          >
+            Create Account
+          </Button>
         </div>
       </div>
     </div>
