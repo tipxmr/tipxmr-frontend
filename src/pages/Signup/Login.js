@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import clsx from "clsx";
 import { useWallet, openFromSeed } from "~/context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "~/libs/monero";
 import { useRecoilValue } from "recoil";
@@ -229,7 +227,7 @@ function Login() {
     setSeed(event.target.value);
   }
 
-  // TODO Verify username input (lenght, does it exist...)
+  // TODO Verify username input (lenght.., form errors)
   return (
     <div className="flex flex-row flex-1">
       <div className="flex-8">
