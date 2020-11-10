@@ -89,11 +89,14 @@ LanguageSelector.propTypes = {
   onChange: PropTypes.func,
 };
 
-function PickUserName() {
+function PickUserName({ onChange }) {
   return (
     <div className="text-center mt-10">
       <h2 className="text-2xl">Pick your username</h2>
-      <input className="text-xmrgray-darker p-2 rounded focus:border-none"></input>
+      <input
+        className="text-xmrgray-darker p-2 rounded focus:border-none"
+        onChange={onChange}
+      ></input>
       <p className="tracking-tight text-xs text-xmrgray-light mt-2">
         This name cannot be changed once chosen
       </p>
@@ -114,6 +117,7 @@ function Login() {
   const { isPending, isResolved } = wallet.status;
   const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
   const [creationMode, setCreationMode] = useState(false);
+  const [userName, setUserName] = useState(null);
   const [userNameNotSet, setUserNameNotSet] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -146,6 +150,15 @@ function Login() {
           dispatcher.updateStreamer(response.data);
         } else {
           // 2 cases: userName taken or no userName set
+          // no userName set
+          if (response.error === "noUserName") {
+            setUserNameNotSet(true);
+            console.error("No Username was set.");
+          }
+          if (response.error === "userNameTaken") {
+            setUserNameNotSet(true);
+            console.error("Username is already taken.");
+          }
         }
       });
 
@@ -155,7 +168,13 @@ function Login() {
 
   // Das streamer.restoreHeight, weil er erst weiterleiten soll,
   // wenn die Streamer Config vom Backend gesendet wurde
-  if (isWalletOpen && isResolved && streamer.restoreHeight) {
+  if (
+    isWalletOpen &&
+    isResolved &&
+    streamer.userName &&
+    streamer.userName !== "" &&
+    !userNameNotSet
+  ) {
     console.log("Redirected");
     return <Redirect to="/dashboard" />;
   }
@@ -174,17 +193,44 @@ function Login() {
     createWallet(language);
   }
 
-  function createAccount() {}
+  function createAccount() {
+    const hashedSeed = getMnemonicHash(seed);
+    // Login procedure
+    socket_streamer.login(hashedSeed, userName, (response) => {
+      console.log("CB response:", response);
+      if (response.type === "success") {
+        dispatcher.updateStreamer(response.data);
+      } else {
+        // 2 cases: userName taken or no userName set
+        // no userName set
+        if (response.error === "noUserName") {
+          setUserNameNotSet(true);
+          console.error("No Username was set.");
+        } else if (response.error === "userNameTaken") {
+          setUserNameNotSet(true);
+          console.error("Username is already taken.");
+        }
+      }
+    });
+  }
 
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
   function handleLanguageChange(event) {
     setLanguage(event.target.value);
   }
 
+  function handleUserNameChange(event) {
+    setUserName(event.target.value);
+  }
+
+  function handleSeedChanged(event) {
+    setSeed(event.target.value);
+  }
+
   // TODO Verify username input (lenght, does it exist...)
   return (
     <div className="flex flex-row flex-1">
-      <div className="flex-1">
+      <div className="flex-8">
         <h2 className="text-2xl text-center">
           Your Seed{" "}
           <span role="img" aria-label="wallet">
@@ -200,6 +246,14 @@ function Login() {
               align="middle"
             />
           ) : null}
+          <Button
+            buttonWidth="w-auto"
+            disabled={isLoading}
+            loading={isLoading}
+            onClick={handleCreateWallet}
+          >
+            Create New Wallet
+          </Button>
         </div>
         <div className="flex justify-center mt-3 space-x-4">
           <textarea
@@ -208,22 +262,19 @@ function Login() {
             name="seed"
             rows="4"
             cols="50"
+            placeholder="Open your wallet by entering your 25 seed words..."
             value={isLoading ? defaultStateSeed : seed}
-            readOnly
             style={{ resize: "none" }}
+            onChange={handleSeedChanged}
           />
+          {isPending ? <Loading text="Loading your wallet" /> : null}
         </div>
-        <Button
-          buttonWidth="w-auto"
-          disabled={isLoading}
-          loading={isLoading}
-          onClick={handleCreateWallet}
-        >
-          Create New Wallet
-        </Button>
-        {creationMode || userNameNotSet ? <PickUserName /> : null}
+
+        {creationMode || userNameNotSet ? (
+          <PickUserName onChange={handleUserNameChange} />
+        ) : null}
       </div>
-      <div className="flex-1 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
+      <div className="flex-3 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
         <div className="text-center">
           <span role="img" aria-label="lightbulp" className="text-4xl">
             💡
