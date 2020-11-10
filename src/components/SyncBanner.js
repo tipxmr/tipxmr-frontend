@@ -5,10 +5,17 @@ import clsx from "clsx";
 function SyncBanner({ synced }) {
   return (
     <div
-      className={clsx("rounded", "p-3", "w-full", {
-        "bg-green-500": synced,
-        "bg-red-500": !synced,
-      })}
+      className={clsx(
+        "rounded",
+        "p-3",
+        "w-full",
+        "text-center",
+        "text-xmrgray-darker",
+        {
+          "bg-green-400": synced,
+          "bg-red-400": !synced,
+        }
+      )}
     >
       {synced ? "You are up to date" : "Your wallet still needs to catch up"}
     </div>

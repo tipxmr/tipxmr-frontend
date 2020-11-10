@@ -2,7 +2,7 @@ import React from "react";
 import { TransactionSubscription } from "~/components";
 
 export default {
-  title: "TransactionSubscription",
+  title: "defect/TransactionSubscription",
   component: TransactionSubscription,
 };
 

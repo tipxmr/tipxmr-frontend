@@ -2,7 +2,7 @@ import React from "react";
 import { InfoHover } from "~/components";
 
 export default {
-  title: "InfoHover",
+  title: "dumb/InfoHover",
   component: InfoHover,
 };
 

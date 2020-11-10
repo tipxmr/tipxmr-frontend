@@ -2,13 +2,24 @@ import React from "react";
 import { CheckboxField } from "~/components";
 
 export default {
-  title: "CheckboxField",
+  title: "dumb/CheckboxField",
   component: CheckboxField,
 };
 
 const Template = (args) => <CheckboxField {...args}>Hallo Welt</CheckboxField>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
+export const Checked = Template.bind({});
+Checked.args = {
+  labelName: "CheckboxField",
+  name: "CheckboxField",
+  defaultChecked: true,
+  register: {},
+};
+
+export const Unchecked = Template.bind({});
+Unchecked.args = {
+  labelName: "CheckboxField",
+  name: "CheckboxField",
+  defaultChecked: false,
+  register: {},
 };

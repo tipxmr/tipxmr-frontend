@@ -1,9 +1,17 @@
 import React from "react";
 import { Header } from "~/components";
+import { StreamerProvider } from "~/context/streamer";
 
 export default {
-  title: "Header",
+  title: "dumb/Header",
   component: Header,
+  decorators: [
+    (Story) => (
+      <StreamerProvider>
+        <Story />
+      </StreamerProvider>
+    ),
+  ],
 };
 
 const Template = (args) => <Header {...args}>Hallo Welt</Header>;

@@ -2,7 +2,7 @@ import React from "react";
 import { ProfilePicture } from "~/components";
 
 export default {
-  title: "ProfilePicture",
+  title: "defect/ProfilePicture",
   component: ProfilePicture,
 };
 
@@ -12,5 +12,8 @@ const Template = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  primary: true,
+  streamer: {
+    profilePicture: "https://imgur.com/a/8uLnjT1",
+  },
+  displayName: "AlexAnarcho",
 };

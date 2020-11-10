@@ -2,13 +2,18 @@ import React from "react";
 import { SyncBanner } from "~/components";
 
 export default {
-  title: "SyncBanner",
+  title: "dumb/SyncBanner",
   component: SyncBanner,
 };
 
 const Template = (args) => <SyncBanner {...args}>Hallo Welt</SyncBanner>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
+export const Synced = Template.bind({});
+Synced.args = {
+  synced: true,
+};
+
+export const Unsynced = Template.bind({});
+Unsynced.args = {
+  synced: false,
 };
