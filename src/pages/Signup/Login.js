@@ -155,6 +155,7 @@ function Login() {
             setUserNameNotSet(true);
             console.error("No Username was set.");
           }
+          // userName taken
           if (response.error === "userNameTaken") {
             setUserNameNotSet(true);
             console.error("Username is already taken.");
@@ -199,6 +200,7 @@ function Login() {
     socket_streamer.login(hashedSeed, userName, (response) => {
       console.log("CB response:", response);
       if (response.type === "success") {
+        setUserNameNotSet(false);
         dispatcher.updateStreamer(response.data);
       } else {
         // 2 cases: userName taken or no userName set
