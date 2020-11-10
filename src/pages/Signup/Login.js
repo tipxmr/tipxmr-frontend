@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import { Redirect } from "react-router-dom";
+import clsx from "clsx";
+import { useWallet, openFromSeed } from "~/context/wallet";
+import { isValidMnemoicLength, getMnemonicHash } from "~/libs/monero";
+import { useRecoilValue } from "recoil";
+import { dispatcherState } from "~/store/atom";
+import { isNil } from "ramda";
+import socket_streamer from "~/libs/socket_streamer";
 import monerojs from "~/libs/monero";
 import Loading from "~/components/Loading";
 import { Button } from "~/components";
@@ -82,13 +89,31 @@ LanguageSelector.propTypes = {
   onChange: PropTypes.func,
 };
 
+function PickUserName() {
+  return (
+    <div className="text-center mt-10">
+      <h2 className="text-2xl">Pick your username</h2>
+      <input className="text-xmrgray-darker p-2 rounded focus:border-none"></input>
+      <p className="tracking-tight text-xs text-xmrgray-light mt-2">
+        This name cannot be changed once chosen
+      </p>
+    </div>
+  );
+}
+
 const defaultLanguage = languages[1];
 
-function CreateWallet() {
+function Login() {
   // states
   const [language, setLanguage] = useState(defaultLanguage);
   const [seed, setSeed] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const dispatcher = useRecoilValue(dispatcherState);
+  const [wallet, dispatch] = useWallet();
+  const { isPending, isResolved } = wallet.status;
+  const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
+  const [creationMode, setCreationMode] = useState(false);
+  const [userNameNotSet, setUserNameNotSet] = useState(false);
 
   function createWallet(lang) {
     setIsLoading(true);
@@ -99,17 +124,40 @@ function CreateWallet() {
       .then(() => setIsLoading(false));
   }
 
-  useEffect(() => {
-    createWallet(defaultLanguage);
-  }, []);
-
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
-    createWallet(language);
+    if (creationMode) {
+      createWallet(language);
+    }
   }, [language]);
 
+  useEffect(() => {
+    // if 25 words are reached
+    if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
+      console.log("25 words reached");
+      const hashedSeed = getMnemonicHash(seed);
+      console.log("hashedSeed:", hashedSeed);
+      // Login procedure
+      socket_streamer.login(hashedSeed, null, (response) => {
+        console.log("CB response:", response);
+        if (response.type === "success") {
+          dispatcher.updateStreamer(response.data);
+        } else {
+          // 2 cases: userName taken or no userName set
+        }
+      });
+
+      dispatch(openFromSeed(seed));
+    }
+  }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
+
+  function handleCreateWallet() {
+    setCreationMode(true);
+    createWallet(language);
+  }
+
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
-  function onChange(event) {
+  function handleLanguageChange(event) {
     setLanguage(event.target.value);
   }
 
@@ -129,20 +177,22 @@ function CreateWallet() {
     <div className="flex flex-row flex-1">
       <div className="flex-1">
         <h2 className="text-2xl text-center">
-          Generating your wallet{" "}
+          Your Seed{" "}
           <span role="img" aria-label="wallet">
             👛
           </span>
         </h2>
         <div>
-          <LanguageSelector
-            language={language}
-            languages={languages}
-            onChange={onChange}
-            align="middle"
-          />
+          {creationMode ? (
+            <LanguageSelector
+              language={language}
+              languages={languages}
+              onChange={handleLanguageChange}
+              align="middle"
+            />
+          ) : null}
         </div>
-        <div className="flex justify-center mt-3">
+        <div className="flex justify-center mt-3 space-x-4">
           <textarea
             className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
             id="seed"
@@ -154,13 +204,15 @@ function CreateWallet() {
             style={{ resize: "none" }}
           />
         </div>
-        <div className="text-center mt-10">
-          <h2 className="text-2xl">Pick your username</h2>
-          <input className="text-xmrgray-darker p-2 rounded focus:border-none"></input>
-          <p className="tracking-tight text-xs text-xmrgray-light mt-2">
-            This name cannot be changed once chosen
-          </p>
-        </div>
+        <Button
+          buttonWidth="w-auto"
+          disabled={isLoading}
+          loading={isLoading}
+          onClick={handleCreateWallet}
+        >
+          Create New Wallet
+        </Button>
+        {creationMode || userNameNotSet ? <PickUserName /> : null}
       </div>
       <div className="flex-1 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
         <div className="text-center">
@@ -213,4 +265,4 @@ function CreateWallet() {
   );
 }
 
-export default CreateWallet;
+export default Login;

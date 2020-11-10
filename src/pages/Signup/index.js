@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import CreateWallet from "./CreateWallet";
+import Login from "./Login";
 import Info from "./Info";
 
 function Signup() {
   const [showInfo, setShowInfo] = useState(true);
-  const [showCreateWallet, setShowCreateWallet] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <div className="w-full container m-auto">
       {showInfo ? (
-        <Info
-          stateSetterInfo={setShowInfo}
-          stateSetterCreate={setShowCreateWallet}
-        />
+        <Info stateSetterInfo={setShowInfo} stateSetterCreate={setShowLogin} />
       ) : null}
-      {showCreateWallet ? <CreateWallet /> : null}
+      {showLogin ? <Login /> : null}
     </div>
   );
 }
