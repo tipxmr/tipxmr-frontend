@@ -10,7 +10,6 @@ import socket_streamer from "~/libs/socket_streamer";
 import monerojs from "~/libs/monero";
 import Loading from "~/components/Loading";
 import { Button } from "~/components";
-import { useSetState } from "react-use";
 
 const defaultStateSeed = "";
 const languages = [
@@ -199,10 +198,6 @@ function Login() {
     createWallet(language);
   }
 
-  function createAccount() {
-    login();
-  }
-
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
   function handleLanguageChange(event) {
     setLanguage(event.target.value);
@@ -307,7 +302,7 @@ function Login() {
             buttonWidth="w-auto"
             disabled={isDisabled}
             loading={isLoading}
-            onClick={createAccount}
+            onClick={login}
           >
             Create Account
           </Button>
