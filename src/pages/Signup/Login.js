@@ -88,13 +88,14 @@ LanguageSelector.propTypes = {
   onChange: PropTypes.func,
 };
 
-function PickUserName({ onChange, userNameError }) {
+function PickUserName({ onChange, isLoading, userNameError }) {
   return (
     <div className="text-center mt-10">
       <h2 className="text-2xl">Pick your username</h2>
       <input
         className="text-xmrgray-darker p-2 rounded focus:border-none"
         onChange={onChange}
+        disabled={isLoading}
       ></input>
       <p className="text-xmrorange mt-2">{userNameError}</p>
       <p className="tracking-tight text-xs text-xmrgray-light mt-2">
@@ -142,30 +143,7 @@ function Login() {
     // if 25 words are reached
     if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
       console.log("25 words reached");
-      const hashedSeed = getMnemonicHash(seed);
-      console.log("hashedSeed:", hashedSeed);
-      // Login procedure
-      socket_streamer.login(hashedSeed, null, (response) => {
-        console.log("CB response:", response);
-        if (response.type === "success") {
-          dispatcher.updateStreamer(response.data);
-        } else {
-          // 2 cases: userName taken or no userName set
-          // no userName set
-          if (response.error === "noUserName") {
-            setUserNameNotSet(true);
-            setUserNameError("No Username was set.");
-            console.error("No Username was set.");
-          }
-          // userName taken
-          if (response.error === "userNameTaken") {
-            setUserNameNotSet(true);
-            setUserNameError("Username is already taken.");
-            console.error("Username is already taken.");
-          }
-        }
-      });
-
+      login();
       dispatch(openFromSeed(seed));
     }
   }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
@@ -183,21 +161,7 @@ function Login() {
     return <Redirect to="/dashboard" />;
   }
 
-  function createWallet(lang) {
-    setIsLoading(true);
-    monerojs
-      .createWallet(lang)
-      .then(monerojs.getMnemonic)
-      .then(setSeed)
-      .then(() => setIsLoading(false));
-  }
-
-  function handleCreateWallet() {
-    setCreationMode(true);
-    createWallet(language);
-  }
-
-  function createAccount() {
+  function login() {
     const hashedSeed = getMnemonicHash(seed);
     // Login procedure
     socket_streamer.login(hashedSeed, userName, (response) => {
@@ -219,6 +183,24 @@ function Login() {
         }
       }
     });
+  }
+
+  function createWallet(lang) {
+    setIsLoading(true);
+    monerojs
+      .createWallet(lang)
+      .then(monerojs.getMnemonic)
+      .then(setSeed)
+      .then(() => setIsLoading(false));
+  }
+
+  function handleCreateWallet() {
+    setCreationMode(true);
+    createWallet(language);
+  }
+
+  function createAccount() {
+    login();
   }
 
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
@@ -280,6 +262,7 @@ function Login() {
         {creationMode || userNameNotSet ? (
           <PickUserName
             onChange={handleUserNameChange}
+            isLoading={isLoading}
             userNameError={userNameError}
           />
         ) : null}
