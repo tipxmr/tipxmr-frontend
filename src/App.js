@@ -11,10 +11,10 @@ import { Header, Footer, PrivateRoute } from "./components";
 import {
   Animation,
   Dashboard,
-  Login,
   Donate,
   Disclaimer,
   FAQ,
+  Login,
   StreamerPage,
   Logout,
   Landing,
