@@ -10,6 +10,7 @@ import socket_streamer from "~/libs/socket_streamer";
 import monerojs from "~/libs/monero";
 import Loading from "~/components/Loading";
 import { Button } from "~/components";
+import { useSetState } from "react-use";
 
 const defaultStateSeed = "";
 const languages = [
@@ -87,7 +88,7 @@ LanguageSelector.propTypes = {
   onChange: PropTypes.func,
 };
 
-function PickUserName({ onChange }) {
+function PickUserName({ onChange, userNameError }) {
   return (
     <div className="text-center mt-10">
       <h2 className="text-2xl">Pick your username</h2>
@@ -95,6 +96,7 @@ function PickUserName({ onChange }) {
         className="text-xmrgray-darker p-2 rounded focus:border-none"
         onChange={onChange}
       ></input>
+      <p className="text-xmrorange mt-2">{userNameError}</p>
       <p className="tracking-tight text-xs text-xmrgray-light mt-2">
         This name cannot be changed once chosen
       </p>
@@ -117,6 +119,7 @@ function Login() {
   const [creationMode, setCreationMode] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userNameNotSet, setUserNameNotSet] = useState(false);
+  const [userNameError, setUserNameError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -151,11 +154,13 @@ function Login() {
           // no userName set
           if (response.error === "noUserName") {
             setUserNameNotSet(true);
+            setUserNameError("No Username was set.");
             console.error("No Username was set.");
           }
           // userName taken
           if (response.error === "userNameTaken") {
             setUserNameNotSet(true);
+            setUserNameError("Username is already taken.");
             console.error("Username is already taken.");
           }
         }
@@ -205,9 +210,11 @@ function Login() {
         // no userName set
         if (response.error === "noUserName") {
           setUserNameNotSet(true);
+          setUserNameError("No Username was set.");
           console.error("No Username was set.");
         } else if (response.error === "userNameTaken") {
           setUserNameNotSet(true);
+          setUserNameError("Username is already taken.");
           console.error("Username is already taken.");
         }
       }
@@ -271,7 +278,10 @@ function Login() {
         </div>
 
         {creationMode || userNameNotSet ? (
-          <PickUserName onChange={handleUserNameChange} />
+          <PickUserName
+            onChange={handleUserNameChange}
+            userNameError={userNameError}
+          />
         ) : null}
       </div>
       <div className="flex-3 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
