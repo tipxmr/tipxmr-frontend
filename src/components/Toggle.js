@@ -13,6 +13,7 @@ function Toggle({ isChecked, onClick, children }) {
     "border-4",
     "bg-xmrgray-darker",
     "appearance-none",
+    "focus:outline-none",
     "cursor-pointer",
     {
       "right-0": isChecked,

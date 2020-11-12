@@ -2,7 +2,6 @@ import React from "react";
 import clsx from "clsx";
 import landingIcon from "~/images/landing-screen.svg";
 import { Link } from "react-router-dom";
-import { ButtonToggle } from "~/components";
 
 function Landing() {
   const textShadow = { "text-shadow": "0px 2px 2px rgba(0, 0, 0, 0.5)" };
@@ -106,8 +105,6 @@ function Landing() {
           </Link>
         </div>
       </div>
-
-      <ButtonToggle buttonTextLeft="yearly" buttonTextRight="monthly" />
     </div>
   );
 }
