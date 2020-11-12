@@ -1,27 +1,56 @@
 import React, { useState } from "react";
-import { Toggle } from "~/components";
+import { Button } from "~/components";
 import QR from "~/images/test-qr.png";
 
 function Invoice() {
-  const [amount, setAmount] = useState("0.00042");
+  const [activeButtonLeft, setActiveButtonLeft] = useState(true);
+  const [activeButtonRight, setActiveButtonRight] = useState(false);
+
+  const [amount, setAmount] = useState("0.009");
   const [address, setAddress] = useState(
     "45ZoRheLkX2H3UjYSFs2wP9yo739nQ7irZA2pX6MQr5FeebkC2n8hABYGQRCcrzJ2AaGbNUyR4EfvanP1G2H5DSrMWi97Sk"
   );
   const [qrCode, setQrCode] = useState(QR);
 
-  return (
-    <div className="flex self-center justify-center">
-      <div className="m-6 p-10 bg-gray-200 text-xmrgray-darker rounded border-4 border-xmrorange">
-        <h1 className="mt-6 text-4xl text-center">tipxmr invoice is due</h1>
-        <p>
-          In order to keep using the tipxmr.live service, please send {amount}{" "}
-          XMR to
-        </p>
-        <div className="flex justify-center my-6">
-          <img src={qrCode} alt="QR Code" />
-        </div>
+  function activateLeft() {
+    setActiveButtonLeft(true);
+    setActiveButtonRight(false);
+  }
 
-        <p className="text-xs">{address}</p>
+  function activateRight() {
+    setActiveButtonLeft(false);
+    setActiveButtonRight(true);
+  }
+
+  return (
+    <div className="flex flex-grow self-center justify-center">
+      <div className="bg-gray-200 text-xmrgray-darker rounded">
+        <div className="rounded border-4 border-dashed border-xmrorange p-10 m-6">
+          <div className="text-center">
+            <h1 className="mt-6 text-4xl text-center">tipxmr invoice is due</h1>
+            <p>
+              To keep using tipxmr for 1 {activeButtonLeft ? "year" : "month"},
+              send {activeButtonLeft ? (amount * 11).toFixed(4) : amount} XMR to
+            </p>
+            <div className="flex justify-center mt-4">
+              <Button active={activeButtonLeft} onClick={activateLeft}>
+                1 year
+              </Button>
+              <Button active={activeButtonRight} onClick={activateRight}>
+                1 month
+              </Button>
+            </div>
+            <p className="tracking-tight text-sm">
+              One year will get you one month for free
+            </p>
+
+            <div className="flex justify-center my-6">
+              <img src={qrCode} alt="QR Code" />
+            </div>
+
+            <p className="text-xs">{address}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

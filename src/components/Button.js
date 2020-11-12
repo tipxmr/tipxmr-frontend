@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 function Button({
   children,
-  bgColor = "bg-xmrorange",
+  // bgColor = "bg-xmrorange",
   buttonWidth = "w-auto",
   textSize = "text-md",
   onClick = () => {},
@@ -14,7 +14,7 @@ function Button({
   active = true,
 }) {
   const styles = clsx([
-    bgColor,
+    // bgColor,
     buttonWidth,
     textSize,
     // "mx-auto",
@@ -35,17 +35,14 @@ function Button({
     "border-4",
     {
       "bg-xmrorange": active,
-      "bg-xmrgray": active,
+      "text-xmrgray-darker": !active,
+      "bg-gray-200": !active,
+      "opacity-75": !active,
     },
   ]);
 
   return (
-    <button
-      disabled={disabled}
-      active={active}
-      className={styles}
-      onClick={onClick}
-    >
+    <button disabled={disabled} className={styles} onClick={onClick}>
       {loading ? (
         <FaSpinner className="self-center inline mr-2 animate-spin" />
       ) : null}
@@ -63,6 +60,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   rounded: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 export default Button;

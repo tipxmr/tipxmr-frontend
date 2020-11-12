@@ -21,4 +21,3 @@ export { default as IsOnlineBadge } from "./IsOnlineBadge";
 export { default as Counter } from "./Counter";
 export { default as InfoHover } from "./InfoHover";
 export { default as Table } from "./Table";
-export { default as ButtonToggle } from "./ButtonToggle";

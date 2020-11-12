@@ -18,6 +18,7 @@ import {
   StreamerPage,
   Logout,
   Landing,
+  Invoice,
 } from "./pages";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -115,6 +116,9 @@ function App() {
               </Route>
               <Route path="/logout">
                 <Logout />
+              </Route>
+              <Route path="/invoice">
+                <Invoice />
               </Route>
               <Route path="/">
                 <Redirect to="/dashboard" />
