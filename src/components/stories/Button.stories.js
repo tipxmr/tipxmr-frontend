@@ -5,13 +5,14 @@ export default {
   title: "dumb/Button",
   component: Button,
   argTypes: { onClick: { action: "clicked" } },
+  parameters: {
+    actions: {
+      handles: ["click"],
+    },
+  },
 };
 
-const Template = (args) => (
-  <Button {...args} onClick="clicked">
-    Button Text
-  </Button>
-);
+const Template = (args) => <Button {...args}>Button Text</Button>;
 
 export const Default = Template.bind({});
 Default.args = {

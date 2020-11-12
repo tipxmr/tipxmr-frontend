@@ -11,16 +11,16 @@ function Button({
   onClick = () => {},
   disabled = false,
   loading = false,
+  active = true,
 }) {
   const styles = clsx([
     bgColor,
     buttonWidth,
     textSize,
-    "mx-auto",
+    // "mx-auto",
     "flex",
     "tracking-tight",
     "justify-center",
-    "hover:bg-xmrorange-darker",
     "text-white",
     "rounded",
     "py-2",
@@ -31,10 +31,21 @@ function Button({
     "focus:outline-none",
     "transform",
     "hover:scale-110",
+    "border-xmrorange",
+    "border-4",
+    {
+      "bg-xmrorange": active,
+      "bg-xmrgray": active,
+    },
   ]);
 
   return (
-    <button disabled={disabled} className={styles} onClick={onClick}>
+    <button
+      disabled={disabled}
+      active={active}
+      className={styles}
+      onClick={onClick}
+    >
       {loading ? (
         <FaSpinner className="self-center inline mr-2 animate-spin" />
       ) : null}
