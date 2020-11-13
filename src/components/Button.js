@@ -5,22 +5,22 @@ import clsx from "clsx";
 
 function Button({
   children,
-  bgColor = "bg-xmrorange",
+  // bgColor = "bg-xmrorange",
   buttonWidth = "w-auto",
   textSize = "text-md",
   onClick = () => {},
   disabled = false,
   loading = false,
+  active = true,
 }) {
   const styles = clsx([
-    bgColor,
+    // bgColor,
     buttonWidth,
     textSize,
-    "mx-auto",
+    // "mx-auto",
     "flex",
     "tracking-tight",
     "justify-center",
-    "hover:bg-xmrorange-darker",
     "text-white",
     "rounded",
     "py-2",
@@ -31,6 +31,14 @@ function Button({
     "focus:outline-none",
     "transform",
     "hover:scale-110",
+    "border-xmrorange",
+    "border-4",
+    {
+      "bg-xmrorange": active,
+      "text-xmrgray-darker": !active,
+      "bg-gray-200": !active,
+      "opacity-75": !active,
+    },
   ]);
 
   return (
@@ -52,6 +60,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   rounded: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 export default Button;

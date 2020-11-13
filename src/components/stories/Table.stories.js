@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "~/components";
 
 export default {
-  title: "defect/Table",
+  title: "dumb/Table",
   component: Table,
 };
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "~/libs/monero";
-import clsx from "clsx";
 
 function Payment({ donor, message, subaddress, getSubaddress, total }) {
   const [qrcode, setQrcode] = useState("");
@@ -13,6 +12,17 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
       getSubaddress();
     }
   }, [getSubaddress, subaddress]);
+
+  function createPaymentUri() {
+    let uri;
+    if (total > 0) {
+      uri = "monero:" + subaddress + "?tx_amount=" + total;
+    } else {
+      uri = "monero:" + subaddress;
+    }
+    setPaymentUri(uri);
+    return uri;
+  }
 
   // generete QR Code on subaddress change
   useEffect(() => {
@@ -29,17 +39,6 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
   function handleClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-  }
-
-  function createPaymentUri() {
-    let uri;
-    if (total > 0) {
-      uri = "monero:" + subaddress + "?tx_amount=" + total;
-    } else {
-      uri = "monero:" + subaddress;
-    }
-    setPaymentUri(uri);
-    return uri;
   }
 
   return (
