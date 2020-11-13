@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Toggle, Button } from "~/components";
 import QR from "~/images/test-qr.png";
+import monerojs from "~/libs/monero";
 
 function Payment() {
+  // TODO props needed: subaddress, getSubaddress
   const [yearly, setYearly] = useState(true);
   const [monthly, setMonthly] = useState(false);
   const [isPremium, setIsPremium] = useState(true);
@@ -13,12 +15,6 @@ function Payment() {
     const factor = yearly ? 11 : 1;
     setAmount(basePrice * factor);
   }, [monthly, yearly, isPremium]);
-
-  // Hard Coded for testing
-  const [address, setAddress] = useState(
-    "45ZoRheLkX2H3UjYSFs2wP9yo739nQ7irZA2pX6MQr5FeebkC2n8hABYGQRCcrzJ2AaGbNUyR4EfvanP1G2H5DSrMWi97Sk"
-  );
-  const [qrCode, setQrCode] = useState(QR);
 
   function activateLeft() {
     setYearly(true);
@@ -33,6 +29,48 @@ function Payment() {
   function handleToggle() {
     setIsPremium(!isPremium);
   }
+
+  // payment handeling, work in progress
+  // Hard Coded for testing
+  const [subaddress, setSubaddress] = useState(
+    "45ZoRheLkX2H3UjYSFs2wP9yo739nQ7irZA2pX6MQr5FeebkC2n8hABYGQRCcrzJ2AaGbNUyR4EfvanP1G2H5DSrMWi97Sk"
+  ); // will be props passed down
+  const [qrCode, setQrCode] = useState(QR);
+  // const [paymentUri, setPaymentUri] = useState(null);
+
+  // useEffect(() => {
+  //   if (subaddress === null) {
+  //     getSubaddress();
+  //   }
+  // }, [getSubaddress, subaddress]);
+
+  // // generete QR Code on subaddress change
+  // useEffect(() => {
+  //   const paymentUri = createPaymentUri();
+  //   async function generateQrCode() {
+  //     if (subaddress !== null) {
+  //       const qrcode = await monerojs.generateQrCode(paymentUri);
+  //       setQrcode(qrcode);
+  //     }
+  //   }
+  //   generateQrCode();
+  // }, [subaddress, createPaymentUri]);
+
+  // function handleClick(e) {
+  //   e.stopPropagation();
+  //   e.nativeEvent.stopImmediatePropagation();
+  // }
+
+  // function createPaymentUri() {
+  //   let uri;
+  //   if (total > 0) {
+  //     uri = "monero:" + subaddress + "?tx_amount=" + total;
+  //   } else {
+  //     uri = "monero:" + subaddress;
+  //   }
+  //   setPaymentUri(uri);
+  //   return uri;
+  // }
 
   return (
     <div className="text-center">
@@ -60,7 +98,7 @@ function Payment() {
         <div className="flex justify-center my-6">
           <img src={qrCode} alt="QR Code" />
         </div>
-        <p className="text-xs">{address}</p>
+        <p className="text-xs">{subaddress}</p>
       </div>
       <div className="mt-4 border-t-2 border-dotted border-xmrgray-darker">
         <p className="mt-2">
@@ -109,3 +147,4 @@ export default Invoice;
 // TODO integrate with backend (generate subaddress, confirm payment, confirm amount)
 // TODO update the db to the new date
 // TODO backend function to check if invoice is due on user login
+// TODO create sockets for subaddress getting

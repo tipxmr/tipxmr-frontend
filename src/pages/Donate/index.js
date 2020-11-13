@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { IsOnlineBadge, Button, Toggle, InfoHover } from "~/components";
+import { IsOnlineBadge, Toggle, InfoHover } from "~/components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 
-import socketio from "../../libs/socket_donator";
+import socketio from "~/libs/socket_donator";
 
 function Donate() {
   let { userName } = useParams();
