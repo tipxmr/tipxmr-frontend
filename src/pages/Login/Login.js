@@ -87,14 +87,16 @@ LanguageSelector.propTypes = {
   onChange: PropTypes.func,
 };
 
-function PickUserName({ onChange }) {
+function PickUserName({ onChange, isLoading, userNameError }) {
   return (
     <div className="text-center mt-10">
       <h2 className="text-2xl">Pick your username</h2>
       <input
         className="text-xmrgray-darker p-2 rounded focus:border-none"
         onChange={onChange}
+        disabled={isLoading}
       ></input>
+      <p className="text-xmrorange mt-2">{userNameError}</p>
       <p className="tracking-tight text-xs text-xmrgray-light mt-2">
         This name cannot be changed once chosen
       </p>
@@ -117,6 +119,7 @@ function Login() {
   const [creationMode, setCreationMode] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userNameNotSet, setUserNameNotSet] = useState(false);
+  const [userNameError, setUserNameError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -139,28 +142,7 @@ function Login() {
     // if 25 words are reached
     if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
       console.log("25 words reached");
-      const hashedSeed = getMnemonicHash(seed);
-      console.log("hashedSeed:", hashedSeed);
-      // Login procedure
-      socket_streamer.login(hashedSeed, null, (response) => {
-        console.log("CB response:", response);
-        if (response.type === "success") {
-          dispatcher.updateStreamer(response.data);
-        } else {
-          // 2 cases: userName taken or no userName set
-          // no userName set
-          if (response.error === "noUserName") {
-            setUserNameNotSet(true);
-            console.error("No Username was set.");
-          }
-          // userName taken
-          if (response.error === "userNameTaken") {
-            setUserNameNotSet(true);
-            console.error("Username is already taken.");
-          }
-        }
-      });
-
+      login();
       dispatch(openFromSeed(seed));
     }
   }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
@@ -178,21 +160,7 @@ function Login() {
     return <Redirect to="/dashboard" />;
   }
 
-  function createWallet(lang) {
-    setIsLoading(true);
-    monerojs
-      .createWallet(lang)
-      .then(monerojs.getMnemonic)
-      .then(setSeed)
-      .then(() => setIsLoading(false));
-  }
-
-  function handleCreateWallet() {
-    setCreationMode(true);
-    createWallet(language);
-  }
-
-  function createAccount() {
+  function login() {
     const hashedSeed = getMnemonicHash(seed);
     // Login procedure
     socket_streamer.login(hashedSeed, userName, (response) => {
@@ -205,13 +173,29 @@ function Login() {
         // no userName set
         if (response.error === "noUserName") {
           setUserNameNotSet(true);
+          setUserNameError("No Username was set.");
           console.error("No Username was set.");
         } else if (response.error === "userNameTaken") {
           setUserNameNotSet(true);
+          setUserNameError("Username is already taken.");
           console.error("Username is already taken.");
         }
       }
     });
+  }
+
+  function createWallet(lang) {
+    setIsLoading(true);
+    monerojs
+      .createWallet(lang)
+      .then(monerojs.getMnemonic)
+      .then(setSeed)
+      .then(() => setIsLoading(false));
+  }
+
+  function handleCreateWallet() {
+    setCreationMode(true);
+    createWallet(language);
   }
 
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
@@ -271,7 +255,11 @@ function Login() {
         </div>
 
         {creationMode || userNameNotSet ? (
-          <PickUserName onChange={handleUserNameChange} />
+          <PickUserName
+            onChange={handleUserNameChange}
+            isLoading={isLoading}
+            userNameError={userNameError}
+          />
         ) : null}
       </div>
       <div className="flex-3 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
@@ -314,7 +302,7 @@ function Login() {
             buttonWidth="w-auto"
             disabled={isDisabled}
             loading={isLoading}
-            onClick={createAccount}
+            onClick={login}
           >
             Create Account
           </Button>

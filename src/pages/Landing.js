@@ -77,7 +77,7 @@ function Landing() {
               in your wallet
             </li>
           </ul>
-          <Link to="/login/create" className={buttonStyle}>
+          <Link to="/login" className={buttonStyle}>
             Get started now
           </Link>
         </div>
