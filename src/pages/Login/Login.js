@@ -251,10 +251,12 @@ function Login() {
             style={{ resize: "none" }}
             onChange={handleSeedChanged}
           />
-          {isPending ? <Loading text="Loading your wallet" /> : null}
+          {isPending && !creationMode ? (
+            <Loading text="Loading your wallet" />
+          ) : null}
         </div>
 
-        {creationMode || userNameNotSet ? (
+        {!isLoading && (creationMode || userNameNotSet) ? (
           <PickUserName
             onChange={handleUserNameChange}
             isLoading={isLoading}
