@@ -11,6 +11,7 @@
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll"
   },
+  "proxy": "http://tipxmr-backend:3000",
   "author": "",
   "license": "AGPL-3.0",
   "dependencies": {
