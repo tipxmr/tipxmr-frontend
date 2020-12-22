@@ -55,7 +55,7 @@ let configBase = {
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     // open browser after npm start
-    open: true,
+    open: false,
     hot: true,
   },
   externals: ["worker_threads", "ws", "perf_hooks"], // exclude nodejs
