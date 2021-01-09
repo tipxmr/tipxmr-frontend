@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socketDonator = io("ws://tipxmr-backend:3000/donator");
+const socketDonator = io("ws://localhost:3000/donator");
 
 // ===============================================================
 // Donator Functions
