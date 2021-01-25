@@ -44,4 +44,5 @@ module.exports = {
   variants: {
     opacity: ["disabled"],
   },
+  plugins: [],
 };

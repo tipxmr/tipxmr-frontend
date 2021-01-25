@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let configBase = {
+  mode: "development",
   entry: {
     index: "./index.js",
     monero: "./libs/monero.js",
@@ -42,8 +43,9 @@ let configBase = {
           {
             loader: "postcss-loader",
             options: {
-              ident: "postcss",
-              plugins: [require("tailwindcss"), require("autoprefixer")],
+              config: path.resolve(__dirname, 'postcss.config.js'),
+/*               ident: "postcss",
+              plugins: [require("tailwindcss"), require("autoprefixer")], */
             },
           },
         ],
@@ -58,7 +60,7 @@ let configBase = {
     open: false,
     hot: true,
   },
-  externals: ["worker_threads", "ws", "perf_hooks"], // exclude nodejs
+  externals: ["worker_threads", "ws", "perf_hooks", "child_process"], // exclude nodejs
   resolve: {
     alias: {
       fs: "html5-fs",
