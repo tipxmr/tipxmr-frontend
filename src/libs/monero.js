@@ -5,7 +5,7 @@ const monerojs = require("monero-javascript");
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
-  let walletWasm = await monerojs.createWalletWasm({
+  let walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     language: lang,
     password: "pass123",
@@ -14,11 +14,11 @@ export async function createWallet(lang = "English") {
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
   });
-  return walletWasm;
+  return walletFull;
 }
 
 export async function openWalletFromSeed(seed) {
-  let walletWasm = await monerojs.createWalletWasm({
+  let walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
@@ -27,25 +27,25 @@ export async function openWalletFromSeed(seed) {
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
   });
-  return walletWasm;
+  return walletFull;
 }
 
-export async function getPrimaryAddress(walletWasm) {
-  return await walletWasm.getPrimaryAddress();
+export async function getPrimaryAddress(walletFull) {
+  return await walletFull.getPrimaryAddress();
 }
 
-export async function createSubaddress(walletWasm) {
-  const subadress = await walletWasm.createSubaddress(0, "");
+export async function createSubaddress(walletFull) {
+  const subadress = await walletFull.createSubaddress(0, "");
   return await subadress.state.address;
 }
 
-export async function getSubaddress(walletWasm, index) {
-  const subadress = await walletWasm.getSubaddress(0, index);
+export async function getSubaddress(walletFull, index) {
+  const subadress = await walletFull.getSubaddress(0, index);
   return await subadress.state.address;
 }
 
-export async function getMnemonic(walletWasm) {
-  return await walletWasm.getMnemonic();
+export async function getMnemonic(walletFull) {
+  return await walletFull.getMnemonic();
 }
 
 export function getMnemonicHash(seed) {
@@ -73,11 +73,11 @@ export async function stopSyncing(wallet) {
   // await wallet.removeListener(wallet.getListeners()[0]);
 }
 
-export async function getTxs(walletWasm) {
+export async function getTxs(walletFull) {
   const query = {
     // isConfirmed: true,
   };
-  return await walletWasm.getTxs(query);
+  return await walletFull.getTxs(query);
 }
 
 export async function generateQrCode(subaddress) {
