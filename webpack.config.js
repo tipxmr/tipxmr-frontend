@@ -37,18 +37,7 @@ let configBase = {
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          { loader: "css-loader", options: { importLoaders: 1 } },
-          {
-            loader: "postcss-loader",
-            options: {
-              config: path.resolve(__dirname, 'postcss.config.js'),
-/*               ident: "postcss",
-              plugins: [require("tailwindcss"), require("autoprefixer")], */
-            },
-          },
-        ],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },

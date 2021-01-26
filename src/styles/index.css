@@ -1,0 +1,19 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@font-face {
+    font-family: "MoneroGothic";
+    font-weight: 400;
+    src: url("../font/monerogothic_v3-webfont.woff2") format("woff2"),
+      url("../font/monerogothic_v3-webfont.woff") format("woff");
+  }
+  
+  html,
+  body {
+    font-size: 1rem;
+    font-size: 16px;
+  }
+  
