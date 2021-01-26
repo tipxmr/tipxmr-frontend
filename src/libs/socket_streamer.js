@@ -16,6 +16,7 @@ function onCreateSubaddress(callback) {
 async function login(hashedSeed, userName = null, callback) {
   socketStreamer.emit("login", { hashedSeed, userName }, (response) => {
     if (response.type === "success") {
+      console.log(response);
       callback(response);
     } else {
       console.error(response);

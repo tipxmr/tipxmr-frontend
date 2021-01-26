@@ -32443,6 +32443,8 @@ video {
           animation: bounce 1s infinite;
 }
 
+@import "../components/Loading.css";
+
 @font-face {
   font-family: "MoneroGothic";
 

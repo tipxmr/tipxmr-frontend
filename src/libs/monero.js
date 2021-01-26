@@ -27,6 +27,7 @@ export async function openWalletFromSeed(seed) {
     serverPassword: "abctesting123",
     rejectUnauthorized: false, // e.g. local development
   });
+  console.log(walletFull);
   return walletFull;
 }
 

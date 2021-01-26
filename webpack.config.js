@@ -5,7 +5,6 @@ let configBase = {
   mode: "development",
   entry: {
     index: "./index.js",
-    monero: "./libs/monero.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
