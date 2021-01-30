@@ -2,9 +2,9 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let configBase = {
+  mode: "development",
   entry: {
     index: "./index.js",
-    monero: "./libs/monero.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -36,17 +36,7 @@ let configBase = {
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          { loader: "css-loader", options: { importLoaders: 1 } },
-          {
-            loader: "postcss-loader",
-            options: {
-              ident: "postcss",
-              plugins: [require("tailwindcss"), require("autoprefixer")],
-            },
-          },
-        ],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },
@@ -55,10 +45,10 @@ let configBase = {
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     // open browser after npm start
-    open: true,
+    open: false,
     hot: true,
   },
-  externals: ["worker_threads", "ws", "perf_hooks"], // exclude nodejs
+  externals: ["worker_threads", "ws", "perf_hooks", "child_process"], // exclude nodejs
   resolve: {
     alias: {
       fs: "html5-fs",
