@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=development",
-    "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
+    "build:style": "npx tailwind build src/styles/index.css -o src/styles/tailwind.css",
     "start": "npm run build:style && webpack-dev-server --mode development --open --hot --host 0.0.0.0",
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll"
@@ -61,6 +61,7 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "file-loader": "^6.1.0",
     "html-webpack-plugin": "^4.5.0",
+    "postcss": "8.2.4",
     "postcss-cli": "^8.3.1",
     "postcss-loader": "^4.2.0",
     "prettier": "^2.2.1",
