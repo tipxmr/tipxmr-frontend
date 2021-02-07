@@ -22,7 +22,7 @@ function Donate() {
     displayName: "loading",
     userName: "loading",
     isOnline: false,
-    hashedSeed: "",
+    _id: "",
     charLimit: 0,
     secondPrice: 0,
     charPrice: 0,
@@ -76,7 +76,7 @@ function Donate() {
     socketio.emitGetSubaddress(
       streamer.displayName,
       streamer.userName,
-      streamer.hashedSeed,
+      streamer._id,
       donor,
       message
     );
