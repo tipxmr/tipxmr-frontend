@@ -54,7 +54,7 @@ function App() {
       });
     }
     if (
-      streamerConfig._id &&
+      streamerConfig.hashedSeed &&
       customWallet.wallet &&
       walletUseEffectDidFire.current === false
     ) {
@@ -66,7 +66,7 @@ function App() {
   }, [
     customWallet.wallet,
     walletUseEffectDidFire,
-    streamerConfig._id,
+    streamerConfig.hashedSeed,
     dispatcher,
     setDonorsInfo,
   ]);

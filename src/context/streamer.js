@@ -56,10 +56,10 @@ function updateRestoreHeight(update, restoreHeight) {
   }));
 }
 
-function update_id(update, _id) {
+function updateHashedSeed(update, hashedSeed) {
   update((streamer) => ({
     ...streamer,
-    _id,
+    hashedSeed,
   }));
 }
 
@@ -79,6 +79,6 @@ export {
   useStreamerUpdate,
   useStreamer,
   updateStreamer,
-  update_id,
+  updateHashedSeed,
   updateAnimationSettings,
 };

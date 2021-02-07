@@ -121,6 +121,15 @@ function Login() {
   const [userNameNotSet, setUserNameNotSet] = useState(false);
   const [userNameError, setUserNameError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if (isChecked && !isLoading) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isLoading, isChecked]);
 
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
@@ -152,25 +161,25 @@ function Login() {
   }
 
   function login() {
-    const _id = getMnemonicHash(seed);
-    console.log(seed, _id);
+    const hashedSeed = getMnemonicHash(seed);
     // Login procedure
-    socket_streamer.login(_id, userName, (response) => {
+    socket_streamer.login(hashedSeed, userName, (response) => {
       console.log("CB response:", response);
-      if (!(response instanceof Error)) {
+      if (response.type === "success") {
         setUserNameNotSet(false);
         dispatcher.updateStreamer(response.data);
-      } else if (
-        response.message ===
-        "_id not found and no userName for userCreation was sent"
-      ) {
-        setUserNameNotSet(true);
-        setUserNameError("No Username was set.");
-        console.error("No Username was set.");
-      } else if (response.message === "Username is already taken") {
-        setUserNameNotSet(true);
-        setUserNameError("Username is already taken.");
-        console.error("Username is already taken.");
+      } else {
+        // 2 cases: userName taken or no userName set
+        // no userName set
+        if (response.error === "noUserName") {
+          setUserNameNotSet(true);
+          setUserNameError("No Username was set.");
+          console.error("No Username was set.");
+        } else if (response.error === "userNameTaken") {
+          setUserNameNotSet(true);
+          setUserNameError("Username is already taken.");
+          console.error("Username is already taken.");
+        }
       }
     });
   }
@@ -293,7 +302,7 @@ function Login() {
           </div>
           <Button
             buttonWidth="w-auto"
-            disabled={isChecked && !isLoading}
+            disabled={isDisabled}
             loading={isLoading}
             onClick={login}
           >

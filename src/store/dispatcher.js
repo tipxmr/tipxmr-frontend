@@ -27,9 +27,9 @@ export default function createDispatcher() {
     }
   );
 
-  const update_id = useRecoilCallback(({ set }) => (_id) => {
+  const updateHashedSeed = useRecoilCallback(({ set }) => (hashedSeed) => {
     set(streamerState, (oldStreamer) => {
-      return mergeDeepLeft({ _id }, oldStreamer);
+      return mergeDeepLeft({ hashedSeed }, oldStreamer);
     });
   });
 
@@ -71,7 +71,7 @@ export default function createDispatcher() {
   return {
     updateStreamer,
     updateRestoreHeight,
-    update_id,
+    updateHashedSeed,
     updateAnimationSettings,
     appendToDonationsQueue,
     appendToDonationsHistory,
