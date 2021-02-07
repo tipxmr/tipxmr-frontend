@@ -101,15 +101,15 @@ function Wallet() {
         setTotalTransactions(txs.length);
       });
       // set Online status to true
-      socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, true);
+      socketio.emitUpdateOnlineStatus(streamerConfig._id, true);
     } else {
       // set Online status to false
-      socketio.emitUpdateOnlineStatus(streamerConfig.hashedSeed, false);
+      socketio.emitUpdateOnlineStatus(streamerConfig._id, false);
     }
   }, [
     isDone,
     wallet.wallet,
-    streamerConfig.hashedSeed,
+    streamerConfig._id,
     unlockedBalance,
     balance,
   ]);

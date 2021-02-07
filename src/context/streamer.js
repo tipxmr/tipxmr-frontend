@@ -56,10 +56,10 @@ function updateRestoreHeight(update, restoreHeight) {
   }));
 }
 
-function updateHashedSeed(update, hashedSeed) {
+function updateHashedSeed(update, _id) {
   update((streamer) => ({
     ...streamer,
-    hashedSeed,
+    _id,
   }));
 }
 

@@ -39,8 +39,8 @@ function emitSubaddressToBackend(newDonorInfo) {
   socketStreamer.emit("subaddressToBackend", newDonorInfo);
 }
 
-function emitUpdateOnlineStatus(hashedSeed, newOnlineStatus) {
-  socketStreamer.emit("updateOnlineStatus", { hashedSeed, newOnlineStatus });
+function emitUpdateOnlineStatus(_id, newOnlineStatus) {
+  socketStreamer.emit("updateOnlineStatus", { _id, newOnlineStatus });
 }
 
 // testing things out, cheers, alex
