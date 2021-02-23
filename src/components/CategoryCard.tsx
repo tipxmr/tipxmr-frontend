@@ -1,9 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import tipxmr from "~/images/tipxmr-button.png";
 import { Link } from "react-router-dom";
 
-function Flags({ languages }) {
+interface FlagsI {
+  languages: string[];
+}
+
+function Flags({ languages }: FlagsI) {
   let flags = [];
   flags = languages.map((language) => {
     switch (language) {
@@ -32,7 +34,19 @@ function Flags({ languages }) {
   return <div className="flex justify-center text-xl">{flags}</div>;
 }
 
-function CategoryCard({ name, numStreamers, languages, pictureLink }) {
+interface CategoryCardI {
+  name: string;
+  numStreamers: number;
+  languages: string[];
+  pictureLink: string;
+}
+
+function CategoryCard({
+  name,
+  numStreamers,
+  languages,
+  pictureLink,
+}: CategoryCardI) {
   return (
     <div className="mx-4">
       <Link to={`/categories/${name}`}>
@@ -59,9 +73,4 @@ function CategoryCard({ name, numStreamers, languages, pictureLink }) {
   );
 }
 
-CategoryCard.propTypes = {
-  name: PropTypes.string,
-  numStreamers: PropTypes.number,
-  languages: PropTypes.array,
-};
 export default CategoryCard;
