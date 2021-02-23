@@ -9,7 +9,7 @@ export { default as Loading } from "./Loading";
 export { default as FileInput } from "./FileInput";
 export { default as Faqblock } from "./Faqblock";
 export { default as CheckboxField } from "./CheckboxField";
-export { default as Button } from "./Button";
+export { default as Button } from "./CustomButton";
 export { default as Progressbar } from "./Progressbar";
 export { default as SyncBanner } from "./SyncBanner";
 export { default as PrivateRoute } from "./PrivateRoute";
