@@ -1,13 +1,13 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-import { IsOnlineBadge, Toggle, InfoHover } from "~/components";
+import { IsOnlineBadge, Toggle, InfoHover } from "../../components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 
-import socketio from "~/libs/socket_donator";
+import socketio from "../../libs/socket_donator";
 
 function Donate() {
   let { userName } = useParams();
@@ -23,7 +23,6 @@ function Donate() {
     userName: "loading",
     isOnline: false,
     _id: "",
-    charLimit: 0,
     secondPrice: 0,
     charPrice: 0,
     charLimit: 100,

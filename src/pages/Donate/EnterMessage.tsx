@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Counter } from "~/components";
+import { Button, Counter } from "../../components";
 import clsx from "clsx";
 import { BsDisplay } from "react-icons/bs";
 import { useForm } from "react-hook-form";

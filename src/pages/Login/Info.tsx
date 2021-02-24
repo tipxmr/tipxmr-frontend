@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Button } from "~/components";
+import { Button } from "../../components";
 
 function Info({ stateSetterInfo, stateSetterCreate }) {
   const cardStyle = clsx(["flex-1", "border", "p-6"]);

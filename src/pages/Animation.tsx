@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
 import { useRecoilValue } from "recoil";
-import { streamerState } from "~/store/atom";
+import { streamerState } from "../store/atom";
 import {
   emitGetAnimationConfig,
   onGetAnimationConfig,
-} from "~/libs/socket_animation";
+} from "../libs/socket_animation";
 import clsx from "clsx";
 
 function GoalBar({ goalProgress, goal, percentage }) {

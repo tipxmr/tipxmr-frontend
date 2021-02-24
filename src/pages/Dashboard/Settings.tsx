@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -8,7 +9,7 @@ import {
   NumberInput,
   StatBox,
   DropdownField,
-} from "~/components";
+} from "../../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
 

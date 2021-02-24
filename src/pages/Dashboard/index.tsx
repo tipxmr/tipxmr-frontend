@@ -5,7 +5,7 @@ import Overview from "./Overview";
 import Wallet from "./Wallet";
 import Settings from "./Settings";
 import AnimationSettings from "./AnimationSettings";
-import Animation from "~/pages/Animation";
+import Animation from "../Animation";
 import clsx from "clsx";
 import TransactionSubscription from "../../components/TransactionSubscription";
 

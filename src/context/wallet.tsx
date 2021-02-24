@@ -1,11 +1,11 @@
+// @ts-nocheck 
 import React, { createContext, useContext } from "react";
-import PropTypes from "prop-types";
 
 import useThunkReducer from "../hook/useThunkReducer";
 import monerojs from "../libs/monero";
 
-const WalletStateContext = createContext();
-const WalletDispatchContext = createContext();
+const WalletStateContext = createContext({});
+const WalletDispatchContext = createContext({});
 
 const actionTypes = {
   failure: "FAILURE",
@@ -77,10 +77,6 @@ function WalletProvider({ children }) {
     </WalletStateContext.Provider>
   );
 }
-
-WalletProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 function useWalletState() {
   const context = useContext(WalletStateContext);

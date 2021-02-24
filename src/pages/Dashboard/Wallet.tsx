@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, SyncBanner, Button } from "~/components";
-import useWalletSynchronisation from "~/hook/useWalletSynchronisation";
-import { useWalletState } from "~/context/wallet";
+import { Progressbar, SyncBanner, Button } from "../../components";
+import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
+import { useWalletState } from "../../context/wallet";
 import { useRecoilValue } from "recoil";
 import { streamerState } from "../../store/atom";
-import monerojs from "~/libs/monero";
-import socketio from "~/libs/socket_streamer";
+import monerojs from "../../libs/monero";
+import socketio from "../../libs/socket_streamer";
 
 function Wallet() {
   const {

@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import landingIcon from "~/images/landing-screen.svg";
+import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 
 function Landing() {

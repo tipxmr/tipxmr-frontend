@@ -7,7 +7,7 @@ import {
   CheckboxField,
   Button,
   DropdownField,
-} from "~/components";
+} from "../../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
 

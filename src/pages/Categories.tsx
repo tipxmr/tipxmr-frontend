@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CategoryCard, CategoryNav } from "~/components";
+import { CategoryCard, CategoryNav } from "../components";
 
 function Categories() {
   const [categories, setCategories] = useState([

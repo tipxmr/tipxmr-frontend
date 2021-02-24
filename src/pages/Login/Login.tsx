@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { useWallet, openFromSeed } from "~/context/wallet";
-import { isValidMnemoicLength, getMnemonicHash } from "~/libs/monero";
+import { useWallet, openFromSeed } from "../../context/wallet";
+import { isValidMnemoicLength, getMnemonicHash } from "../../libs/monero";
 import { useRecoilValue } from "recoil";
 import { streamerState, dispatcherState } from "../../store/atom";
 import { isNil } from "ramda";
-import socket_streamer from "~/libs/socket_streamer";
-import monerojs from "~/libs/monero";
-import Loading from "~/components/Loading";
-import { Button } from "~/components";
+import socket_streamer from "../../libs/socket_streamer";
+import monerojs from "../../libs/monero";
+import Loading from "../../components/Loading";
+import { Button } from "../../components";
 
 const defaultStateSeed = "";
 const languages = [

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "~/images/tipxmr-live.png";
+import logo from "../images/tipxmr-live.png";
 import ProfilePicture from "./ProfilePicture";
 import clsx from "clsx";
 import PropTypes from "prop-types";

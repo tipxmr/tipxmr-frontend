@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
-import monerojs from "~/libs/monero";
+import monerojs from "../../libs/monero";
 
 function Payment({ donor, message, subaddress, getSubaddress, total }) {
   const [qrcode, setQrcode] = useState("");

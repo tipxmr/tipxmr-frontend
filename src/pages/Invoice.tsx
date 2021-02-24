@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Toggle, Button } from "~/components";
-import QR from "~/images/test-qr.png";
-import monerojs from "~/libs/monero";
+import { Toggle, Button } from "../components";
+import QR from "../images/test-qr.png";
+import monerojs from "../libs/monero";
 
 function Payment() {
   // TODO props needed: subaddress, getSubaddress

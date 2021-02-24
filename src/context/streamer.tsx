@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { mergeDeepLeft } from "ramda";
 
-const StreamerStateContext = createContext();
-const StreamerUpdateContext = createContext();
+const StreamerStateContext = createContext({});
+const StreamerUpdateContext = createContext({});
 
 function StreamerProvider({ children }) {
   const [state, setState] = useState({});
