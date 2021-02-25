@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { append, mergeDeepLeft, omit } from "ramda";
 import { useRecoilCallback } from "recoil";
 import {
   donationsQueueState,
   donationsHistoryState,
   streamerState,
-  walletState,
   donorsInfoState,
 } from "./atom";
 
@@ -27,9 +27,9 @@ export default function createDispatcher() {
     }
   );
 
-  const updateHashedSeed = useRecoilCallback(({ set }) => (hashedSeed) => {
+  const updateHashedSeed = useRecoilCallback(({ set }) => (_id) => {
     set(streamerState, (oldStreamer) => {
-      return mergeDeepLeft({ hashedSeed }, oldStreamer);
+      return mergeDeepLeft({ _id }, oldStreamer);
     });
   });
 

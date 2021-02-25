@@ -35,13 +35,13 @@ function emitGetStreamer(userName) {
   socketDonator.emit("getStreamer", userName);
 }
 
-function emitGetSubaddress(displayName, userName, hashedSeed, donor, message) {
+function emitGetSubaddress(displayName, userName, _id, donor, message) {
   socketDonator.emit("getSubaddress", {
     donor,
     message,
     userName,
     displayName,
-    hashedSeed,
+    _id,
   });
 }
 
