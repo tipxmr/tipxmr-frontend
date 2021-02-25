@@ -2,24 +2,11 @@ import React from "react";
 import clsx from "clsx";
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
+import { Button } from "antd";
 
 function Landing() {
-  const textShadow = { "textShadow": "0px 2px 2px rgba(0, 0, 0, 0.5)" };
-  const buttonStyle = clsx([
-    "block",
-    "bg-xmrorange",
-    "hover:bg-xmrorange-darker",
-    "py-2",
-    "px-4",
-    "rounded",
-    "text-white",
-    "uppercase",
-    "mt-4",
-    "flex-none",
-    "mx-auto",
-    "max-w-xs",
-    "shadow-md",
-  ]);
+  const textShadow = { textShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)" };
+
   const containerStyle = clsx([
     "my-12",
     "flex-1",
@@ -81,8 +68,8 @@ function Landing() {
                 in your wallet
               </li>
             </ul>
-            <Link to="/login" className={buttonStyle}>
-              Get started now
+            <Link to="/login">
+              <Button type="primary">Get started now</Button>
             </Link>
           </div>
 
@@ -106,8 +93,8 @@ function Landing() {
                 Watch streams right here on the website, no download needed
               </li>
             </ul>
-            <Link to="/streamerpage" className={buttonStyle}>
-              See who is streaming
+            <Link to="/streamerpage">
+              <Button type="primary">See who is streaming</Button>
             </Link>
           </div>
         </div>

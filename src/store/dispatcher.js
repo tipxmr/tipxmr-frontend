@@ -1,11 +1,10 @@
-// @ts-nocheck
+/* eslint-disable react-hooks/rules-of-hooks */
 import { append, mergeDeepLeft, omit } from "ramda";
 import { useRecoilCallback } from "recoil";
 import {
   donationsQueueState,
   donationsHistoryState,
   streamerState,
-  walletState,
   donorsInfoState,
 } from "./atom";
 

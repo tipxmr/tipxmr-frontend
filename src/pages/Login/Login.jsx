@@ -9,7 +9,8 @@ import { isNil } from "ramda";
 import socket_streamer from "../../libs/socket_streamer";
 import monerojs from "../../libs/monero";
 import Loading from "../../components/Loading";
-import { Button } from "../../components";
+//import { Button } from "../../components";
+import { Button } from "antd";
 
 const defaultStateSeed = "";
 const languages = [
@@ -221,7 +222,7 @@ function Login() {
             />
           ) : null}
           <Button
-            buttonWidth="w-auto"
+            type="primary"
             disabled={isLoading}
             loading={isLoading}
             onClick={handleCreateWallet}
@@ -291,7 +292,7 @@ function Login() {
             </p>
           </div>
           <Button
-            buttonWidth="w-auto"
+            type="primary"
             disabled={isChecked && !isLoading}
             loading={isLoading}
             onClick={login}
