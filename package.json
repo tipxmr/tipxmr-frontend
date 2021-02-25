@@ -15,6 +15,7 @@
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.12.3",
     "clsx": "^1.1.1",
+    "craco-less": "^1.17.1",
     "deep-diff": "^1.0.2",
     "monero-javascript": "^0.5.1",
     "qrcode": "^1.4.4",
