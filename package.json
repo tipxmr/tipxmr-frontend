@@ -36,7 +36,7 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "BROWSER='firefox developer edition' PORT=8080 craco start",
+    "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
