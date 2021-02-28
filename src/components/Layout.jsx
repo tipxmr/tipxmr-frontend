@@ -1,5 +1,6 @@
 import logo from "../images/tipxmr-live.png";
 import { Layout, Menu, Image } from 'antd';
+import { tiplayout } from "../styles/tiplayout"
 
 // const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
