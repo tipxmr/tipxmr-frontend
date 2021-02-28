@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
-import { Header, Footer, PrivateRoute } from "./components";
+import { Header, Footer, PrivateRoute, Layout } from "./components";
 import {
   Animation,
   Dashboard,
@@ -86,50 +86,52 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
-        {/* <Header userName={streamerConfig.userName} /> */}
-        <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
-          <div className="flex flex-full">
-            <Switch>
-              <PrivateRoute path="/dashboard">
-                <Dashboard />
-              </PrivateRoute>
-              <Route path="/donate/:userName">
-                <Donate />
-              </Route>
-              <Route path="/" exact>
-                <Landing />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/streamerpage" exact>
-                <StreamerPage />
-              </Route>
-              <Route path="/animation/:userName">
-                <Animation />
-              </Route>
-              <Route path="/disclaimer">
-                <Disclaimer />
-              </Route>
-              <Route path="/faq">
-                <FAQ />
-              </Route>
-              <Route path="/logout">
-                <Logout />
-              </Route>
-              <Route path="/invoice">
-                <Invoice />
-              </Route>
-              <Route path="/">
-                <Redirect to="/dashboard" />
-              </Route>
-              <Route>
-                <Redirect to="/" />
-              </Route>
-            </Switch>
+        <Layout>
+          {/* <Header userName={streamerConfig.userName} /> */}
+          <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
+            <div className="flex flex-full">
+              <Switch>
+                <PrivateRoute path="/dashboard">
+                  <Dashboard />
+                </PrivateRoute>
+                <Route path="/donate/:userName">
+                  <Donate />
+                </Route>
+                <Route path="/" exact>
+                  <Landing />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/streamerpage" exact>
+                  <StreamerPage />
+                </Route>
+                <Route path="/animation/:userName">
+                  <Animation />
+                </Route>
+                <Route path="/disclaimer">
+                  <Disclaimer />
+                </Route>
+                <Route path="/faq">
+                  <FAQ />
+                </Route>
+                <Route path="/logout">
+                  <Logout />
+                </Route>
+                <Route path="/invoice">
+                  <Invoice />
+                </Route>
+                <Route path="/">
+                  <Redirect to="/dashboard" />
+                </Route>
+                <Route>
+                  <Redirect to="/" />
+                </Route>
+              </Switch>
+            </div>
           </div>
-        </div>
-        {/* <Footer /> */}
+          {/* <Footer /> */}
+        </Layout>
       </Router>
     </div>
   );
