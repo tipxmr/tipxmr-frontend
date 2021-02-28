@@ -3,10 +3,25 @@ import clsx from "clsx";
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import { Layout } from 'antd';
+
+const { Header, Footer, Sider, Content } = Layout;
+
+function LandingA() {
+  return (
+    <Layout>
+      <Header>Header</Header>
+      <Content>Content</Content>
+      <Footer>Footer</Footer>
+    </Layout >
+  )
+}
 
 function Landing() {
+  // TODO Textshadow with antd
   const textShadow = { textShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)" };
 
+  // TODO Style container with antd
   const containerStyle = clsx([
     "my-12",
     "flex-1",
@@ -18,6 +33,7 @@ function Landing() {
     "border-4",
     "border-xmrorange",
   ]);
+  // TODO Style list with antd
   const listStyle = clsx([
     "text-justify",
     "list-disc",
@@ -28,6 +44,8 @@ function Landing() {
     "leading-tight",
     "space-y-3",
   ]);
+
+  // TODO migrate css from tailwind to antd
   return (
     <div className="container mx-auto">
       <div className="flex flex-col bg-xmrgray-darker">
@@ -103,4 +121,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default LandingA;
