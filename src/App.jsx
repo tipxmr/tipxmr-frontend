@@ -86,7 +86,7 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
-        <Header userName={streamerConfig.userName} />
+        {/* <Header userName={streamerConfig.userName} /> */}
         <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
           <div className="flex flex-full">
             <Switch>
@@ -129,7 +129,7 @@ function App() {
             </Switch>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </div>
   );
