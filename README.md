@@ -40,6 +40,7 @@ npm install
 npm start
 git clone https://github.com/hundehausen/tipxmr.git
 npm install
+cp .env.example .env
 npm start
 ```
 
