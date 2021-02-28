@@ -3,19 +3,6 @@ import clsx from "clsx";
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
-import { Layout } from 'antd';
-
-const { Header, Footer, Sider, Content } = Layout;
-
-function LandingA() {
-  return (
-    <Layout>
-      <Header>Header</Header>
-      <Content>Content</Content>
-      <Footer>Footer</Footer>
-    </Layout >
-  )
-}
 
 function Landing() {
   // TODO Textshadow with antd
@@ -121,4 +108,4 @@ function Landing() {
   );
 }
 
-export default LandingA;
+export default Landing;
