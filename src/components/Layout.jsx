@@ -1,16 +1,17 @@
 import logo from "../images/tipxmr-live.png";
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Image } from 'antd';
 
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
 
 function TipLayout() {
     return (
         <Layout>
-            <Header className="header">
+            <Header>
                 {/* <Title level={3}>TipXMR</Title> */}
-                <div className={logo} />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+
+                    <img src={logo} width={180} />
                     <Menu.Item key="1">Streams</Menu.Item>
                     <Menu.Item key="2">Donate</Menu.Item>
                     <Menu.Item key="3">Login/Signup</Menu.Item>
