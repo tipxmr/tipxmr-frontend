@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu, Row, Col } from 'antd'
+import { GithubOutlined } from "@ant-design/icons"
 
 
 const { Footer } = Layout
 
 function TipFooter() {
   return (
-    <Footer>
+    <Footer style={{ "padding": 0, "margin": 0 }}>
       <Row justify="center" align="middle">
         <Col span={24}>
           <Menu theme="dark" mode="horizontal">
@@ -33,7 +34,7 @@ function TipFooter() {
                 rel="noopener noreferrer"
 
               >
-                GitHub
+                <GithubOutlined />
               </a>
             </Menu.Item>
           </Menu>
