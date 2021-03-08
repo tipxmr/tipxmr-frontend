@@ -1,4 +1,4 @@
-import { Layout, Menu, Row, Col } from 'antd';
+import { Layout } from 'antd';
 import TipHeader from './Header'
 import TipFooter from "./Footer"
 
