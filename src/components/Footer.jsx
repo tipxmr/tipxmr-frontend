@@ -7,6 +7,7 @@ import { Layout, Row, Col } from 'antd'
 const { Footer } = Layout
 
 function TipFooter() {
+  // TODO eliminate clsx
   const linkStyle = clsx([
     "transform",
     "hover:text-xmrorange-lighter",
