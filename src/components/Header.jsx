@@ -4,6 +4,7 @@ import { Layout, Menu, Row, Col } from 'antd'
 
 const { Header } = Layout
 
+// TODO show username when user is logged in
 function TipHeader({ userName }) {
   return (
     <Header>
