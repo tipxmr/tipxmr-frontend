@@ -1,15 +1,15 @@
 import { Layout, Menu, Row, Col } from 'antd';
 import TipHeader from './Header'
+import TipFooter from "./Footer"
 
-// const { Header, Footer, Content } = Layout;
-const { Footer, Content } = Layout;
+const { Content } = Layout;
 
-function TipLayout() {
+function TipLayout(props) {
     return (
         <Layout>
-            <TipHeader userName="Tester">Something</TipHeader>
-            <Content>This is some awesome Content</Content>
-            <Footer>This is a footer</Footer>
+            <TipHeader userName="Tester" />
+            <Content>{props.children}</Content>
+            <TipFooter />
         </Layout >
     )
 }
