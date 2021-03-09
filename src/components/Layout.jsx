@@ -6,7 +6,7 @@ const { Content } = Layout;
 
 function TipLayout(props) {
     return (
-        <Layout>
+        <Layout style={{ "background-color": "#4d4d4d" }}>
             <TipHeader userName="Tester" />
             <Content>{props.children}</Content>
             <TipFooter />
