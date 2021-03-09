@@ -83,54 +83,48 @@ function App() {
   }, [streamerConfig, restoreHeight, setRestoreHeight]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
         <Layout>
-          {/* <Header userName={streamerConfig.userName} /> */}
-          <div className="flex-auto flex flex-col bg-xmrgray-darker text-gray-200">
-            <div className="flex flex-full">
-              <Switch>
-                <PrivateRoute path="/dashboard">
-                  <Dashboard />
-                </PrivateRoute>
-                <Route path="/donate/:userName">
-                  <Donate />
-                </Route>
-                <Route path="/" exact>
-                  <Landing />
-                </Route>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path="/streamerpage" exact>
-                  <StreamerPage />
-                </Route>
-                <Route path="/animation/:userName">
-                  <Animation />
-                </Route>
-                <Route path="/disclaimer">
-                  <Disclaimer />
-                </Route>
-                <Route path="/faq">
-                  <FAQ />
-                </Route>
-                <Route path="/logout">
-                  <Logout />
-                </Route>
-                <Route path="/invoice">
-                  <Invoice />
-                </Route>
-                <Route path="/">
-                  <Redirect to="/dashboard" />
-                </Route>
-                <Route>
-                  <Redirect to="/" />
-                </Route>
-              </Switch>
-            </div>
-          </div>
-          {/* <Footer /> */}
+          <Switch>
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+            <Route path="/donate/:userName">
+              <Donate />
+            </Route>
+            <Route path="/" exact>
+              <Landing />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/streamerpage" exact>
+              <StreamerPage />
+            </Route>
+            <Route path="/animation/:userName">
+              <Animation />
+            </Route>
+            <Route path="/disclaimer">
+              <Disclaimer />
+            </Route>
+            <Route path="/faq">
+              <FAQ />
+            </Route>
+            <Route path="/logout">
+              <Logout />
+            </Route>
+            <Route path="/invoice">
+              <Invoice />
+            </Route>
+            <Route path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+            <Route>
+              <Redirect to="/" />
+            </Route>
+          </Switch>
         </Layout>
       </Router>
     </div>
