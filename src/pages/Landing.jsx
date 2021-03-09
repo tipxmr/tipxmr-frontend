@@ -1,110 +1,89 @@
 import React from "react";
-import clsx from "clsx";
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Row, Col, Card, List, Typography } from "antd";
+
+const { Title } = Typography
+
+const streamerList = [
+  {
+    title: "Earn monero with your livestream right now & reach your funding goals",
+    description: "Some text"
+  },
+  {
+    title: "Customize your donation settings & interact with your live",
+    description: "Some text"
+  },
+  {
+    title: "Pay a flat fee as low as $1 instead of a percentage - more money in your wallet",
+    description: "Some text"
+  },
+]
+
+const viewerList = [
+  {
+    title: "Support your favorite streamers financially with Monero, while staying private",
+    description: "Some text"
+  },
+  {
+    title: "Fast and easy payments that allow you to use your own existing Monero wallet",
+    description: "Some text"
+  },
+  {
+    title: "Watch streams right here on the website, no download needed",
+    description: "Some text"
+  },
+]
 
 function Landing() {
   // TODO Textshadow with antd
   const textShadow = { textShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)" };
 
-  // TODO Style container with antd
-  const containerStyle = clsx([
-    "my-12",
-    "flex-1",
-    "p-6",
-    "mx-3",
-    "text-center",
-    "rounded",
-    "shadow-md",
-    "border-4",
-    "border-xmrorange",
-  ]);
-  // TODO Style list with antd
-  const listStyle = clsx([
-    "text-justify",
-    "list-disc",
-    "mx-8",
-    "my-4",
-    "text-lg",
-    "tracking-tight",
-    "leading-tight",
-    "space-y-3",
-  ]);
-
   // TODO migrate css from tailwind to antd
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col bg-xmrgray-darker">
-        <div className="flex flex-row items-center">
-          <div className="flex flex-1">
-            <h1
-              className="text-4xl sm:text-6xl text-xmrorange leading-tight tracking-tight m-4"
-              style={textShadow}
-            >
-              Monero donations in your livestream
-            </h1>
-          </div>
-          <div className="flex flex-1">
-            <img src={landingIcon} alt="tipxmr.live screen" />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col bg-xmrgray-darker">
-        <div className="flex flex-row">
-          <div className={containerStyle}>
-            <span
-              className="uppercase text-center text-2xl text-xmrorange-lighter"
-              style={textShadow}
-            >
-              For Streamers
-            </span>
-            <ul className={listStyle}>
-              <li>
-                Earn monero with your livestream right now & reach your funding
-                goals
-              </li>
-              <li>
-                Customize your donation settings & interact with your audience
-                live
-              </li>
-              <li>
-                Pay a flat fee as low as $1 instead of a percentage - more money
-                in your wallet
-              </li>
-            </ul>
-            <Link to="/login">
-              <Button type="primary">Get started now</Button>
-            </Link>
-          </div>
+    <div>
+      {/* Headline and sample picture */}
+      <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
+        <Col span={10}>
+          <Title level={1} style={{ "font-size": "4em" }}>
+            Monero donations in your livestream
+          </Title>
+        </Col>
+        <Col span={10}>
+          <img src={landingIcon} alt="tipxmr.live screen" />
+        </Col>
 
-          <div className={containerStyle}>
-            <span
-              className="uppercase text-center text-2xl text-xmrorange-lighter"
-              style={textShadow}
-            >
-              For Viewers
-            </span>
-            <ul className={listStyle}>
-              <li>
-                Support your favorite streamers financially with Monero, while
-                staying private
-              </li>
-              <li>
-                Fast and easy payments that allow you to use your own existing
-                Monero wallet
-              </li>
-              <li>
-                Watch streams right here on the website, no download needed
-              </li>
-            </ul>
-            <Link to="/streamerpage">
-              <Button type="primary">See who is streaming</Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      </Row>
+      {/* Cards for streamers and viewers */}
+      <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
+
+        {/* Streamer Card */}
+        <Col span={10}>
+          <Card title="For Streamers" extra={<Link to="/login"><Button type="primary">Get started now</Button></Link>}>
+            <List itemLayout="horizontal" dataSource={streamerList} renderItem={item => (
+              <List.Item>
+                <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
+              </List.Item>
+            )}>
+            </List>
+          </Card>
+        </Col>
+
+        {/* Viewer Card */}
+        <Col span={10}>
+          <Card title="For Viewers" extra={<Link to="/streamerpage"><Button type="primary">See who is streaming</Button></Link>}>
+            <List itemLayout="horizontal" dataSource={viewerList} renderItem={item => (
+              <List.Item>
+                <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
+              </List.Item>
+            )}>
+            </List>
+          </Card>
+        </Col>
+
+      </Row>
     </div>
+
   );
 }
 
