@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { Row, Col, Select } from "antd";
 import { convertFlag } from "../pages/Login/Login";
 
+
+const { Option } = Select
+
 function LanguageSelector({ languages, language, onChange }) {
     // Build list of language items, alphabetically sorted
     const languageItems = languages.map((language) => {

@@ -73,7 +73,6 @@ export function convertFlag(language) {
   }
 }
 
-
 function PickUserName({ onChange, isLoading, userNameError }) {
   return (
     <div className="text-center mt-10">
