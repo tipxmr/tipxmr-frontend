@@ -7,13 +7,10 @@ import { streamerState, dispatcherState } from "../../store/atom";
 import { isNil } from "ramda";
 import socket_streamer from "../../libs/socket_streamer";
 import monerojs from "../../libs/monero";
-// import Loading from "../../components/Loading";
 import { Typography, Row, Col, List, Button, Checkbox, Select, Spin } from "antd";
 import { LanguageSelector } from "../../components";
 
 const { Title } = Typography
-const { Option } = Select
-
 const importantList = [
   {
     title: 'Secure your seed',
@@ -33,7 +30,6 @@ const importantList = [
   },
 
 ];
-
 const defaultStateSeed = "";
 const languages = [
   "Dutch",
@@ -47,6 +43,7 @@ const languages = [
   "Russian",
   "Spanish",
 ];
+const defaultLanguage = languages[1];
 
 export function convertFlag(language) {
   switch (language) {
@@ -90,7 +87,6 @@ function PickUserName({ onChange, isLoading, userNameError }) {
   );
 }
 
-const defaultLanguage = languages[1];
 
 function Login() {
   // states
