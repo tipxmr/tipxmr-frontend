@@ -8,7 +8,6 @@ import { openFromSeed, useWallet } from "../../context/wallet";
 import monerojs, { getMnemonicHash, isValidMnemoicLength } from "../../libs/monero";
 import socket_streamer from "../../libs/socket_streamer";
 import { dispatcherState, streamerState } from "../../store/atom";
-// import { PickUserName } from "./PickUserName";
 
 const { Title } = Typography
 const importantList = [
@@ -44,31 +43,6 @@ const languages = [
   "Spanish",
 ];
 const defaultLanguage = languages[1];
-
-export function convertFlag(language) {
-  switch (language) {
-    case "German":
-      return "🇩🇪";
-    case "French":
-      return "🇲🇫";
-    case "Esperanto":
-      return "🏴‍☠️";
-    case "Spanish":
-      return "🇪🇦";
-    case "Russian":
-      return "🇷🇺";
-    case "Italian":
-      return "🇮🇹";
-    case "Japanese":
-      return "🇯🇵";
-    case "Portuguese":
-      return "🇵🇹";
-    case "Dutch":
-      return "🇳🇱";
-    default:
-      return "🇬🇧";
-  }
-}
 
 function Login() {
   // states
