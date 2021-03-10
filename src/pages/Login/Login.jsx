@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { useWallet, openFromSeed } from "../../context/wallet";
 import { isValidMnemoicLength, getMnemonicHash } from "../../libs/monero";
@@ -8,10 +7,10 @@ import { streamerState, dispatcherState } from "../../store/atom";
 import { isNil } from "ramda";
 import socket_streamer from "../../libs/socket_streamer";
 import monerojs from "../../libs/monero";
-import { Typography, Row, Col, List, Button, Checkbox, Select, Spin } from "antd";
+import { Typography, Row, Col, List, Button, Checkbox, Spin } from "antd";
+import { LanguageSelector } from "./LanguageSelector";
 
 const { Title } = Typography
-const { Option } = Select
 
 const importantList = [
   {
@@ -34,6 +33,7 @@ const importantList = [
 ];
 
 const defaultStateSeed = "";
+
 const languages = [
   "Dutch",
   "English",
@@ -47,7 +47,7 @@ const languages = [
   "Spanish",
 ];
 
-function convertFlag(language) {
+export function convertFlag(language) {
   switch (language) {
     case "German":
       return "🇩🇪";
@@ -72,44 +72,6 @@ function convertFlag(language) {
   }
 }
 
-function LanguageSelector({ languages, language, onChange }) {
-  // Build list of language items, alphabetically sorted
-  const languageItems = languages.map((language) => {
-    return (
-      <Option key={language} value={language}>
-        {convertFlag(language) + " " + language}
-      </Option>
-    );
-  });
-
-  return (
-    <Row justify="center" align="middle">
-      <Col>
-        <span
-          htmlFor="languages"
-        >
-          Seed language:
-      </span>
-        <Select
-          id="languages"
-          name="languages"
-          defaultValue={language}
-          onChange={onChange}
-          style={{ width: "200px" }}
-        >
-          {languageItems}
-        </Select>
-
-      </Col>
-    </Row>
-  );
-}
-// Defining property types
-LanguageSelector.propTypes = {
-  language: PropTypes.string,
-  languages: PropTypes.array,
-  onChange: PropTypes.func,
-};
 
 function PickUserName({ onChange, isLoading, userNameError }) {
   return (
