@@ -9,8 +9,30 @@ import { isNil } from "ramda";
 import socket_streamer from "../../libs/socket_streamer";
 import monerojs from "../../libs/monero";
 import Loading from "../../components/Loading";
-//import { Button } from "../../components";
-import { Button } from "antd";
+import { Typography, Row, Col, List, Button, Checkbox, Select, Spin } from "antd";
+
+const { Title } = Typography
+const { Option } = Select
+
+const importantList = [
+  {
+    title: 'Secure your seed',
+    description: "Please write your seedphrase on a piece of paper. DO NOT STORE IT ON THE COMPUTER."
+  },
+  {
+    title: 'Keep your seed secret',
+    description: "Anybody that knows the seed can access funds stored on the wallet. Do not share it with others."
+  },
+  {
+    title: "Don't get phished",
+    description: "Before you sign into TipXMR with your seed, make sure that you are actually using TipXMR. Verify the URL and check the 🔒 in your browser."
+  },
+  {
+    title: "Regularly withdraw to a different wallet",
+    description: "Just to be on the save side, do not keep large amounts on your TipXMR wallet. You should regularly withdraw funds to another Monero wallet, like CakeWallet or Monerujo."
+  },
+
+];
 
 const defaultStateSeed = "";
 const languages = [
@@ -55,30 +77,32 @@ function LanguageSelector({ languages, language, onChange }) {
   // Build list of language items, alphabetically sorted
   const languageItems = languages.map((language) => {
     return (
-      <option className="bg-xmrgray-darker" key={language} value={language}>
+      <Option key={language} value={language}>
         {convertFlag(language) + " " + language}
-      </option>
+      </Option>
     );
   });
 
   return (
-    <div className="text-center mt-4">
-      <span
-        className="uppercase tracking-tight font-bold mb-2"
-        htmlFor="languages"
-      >
-        Seed language:
+    <Row justify="center" align="middle">
+      <Col>
+        <span
+          htmlFor="languages"
+        >
+          Seed language:
       </span>
-      <select
-        id="languages"
-        name="languages"
-        value={language}
-        onChange={onChange}
-        className="ml-4 p-2 appearance-none bg-xmrgray-darker border border-xmrorange py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
-      >
-        {languageItems}
-      </select>
-    </div>
+        <Select
+          id="languages"
+          name="languages"
+          defaultValue={language}
+          onChange={onChange}
+          style={{ width: "200px" }}
+        >
+          {languageItems}
+        </Select>
+
+      </Col>
+    </Row>
   );
 }
 // Defining property types
@@ -190,8 +214,8 @@ function Login() {
   }
 
   // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
-  function handleLanguageChange(event) {
-    setLanguage(event.target.value);
+  function handleLanguageChange(value) {
+    setLanguage(value);
   }
 
   function handleUserNameChange(event) {
@@ -204,93 +228,107 @@ function Login() {
 
   // TODO Verify username input (lenght.., form errors)
   return (
-    <div className="flex flex-row flex-1">
-      <div className="flex-8">
-        <h2 className="text-2xl text-center">
-          Your Seed{" "}
-          <span role="img" aria-label="wallet">
-            👛
-          </span>
-        </h2>
-        <div>
-          {creationMode ? (
-            <LanguageSelector
-              language={language}
-              languages={languages}
-              onChange={handleLanguageChange}
-              align="middle"
-            />
-          ) : null}
-          <Button
-            type="primary"
-            disabled={isLoading}
-            loading={isLoading}
-            onClick={handleCreateWallet}
-          >
-            Create New Wallet
-          </Button>
-        </div>
-        <div className="flex justify-center mt-3 space-x-4">
-          <textarea
-            className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
-            id="seed"
-            name="seed"
-            rows="4"
-            cols="50"
-            placeholder="Open your wallet by entering your 25 seed words..."
-            value={isLoading ? defaultStateSeed : seed}
-            style={{ resize: "none" }}
-            onChange={handleSeedChanged}
-          />
-          {isPending && !creationMode ? (
-            <Loading text="Loading your wallet" />
-          ) : null}
-        </div>
+    <div>
 
-        {!isLoading && (creationMode || userNameNotSet) ? (
-          <PickUserName
-            onChange={handleUserNameChange}
-            isLoading={isLoading}
-            userNameError={userNameError}
+      {/* Create/enter seed area */}
+      <Row justify="center" align="middle">
+        <Col span={20}>
+
+          {/* Headline */}
+          <Row justify="center">
+            <Col>
+              <Title level={2} style={{ "text-align": "center" }}>
+                Your Seed 👛
+            </Title>
+              {creationMode ? (
+                <LanguageSelector
+                  language={language}
+                  languages={languages}
+                  /* onChange={handleLanguageChange} */
+                  align="middle"
+                />
+              ) : null}
+
+              {/* Continue Button */}
+              <Row justify="center">
+                <Col>
+                  <Button
+                    type="primary"
+                    disabled={isLoading}
+                    loading={isLoading}
+                    onClick={handleCreateWallet}
+                    align="middle"
+                    justify="center"
+                  >
+                    Create New Wallet
+                  </Button>
+                </Col>
+              </Row>
+
+              {/* Text area  */}
+              <Row justify="center" align="middle">
+                <Col>
+                  <div className="flex justify-center mt-3 space-x-4">
+                    <textarea
+                      className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
+                      id="seed"
+                      name="seed"
+                      rows="4"
+                      cols="50"
+                      placeholder="Open your wallet by entering your 25 seed words..."
+                      value={isLoading ? defaultStateSeed : seed}
+                      style={{ resize: "none" }}
+                      onChange={handleSeedChanged}
+                    />
+                    {isPending && !creationMode ? (
+                      <Spin />
+                      /* <Loading text="Loading your wallet" /> */
+                    ) : null}
+                  </div>
+                  {!isLoading && (creationMode || userNameNotSet) ? (
+                    <PickUserName
+                      onChange={handleUserNameChange}
+                      isLoading={isLoading}
+                      userNameError={userNameError}
+                    />
+                  ) : null}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      {/* Information Area */}
+      <Row justify="center" align="middle">
+        <Col>
+          <Title level={2} style={{ "text-align": "center" }}> ⚠️ Important ⚠️</Title>
+          <p>Your seed phrase is the ultimate backup for your Monero wallet.</p>
+          <List
+            itemLayout="horizontal"
+            dataSource={importantList}
+            renderItem={item => (
+              <List.Item>
+                <List.Item.Meta
+                  title={item.title}
+                  description={item.description}
+                />
+              </List.Item>
+            )}
           />
-        ) : null}
-      </div>
-      <div className="flex-3 self-center border-4 border-red-600 p-6 text-lg space-y-4 rounded">
-        <div className="text-center">
-          <span role="img" aria-label="lightbulp" className="text-4xl">
-            💡
-          </span>
-          <span className="text-center underline text-4xl">Important</span>
-          <span role="img" aria-label="warning" className="text-4xl">
-            {" "}
-            ⚠️
-          </span>
-        </div>
-        <p className="text-center text-xl">
-          Your seedphrase is the ultimate backup for your Monero wallet.
-        </p>
-        <ul className="list-decimal leading-tight space-y-5 px-6">
-          <li>Write it down on a piece of paper and store it securely.</li>
-          <li>
-            Keep your seed secret - whoever knows your seed can spend the coins.
-          </li>
-          <li>
-            The seed is universal, you can also use it with other wallet
-            applications like CakeWallet or Monerujo.
-          </li>
-        </ul>
-        <div className="">
-          <div className="flex mt-6">
-            <input
-              type="checkbox"
-              onClick={() => setIsChecked(!isChecked)}
-              className="m-3 self-center checked:border-none"
-            />
-            <p className="tracking-tight text-sm self-center">
-              I have secured my seed and understand that I am responsible for my
-              own security
-            </p>
-          </div>
+        </Col>
+      </Row>
+
+      {/* Agreement of responsibility */}
+      <Row justify="center" align="middle">
+        <Col>
+          <Checkbox onChange={() => setIsChecked(!isChecked)}>I understand that I am responsible for my own security and that TipXMR.live is not liable if I mess up</Checkbox>
+        </Col>
+      </Row>
+
+      {/* Create Account Button */}
+      <Row justify="center" align="middle">
+        <Col>
           <Button
             type="primary"
             disabled={isChecked && !isLoading}
@@ -298,9 +336,9 @@ function Login() {
             onClick={login}
           >
             Create Account
-          </Button>
-        </div>
-      </div>
+        </Button>
+        </Col>
+      </Row>
     </div>
   );
 }
