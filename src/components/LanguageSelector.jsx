@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Select } from "antd";
-import { convertFlag } from "../pages/Login/Login";
+import convertFlag from "./convertFlag";
 
 
 const { Option } = Select

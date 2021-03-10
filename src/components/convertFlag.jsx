@@ -1,5 +1,5 @@
 
-export function convertFlag(language) {
+function convertFlag(language) {
     switch (language) {
         case "German":
             return "🇩🇪";
@@ -23,3 +23,5 @@ export function convertFlag(language) {
             return "🇬🇧";
     }
 }
+
+export default convertFlag
