@@ -23,3 +23,4 @@ export { default as Table } from "./Table";
 export { default as Button } from "./Button";
 export { default as Layout } from "./Layout";
 export { default as LanguageSelector } from "./LanguageSelector";
+export { default as PickUserName } from "./PickUserName";

@@ -3,11 +3,12 @@ import { isNil } from "ramda";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { LanguageSelector } from "../../components";
+import { LanguageSelector, PickUserName } from "../../components";
 import { openFromSeed, useWallet } from "../../context/wallet";
 import monerojs, { getMnemonicHash, isValidMnemoicLength } from "../../libs/monero";
 import socket_streamer from "../../libs/socket_streamer";
 import { dispatcherState, streamerState } from "../../store/atom";
+// import { PickUserName } from "./PickUserName";
 
 const { Title } = Typography
 const importantList = [
@@ -68,24 +69,6 @@ export function convertFlag(language) {
       return "🇬🇧";
   }
 }
-
-function PickUserName({ onChange, isLoading, userNameError }) {
-  return (
-    <div className="text-center mt-10">
-      <h2 className="text-2xl">Pick your username</h2>
-      <input
-        className="text-xmrgray-darker p-2 rounded focus:border-none"
-        onChange={onChange}
-        disabled={isLoading}
-      ></input>
-      <p className="text-xmrorange mt-2">{userNameError}</p>
-      <p className="tracking-tight text-xs text-xmrgray-light mt-2">
-        This name cannot be changed once chosen
-      </p>
-    </div>
-  );
-}
-
 
 function Login() {
   // states
