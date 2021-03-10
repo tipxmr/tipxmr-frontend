@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { useWallet, openFromSeed } from "../../context/wallet";
-import { isValidMnemoicLength, getMnemonicHash } from "../../libs/monero";
-import { useRecoilValue } from "recoil";
-import { streamerState, dispatcherState } from "../../store/atom";
+import { Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
 import { isNil } from "ramda";
-import socket_streamer from "../../libs/socket_streamer";
-import monerojs from "../../libs/monero";
-import { Typography, Row, Col, List, Button, Checkbox, Select, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { LanguageSelector } from "../../components";
+import { openFromSeed, useWallet } from "../../context/wallet";
+import monerojs, { getMnemonicHash, isValidMnemoicLength } from "../../libs/monero";
+import socket_streamer from "../../libs/socket_streamer";
+import { dispatcherState, streamerState } from "../../store/atom";
 
 const { Title } = Typography
 const importantList = [
