@@ -289,7 +289,7 @@ function Login() {
         <Col>
           <Button
             type="primary"
-            disabled={isChecked && !isLoading}
+            disabled={!isChecked || isChecked && !isLoading}
             loading={isLoading}
             onClick={login}
           >
