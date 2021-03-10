@@ -7,10 +7,12 @@ import { streamerState, dispatcherState } from "../../store/atom";
 import { isNil } from "ramda";
 import socket_streamer from "../../libs/socket_streamer";
 import monerojs from "../../libs/monero";
-import { Typography, Row, Col, List, Button, Checkbox, Spin } from "antd";
-import { LanguageSelector } from "./LanguageSelector";
+// import Loading from "../../components/Loading";
+import { Typography, Row, Col, List, Button, Checkbox, Select, Spin } from "antd";
+import { LanguageSelector } from "../../components";
 
 const { Title } = Typography
+const { Option } = Select
 
 const importantList = [
   {
@@ -33,7 +35,6 @@ const importantList = [
 ];
 
 const defaultStateSeed = "";
-
 const languages = [
   "Dutch",
   "English",
@@ -242,8 +243,10 @@ function Login() {
                       onChange={handleSeedChanged}
                     />
                     {isPending && !creationMode ? (
-                      <Spin />
-                      /* <Loading text="Loading your wallet" /> */
+                      <div>
+                        {/* <Loading text="Loading your wallet" /> */}
+                        <Spin />
+                      </div>
                     ) : null}
                   </div>
                   {!isLoading && (creationMode || userNameNotSet) ? (
