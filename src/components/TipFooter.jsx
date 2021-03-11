@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout, Menu, Row, Col } from 'antd'
 import { GithubOutlined } from "@ant-design/icons"
+import './styles/TipFooter.css'
 
 
 const { Footer } = Layout
