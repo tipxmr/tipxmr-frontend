@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
+import { Divider, Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
 import { isNil } from "ramda";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
@@ -224,6 +224,7 @@ const Login = () => {
         <Col span={24}>
           <Row justify="center" align="middle">
             <Col>
+              <Divider />
               <Title level={2} style={{ "text-align": "center" }}> ⚠️ Important ⚠️</Title>
               <p>Your seed phrase is the ultimate backup for your Monero wallet.</p>
               <List
