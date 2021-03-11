@@ -7,7 +7,7 @@ const { Footer } = Layout
 
 const TipFooter = () => {
   return (
-    <Footer style={{ "padding": 0, "margin": 0 }}>
+    <Footer class="footer-box">
       <Menu theme="dark" mode="horizontal">
 
         <Row justify="space-around" align="middle">
