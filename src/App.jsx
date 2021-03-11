@@ -38,7 +38,7 @@ function App() {
 
   // as soon as wallet is loaded
   useEffect(() => {
-    function handleOnNewSubaddress(data) {
+    const handleOnNewSubaddress = (data) => {
       monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
         const newDonorInfo = { ...data, subaddress: subaddress };
         setDonorsInfo((prevState) => [...prevState, newDonorInfo]);
