@@ -1,11 +1,10 @@
-import React from "react";
+import { Col, Layout, Menu, Row } from 'antd';
 import logo from "../images/tipxmr-live.png";
-import { Layout, Menu, Row, Col } from 'antd'
 
 const { Header } = Layout
 
 // TODO show username when user is logged in
-function TipHeader({ userName }) {
+const TipHeader = () => {
   return (
     <Header>
       <Row justify="space-around" align="middle">
