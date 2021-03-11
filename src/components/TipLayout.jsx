@@ -1,12 +1,12 @@
 import { Layout } from 'antd';
-import TipHeader from './Header'
-import TipFooter from "./Footer"
+import { TipHeader, TipFooter } from '/src/components'
+import './styles/TipLayout.css'
 
 const { Content } = Layout;
 
 const TipLayout = ({ props }) => {
     return (
-        <Layout style={{ "background-color": "#4d4d4d" }}>
+        <Layout class="Layout-bg">
             <TipHeader userName="Tester" />
             <Content>{props.children}</Content>
             <TipFooter />
