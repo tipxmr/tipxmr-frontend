@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const { Option } = Select
 
-function convertFlag(language) {
+const convertFlag = (language) => {
     switch (language) {
         case "German":
             return "🇩🇪";
