@@ -29,7 +29,7 @@ const TipFooter = () => {
           <Col>
 
             <Menu.Item key="getmonero">
-              <a href="https:getmonero.org">
+              <a href="https://getmonero.org">
                 GetMonero
               </a>
             </Menu.Item>
@@ -38,7 +38,7 @@ const TipFooter = () => {
 
             <Menu.Item key="github">
               <a
-                href="https:github.com/hundehausen/tipxmr"
+                href="https://github.com/hundehausen/tipxmr"
                 target="_blank"
                 rel="noopener noreferrer"
 
