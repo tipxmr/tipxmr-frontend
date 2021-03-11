@@ -1,4 +1,4 @@
-import { Divider, Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
+import { Input, Divider, Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
 import { isNil } from "ramda";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
@@ -43,6 +43,7 @@ const languages = [
   "Spanish",
 ];
 const defaultLanguage = languages[1];
+const { TextArea } = Input
 
 const Login = () => {
   // states
@@ -187,26 +188,21 @@ const Login = () => {
 
 
               <Row justify="center" align="middle">
-                <Col>
-                  <div>
-                    {/* TODO Use an ant.design component */}
-                    <textarea
-                      className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
-                      id="seed"
-                      name="seed"
-                      rows="4"
-                      cols="50"
-                      placeholder="Open your wallet by entering your 25 seed words..."
-                      value={isLoading ? defaultStateSeed : seed}
-                      style={{ resize: "none" }}
-                      onChange={handleSeedChanged}
-                    />
-                    {isPending && !creationMode ? (
-                      <div>
-                        <Spin />
-                      </div>
-                    ) : null}
-                  </div>
+                <Col span={8}>
+                  {/* TODO Use an ant.design component */}
+                  <TextArea rows={5}
+                    id="seed"
+                    name="seed"
+                    placeholder="Open your wallet by entering your 25 seed words..."
+                    value={isLoading ? defaultStateSeed : seed}
+                    style={{ resize: "none" }}
+                    onChange={handleSeedChanged}
+                  />
+                  {isPending && !creationMode ? (
+                    <div>
+                      <Spin />
+                    </div>
+                  ) : null}
                   {!isLoading && (creationMode || userNameNotSet) ? (
                     <PickUserName
                       onChange={handleUserNameChange}
