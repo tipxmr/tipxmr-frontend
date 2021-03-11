@@ -245,7 +245,7 @@ const Login = () => {
         <Col>
           <Button
             type="primary"
-            disabled={!isChecked || isChecked && !isLoading}
+            disabled={!isChecked || (isChecked && !isLoading)}
             loading={isLoading}
             onClick={login}
           >
