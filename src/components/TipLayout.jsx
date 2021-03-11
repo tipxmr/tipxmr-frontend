@@ -1,14 +1,15 @@
 import { Layout } from 'antd';
-import { TipHeader, TipFooter } from '/src/components'
-import './styles/TipLayout.css'
+import { TipHeader, TipFooter } from './'
+import '../styles/index.less'
+import { gray } from "@ant-design/colors"
 
 const { Content } = Layout;
 
-const TipLayout = ({ props }) => {
+const TipLayout = ({ children }) => {
     return (
-        <Layout class="Layout-bg">
+        <Layout>
             <TipHeader userName="Tester" />
-            <Content>{props.children}</Content>
+            <Content>{children}</Content>
             <TipFooter />
         </Layout >
     )
