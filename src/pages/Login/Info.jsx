@@ -1,4 +1,3 @@
-import React from "react";
 import { Row, Col, Typography, Card, List, Button } from "antd"
 
 
@@ -28,7 +27,7 @@ const stepByStep = [
 
 ]
 
-function Info({ stateSetterInfo, stateSetterCreate }) {
+const Info = ({ stateSetterInfo, stateSetterCreate }) => {
   function handleChange() {
     stateSetterInfo(false);
     stateSetterCreate(true);
