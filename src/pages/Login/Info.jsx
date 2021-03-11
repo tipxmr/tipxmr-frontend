@@ -28,7 +28,7 @@ const stepByStep = [
 ]
 
 const Info = ({ stateSetterInfo, stateSetterCreate }) => {
-  function handleChange() {
+  const handleChange = () => {
     stateSetterInfo(false);
     stateSetterCreate(true);
   }
