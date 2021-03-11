@@ -40,48 +40,51 @@ const Landing = () => {
   // TODO gutters instead of inline styles
   return (
     <div>
-
-      {/* Headline and sample picture */}
-      <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
-        <Col span={10}>
-          <Title level={1} className="title-text">
-            Monero donations in your livestream
+      <Row gutter={[0, 48]}>
+        <Col span={24}>
+          {/* Headline and sample picture */}
+          <Row justify="space-around" align="middle">
+            <Col span={10}>
+              <Title level={1} className="title-text">
+                Monero donations in your livestream
           </Title>
+            </Col>
+            <Col span={10}>
+              <img src={landingIcon} alt="tipxmr.live screen" />
+            </Col>
+          </Row>
         </Col>
-        <Col span={10}>
-          <img src={landingIcon} alt="tipxmr.live screen" />
+        <Col span={24}>
+          {/* Cards for streamers and viewers */}
+          <Row justify="space-around" align="middle">
+
+            {/* Streamer Card */}
+            <Col span={10} className="gutter-row">
+              <Card title="For Streamers" extra={<Link to="/login"><Button type="primary">Get started now</Button></Link>}>
+                <List itemLayout="horizontal" dataSource={streamerList} renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
+                  </List.Item>
+                )}>
+                </List>
+              </Card>
+            </Col>
+
+            {/* Viewer Card */}
+            <Col span={10}>
+              <Card title="For Viewers" extra={<Link to="/streamerpage"><Button type="primary">See who is streaming</Button></Link>}>
+                <List itemLayout="horizontal" dataSource={viewerList} renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
+                  </List.Item>
+                )}>
+                </List>
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
-
-      {/* Cards for streamers and viewers */}
-      <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
-
-        {/* Streamer Card */}
-        <Col span={10}>
-          <Card title="For Streamers" extra={<Link to="/login"><Button type="primary">Get started now</Button></Link>}>
-            <List itemLayout="horizontal" dataSource={streamerList} renderItem={item => (
-              <List.Item>
-                <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
-              </List.Item>
-            )}>
-            </List>
-          </Card>
-        </Col>
-
-        {/* Viewer Card */}
-        <Col span={10}>
-          <Card title="For Viewers" extra={<Link to="/streamerpage"><Button type="primary">See who is streaming</Button></Link>}>
-            <List itemLayout="horizontal" dataSource={viewerList} renderItem={item => (
-              <List.Item>
-                <List.Item.Meta title={<a href="#">{item.title}</a>} description={item.description} />
-              </List.Item>
-            )}>
-            </List>
-          </Card>
-        </Col>
-
-      </Row>
-    </div>
+    </div >
 
   );
 }
