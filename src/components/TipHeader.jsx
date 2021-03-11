@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 
 const { Header } = Layout
 
-// TODO show username when user is logged in
 const TipHeader = () => {
   return (
     <Header>
