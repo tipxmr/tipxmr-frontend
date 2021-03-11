@@ -4,7 +4,7 @@ import TipFooter from "./Footer"
 
 const { Content } = Layout;
 
-function TipLayout(props) {
+const TipLayout = ({ props }) => {
     return (
         <Layout style={{ "background-color": "#4d4d4d" }}>
             <TipHeader userName="Tester" />
