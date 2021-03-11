@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Layout, Menu, Row, Col } from 'antd'
 import { GithubOutlined } from "@ant-design/icons"
-import './styles/TipFooter.css'
+import '../styles/index.less'
 
 
 const { Footer } = Layout
 
 const TipFooter = () => {
   return (
-    <Footer className="footer-box">
+    <Footer className="zero-margin-padding">
       <Menu theme="dark" mode="horizontal">
 
         <Row justify="space-around" align="middle">
