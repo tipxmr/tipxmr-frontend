@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StreamerCard, CategoryNav } from "../components";
 import socketio from "../libs/socket_donator";
+import { Row, Col, Layout, Menu } from "antd"
+
+
+const { Sider } = Layout
 
 // TODO render the category page with a filter
 function StreamerPage() {
@@ -40,14 +44,30 @@ function StreamerPage() {
     return null;
   }
   return (
-    <div className="flex">
-      <CategoryNav
-        activeCategory={activeCategory}
-        stateSetter={setActiveCategory}
-        categories={categories}
-      />
+    <div>
+      <Row justify="center" align="center">
+        <Col span={24}>
+          <Layout>
+            <Sider style={{ "color": "white" }}>
+              <Menu>
+                <Menu.Item>
+                  nav1
+                </Menu.Item>
+                <Menu.Item>
+                  nav2
+                </Menu.Item>
+              </Menu>
+            </Sider>
+          </Layout>
+        </Col>
+      </Row>
+      {/* <CategoryNav */}
+      {/*   activeCategory={activeCategory} */}
+      {/*   stateSetter={setActiveCategory} */}
+      {/*   categories={categories} */}
+      {/* /> */}
 
-      <div className="bg-xmrgray-darker m-16">{renderStreamerCards()}</div>
+      {/* <div className="bg-xmrgray-darker m-16">{renderStreamerCards()}</div> */}
     </div>
   );
 }
