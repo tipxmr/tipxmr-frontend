@@ -17,7 +17,7 @@
     "clsx": "^1.1.1",
     "craco-less": "^1.17.1",
     "deep-diff": "^1.0.2",
-    "monero-javascript": "^0.5.1",
+    "monero-javascript": "^0.5.2",
     "qrcode": "^1.4.4",
     "ramda": "^0.27.1",
     "react": "^17.0.1",
