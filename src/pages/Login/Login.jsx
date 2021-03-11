@@ -44,7 +44,7 @@ const languages = [
 ];
 const defaultLanguage = languages[1];
 
-function Login() {
+const Login = () => {
   // states
   const [language, setLanguage] = useState(defaultLanguage);
   const [seed, setSeed] = useState("");
@@ -89,7 +89,7 @@ function Login() {
     return <Redirect to="/dashboard" />;
   }
 
-  function login() {
+  const login = () => {
     const _id = getMnemonicHash(seed);
     // Login procedure
     socket_streamer.login(_id, userName, (response) => {
@@ -112,7 +112,7 @@ function Login() {
     });
   }
 
-  function createWallet(lang) {
+  const createWallet = (lang) => {
     setIsLoading(true);
     monerojs
       .createWallet(lang)
@@ -121,21 +121,21 @@ function Login() {
       .then(() => setIsLoading(false));
   }
 
-  function handleCreateWallet() {
+  const handleCreateWallet = () => {
     setCreationMode(true);
     createWallet(language);
   }
 
-  // function for the LanguageSelector function, which sets the language state from the selected event target of the LanguageSelector
-  function handleLanguageChange(value) {
+  // LanguageSelector handler
+  const handleLanguageChange = (value) => {
     setLanguage(value);
   }
 
-  function handleUserNameChange(event) {
+  const handleUserNameChange = (event) => {
     setUserName(event.target.value);
   }
 
-  function handleSeedChanged(event) {
+  const handleSeedChanged = (event) => {
     setSeed(event.target.value);
   }
 
@@ -157,7 +157,7 @@ function Login() {
                 <LanguageSelector
                   language={language}
                   languages={languages}
-                  /* onChange={handleLanguageChange} */
+                  onChange={handleLanguageChange}
                   align="middle"
                 />
               ) : null}
