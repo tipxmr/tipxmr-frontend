@@ -6,7 +6,7 @@ function Signup() {
   const [showInfo, setShowInfo] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="w-full container m-auto">
+    <div>
       {showInfo ? (
         <Info stateSetterInfo={setShowInfo} stateSetterCreate={setShowLogin} />
       ) : null}

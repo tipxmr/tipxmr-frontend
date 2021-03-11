@@ -1,4 +1,5 @@
-@import '~antd/dist/antd.less';
+@import "~antd/lib/style/themes/default.less";
+@import "~antd/dist/antd.less";
 
 // LEGACY
 @tailwind base;
@@ -10,15 +11,23 @@
 @import "../components/Loading.css";
 
 @font-face {
-    font-family: "MoneroGothic";
-    font-weight: 400;
-    src: url("../font/monerogothic_v3-webfont.woff2") format("woff2"),
-      url("../font/monerogothic_v3-webfont.woff") format("woff");
-  }
-  
-  html,
-  body {
-    font-size: 1rem;
-    font-size: 16px;
-  }
-  
+  font-family: "MoneroGothic";
+  font-weight: 400;
+  src: url("../font/monerogothic_v3-webfont.woff2") format("woff2"),
+    url("../font/monerogothic_v3-webfont.woff") format("woff");
+}
+
+html,
+body {
+  font-size: 1rem;
+  font-size: 16px;
+}
+
+.content-container {
+  margin: 4em 0;
+}
+
+.zero-margin-padding {
+  padding: 0;
+  margin: 0;
+}
