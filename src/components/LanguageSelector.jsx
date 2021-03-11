@@ -37,7 +37,7 @@ const LanguageSelector = ({ languages, language, onChange }) => {
         </Row>
     );
 }
-// Defining property types
+
 LanguageSelector.propTypes = {
     language: PropTypes.string,
     languages: PropTypes.array,
