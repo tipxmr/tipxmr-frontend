@@ -1,7 +1,7 @@
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Card, List, Typography } from "antd";
-import "../styles/Landing.css"
+import "./styles/Landing.less"
 
 const { Title } = Typography
 
