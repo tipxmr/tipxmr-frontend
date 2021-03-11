@@ -8,7 +8,7 @@ const TipLayout = ({ children }) => {
     return (
         <Layout>
             <TipHeader userName="Tester" />
-            <Content className="bg">{children}</Content>
+            <Content>{children}</Content>
             <TipFooter />
         </Layout >
     )
