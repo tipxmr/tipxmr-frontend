@@ -12,8 +12,7 @@ const PickUserName = ({ onChange, isLoading, userNameError }) => {
                     <Tooltip title="This name cannot be changed later - choose wisely">
                         <Input onChange={onChange} disabled={isLoading} />
                     </Tooltip>
-                    <p className="error-style-1">{userNameError}</p>
-
+                    <p>{userNameError}</p>
                 </Col>
             </Row>
         </div>
