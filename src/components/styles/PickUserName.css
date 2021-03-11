@@ -1,16 +1,10 @@
 /* subject to change */
-.pickusername-container {
-  text-align: "center";
-  margin-top: 10em;
-}
 
 .error-style-1 {
   color: "#ff0000";
-  margin-top: 2em;
 }
 .error-style-2 {
   letter-spacing: -1px;
   font-size: 80%;
   color: "#4c4c4c";
-  margin-top: 2em;
 }
