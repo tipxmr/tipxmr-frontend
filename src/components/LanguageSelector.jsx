@@ -44,6 +44,7 @@ const LanguageSelector = ({ languages, language, onChange }) => {
             <Col>
                 <span
                     htmlFor="languages"
+                    style={{ "padding-right": "10px" }}
                 >
                     Seed language:
       </span>
