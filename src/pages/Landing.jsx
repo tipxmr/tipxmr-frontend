@@ -44,7 +44,7 @@ const Landing = () => {
       {/* Headline and sample picture */}
       <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
         <Col span={10}>
-          <Title level={1} class="title-text">
+          <Title level={1} className="title-text">
             Monero donations in your livestream
           </Title>
         </Col>

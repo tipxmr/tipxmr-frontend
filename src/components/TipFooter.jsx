@@ -8,7 +8,7 @@ const { Footer } = Layout
 
 const TipFooter = () => {
   return (
-    <Footer class="footer-box">
+    <Footer className="footer-box">
       <Menu theme="dark" mode="horizontal">
 
         <Row justify="space-around" align="middle">
