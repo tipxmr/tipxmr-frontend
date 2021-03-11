@@ -1,5 +1,4 @@
 import { Row, Col, Typography, Input, Tooltip } from "antd";
-import './styles/PickUserName.css';
 
 const { Title } = Typography
 
