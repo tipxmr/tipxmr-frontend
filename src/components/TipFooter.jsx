@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu, Row, Col } from 'antd'
 import { GithubOutlined } from "@ant-design/icons"
@@ -6,7 +5,7 @@ import { GithubOutlined } from "@ant-design/icons"
 
 const { Footer } = Layout
 
-function TipFooter() {
+const TipFooter = () => {
   return (
     <Footer style={{ "padding": 0, "margin": 0 }}>
       <Menu theme="dark" mode="horizontal">
