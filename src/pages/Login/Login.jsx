@@ -180,7 +180,8 @@ const Login = () => {
               {/* Text area  */}
               <Row justify="center" align="middle">
                 <Col>
-                  <div className="flex justify-center mt-3 space-x-4">
+                  <div>
+                    {/* TODO Use an ant.design component */}
                     <textarea
                       className="select-all outline-none text-gray-200 text-justify border-4 border-dashed border-xmrorange-lighter p-5 bg-xmrgray-darker rounded"
                       id="seed"
@@ -194,7 +195,6 @@ const Login = () => {
                     />
                     {isPending && !creationMode ? (
                       <div>
-                        {/* <Loading text="Loading your wallet" /> */}
                         <Spin />
                       </div>
                     ) : null}
