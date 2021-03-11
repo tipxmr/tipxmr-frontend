@@ -5,7 +5,7 @@ import {
   Switch
 } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Layout, PrivateRoute } from "./components";
+import { TipLayout, PrivateRoute } from "./components";
 import { useWalletState } from "./context/wallet";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
@@ -79,7 +79,7 @@ function App() {
     <div>
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
-        <Layout>
+        <TipLayout>
           <Switch>
             <PrivateRoute path="/dashboard">
               <Dashboard />
@@ -118,7 +118,7 @@ function App() {
               <Redirect to="/" />
             </Route>
           </Switch>
-        </Layout>
+        </TipLayout>
       </Router>
     </div>
   );
