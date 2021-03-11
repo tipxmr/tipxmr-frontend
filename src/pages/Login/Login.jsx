@@ -189,7 +189,6 @@ const Login = () => {
 
               <Row justify="center" align="middle">
                 <Col span={8}>
-                  {/* TODO Use an ant.design component */}
                   <TextArea rows={5}
                     id="seed"
                     name="seed"
