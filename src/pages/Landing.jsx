@@ -37,9 +37,10 @@ const viewerList = [
 
 const Landing = () => {
 
-  // TODO migrate css from tailwind to antd
+  // TODO gutters instead of inline styles
   return (
     <div>
+
       {/* Headline and sample picture */}
       <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
         <Col span={10}>
@@ -50,8 +51,8 @@ const Landing = () => {
         <Col span={10}>
           <img src={landingIcon} alt="tipxmr.live screen" />
         </Col>
-
       </Row>
+
       {/* Cards for streamers and viewers */}
       <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
 
