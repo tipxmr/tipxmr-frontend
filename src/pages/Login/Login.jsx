@@ -139,7 +139,6 @@ const Login = () => {
     setSeed(event.target.value);
   }
 
-  // TODO Verify username input (lenght.., form errors)
   return (
     <div>
 
