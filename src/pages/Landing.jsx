@@ -1,4 +1,3 @@
-import React from "react";
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Card, List, Typography } from "antd";
@@ -35,7 +34,7 @@ const viewerList = [
   },
 ]
 
-function Landing() {
+const Landing = () => {
   // TODO Textshadow with antd
   const textShadow = { textShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)" };
 
