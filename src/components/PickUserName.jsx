@@ -1,6 +1,4 @@
-import React from "react";
-
-function PickUserName({ onChange, isLoading, userNameError }) {
+const PickUserName = ({ onChange, isLoading, userNameError }) => {
     return (
         <div className="text-center mt-10">
             <h2 className="text-2xl">Pick your username</h2>
