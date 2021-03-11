@@ -184,33 +184,27 @@ const Login = () => {
         {/* Text area  */}
         <Col span={24}>
           <Row justify="center" align="middle">
-            <Col span={20}>
-
-
-              <Row justify="center" align="middle">
-                <Col span={8}>
-                  <TextArea rows={5}
-                    id="seed"
-                    name="seed"
-                    placeholder="Open your wallet by entering your 25 seed words..."
-                    value={isLoading ? defaultStateSeed : seed}
-                    style={{ resize: "none" }}
-                    onChange={handleSeedChanged}
-                  />
-                  {isPending && !creationMode ? (
-                    <div>
-                      <Spin />
-                    </div>
-                  ) : null}
-                  {!isLoading && (creationMode || userNameNotSet) ? (
-                    <PickUserName
-                      onChange={handleUserNameChange}
-                      isLoading={isLoading}
-                      userNameError={userNameError}
-                    />
-                  ) : null}
-                </Col>
-              </Row>
+            <Col span={8}>
+              <TextArea rows={5}
+                id="seed"
+                name="seed"
+                placeholder="Open your wallet by entering your 25 seed words..."
+                value={isLoading ? defaultStateSeed : seed}
+                style={{ resize: "none" }}
+                onChange={handleSeedChanged}
+              />
+              {isPending && !creationMode ? (
+                <div>
+                  <Spin />
+                </div>
+              ) : null}
+              {!isLoading && (creationMode || userNameNotSet) ? (
+                <PickUserName
+                  onChange={handleUserNameChange}
+                  isLoading={isLoading}
+                  userNameError={userNameError}
+                />
+              ) : null}
             </Col>
           </Row>
         </Col>
