@@ -141,17 +141,15 @@ const Login = () => {
 
   return (
     <div>
+      <Row gutter={[0, 24]}>
 
-      {/* Create/enter seed area */}
-      <Row justify="center" align="middle">
-        <Col span={20}>
-
-          {/* Headline */}
+        {/* Headline */}
+        <Col span={24}>
           <Row justify="center">
             <Col>
               <Title level={2} style={{ "text-align": "center" }}>
                 Your Seed 👛
-            </Title>
+              </Title>
               {creationMode ? (
                 <LanguageSelector
                   language={language}
@@ -160,24 +158,34 @@ const Login = () => {
                   align="middle"
                 />
               ) : null}
+            </Col>
+          </Row>
+        </Col>
 
-              {/* Continue Button */}
-              <Row justify="center">
-                <Col>
-                  <Button
-                    type="primary"
-                    disabled={isLoading}
-                    loading={isLoading}
-                    onClick={handleCreateWallet}
-                    align="middle"
-                    justify="center"
-                  >
-                    Create New Wallet
+        {/* Continue Button */}
+        <Col span={24}>
+          <Row justify="center">
+            <Col>
+              <Button
+                type="primary"
+                disabled={isLoading}
+                loading={isLoading}
+                onClick={handleCreateWallet}
+                align="middle"
+                justify="center"
+              >
+                Create New Wallet
                   </Button>
-                </Col>
-              </Row>
+            </Col>
+          </Row>
+        </Col>
 
-              {/* Text area  */}
+        {/* Text area  */}
+        <Col span={24}>
+          <Row justify="center" align="middle">
+            <Col span={20}>
+
+
               <Row justify="center" align="middle">
                 <Col>
                   <div>
@@ -211,49 +219,56 @@ const Login = () => {
             </Col>
           </Row>
         </Col>
-      </Row>
 
-      {/* Information Area */}
-      <Row justify="center" align="middle">
-        <Col>
-          <Title level={2} style={{ "text-align": "center" }}> ⚠️ Important ⚠️</Title>
-          <p>Your seed phrase is the ultimate backup for your Monero wallet.</p>
-          <List
-            itemLayout="horizontal"
-            dataSource={importantList}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  title={item.title}
-                  description={item.description}
-                />
-              </List.Item>
-            )}
-          />
+        {/* Information Area*/}
+        <Col span={24}>
+          <Row justify="center" align="middle">
+            <Col>
+              <Title level={2} style={{ "text-align": "center" }}> ⚠️ Important ⚠️</Title>
+              <p>Your seed phrase is the ultimate backup for your Monero wallet.</p>
+              <List
+                itemLayout="horizontal"
+                dataSource={importantList}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={item.title}
+                      description={item.description}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Col>
+          </Row>
         </Col>
-      </Row>
 
-      {/* Agreement of responsibility */}
-      <Row justify="center" align="middle">
-        <Col>
-          <Checkbox onChange={() => setIsChecked(!isChecked)}>I understand that I am responsible for my own security and that TipXMR.live is not liable if I mess up</Checkbox>
+        {/* Agreement of responsibility */}
+        <Col span={24}>
+          <Row justify="center" align="middle">
+            <Col>
+              <Checkbox onChange={() => setIsChecked(!isChecked)}>I understand that I am responsible for my own security and that TipXMR.live is not liable if I mess up</Checkbox>
+            </Col>
+          </Row>
         </Col>
-      </Row>
 
-      {/* Create Account Button */}
-      <Row justify="center" align="middle">
-        <Col>
-          <Button
-            type="primary"
-            disabled={!isChecked || (isChecked && !isLoading)}
-            loading={isLoading}
-            onClick={login}
-          >
-            Create Account
+        {/* Create Account Button */}
+        <Col span={24}>
+          <Row justify="center" align="middle">
+            <Col>
+              <Button
+                type="primary"
+                disabled={!isChecked || (isChecked && !isLoading)}
+                loading={isLoading}
+                onClick={login}
+              >
+                Create Account
         </Button>
+            </Col>
+          </Row>
         </Col>
+
       </Row>
-    </div>
+    </div >
   );
 }
 
