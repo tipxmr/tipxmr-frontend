@@ -1,12 +1,11 @@
-import React from "react";
+import { Col, Row, Select } from "antd";
 import PropTypes from "prop-types";
-import { Row, Col, Select } from "antd";
 import convertFlag from "./convertFlag";
 
 
 const { Option } = Select
 
-function LanguageSelector({ languages, language, onChange }) {
+const LanguageSelector = ({ languages, language, onChange }) => {
     // Build list of language items, alphabetically sorted
     const languageItems = languages.map((language) => {
         return (
