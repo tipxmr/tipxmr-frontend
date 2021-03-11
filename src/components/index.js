@@ -1,5 +1,5 @@
-export { default as TipHeader } from "./Header";
-export { default as Footer } from "./Footer";
+export { default as TipHeader } from "./TipHeader";
+export { default as Footer } from "./TipFooter";
 export { default as Nav } from "./Nav";
 export { default as StreamerCard } from "./StreamerCard";
 export { default as StatBox } from "./StatBox";
@@ -21,7 +21,8 @@ export { default as Counter } from "./Counter";
 export { default as InfoHover } from "./InfoHover";
 export { default as Table } from "./Table";
 export { default as Button } from "./Button";
-export { default as Layout } from "./Layout";
+// export { default as Layout } from "./Layout";
+export { default as Layout } from "./TipLayout";
 export { default as LanguageSelector } from "./LanguageSelector";
 export { default as PickUserName } from "./PickUserName";
 export { default as convertFlag } from "./convertFlag";
