@@ -1,6 +1,7 @@
 import landingIcon from "../images/landing-screen.svg";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Card, List, Typography } from "antd";
+import "/src/styles/Landing.css"
 
 const { Title } = Typography
 
@@ -35,8 +36,6 @@ const viewerList = [
 ]
 
 const Landing = () => {
-  // TODO Textshadow with antd
-  const textShadow = { textShadow: "0px 2px 2px rgba(0, 0, 0, 0.5)" };
 
   // TODO migrate css from tailwind to antd
   return (
@@ -44,7 +43,7 @@ const Landing = () => {
       {/* Headline and sample picture */}
       <Row justify="space-around" align="middle" style={{ "margin-top": "2em" }}>
         <Col span={10}>
-          <Title level={1} style={{ "font-size": "4em" }}>
+          <Title level={1} class="title-text">
             Monero donations in your livestream
           </Title>
         </Col>
