@@ -1,34 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import {
-  Route,
   BrowserRouter as Router,
-  Redirect,
-  Switch,
+  Redirect, Route,
+  Switch
 } from "react-router-dom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { Layout, PrivateRoute } from "./components";
+import { useWalletState } from "./context/wallet";
 import monerojs from "./libs/monero";
 import socketio from "./libs/socket_streamer";
-import { Header, Footer, PrivateRoute, Layout } from "./components";
 import {
   Animation,
   Dashboard,
-  Donate,
-  Disclaimer,
+  Disclaimer, Donate,
   FAQ,
-  Login,
-  StreamerPage,
-  Logout,
-  Landing,
-  Invoice,
+  Invoice, Landing, Login,
+  Logout, StreamerPage
 } from "./pages";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   dispatcherState,
-  streamerState,
-  restoreHeightState,
-  donorsInfoState,
+  donorsInfoState, restoreHeightState, streamerState
 } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
-import { useWalletState } from "./context/wallet";
 
 function App() {
   const [dispatcher, setDispatcher] = useRecoilState(dispatcherState);
