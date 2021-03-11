@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { TipHeader, TipFooter } from './'
 import '../styles/index.less'
 
@@ -8,7 +8,9 @@ const TipLayout = ({ children }) => {
     return (
         <Layout>
             <TipHeader userName="Tester" />
-            <Content>{children}</Content>
+            <div className="content-container">
+                <Content>{children}</Content>
+            </div>
             <TipFooter />
         </Layout >
     )
