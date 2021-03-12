@@ -22,21 +22,21 @@ Thanks to the awesome [[https://github.com/monero-ecosystem/monero-javascript][m
 *** Typical process for streamers
 - 💡 A streamer chooses to monetize their stream with TipXMR.live.
 - 💻 The streamer then navigates to https://tipxmr.live or any other website hosting this project code.
-- ✍ On the site the streamer follows the Signup process, generates a new seed in their browser and picks a username
+- ✍ On the site the streamer follows the Sign-up process, generates a new seed in their browser and picks a username
 - 👈 The new account is now created and ready to be customized. The streamer will have multiple options to make the donation model fit their brand and style.
-- 🎬 The streamer now adds a new browser source to their [[https://obsproject.com/][OBS]] setup. Just like with streamlabs, this is a unique URL that points to a blank website. New donations will be displayed here and overlayed in the stream.
+- 🎬 The streamer now adds a new browser source to their [[https://obsproject.com/][OBS]] setup. Just like with [[https://streamlabs.com/][Streamlabs]], this is a unique URL that points to a blank website. New donations will be displayed here and overlayed in the stream.
 - 🖥️ Now the streamer just needs to link their viewers to their TipXMR url (something like ~https://tipxmr.live/<StreamerName>~) where donors can enter their messages and are displayed QR codes/XMR-addresses.
 - 💸 Donations will be sent to streamers WASM wallet, which should be swept in regular intervals.
 
 As you can see, the endusers (i.e. streamer and donors) are not required to have a deep understanding of the Monero network. TipXMR delivers an easy path for streamers to monetize their content powered by the best privacy coin out there.
 
 **** Login
-Tipxmr requires very little information about the streamer who creates an account. There is no KYC process or even email required. After picking the username, the streamer can sign in by using their seed. While it may seem dangerous at first glance to enter a XMR seed into a browser, since TipXMR uses the WebAssembly wallet the seed never leaves the local computer. Of course, a compromised machine would leak the seed and risk loosing funds. However, in the end is OpSec a personal responsiblity and we could never _guarantee_ safety. Therefore, we simply recommend to sweep the TipXMR wallet regularly in addition to other cybersafety measures.
+TipXMR requires very little information about the streamer who creates an account. There is no KYC process or even email required. After picking the username, the streamer can sign in by using their seed. While it may seem dangerous at first glance to enter a XMR seed into a browser, since TipXMR uses the WebAssembly wallet the seed never leaves the local computer. Of course, a compromised machine would leak the seed and risk loosing funds. However, in the end is OpSec a personal responsibility and we could never _guarantee_ safety. Therefore, we simply recommend sweeping the TipXMR wallet regularly in addition to other cybersafety measures.
 
-On login, the local browser hashes the seed and sends it to the user db. The hashed seed is used on the serverside to authorize the user and log them in.
+On login, the local browser hashes the seed and sends it to the user db. The hashed seed is used on the server side to authorize the user and log them in.
 
 **** Wallet functionality
-Once logged in the streamer is presented a dashboard, which offers stats, settings and a basic wallet. While the wallet interface is still a work in progress, the design should be minimal. The wallet should not be used as a store for large amounts, because of the inherent risk of being on a machine connected to the internet. The streamer will be able to provide a withdrawl address in the settings and be able to sweep the entire balance to this address with an easy button.
+Once logged in the streamer is presented a dashboard, which offers stats, settings and a basic wallet. While the wallet interface is still a work in progress, the design should be minimal. The wallet should not be used as a store for large amounts, because of the inherent risk of being on a machine connected to the internet. The streamer will be able to provide a withdrawal address in the settings and be able to sweep the entire balance to this address with an easy button.
 
 *** Typical process for donors
 - 👀 A donor sees that a streamer uses TipXMR and clicks on a link
@@ -61,7 +61,7 @@ We are Monero enthusiasts and hold the ethos dear. Hundehausen and AlexAnarcho a
 has contributed many times to the Monero community, most recently with an infographic about the workings of a Monero wallet. Grischa also wrote his bachelor thesis on the thought of "Monero as a currency for the masses" (thesis in German).
 
 *** [[https://github.com/AlexAnarcho][AlexAnarcho]]
-has been involved in the early days of the Monero Outreach and is a well-known outspoken advocate for Monero in the German community. Alex has been working for various cryptocurrency magazines such as the BeInCrypto and BTC-ECHO. In August he quit his full-time job at BeInCrypto to dedicate himself to TipXMR.live.
+has been involved in the early days of the [[https://www.monerooutreach.org/][Monero Outreach]] and is a well-known outspoken advocate for Monero in the German community.
 
 *** [[https://github.com/mghny][mghny]]
 who chooses to remain pseudonymous - has been a professional software-engineer for 5 years and has been coding for 8 years. They have been involved with TipXMR.live since the very beginning and keeps an eye on architecture, code and many more technical aspects. It cannot be overstated how beneficial an experienced engineer is in a project like ours, since it reduces complexity and makes the code easily reusable by other developers.
