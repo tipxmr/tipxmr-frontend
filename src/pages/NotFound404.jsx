@@ -1,16 +1,24 @@
-import React from "react";
-import { BiUpsideDown } from "react-icons/bi";
+import { Row, Col, Typography } from "antd"
+import { SmileOutlined } from "@ant-design/icons"
+
+
+const { Title } = Typography
 
 function NotFound404() {
   return (
-    <div className="flex flex-grow justify-center">
-      <div className="self-center text-center">
-        <BiUpsideDown size="4em" className="mx-auto" />
+    <Row justify="center" align="middle">
+      <Col span={24}>
 
-        <p>Error: 404</p>
-        <h2 className="text-xl">There does not seem to be anything here</h2>
-      </div>
-    </div>
+        <Row justify="center" align="middle">
+          <Col>
+            <Title level={1}>Error: 404</Title>
+            <SmileOutlined rotate={180} />
+            <Title level={4}>There does not seem to be anything here</Title>
+          </Col>
+        </Row>
+
+      </Col>
+    </Row>
   );
 }
 
