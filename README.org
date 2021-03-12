@@ -52,25 +52,9 @@ _Note_: Donors are always anonymous. They do not require an account to tip. This
 * Installation
 If you want to try out TipXMR on your own machine, follow the instructions [[https://github.com/hundehausen/tipdocker][here]].
 
-Use the package manager [npm](https://www.npmjs.com/) to install the dependencies for TipXMR.
-
-#+begin_src sh
-git clone https://github.com/hundehausen/tipxmr-backend.git
-npm install
-npm start
-git clone https://github.com/hundehausen/tipxmr.git
-npm install
-cp .env.example .env
-npm start
-#+end_src
-
 * Who we are
 
-We are two Monero enthusiasts that have been following the project since the beginning of 2017. Our values are privacy, sound money and individual souvereignty. Crypto in general and Monero in particular fulfill these values and are the tool of the future.
-
-In the beginning of 2018 we created the MoneroMumble Podcast, a german-speaking, monthly podcast/roundtable to inform and engage the German community about developments concerning Monero. The roundtables take place on the second Sunday of every month on Jitsi and are livestreamed to YouTube.
-
-It was in this setting that the idea of a livestream donation program based on Monero was born. TipXMR.live is therefore aiming to fulfill our need and we are our own customers.
+We are Monero enthusiasts and hold the ethos dear. Hundehausen and AlexAnarcho are hosts of the german-speaking [[https://moneromumble.de/][MoneroMumble Podcast]] since early 2018. mghny has professional experience in the field of software development and architecture.
 
 ** [[https://github.com/hundehausen][Hundehausen]]
 has contributed many times to the Monero community, most recently with an infographic about the workings of a Monero wallet. Grischa also wrote his bachelor thesis on the thought of "Monero as a currency for the masses" (thesis in German).
@@ -84,4 +68,4 @@ who chooses to remain pseudonymous - has been a professional software-engineer f
 
 * License
 
-:balance_scale: [AGPL-3.0 License](https://github.com/hundehausen/tipxmr/blob/master/LICENSE)
+ ⚖️[[AGPL-3.0 License][AGPL-3.0 License]]
