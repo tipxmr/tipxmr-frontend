@@ -4,7 +4,7 @@ import { SmileOutlined } from "@ant-design/icons"
 
 const { Title } = Typography
 
-function NotFound404() {
+const NotFound404 = () => {
   return (
     <Row justify="center" align="middle">
       <Col span={24}>
