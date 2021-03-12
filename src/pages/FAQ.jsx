@@ -1,25 +1,37 @@
-import React from "react";
-import { Faqblock } from "../components";
 import { faqs } from "../data/faqdata";
+import { Row, Col, Collapse, Typography } from "antd"
 
-function FAQ() {
+const { Title } = Typography
+const { Panel } = Collapse
+
+
+const FAQ = () => {
   return (
-    <div className="flex flex-grow justify-center text-gray-200">
-      <div className="my-auto w-5/6 lg:w-1/2">
-        <div>
-          <h2 className="text-3xl text-center underline mb-4">
-            Frequently Asked Questions
-          </h2>
-        </div>
-        <div>
-          {faqs.map((faq, i) => (
-            <Faqblock question={faq.question} key={i}>
-              {faq.answer}
-            </Faqblock>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Row justify="center" align="middle">
+      <Col span={24}>
+
+        {/* Heading */}
+        <Row justify="center" align="middle">
+          <Col>
+            <Title level={1}>Frequently Asked Questions</Title>
+          </Col>
+        </Row>
+
+        {/* Q&A Blocks */}
+        <Row justify="center" align="middle">
+          <Col span={12}>
+            <Collapse accordion={true}>
+              {faqs.map((faq, i) => (
+                <Panel header={<Title level={3}>{faq.question}</Title>} key={i}>
+                  <Title level={5}> {faq.answer}</Title>
+                </Panel>
+              ))}
+            </Collapse>
+          </Col>
+        </Row>
+
+      </Col>
+    </Row >
   );
 }
 

@@ -7,7 +7,6 @@ export { default as Counter } from "./Counter";
 
 export { default as DropdownField } from "./DropdownField";
 
-export { default as Faqblock } from "./Faqblock";
 export { default as FileInput } from "./FileInput";
 
 export { default as Nav } from "./Nav";
