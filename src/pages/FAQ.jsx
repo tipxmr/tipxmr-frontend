@@ -1,9 +1,12 @@
-import { Faqblock } from "../components";
 import { faqs } from "../data/faqdata";
 import { Row, Col, Collapse, Typography } from "antd"
 
-const { Panel } = Collapse
 const { Title } = Typography
+const { Panel } = Collapse
+
+const handleChange = (key) => {
+  console.log(key)
+}
 
 const FAQ = () => {
   return (
@@ -20,29 +23,16 @@ const FAQ = () => {
         {/* Q&A Block */}
         <Row justify="center" align="middle">
           <Col>
-
+            <Collapse onChange={handleChange}>
+              {faqs.map((faq, i) => (
+                <Panel header={faq.question} key={i}><p>{faq.answer}</p></Panel>
+              ))}
+            </Collapse>
           </Col>
         </Row>
 
       </Col>
     </Row>
-
-    // <div className="flex flex-grow justify-center text-gray-200">
-    //   <div className="my-auto w-5/6 lg:w-1/2">
-    //     <div>
-    //       <h2 className="text-3xl text-center underline mb-4">
-    //         Frequently Asked Questions
-    //       </h2>
-    //     </div>
-    //     <div>
-    //       {faqs.map((faq, i) => (
-    //         <Faqblock question={faq.question} key={i}>
-    //           {faq.answer}
-    //         </Faqblock>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 
