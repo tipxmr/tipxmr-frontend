@@ -2,13 +2,13 @@
 
 [[file:src/images/tipxmr-live.png]]
 
-*TipXMR is a web based application that let's you accept donations in your livestream.*
+*** *TipXMR is a web based application that let's you accept donations in your livestream.*
 
 💸 [[https://ccs.getmonero.org/proposals/tipxmr.live.html][Our CCS Funding Campaign]]
 
 * The Goal
 
-We want to provide an open source, non-custodial service for streamers all around the world to accept [XMR](https://www.getmonero.org) in their live streams and display some information about the donor.
+We want to provide an open source, non-custodial service for streamers all around the world to accept [[https://www.getmonero.org][XMR]] in their live streams and display some information about the donor.
 
 This will allow for a censorship resistant income source, independent of the big players like Twitch, YouTube, PornHub 🙊 and the like.
 
@@ -50,7 +50,7 @@ The tipping process is very easy for anybody familiar with a mobile wallet. Mone
 _Note_: Donors are always anonymous. They do not require an account to tip. This may lead to abusive messages, which could cause trouble for the streamer on a platform like Twitch. Therefore we plan to have an option to approve messages before they are displayed in the stream.
 
 * Installation
-If you want to try out TipXMR on your own machine, follow the instructions [[https://github.com/hundehausen/tipdocker][here]].
+If you want to try out TipXMR on your own machine, use TipDocker and follow the instructions [[https://github.com/hundehausen/tipdocker][here]].
 
 * Who we are
 
