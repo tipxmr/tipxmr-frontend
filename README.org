@@ -1,5 +1,6 @@
 #+TITLE: TipXMR - The Livestream Tipping Service for OBS
 
+#+attr_html: width="100px"
 [[src/images/tipxmr-live.png]]
 
 *** *TipXMR is a web based application that let's you accept donations in your livestream.*
