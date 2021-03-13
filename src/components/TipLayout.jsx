@@ -1,19 +1,17 @@
-import { Layout, Row, Col } from 'antd';
-import { TipHeader, TipFooter } from './'
-import '../styles/index.less'
+import { Layout, Row, Col } from "antd";
+import { TipHeader, TipFooter } from "./";
+import "./TipLayout.less";
 
 const { Content } = Layout;
 
 const TipLayout = ({ children }) => {
-    return (
-        <Layout>
-            <TipHeader userName="Tester" />
-            <div className="content-container">
-                <Content>{children}</Content>
-            </div>
-            <TipFooter />
-        </Layout >
-    )
-}
+  return (
+    <Layout style={{ height: "100vh" }}>
+      <TipHeader userName="Tester" />
+      <Content className="content">{children}</Content>
+      <TipFooter />
+    </Layout>
+  );
+};
 
-export default TipLayout
+export default TipLayout;
