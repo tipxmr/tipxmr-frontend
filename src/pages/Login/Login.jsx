@@ -1,33 +1,49 @@
-import { Input, Divider, Button, Checkbox, Col, List, Row, Spin, Typography } from "antd";
+import {
+  Input,
+  Divider,
+  Button,
+  Checkbox,
+  Col,
+  List,
+  Row,
+  Spin,
+  Typography,
+} from "antd";
 import { isNil } from "ramda";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LanguageSelector, PickUserName } from "../../components";
 import { openFromSeed, useWallet } from "../../context/wallet";
-import monerojs, { getMnemonicHash, isValidMnemoicLength } from "../../libs/monero";
+import monerojs, {
+  getMnemonicHash,
+  isValidMnemoicLength,
+} from "../../libs/monero";
 import socket_streamer from "../../libs/socket_streamer";
 import { dispatcherState, streamerState } from "../../store/atom";
 
-const { Title } = Typography
+const { Title } = Typography;
 const importantList = [
   {
-    title: 'Secure your seed',
-    description: "Please write your seedphrase on a piece of paper. DO NOT STORE IT ON THE COMPUTER."
+    title: "Secure your seed",
+    description:
+      "Please write your seedphrase on a piece of paper. DO NOT STORE IT ON THE COMPUTER.",
   },
   {
-    title: 'Keep your seed secret',
-    description: "Anybody that knows the seed can access funds stored on the wallet. Do not share it with others."
+    title: "Keep your seed secret",
+    description:
+      "Anybody that knows the seed can access funds stored on the wallet. Do not share it with others.",
   },
   {
     title: "Don't get phished",
-    description: "Before you sign into TipXMR with your seed, make sure that you are actually using TipXMR. Verify the URL and check the 🔒 in your browser."
+    description:
+      "Before you sign into TipXMR with your seed, make sure that you are actually using TipXMR. Verify the URL and check the 🔒 in your browser.",
   },
   {
     title: "Regularly withdraw to a different wallet",
-    description: "Just to be on the save side, do not keep large amounts on your TipXMR wallet. You should regularly withdraw funds to another Monero wallet, like CakeWallet or Monerujo."
+    description:
+      "Just to be on the save side, do not keep large amounts on your TipXMR wallet. You should regularly withdraw funds to another Monero wallet, like CakeWallet or Monerujo.",
   },
-
 ];
 const defaultStateSeed = "";
 const languages = [
@@ -43,7 +59,7 @@ const languages = [
   "Spanish",
 ];
 const defaultLanguage = languages[1];
-const { TextArea } = Input
+const { TextArea } = Input;
 
 const Login = () => {
   // states
@@ -111,7 +127,7 @@ const Login = () => {
         console.error("Username is already taken.");
       }
     });
-  }
+  };
 
   const createWallet = (lang) => {
     setIsLoading(true);
@@ -120,35 +136,34 @@ const Login = () => {
       .then(monerojs.getMnemonic)
       .then(setSeed)
       .then(() => setIsLoading(false));
-  }
+  };
 
   const handleCreateWallet = () => {
     setCreationMode(true);
     createWallet(language);
-  }
+  };
 
   // LanguageSelector handler
   const handleLanguageChange = (value) => {
     setLanguage(value);
-  }
+  };
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
-  }
+  };
 
   const handleSeedChanged = (event) => {
     setSeed(event.target.value);
-  }
+  };
 
   return (
     <div>
       <Row gutter={[0, 24]}>
-
         {/* Headline */}
         <Col span={24}>
           <Row justify="center">
             <Col>
-              <Title level={2} style={{ "text-align": "center" }}>
+              <Title level={2} style={{ textAlign: "center" }}>
                 Your Seed 👛
               </Title>
               {creationMode ? (
@@ -176,7 +191,7 @@ const Login = () => {
                 justify="center"
               >
                 Create New Wallet
-                  </Button>
+              </Button>
             </Col>
           </Row>
         </Col>
@@ -185,7 +200,8 @@ const Login = () => {
         <Col span={24}>
           <Row justify="center" align="middle">
             <Col span={8}>
-              <TextArea rows={5}
+              <TextArea
+                rows={5}
                 id="seed"
                 name="seed"
                 placeholder="Open your wallet by entering your 25 seed words..."
@@ -214,12 +230,17 @@ const Login = () => {
           <Row justify="center" align="middle">
             <Col>
               <Divider />
-              <Title level={2} style={{ "text-align": "center" }}> ⚠️ Important ⚠️</Title>
-              <p>Your seed phrase is the ultimate backup for your Monero wallet.</p>
+              <Title level={2} style={{ textAlign: "center" }}>
+                {" "}
+                ⚠️ Important ⚠️
+              </Title>
+              <p>
+                Your seed phrase is the ultimate backup for your Monero wallet.
+              </p>
               <List
                 itemLayout="horizontal"
                 dataSource={importantList}
-                renderItem={item => (
+                renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
                       title={item.title}
@@ -236,7 +257,10 @@ const Login = () => {
         <Col span={24}>
           <Row justify="center" align="middle">
             <Col>
-              <Checkbox onChange={() => setIsChecked(!isChecked)}>I understand that I am responsible for my own security and that TipXMR.live is not liable if I mess up</Checkbox>
+              <Checkbox onChange={() => setIsChecked(!isChecked)}>
+                I understand that I am responsible for my own security and that
+                TipXMR.live is not liable if I mess up
+              </Checkbox>
             </Col>
           </Row>
         </Col>
@@ -252,14 +276,13 @@ const Login = () => {
                 onClick={login}
               >
                 Create Account
-        </Button>
+              </Button>
             </Col>
           </Row>
         </Col>
-
       </Row>
-    </div >
+    </div>
   );
-}
+};
 
 export default Login;
