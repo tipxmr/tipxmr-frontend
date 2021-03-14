@@ -113,7 +113,7 @@ const Login = () => {
       console.log("CB response:", response);
       if (!(response instanceof Error)) {
         setUserNameNotSet(false);
-        dispatcher.updateStreamer(response.data);
+        dispatcher.updateStreamer(response);
       } else if (
         response.message ===
         "_id not found and no userName for userCreation was sent"
