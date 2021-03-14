@@ -163,7 +163,7 @@ const Login = () => {
         <Col span={24}>
           <Row justify="center">
             <Col>
-              <Title level={2} style={{ "text-align": "center" }}>
+              <Title level={2} style={{ textAlign: "center" }}>
                 Your Seed 👛
               </Title>
               {creationMode ? (
@@ -230,7 +230,7 @@ const Login = () => {
           <Row justify="center" align="middle">
             <Col>
               <Divider />
-              <Title level={2} style={{ "text-align": "center" }}>
+              <Title level={2} style={{ textAlign: "center" }}>
                 {" "}
                 ⚠️ Important ⚠️
               </Title>
