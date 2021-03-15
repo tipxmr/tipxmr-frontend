@@ -90,14 +90,17 @@ const Donate = () => {
     <Row justify="center" align="middle">
       <Col span={24}>
 
-        {/* Toggle Livestream Preview */}
+        {/* Toggle Livestream Preview / Online/Offline Button */}
         <Row justify="end" align="middle">
           <Col className="right-padding toggle-container">
             <div>
               <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
               <p className="inline left-padding right-padding toggle-container">Show Stream</p>
             </div>
-            <Button type="text" shape="round" size="large" className="online-button">Online</Button>
+            {streamer.isOnline ?
+              (<Button type="text" shape="round" size="large" className="online-button" onClick={() => console.log("Online")}>Online</Button>)
+              : (<Button type="text" shape="round" size="large" className="offline-button" onClick={() => console.log("Offline")}>Offline</Button>)
+            }
           </Col>
         </Row>
 
@@ -112,7 +115,7 @@ const Donate = () => {
                   src="https:www.youtube.com/embed/5qap5aO4i9A"
                   frameBorder="0"
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen="true"
+                  allowFullScreen
                 ></iframe>
               </div>
             </Col >
