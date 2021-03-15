@@ -6,10 +6,13 @@ import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
-import { Row, Col } from "antd"
+import { Row, Col, Switch, Typography } from "antd"
 import "./index.less"
+import { PlayCircleOutlined } from "@ant-design/icons"
 
 import socketio from "../../libs/socket_donator";
+
+const { Title } = Typography
 
 const Donate = () => {
   let { userName } = useParams();
@@ -87,26 +90,47 @@ const Donate = () => {
   return (
     <Row justify="center" align="middle">
       <Col span={24}>
+        <Row justify="end" align="middle">
+          <Col className="right-padding toggle-container">
+            <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
+            <p className="inline left-padding right-padding toggle-container">Show Stream</p>
+          </Col>
+        </Row>
 
-        <Row>
+        <Row justify="center" align="middle">
+
+          {/* Livestream Preview with iframe */}
           {showLivestream ? (
-
-            <Col flex={2} className="container">
-              <iframe
-                className="responsive-iframe"
-                width="auto"
-                height="500px"
-                src="https:www.youtube.com/embed/5qap5aO4i9A"
-                frameBorder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen="true"
-              ></iframe>
-
+            <Col span={8} className="right-padding">
+              <div className="container">
+                <iframe
+                  className="responsive-iframe"
+                  src="https:www.youtube.com/embed/5qap5aO4i9A"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen="true"
+                ></iframe>
+              </div>
             </Col >
           ) : null
           }
 
-          <Col flex={1}></Col>
+          {/* Donation Mask */}
+          <Col span={8}>
+
+            {/* Toggle Livestream Preview */}
+            <Row justify="end" align="middle">
+              <Col>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+
+                <Title level={1}>Here is also some content</Title>
+              </Col>
+            </Row>
+
+          </Col>
         </Row>
 
 
