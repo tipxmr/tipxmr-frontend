@@ -1,17 +1,16 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { IsOnlineBadge, Toggle, InfoHover } from "../../components";
+import { InfoHover } from "../../components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
-import { Row, Col, Switch, Button, Typography } from "antd"
+import { Row, Col, Switch, Button } from "antd"
 import "./index.less"
 
 import socketio from "../../libs/socket_donator";
 
-const { Title } = Typography
 
 const Donate = () => {
   let { userName } = useParams();
