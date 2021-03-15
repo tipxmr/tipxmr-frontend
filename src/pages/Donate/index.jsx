@@ -6,10 +6,12 @@ import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
+import { Row, Col } from "antd"
+import "./index.less"
 
 import socketio from "../../libs/socket_donator";
 
-function Donate() {
+const Donate = () => {
   let { userName } = useParams();
   const [showEnterMessage, setShowEnterMessage] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
@@ -40,7 +42,7 @@ function Donate() {
   const [subaddress, setSubaddress] = useState(null);
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState("");
-  const [showLivestream, setShowLivestream] = useState(false);
+  const [showLivestream, setShowLivestream] = useState(true);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -64,14 +66,14 @@ function Donate() {
     }
   }, [streamer]);
 
-  function paymentConfirmation(confirmation) {
+  const paymentConfirmation = (confirmation) => {
     console.log("confirmation", confirmation);
     setAmount(confirmation.amount);
     setShowPayment(false);
     setShowSuccess(true);
   }
 
-  function getSubaddress() {
+  const getSubaddress = () => {
     socketio.emitGetSubaddress(
       streamer.displayName,
       streamer.userName,
@@ -83,83 +85,98 @@ function Donate() {
   }
 
   return (
-    <div className="flex flex-grow justify-center items-center relative">
-      {showLivestream ? (
-        <div className="flex-4 h-full">
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/5qap5aO4i9A"
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      ) : null}
-      <div className="flex-2">
-        <div className="absolute top-0 right-0 m-3 text-gray-200 flex flex-col justify-center">
-          <Toggle
-            isChecked={showLivestream}
-            onClick={() => setShowLivestream(!showLivestream)}
-          >
-            Watch the stream
-          </Toggle>
-          <div className="mt-3 mx-auto">
-            <IsOnlineBadge isOnline={streamer.isOnline} />
-          </div>
-        </div>
-        {showEnterMessage ? (
-          <EnterMessage
-            donor={donor}
-            setDonor={setDonor}
-            setMessage={setMessage}
-            setShowEnterMessage={setShowEnterMessage}
-            setShowPayment={setShowPayment}
-            displayName={streamer.displayName}
-            secondPrice={streamer.secondPrice}
-            charLimit={streamer.charLimit}
-            charPrice={streamer.charPrice}
-            stream={streamer.stream}
-            total={total}
-            setTotal={setTotal}
-            message={message}
-            goal={streamer.goal}
-            goalReached={streamer.goalReached}
-            streamUrl={streamer.streamUrl}
-            streamPlatform={streamer.streamPlatform}
-            streamLanguage={streamer.streamLanguage}
-            streamDescription={streamer.streamDescription}
-            streamCategory={streamer.streamCategory}
-          />
-        ) : null}
-        {showPayment ? (
-          <Payment
-            displayName={streamer.displayName}
-            donor={donor}
-            message={message}
-            subaddress={subaddress}
-            getSubaddress={getSubaddress}
-            total={total}
-          />
-        ) : null}
-        {showSuccess ? (
-          <Success
-            displayName={streamer.displayName}
-            donor={donor}
-            message={message}
-            amount={amount}
-          />
-        ) : null}
-        {showStreamerNotFound ? <StreamerNotFound /> : null}
-        <div className="m-2 absolute bottom-0 right-0">
-          <InfoHover
-            displayName={streamer.displayName}
-            secondPrice={streamer.secondPrice}
-            charPrice={streamer.charPrice}
-          />
-        </div>
-      </div>
-    </div>
+    <Row justify="center" align="middle">
+      <Col span={24}>
+
+        <Row>
+          {showLivestream ? (
+
+            <Col flex={2} className="container">
+              <iframe
+                className="responsive-iframe"
+                width="auto"
+                height="500px"
+                src="https:www.youtube.com/embed/5qap5aO4i9A"
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen="true"
+              ></iframe>
+
+            </Col >
+          ) : null
+          }
+
+          <Col flex={1}></Col>
+        </Row>
+
+
+      </Col>
+    </Row >
+    // <div className="flex flex-grow justify-center items-center relative">
+    //   <div className="flex-2">
+    //     <div className="absolute top-0 right-0 m-3 text-gray-200 flex flex-col justify-center">
+    //       <Toggle
+    //         isChecked={showLivestream}
+    //         onClick={() => setShowLivestream(!showLivestream)}
+    //       >
+    //         Watch the stream
+    //       </Toggle>
+    //       <div className="mt-3 mx-auto">
+    //         <IsOnlineBadge isOnline={streamer.isOnline} />
+    //       </div>
+    //     </div>
+    //     {showEnterMessage ? (
+    //       <EnterMessage
+    //         donor={donor}
+    //         setDonor={setDonor}
+    //         setMessage={setMessage}
+    //         setShowEnterMessage={setShowEnterMessage}
+    //         setShowPayment={setShowPayment}
+    //         displayName={streamer.displayName}
+    //         secondPrice={streamer.secondPrice}
+    //         charLimit={streamer.charLimit}
+    //         charPrice={streamer.charPrice}
+    //         stream={streamer.stream}
+    //         total={total}
+    //         setTotal={setTotal}
+    //         message={message}
+    //         goal={streamer.goal}
+    //         goalReached={streamer.goalReached}
+    //         streamUrl={streamer.streamUrl}
+    //         streamPlatform={streamer.streamPlatform}
+    //         streamLanguage={streamer.streamLanguage}
+    //         streamDescription={streamer.streamDescription}
+    //         streamCategory={streamer.streamCategory}
+    //       />
+    //     ) : null}
+    //     {showPayment ? (
+    //       <Payment
+    //         displayName={streamer.displayName}
+    //         donor={donor}
+    //         message={message}
+    //         subaddress={subaddress}
+    //         getSubaddress={getSubaddress}
+    //         total={total}
+    //       />
+    //     ) : null}
+    //     {showSuccess ? (
+    //       <Success
+    //         displayName={streamer.displayName}
+    //         donor={donor}
+    //         message={message}
+    //         amount={amount}
+    //       />
+    //     ) : null}
+    //     {showStreamerNotFound ? <StreamerNotFound /> : null}
+    //     <div className="m-2 absolute bottom-0 right-0">
+    //       <InfoHover
+    //         displayName={streamer.displayName}
+    //         secondPrice={streamer.secondPrice}
+    //         charPrice={streamer.charPrice}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 export default Donate;
