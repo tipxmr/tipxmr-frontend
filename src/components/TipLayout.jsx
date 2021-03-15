@@ -1,4 +1,4 @@
-import { Layout, Row, Col } from "antd";
+import { Layout } from "antd";
 import { TipHeader, TipFooter } from "./";
 import "./TipLayout.less";
 
