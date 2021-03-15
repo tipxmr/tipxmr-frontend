@@ -1,12 +1,14 @@
 import { Col, Layout, Menu, Row } from "antd";
 import logo from "../images/tipxmr-live.png";
 import { Link } from "react-router-dom";
+import "./TipHeader.less";
+
 
 const { Header } = Layout;
 
 const TipHeader = () => {
   return (
-    <Header>
+    <Header className="header">
       <Row justify="space-around" align="middle">
         <Col>
           <img src={logo} width={180} />

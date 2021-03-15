@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Layout, Menu, Row, Col } from "antd";
+import { Layout, Row, Col } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import "../styles/index.less";
 import "./TipFooter.less";
