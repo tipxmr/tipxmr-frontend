@@ -6,9 +6,8 @@ import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
-import { Row, Col, Switch, Typography } from "antd"
+import { Row, Col, Switch, Button, Typography } from "antd"
 import "./index.less"
-import { PlayCircleOutlined } from "@ant-design/icons"
 
 import socketio from "../../libs/socket_donator";
 
@@ -90,10 +89,15 @@ const Donate = () => {
   return (
     <Row justify="center" align="middle">
       <Col span={24}>
+
+        {/* Toggle Livestream Preview */}
         <Row justify="end" align="middle">
           <Col className="right-padding toggle-container">
-            <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
-            <p className="inline left-padding right-padding toggle-container">Show Stream</p>
+            <div>
+              <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
+              <p className="inline left-padding right-padding toggle-container">Show Stream</p>
+            </div>
+            <Button type="text" shape="round" size="large" className="online-button">Online</Button>
           </Col>
         </Row>
 
@@ -117,13 +121,7 @@ const Donate = () => {
 
           {/* Donation Mask */}
           <Col span={8}>
-
-            {/* Toggle Livestream Preview */}
-            <Row justify="end" align="middle">
-              <Col>
-              </Col>
-            </Row>
-            <Row>
+            <Row justify="center" align="middle">
               <Col>
 
                 <Title level={1}>Here is also some content</Title>
