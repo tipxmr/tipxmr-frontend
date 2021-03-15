@@ -126,82 +126,63 @@ const Donate = () => {
           <Col span={8}>
             <Row justify="center" align="middle">
               <Col>
+                {showEnterMessage ? (
+                  <EnterMessage
+                    donor={donor}
+                    setDonor={setDonor}
+                    setMessage={setMessage}
+                    setShowEnterMessage={setShowEnterMessage}
+                    setShowPayment={setShowPayment}
+                    displayName={streamer.displayName}
+                    secondPrice={streamer.secondPrice}
+                    charLimit={streamer.charLimit}
+                    charPrice={streamer.charPrice}
+                    stream={streamer.stream}
+                    total={total}
+                    setTotal={setTotal}
+                    message={message}
+                    goal={streamer.goal}
+                    goalReached={streamer.goalReached}
+                    streamUrl={streamer.streamUrl}
+                    streamPlatform={streamer.streamPlatform}
+                    streamLanguage={streamer.streamLanguage}
+                    streamDescription={streamer.streamDescription}
+                    streamCategory={streamer.streamCategory}
+                  />
+                ) : null}
+                {showPayment ? (
+                  <Payment
+                    displayName={streamer.displayName}
+                    donor={donor}
+                    message={message}
+                    subaddress={subaddress}
+                    getSubaddress={getSubaddress}
+                    total={total}
+                  />
+                ) : null}
+                {showSuccess ? (
+                  <Success
+                    displayName={streamer.displayName}
+                    donor={donor}
+                    message={message}
+                    amount={amount}
+                  />
+                ) : null}
+                {showStreamerNotFound ? <StreamerNotFound /> : null}
 
-                <Title level={1}>Here is also some content</Title>
               </Col>
             </Row>
 
           </Col>
         </Row>
-
-
+        {/* TODO Remove */}
+        <InfoHover
+          displayName={streamer.displayName}
+          secondPrice={streamer.secondPrice}
+          charPrice={streamer.charPrice}
+        />
       </Col>
     </Row >
-    // <div className="flex flex-grow justify-center items-center relative">
-    //   <div className="flex-2">
-    //     <div className="absolute top-0 right-0 m-3 text-gray-200 flex flex-col justify-center">
-    //       <Toggle
-    //         isChecked={showLivestream}
-    //         onClick={() => setShowLivestream(!showLivestream)}
-    //       >
-    //         Watch the stream
-    //       </Toggle>
-    //       <div className="mt-3 mx-auto">
-    //         <IsOnlineBadge isOnline={streamer.isOnline} />
-    //       </div>
-    //     </div>
-    //     {showEnterMessage ? (
-    //       <EnterMessage
-    //         donor={donor}
-    //         setDonor={setDonor}
-    //         setMessage={setMessage}
-    //         setShowEnterMessage={setShowEnterMessage}
-    //         setShowPayment={setShowPayment}
-    //         displayName={streamer.displayName}
-    //         secondPrice={streamer.secondPrice}
-    //         charLimit={streamer.charLimit}
-    //         charPrice={streamer.charPrice}
-    //         stream={streamer.stream}
-    //         total={total}
-    //         setTotal={setTotal}
-    //         message={message}
-    //         goal={streamer.goal}
-    //         goalReached={streamer.goalReached}
-    //         streamUrl={streamer.streamUrl}
-    //         streamPlatform={streamer.streamPlatform}
-    //         streamLanguage={streamer.streamLanguage}
-    //         streamDescription={streamer.streamDescription}
-    //         streamCategory={streamer.streamCategory}
-    //       />
-    //     ) : null}
-    //     {showPayment ? (
-    //       <Payment
-    //         displayName={streamer.displayName}
-    //         donor={donor}
-    //         message={message}
-    //         subaddress={subaddress}
-    //         getSubaddress={getSubaddress}
-    //         total={total}
-    //       />
-    //     ) : null}
-    //     {showSuccess ? (
-    //       <Success
-    //         displayName={streamer.displayName}
-    //         donor={donor}
-    //         message={message}
-    //         amount={amount}
-    //       />
-    //     ) : null}
-    //     {showStreamerNotFound ? <StreamerNotFound /> : null}
-    //     <div className="m-2 absolute bottom-0 right-0">
-    //       <InfoHover
-    //         displayName={streamer.displayName}
-    //         secondPrice={streamer.secondPrice}
-    //         charPrice={streamer.charPrice}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 export default Donate;
