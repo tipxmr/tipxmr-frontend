@@ -96,10 +96,7 @@ const Donate = () => {
               <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
               <p className="inline left-padding right-padding toggle-container">Show Stream</p>
             </div>
-            {streamer.isOnline ?
-              (<Button type="text" shape="round" size="large" className="online-button" onClick={() => console.log("Online")}>Online</Button>)
-              : (<Button type="text" shape="round" size="large" className="offline-button" onClick={() => console.log("Offline")}>Offline</Button>)
-            }
+            <Button type="text" shape="round" size="large" className={streamer.isOnline ? "button-online" : "button-offline"} onClick={() => console.log("Online")}>{streamer.isOnline ? "Online" : "Offline"}</Button>
           </Col>
         </Row>
 
@@ -111,7 +108,7 @@ const Donate = () => {
               <div className="container">
                 <iframe
                   className="responsive-iframe"
-                  src="https:www.youtube.com/embed/5qap5aO4i9A"
+                  src="https://www.youtube.com/embed/5qap5aO4i9A"
                   frameBorder="0"
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
