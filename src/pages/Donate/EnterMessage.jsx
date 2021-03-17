@@ -39,7 +39,6 @@ const tailLayout = {
   },
 };
 
-// TODO automatically grab values from the particular streamer
 const PriceInfo = () => {
   return (
     <div flex="auto">
@@ -62,6 +61,11 @@ const MessageForm = ({
   setShowEnterMessage,
   setShowPayment,
   setDonor,
+  seconds,
+  setSeconds,
+  secondPrice,
+  total,
+  usdConvert,
 }) => {
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -97,6 +101,7 @@ const MessageForm = ({
           onChange={(e) => {
             setDonor(e.target.value);
           }}
+          maxLength={15}
         />
       </Form.Item>
       <Form.Item name="message">
@@ -116,20 +121,29 @@ const MessageForm = ({
         </div>
       </Form.Item>
 
-      <Form.Item
-        {...secondsLayout}
-        name="seconds"
-        style={{ textAlign: "center" }}
-      >
-        Showtime in seconds:
-        <InputNumber size="large" step={1} min={1} defaultValue={5} />
+      {secondPrice ? (
+        <Form.Item
+          {...secondsLayout}
+          name="seconds"
+          style={{ textAlign: "center" }}
+        >
+          Showtime in seconds:
+          <InputNumber size="large" step={1} min={1} defaultValue={5} onChange={(seconds) => setSeconds(seconds)} />
+        </Form.Item>) : null}
+
+      <Form.Item>
+        <Tooltip title={PriceInfo} placement="bottom">
+          <div style={{ textAlign: "center", marginBottom: "1em" }}>
+            Price: {total.toFixed(5)} XMR = {usdConvert} $
+            <div>
+              <BulbOutlined size="large" />
+            </div>
+          </div>
+
+        </Tooltip>
       </Form.Item>
 
-      <div style={{ textAlign: "center", marginBottom: "1em" }}>
-        <Tooltip title={PriceInfo} placement="bottom">
-          <BulbOutlined size="large" />
-        </Tooltip>
-      </div>
+
       <Form.Item {...tailLayout}>
         <Button
           type="primary"
@@ -214,10 +228,9 @@ const EnterMessage = ({
               <span> | </span>
               <Tooltip title="Go to stream">
                 <a href={streamUrl}>
-                  <DesktopOutlined style={{ fontSize: "2rem" }} />
+                  <DesktopOutlined style={{ fontSize: "2rem", color: "rgba(255, 255, 255, 0.85)" }} />
                 </a>
               </Tooltip>
-
             </Title>
           </Col>
         </Row>
@@ -232,42 +245,16 @@ const EnterMessage = ({
           setShowEnterMessage={setShowEnterMessage}
           setDonor={setDonor}
           setShowPayment={setShowPayment}
+          seconds={seconds}
+          secondPrice={secondPrice}
+          total={total}
+          setSeconds={setSeconds}
+          charPrice={charPrice}
+          setTotal={setTotal}
+          usdConvert={usdConvert}
         />
       </Col>
     </Row>
-    //           <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
-    //             {donor ? donor.length + "/15" : null}
-    //           </p>
-    //         </div>
-    //         <p className="text-xmrorange mb-3">
-    //           {errors.donorName ? "Please enter a name" : null}
-    //         </p>
-
-    //         <MessageArea
-    //           message={message}
-    //           setMessage={setMessage}
-    //           charLimit={charLimit}
-    //         />
-    //         <div className="w-3/5 mx-auto m-4 text-gray-200">
-    //           {secondPrice ? (
-    //             <div className="flex items-center justify-center">
-    //               <p className="tracking-tight mr-3">Showtime: </p>
-    //               <Counter count={seconds} setCount={setSeconds} />
-    //               <p className="tracking-tight ml-3">seconds</p>
-    //             </div>
-    //           ) : null}
-
-    //           <div className="my-3">
-    //             <p className="tracking-tight text-xs">Minimum amount:</p>
-    //             {total.toFixed(5)} XMR = {usdConvert} $
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="w-full flex justify-center">
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 EnterMessage.propTypes = {
