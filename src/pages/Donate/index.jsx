@@ -181,4 +181,5 @@ const Donate = () => {
     </Row >
   );
 }
+
 export default Donate;

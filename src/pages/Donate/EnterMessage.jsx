@@ -1,33 +1,27 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-// import { Button, Counter } from "../../components";
-import clsx from "clsx";
-// import { BsDisplay } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import { Row, Col, Typography, Form, Input, Button, Checkbox } from "antd"
+import { Row, Col, Typography, Form, Input, Button } from "antd"
 
 const { Title } = Typography
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 0,
   },
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 10,
     span: 5,
   },
 };
-
-const MessageForm = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+const MessageForm = ({ message, setMessage, charLimit }) => {
+  const onFinish = (values) => { console.log('Success:', values); };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -44,7 +38,6 @@ const MessageForm = () => {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        label="Your name"
         name="name"
         rules={[
           {
@@ -54,15 +47,24 @@ const MessageForm = () => {
           },
         ]}
       >
-        <Input size="large" />
+        <Input size="large" placeholder="Your name" />
       </Form.Item>
-      <Form.Item name="message" label="Your message" rules={[{ required: true, message: "Please write message" }]}>
-        <Input.TextArea size="large" autosize={{ minRows: 4, maxRows: 7 }} />
-      </Form.Item>
+      <Form.Item name="message" rules={[{ required: true, message: "Please write message" }]}>
+        <div>
 
-      {/* <Form.Item {...tailLayout} name="remember" valuePropName="checked"> */}
-      {/*   <Checkbox>Remember me</Checkbox> */}
-      {/* </Form.Item> */}
+          <Input.TextArea
+            size="large"
+            autosize={{ minRows: 4, maxRows: 7 }}
+            maxLength={charLimit}
+            placeholder="Enter your message here..."
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+          {message ? message.length + "/" + charLimit : null}
+
+        </div>
+      </Form.Item>
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit" size="large">
@@ -74,24 +76,9 @@ const MessageForm = () => {
 };
 
 const MessageArea = ({ message, setMessage, charLimit }) => {
-  const textBoxStyle = clsx([
-    "flex flex-grow p-2 mx-3 border border-gray-200 shadow placeholder-gray-200 bg-xmrgray-darker rounded",
-  ]);
 
   return (
     <div className="flex flex-grow relative h-32 mx-3">
-      <textarea
-        type="text"
-        className={textBoxStyle}
-        maxLength={charLimit}
-        placeholder="Enter your message here..."
-        onChange={(e) => {
-          setMessage(e.target.value);
-        }}
-      />
-      <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
-        {message ? message.length + "/" + charLimit : null}
-      </p>
     </div>
   );
 }
@@ -164,7 +151,7 @@ const EnterMessage = ({
 
       {/* Enter message form */}
       <Col span={24}>
-        <MessageForm />
+        <MessageForm message={message} setMessage={setMessage} charLimit={180} />
       </Col>
 
     </Row >
