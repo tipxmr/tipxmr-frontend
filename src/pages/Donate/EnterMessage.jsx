@@ -49,7 +49,7 @@ const PriceInfo = () => {
   )
 }
 
-const MessageForm = ({ message, setMessage, charLimit }) => {
+const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setShowPayment }) => {
   const onFinish = (values) => { console.log('Success:', values); };
 
   const onFinishFailed = (errorInfo) => {
@@ -107,7 +107,10 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
         </Tooltip>
       </div>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" size="large">
+        <Button type="primary" htmlType="submit" size="large" onClick={() => {
+          setShowEnterMessage(false);
+          setShowPayment(true);
+        }}>
           Submit
           </Button>
       </Form.Item>
@@ -178,7 +181,12 @@ const EnterMessage = ({
 
       {/* Enter message form */}
       <Col span={24}>
-        <MessageForm message={message} setMessage={setMessage} charLimit={180} />
+        <MessageForm
+          message={message}
+          setMessage={setMessage}
+          charLimit={180}
+          setShowEnterMessage={setShowEnterMessage}
+          setShowPayment={setShowPayment} />
       </Col>
 
     </Row >
@@ -229,10 +237,6 @@ const EnterMessage = ({
     //       </div>
     //       <div className="w-full flex justify-center">
     //         <Button
-    //           onClick={() => {
-    //             setShowEnterMessage(false);
-    //             setShowPayment(true);
-    //           }}
     //           type="submit"
     //         >
     //           Submit
