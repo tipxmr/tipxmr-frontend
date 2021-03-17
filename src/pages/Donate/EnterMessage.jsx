@@ -84,14 +84,26 @@ const EnterMessage = ({
 
   return (
     <Row justify="center" align="middle">
+
+      {/* Information on the Streamer */}
       <Col>
-        <Row>
-          <Col><Title>Tip {displayName} with Monero</Title></Col>
-          <Col><Title>#{streamCategory} | {streamLanguage}</Title></Col>
-          <Col>{streamUrl}</Col>
+        <Row justify="center" align="middle" gutter={[16, 0]}>
+          <Col className="gutter-row" flex="0 1 auto"><Title>Tip {displayName} with Monero</Title></Col>
+          <Col className="gutter-row" flex="0 1 500px"><Title style={{ textAlign: "center" }}>#{streamCategory} | {streamLanguage}</Title></Col>
+          <Col className="gutter-row" flex="0 1 400px">
+            <Title type="block" level={4} style={{ textAlign: "center" }}>{streamUrl}</Title>
+          </Col>
         </Row>
       </Col>
-    </Row>
+
+      {/* Enter message mask */}
+      <Col>
+        <Row>
+
+        </Row>
+      </Col>
+
+    </Row >
     // <div className="flex flex-grow justify-center text-gray-200">
     //   <div className="my-auto">
     //     <h2 className="text-center text-3xl">
