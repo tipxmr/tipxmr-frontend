@@ -85,7 +85,6 @@ const Donate = () => {
 
   return (
     <Row justify="center" align="middle" gutter={[16, 48]}>
-
       {/* Toggle Livestream Preview / Online/Offline Button */}
       <Col span={6} offset={18} className="gutter-row">
         <Row justify="center" align="middle">
@@ -94,9 +93,7 @@ const Donate = () => {
             onChange={() => setShowLivestream(!showLivestream)}
             style={{ marginRight: "5px" }}
           ></Switch>
-          <p className="inline toggle-container">
-            Show Stream
-                </p>
+          <p className="inline toggle-container">Show Stream</p>
         </Row>
         <Row justify="center" align="middle">
           <Button
@@ -112,7 +109,6 @@ const Donate = () => {
       </Col>
 
       <Col span={24} className="gutter-row">
-
         {/* Livestream Preview with iframe */}
         <Row justify="center" align="middle">
           {showLivestream ? (

@@ -128,8 +128,15 @@ const MessageForm = ({
           style={{ textAlign: "center" }}
         >
           Showtime in seconds:
-          <InputNumber size="large" step={1} min={1} defaultValue={5} onChange={(seconds) => setSeconds(seconds)} />
-        </Form.Item>) : null}
+          <InputNumber
+            size="large"
+            step={1}
+            min={1}
+            defaultValue={5}
+            onChange={(seconds) => setSeconds(seconds)}
+          />
+        </Form.Item>
+      ) : null}
 
       <Form.Item>
         <Tooltip title={PriceInfo} placement="bottom">
@@ -139,10 +146,8 @@ const MessageForm = ({
               <BulbOutlined size="large" />
             </div>
           </div>
-
         </Tooltip>
       </Form.Item>
-
 
       <Form.Item {...tailLayout}>
         <Button
@@ -218,17 +223,18 @@ const EnterMessage = ({
           </Col>
           <Col className="gutter-row" flex="0 1 500px">
             <Title level={2}>
-              <Tooltip title="Stream category">
-                #{streamCategory}
-              </Tooltip>
+              <Tooltip title="Stream category">#{streamCategory}</Tooltip>
               <span> | </span>
-              <Tooltip title="Stream language">
-                {streamLanguage}
-              </Tooltip>
+              <Tooltip title="Stream language">{streamLanguage}</Tooltip>
               <span> | </span>
               <Tooltip title="Go to stream">
                 <a href={streamUrl}>
-                  <DesktopOutlined style={{ fontSize: "2rem", color: "rgba(255, 255, 255, 0.85)" }} />
+                  <DesktopOutlined
+                    style={{
+                      fontSize: "2rem",
+                      color: "rgba(255, 255, 255, 0.85)",
+                    }}
+                  />
                 </a>
               </Tooltip>
             </Title>
