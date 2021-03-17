@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { Row, Col, Typography, Form, Input, Button } from "antd"
+import { Row, Col, Typography, Form, Input, InputNumber, Button, Tooltip } from "antd"
 
 const { Title } = Typography
 
@@ -14,12 +14,40 @@ const layout = {
     span: 24,
   },
 };
+const secondsLayout = {
+  labelCol: {
+    span: 0,
+  },
+  wrapperCol: {
+    span: 24,
+  },
+};
 const tailLayout = {
+
   wrapperCol: {
     offset: 10,
     span: 5,
   },
 };
+
+// TODO automatically grab values from the particular streamer
+const PriceInfo = () => {
+  return (
+    <div flex="auto">
+      <Title level={5}>
+        How is this price calculated?
+      </Title>
+      {/* <ul> */}
+      {/*   <li>- Price per second = {secondPrice} XMR</li> */}
+      {/*   <li>- Price per character = {charPrice} XMR</li> */}
+      {/* </ul> */}
+      <p>
+        Total Cost = (SecondPrice * Seconds) + (CharacterPrice * Characters)
+      </p>
+    </div>
+  )
+}
+
 const MessageForm = ({ message, setMessage, charLimit }) => {
   const onFinish = (values) => { console.log('Success:', values); };
 
@@ -49,9 +77,8 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
       >
         <Input size="large" placeholder="Your name" />
       </Form.Item>
-      <Form.Item name="message" rules={[{ required: true, message: "Please write message" }]}>
+      <Form.Item name="message">
         <div>
-
           <Input.TextArea
             size="large"
             autosize={{ minRows: 4, maxRows: 7 }}
@@ -64,19 +91,26 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
           <p style={{ textAlign: "right" }}>
             {message ? message.length + "/" + charLimit : null}
           </p>
-
         </div>
       </Form.Item>
 
+
+      <Form.Item {...secondsLayout} name="seconds" style={{ textAlign: "center" }}>
+        Showtime in seconds:
+        <InputNumber size="large" step={1} min={1} defaultValue={5} />
+      </Form.Item>
+
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" size="large">
-          Submit
-        </Button>
+
+        <Tooltip title={PriceInfo} placement="bottom">
+          <Button type="primary" htmlType="submit" size="large">
+            Submit
+          </Button>
+        </Tooltip>
       </Form.Item>
     </Form>
   );
 };
-
 
 const EnterMessage = ({
   donor,
