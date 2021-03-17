@@ -12,7 +12,7 @@ import {
   Button,
   Tooltip,
 } from "antd";
-import { BulbOutlined } from "@ant-design/icons";
+import { BulbOutlined, DesktopOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -204,11 +204,21 @@ const EnterMessage = ({
           </Col>
           <Col className="gutter-row" flex="0 1 500px">
             <Title level={2}>
-              #{streamCategory} | {streamLanguage}
+              <Tooltip title="Stream category">
+                #{streamCategory}
+              </Tooltip>
+              <span> | </span>
+              <Tooltip title="Stream language">
+                {streamLanguage}
+              </Tooltip>
+              <span> | </span>
+              <Tooltip title="Go to stream">
+                <a href={streamUrl}>
+                  <DesktopOutlined style={{ fontSize: "2rem" }} />
+                </a>
+              </Tooltip>
+
             </Title>
-          </Col>
-          <Col className="gutter-row" flex="0 1 400px">
-            <Title level={4}>{streamUrl}</Title>
           </Col>
         </Row>
       </Col>
