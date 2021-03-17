@@ -6,11 +6,10 @@ import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
-import { Row, Col, Switch, Button } from "antd"
-import "./index.less"
+import { Row, Col, Switch, Button } from "antd";
+import "./index.less";
 
 import socketio from "../../libs/socket_donator";
-
 
 const Donate = () => {
   let { userName } = useParams();
@@ -72,7 +71,7 @@ const Donate = () => {
     setAmount(confirmation.amount);
     setShowPayment(false);
     setShowSuccess(true);
-  }
+  };
 
   const getSubaddress = () => {
     socketio.emitGetSubaddress(
@@ -83,25 +82,36 @@ const Donate = () => {
       message
     );
     socketio.onSubaddressToDonator(setSubaddress);
-  }
+  };
 
   return (
     <Row justify="center" align="middle">
       <Col span={24}>
-
         {/* Toggle Livestream Preview / Online/Offline Button */}
         <Row justify="end" align="middle">
           <Col className="right-padding toggle-container">
             <div>
-              <Switch defaultChecked onChange={() => setShowLivestream(!showLivestream)}></Switch>
-              <p className="inline left-padding right-padding toggle-container">Show Stream</p>
+              <Switch
+                defaultChecked
+                onChange={() => setShowLivestream(!showLivestream)}
+              ></Switch>
+              <p className="inline left-padding right-padding toggle-container">
+                Show Stream
+              </p>
             </div>
-            <Button type="text" shape="round" size="large" className={streamer.isOnline ? "button-online" : "button-offline"} onClick={() => console.log("Online")}>{streamer.isOnline ? "Online" : "Offline"}</Button>
+            <Button
+              type="text"
+              shape="round"
+              size="large"
+              className={streamer.isOnline ? "button-online" : "button-offline"}
+              onClick={() => console.log("Online")}
+            >
+              {streamer.isOnline ? "Online" : "Offline"}
+            </Button>
           </Col>
         </Row>
 
         <Row justify="center" align="middle">
-
           {/* Livestream Preview with iframe */}
           {showLivestream ? (
             <Col span={8} className="right-padding">
@@ -114,9 +124,8 @@ const Donate = () => {
                   allowFullScreen
                 ></iframe>
               </div>
-            </Col >
-          ) : null
-          }
+            </Col>
+          ) : null}
 
           {/* Donation Mask */}
           <Col span={8}>
@@ -165,10 +174,8 @@ const Donate = () => {
                   />
                 ) : null}
                 {showStreamerNotFound ? <StreamerNotFound /> : null}
-
               </Col>
             </Row>
-
           </Col>
         </Row>
         {/* TODO Remove */}
@@ -178,8 +185,8 @@ const Donate = () => {
         {/*   charPrice={streamer.charPrice} */}
         {/* /> */}
       </Col>
-    </Row >
+    </Row>
   );
-}
+};
 
 export default Donate;

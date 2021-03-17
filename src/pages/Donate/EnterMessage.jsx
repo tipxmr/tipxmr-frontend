@@ -2,10 +2,19 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { Row, Col, Typography, Form, Input, InputNumber, Button, Tooltip } from "antd"
-import { BulbOutlined } from "@ant-design/icons"
+import {
+  Row,
+  Col,
+  Typography,
+  Form,
+  Input,
+  InputNumber,
+  Button,
+  Tooltip,
+} from "antd";
+import { BulbOutlined } from "@ant-design/icons";
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const layout = {
   labelCol: {
@@ -24,7 +33,6 @@ const secondsLayout = {
   },
 };
 const tailLayout = {
-
   wrapperCol: {
     offset: 10,
     span: 5,
@@ -35,9 +43,7 @@ const tailLayout = {
 const PriceInfo = () => {
   return (
     <div flex="auto">
-      <Title level={5}>
-        How is this price calculated?
-      </Title>
+      <Title level={5}>How is this price calculated?</Title>
       {/* <ul> */}
       {/*   <li>- Price per second = {secondPrice} XMR</li> */}
       {/*   <li>- Price per character = {charPrice} XMR</li> */}
@@ -46,14 +52,23 @@ const PriceInfo = () => {
         Total Cost = (SecondPrice * Seconds) + (CharacterPrice * Characters)
       </p>
     </div>
-  )
-}
+  );
+};
 
-const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setShowPayment, setDonor }) => {
-  const onFinish = (values) => { console.log('Success:', values); };
+const MessageForm = ({
+  message,
+  setMessage,
+  charLimit,
+  setShowEnterMessage,
+  setShowPayment,
+  setDonor,
+}) => {
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -72,15 +87,16 @@ const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setS
           {
             required: false,
             default: "anon",
-            message: 'Please input your username!',
+            message: "Please input your username!",
           },
         ]}
       >
-        <Input size="large" placeholder="Your name"
+        <Input
+          size="large"
+          placeholder="Your name"
           onChange={(e) => {
             setDonor(e.target.value);
           }}
-
         />
       </Form.Item>
       <Form.Item name="message">
@@ -100,8 +116,11 @@ const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setS
         </div>
       </Form.Item>
 
-
-      <Form.Item {...secondsLayout} name="seconds" style={{ textAlign: "center" }}>
+      <Form.Item
+        {...secondsLayout}
+        name="seconds"
+        style={{ textAlign: "center" }}
+      >
         Showtime in seconds:
         <InputNumber size="large" step={1} min={1} defaultValue={5} />
       </Form.Item>
@@ -112,12 +131,17 @@ const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setS
         </Tooltip>
       </div>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" size="large" onClick={() => {
-          setShowEnterMessage(false);
-          setShowPayment(true);
-        }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="large"
+          onClick={() => {
+            setShowEnterMessage(false);
+            setShowPayment(true);
+          }}
+        >
           Submit
-          </Button>
+        </Button>
       </Form.Item>
     </Form>
   );
@@ -165,16 +189,24 @@ const EnterMessage = ({
   //   setUsdConvert((usdPrice * total).toFixed(2));
   // }, [total, usdPrice]);
 
-
-
   return (
     <Row justify="center" align="middle">
-
       {/* Information on the Streamer */}
       <Col>
-        <Row justify="center" align="middle" gutter={[16, 0]} style={{ textAlign: "center" }}>
-          <Col className="gutter-row" flex="0 1 auto"><Title level={1}>{displayName}</Title></Col>
-          <Col className="gutter-row" flex="0 1 500px"><Title level={2}>#{streamCategory} | {streamLanguage}</Title></Col>
+        <Row
+          justify="center"
+          align="middle"
+          gutter={[16, 0]}
+          style={{ textAlign: "center" }}
+        >
+          <Col className="gutter-row" flex="0 1 auto">
+            <Title level={1}>{displayName}</Title>
+          </Col>
+          <Col className="gutter-row" flex="0 1 500px">
+            <Title level={2}>
+              #{streamCategory} | {streamLanguage}
+            </Title>
+          </Col>
           <Col className="gutter-row" flex="0 1 400px">
             <Title level={4}>{streamUrl}</Title>
           </Col>
@@ -189,10 +221,10 @@ const EnterMessage = ({
           charLimit={180}
           setShowEnterMessage={setShowEnterMessage}
           setDonor={setDonor}
-          setShowPayment={setShowPayment} />
+          setShowPayment={setShowPayment}
+        />
       </Col>
-
-    </Row >
+    </Row>
     //           <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
     //             {donor ? donor.length + "/15" : null}
     //           </p>
@@ -227,7 +259,7 @@ const EnterMessage = ({
     //   </div>
     // </div>
   );
-}
+};
 EnterMessage.propTypes = {
   donor: PropTypes.string,
   setDonor: PropTypes.func,
