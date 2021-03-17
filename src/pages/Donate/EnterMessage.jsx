@@ -1,13 +1,78 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Counter } from "../../components";
+// import { Button, Counter } from "../../components";
 import clsx from "clsx";
-import { BsDisplay } from "react-icons/bs";
+// import { BsDisplay } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import { Row, Col, Typography } from "antd"
+import { Row, Col, Typography, Form, Input, Button, Checkbox } from "antd"
 
 const { Title } = Typography
+
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 5,
+  },
+};
+
+const MessageForm = () => {
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  return (
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="Your name"
+        name="name"
+        rules={[
+          {
+            required: false,
+            default: "anon",
+            message: 'Please input your username!',
+          },
+        ]}
+      >
+        <Input size="large" />
+      </Form.Item>
+      <Form.Item name="message" label="Your message" rules={[{ required: true, message: "Please write message" }]}>
+        <Input.TextArea size="large" autosize={{ minRows: 4, maxRows: 7 }} />
+      </Form.Item>
+
+      {/* <Form.Item {...tailLayout} name="remember" valuePropName="checked"> */}
+      {/*   <Checkbox>Remember me</Checkbox> */}
+      {/* </Form.Item> */}
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit" size="large">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
 const MessageArea = ({ message, setMessage, charLimit }) => {
   const textBoxStyle = clsx([
     "flex flex-grow p-2 mx-3 border border-gray-200 shadow placeholder-gray-200 bg-xmrgray-darker rounded",
@@ -82,50 +147,27 @@ const EnterMessage = ({
     console.log(data);
   };
 
+
   return (
     <Row justify="center" align="middle">
 
       {/* Information on the Streamer */}
       <Col>
-        <Row justify="center" align="middle" gutter={[16, 0]}>
+        <Row justify="center" align="middle" gutter={[16, 0]} style={{ textAlign: "center" }}>
           <Col className="gutter-row" flex="0 1 auto"><Title>Tip {displayName} with Monero</Title></Col>
-          <Col className="gutter-row" flex="0 1 500px"><Title style={{ textAlign: "center" }}>#{streamCategory} | {streamLanguage}</Title></Col>
+          <Col className="gutter-row" flex="0 1 500px"><Title>#{streamCategory} | {streamLanguage}</Title></Col>
           <Col className="gutter-row" flex="0 1 400px">
-            <Title type="block" level={4} style={{ textAlign: "center" }}>{streamUrl}</Title>
+            <Title level={4}>{streamUrl}</Title>
           </Col>
         </Row>
       </Col>
 
-      {/* Enter message mask */}
-      <Col>
-        <Row>
-
-        </Row>
+      {/* Enter message form */}
+      <Col span={24}>
+        <MessageForm />
       </Col>
 
     </Row >
-    // <div className="flex flex-grow justify-center text-gray-200">
-    //   <div className="my-auto">
-    //     <h2 className="text-center text-3xl">
-    //       <span role="img" aria-label="Green Money">
-    //         💸
-    //       </span>
-    //       Donate to <span className="font-bold">{displayName}</span> with Monero
-    //       <span role="img" aria-label="Green Money">
-    //         💸
-    //       </span>
-    //     </h2>
-    //     <div className="flex flex-row justify-evenly items-center">
-    //       <span className="text-xl">{streamLanguage}</span>
-    //       <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker ">
-    //         #{streamCategory}
-    //       </span>
-
-    //       <a href={streamUrl}>
-    //         <BsDisplay size="1.2em" color="text-gray-700" />
-    //       </a>
-    //     </div>
-
     //     <form onSubmit={handleSubmit(onSubmit)}>
     //       <div className="flex flex-col text-center">
     //         <div className="flex flex-grow relative mx-3">
