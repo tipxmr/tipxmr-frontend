@@ -165,9 +165,6 @@ const EnterMessage = ({
   //   setUsdConvert((usdPrice * total).toFixed(2));
   // }, [total, usdPrice]);
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
 
   return (
@@ -196,23 +193,6 @@ const EnterMessage = ({
       </Col>
 
     </Row >
-    //     <form onSubmit={handleSubmit(onSubmit)}>
-    //       <div className="flex flex-col text-center">
-    //         <div className="flex flex-grow relative mx-3">
-    //           <input
-    //             name="donorName"
-    //             type="text"
-    //             align="middle"
-    //             maxLength={15}
-    //             className="block m-4 p-2 border border-gray-200 bg-xmrgray-darker placeholder-gray-200 w-2/3 mx-auto text-center rounded"
-    //             placeholder="Your Name"
-    //             ref={register({
-    //               required: "You forgot to put in a name",
-    //             })}
-    //             onChange={(e) => {
-    //               setDonor(e.target.value);
-    //             }}
-    //           />
     //           <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
     //             {donor ? donor.length + "/15" : null}
     //           </p>
@@ -242,11 +222,6 @@ const EnterMessage = ({
     //         </div>
     //       </div>
     //       <div className="w-full flex justify-center">
-    //         <Button
-    //           type="submit"
-    //         >
-    //           Submit
-    //         </Button>
     //       </div>
     //     </form>
     //   </div>
