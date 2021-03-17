@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
 
-function Payment({ donor, message, subaddress, getSubaddress, total }) {
+const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   const [qrcode, setQrcode] = useState("");
   const [paymentUri, setPaymentUri] = useState(null);
 
@@ -49,8 +49,8 @@ function Payment({ donor, message, subaddress, getSubaddress, total }) {
             Please transfer at least {total} XMR to{" "}
           </span>
         ) : (
-          <span className="text-2xl">Please transfer any amount of XMR to</span>
-        )}
+            <span className="text-2xl">Please transfer any amount of XMR to</span>
+          )}
       </div>
       <img className="w-400px h-auto" src={qrcode} alt="qr code" />
       <a href={paymentUri} onClick={handleClick}>
