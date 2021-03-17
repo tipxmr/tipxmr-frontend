@@ -61,7 +61,9 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
               setMessage(e.target.value);
             }}
           />
-          {message ? message.length + "/" + charLimit : null}
+          <p style={{ textAlign: "right" }}>
+            {message ? message.length + "/" + charLimit : null}
+          </p>
 
         </div>
       </Form.Item>
@@ -75,18 +77,6 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
   );
 };
 
-const MessageArea = ({ message, setMessage, charLimit }) => {
-
-  return (
-    <div className="flex flex-grow relative h-32 mx-3">
-    </div>
-  );
-}
-MessageArea.propTypes = {
-  message: PropTypes.string,
-  setMessage: PropTypes.func,
-  charLimit: PropTypes.number,
-};
 
 const EnterMessage = ({
   donor,
