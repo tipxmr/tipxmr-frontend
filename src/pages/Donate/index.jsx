@@ -130,7 +130,7 @@ const Donate = () => {
           ) : null}
 
           {/* Message Form, Payment & Success */}
-          <Col span={8} offset={2}>
+          <Col span={8} offset={3}>
             <Row justify="center" align="middle">
               <Col>
                 {showEnterMessage ? (
