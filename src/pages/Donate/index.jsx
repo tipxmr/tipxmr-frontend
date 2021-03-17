@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { InfoHover } from "../../components";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
@@ -85,34 +84,37 @@ const Donate = () => {
   };
 
   return (
-    <Row justify="center" align="middle">
-      <Col span={24}>
-        {/* Toggle Livestream Preview / Online/Offline Button */}
-        <Row justify="end" align="middle">
-          <Col className="right-padding toggle-container">
-            <div>
-              <Switch
-                defaultChecked
-                onChange={() => setShowLivestream(!showLivestream)}
-              ></Switch>
-              <p className="inline left-padding right-padding toggle-container">
-                Show Stream
-              </p>
-            </div>
-            <Button
-              type="text"
-              shape="round"
-              size="large"
-              className={streamer.isOnline ? "button-online" : "button-offline"}
-              onClick={() => console.log("Online")}
-            >
-              {streamer.isOnline ? "Online" : "Offline"}
-            </Button>
-          </Col>
-        </Row>
+    <Row justify="center" align="middle" gutter={[16, 48]}>
 
+      {/* Toggle Livestream Preview / Online/Offline Button */}
+      <Col span={6} offset={18} className="gutter-row">
         <Row justify="center" align="middle">
-          {/* Livestream Preview with iframe */}
+          <Switch
+            defaultChecked
+            onChange={() => setShowLivestream(!showLivestream)}
+            style={{ marginRight: "5px" }}
+          ></Switch>
+          <p className="inline toggle-container">
+            Show Stream
+                </p>
+        </Row>
+        <Row justify="center" align="middle">
+          <Button
+            type="text"
+            shape="round"
+            size="large"
+            className={streamer.isOnline ? "button-online" : "button-offline"}
+            onClick={() => console.log("Online")}
+          >
+            {streamer.isOnline ? "Online" : "Offline"}
+          </Button>
+        </Row>
+      </Col>
+
+      <Col span={24} className="gutter-row">
+
+        {/* Livestream Preview with iframe */}
+        <Row justify="center" align="middle">
           {showLivestream ? (
             <Col span={8} className="right-padding">
               <div className="container">
@@ -127,8 +129,8 @@ const Donate = () => {
             </Col>
           ) : null}
 
-          {/* Donation Mask */}
-          <Col span={8}>
+          {/* Message Form, Payment & Success */}
+          <Col span={8} offset={2}>
             <Row justify="center" align="middle">
               <Col>
                 {showEnterMessage ? (
@@ -178,12 +180,6 @@ const Donate = () => {
             </Row>
           </Col>
         </Row>
-        {/* TODO Remove */}
-        {/* <InfoHover */}
-        {/*   displayName={streamer.displayName} */}
-        {/*   secondPrice={streamer.secondPrice} */}
-        {/*   charPrice={streamer.charPrice} */}
-        {/* /> */}
       </Col>
     </Row>
   );
