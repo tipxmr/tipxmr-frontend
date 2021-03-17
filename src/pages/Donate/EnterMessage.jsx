@@ -49,7 +49,7 @@ const PriceInfo = () => {
   )
 }
 
-const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setShowPayment }) => {
+const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setShowPayment, setDonor }) => {
   const onFinish = (values) => { console.log('Success:', values); };
 
   const onFinishFailed = (errorInfo) => {
@@ -59,7 +59,7 @@ const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setS
   return (
     <Form
       {...layout}
-      name="basic"
+      name="tip"
       initialValues={{
         remember: true,
       }}
@@ -76,7 +76,12 @@ const MessageForm = ({ message, setMessage, charLimit, setShowEnterMessage, setS
           },
         ]}
       >
-        <Input size="large" placeholder="Your name" />
+        <Input size="large" placeholder="Your name"
+          onChange={(e) => {
+            setDonor(e.target.value);
+          }}
+
+        />
       </Form.Item>
       <Form.Item name="message">
         <div>
@@ -171,8 +176,8 @@ const EnterMessage = ({
       {/* Information on the Streamer */}
       <Col>
         <Row justify="center" align="middle" gutter={[16, 0]} style={{ textAlign: "center" }}>
-          <Col className="gutter-row" flex="0 1 auto"><Title>Tip {displayName} with Monero</Title></Col>
-          <Col className="gutter-row" flex="0 1 500px"><Title>#{streamCategory} | {streamLanguage}</Title></Col>
+          <Col className="gutter-row" flex="0 1 auto"><Title level={1}>{displayName}</Title></Col>
+          <Col className="gutter-row" flex="0 1 500px"><Title level={2}>#{streamCategory} | {streamLanguage}</Title></Col>
           <Col className="gutter-row" flex="0 1 400px">
             <Title level={4}>{streamUrl}</Title>
           </Col>
@@ -186,6 +191,7 @@ const EnterMessage = ({
           setMessage={setMessage}
           charLimit={180}
           setShowEnterMessage={setShowEnterMessage}
+          setDonor={setDonor}
           setShowPayment={setShowPayment} />
       </Col>
 
