@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import {
   BrowserRouter as Router,
-  Redirect, Route,
-  Switch
+  Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { TipLayout, PrivateRoute } from "./components";
@@ -12,14 +13,20 @@ import socketio from "./libs/socket_streamer";
 import {
   Animation,
   Dashboard,
-  Disclaimer, Donate,
+  Disclaimer,
+  Donate,
   FAQ,
-  Invoice, Landing, Login,
-  Logout, StreamerPage
+  Invoice,
+  Landing,
+  Login,
+  Logout,
+  StreamerPage,
 } from "./pages";
 import {
   dispatcherState,
-  donorsInfoState, restoreHeightState, streamerState
+  donorsInfoState,
+  restoreHeightState,
+  streamerState,
 } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
 
@@ -45,7 +52,7 @@ function App() {
         socketio.emitSubaddressToBackend(newDonorInfo);
         console.log("created Subaddress for:", newDonorInfo);
       });
-    }
+    };
     if (
       streamerConfig._id &&
       customWallet.wallet &&

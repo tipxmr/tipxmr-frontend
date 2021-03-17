@@ -106,13 +106,7 @@ function Wallet() {
       // set Online status to false
       socketio.emitUpdateOnlineStatus(streamerConfig._id, false);
     }
-  }, [
-    isDone,
-    wallet.wallet,
-    streamerConfig._id,
-    unlockedBalance,
-    balance,
-  ]);
+  }, [isDone, wallet.wallet, streamerConfig._id, unlockedBalance, balance]);
 
   // Withdraw
   function handleAddressChange(event) {

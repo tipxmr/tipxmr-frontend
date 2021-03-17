@@ -1,15 +1,13 @@
 import { faqs } from "../data/faqdata";
-import { Row, Col, Collapse, Typography } from "antd"
+import { Row, Col, Collapse, Typography } from "antd";
 
-const { Title } = Typography
-const { Panel } = Collapse
-
+const { Title } = Typography;
+const { Panel } = Collapse;
 
 const FAQ = () => {
   return (
     <Row justify="center" align="middle">
       <Col span={24}>
-
         {/* Heading */}
         <Row justify="center" align="middle">
           <Col>
@@ -29,10 +27,9 @@ const FAQ = () => {
             </Collapse>
           </Col>
         </Row>
-
       </Col>
-    </Row >
+    </Row>
   );
-}
+};
 
 export default FAQ;

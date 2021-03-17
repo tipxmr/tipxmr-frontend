@@ -23,7 +23,6 @@ export { default as PickUserName } from "./PickUserName";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as Progressbar } from "./Progressbar";
 
-
 export { default as StatBox } from "./StatBox";
 export { default as StreamerCard } from "./StreamerCard";
 export { default as SyncBanner } from "./SyncBanner";

@@ -3,7 +3,6 @@ import logo from "../images/tipxmr-live.png";
 import { Link } from "react-router-dom";
 import "./TipHeader.less";
 
-
 const { Header } = Layout;
 
 const TipHeader = () => {
