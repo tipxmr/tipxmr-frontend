@@ -172,11 +172,11 @@ const Donate = () => {
           </Col>
         </Row>
         {/* TODO Remove */}
-        <InfoHover
-          displayName={streamer.displayName}
-          secondPrice={streamer.secondPrice}
-          charPrice={streamer.charPrice}
-        />
+        {/* <InfoHover */}
+        {/*   displayName={streamer.displayName} */}
+        {/*   secondPrice={streamer.secondPrice} */}
+        {/*   charPrice={streamer.charPrice} */}
+        {/* /> */}
       </Col>
     </Row >
   );
