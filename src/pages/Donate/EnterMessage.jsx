@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { Row, Col, Typography, Form, Input, InputNumber, Button, Tooltip } from "antd"
+import { BulbOutlined } from "@ant-design/icons"
 
 const { Title } = Typography
 
@@ -100,13 +101,15 @@ const MessageForm = ({ message, setMessage, charLimit }) => {
         <InputNumber size="large" step={1} min={1} defaultValue={5} />
       </Form.Item>
 
-      <Form.Item {...tailLayout}>
-
+      <div style={{ textAlign: "center", marginBottom: "1em" }}>
         <Tooltip title={PriceInfo} placement="bottom">
-          <Button type="primary" htmlType="submit" size="large">
-            Submit
-          </Button>
+          <BulbOutlined size="large" />
         </Tooltip>
+      </div>
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit" size="large">
+          Submit
+          </Button>
       </Form.Item>
     </Form>
   );
