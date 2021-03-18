@@ -145,11 +145,7 @@ const MessageForm = ({
       <Form.Item>
         <Tooltip
           title={PriceInfo(
-            secondPrice,
-            charPrice,
-            seconds,
-            usdConvert,
-            message
+            secondPrice, charPrice, usdConvert, seconds, message
           )}
           placement="bottom"
         >
