@@ -14,7 +14,7 @@ import {
 } from "antd";
 import { BulbOutlined, DesktopOutlined } from "@ant-design/icons";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const layout = {
   labelCol: {
@@ -39,17 +39,17 @@ const tailLayout = {
   },
 };
 
-const PriceInfo = () => {
+const PriceInfo = (secondPrice, charPrice, usdConvert, seconds, message) => {
   return (
-    <div flex="auto">
+    <div>
       <Title level={5}>How is this price calculated?</Title>
-      {/* <ul> */}
-      {/*   <li>- Price per second = {secondPrice} XMR</li> */}
-      {/*   <li>- Price per character = {charPrice} XMR</li> */}
-      {/* </ul> */}
-      <p>
-        Total Cost = (SecondPrice * Seconds) + (CharacterPrice * Characters)
-      </p>
+      <ul>
+        <li>- Price per second = {secondPrice} XMR</li>
+        <li>- Price per character = {charPrice} XMR</li>
+      </ul>
+      <Text code>
+        {usdConvert}$ = ({secondPrice}$ * {seconds} secs ) + ({charPrice}$ * {message.length})
+      </Text>
     </div>
   );
 };
@@ -66,6 +66,7 @@ const MessageForm = ({
   secondPrice,
   total,
   usdConvert,
+  charPrice,
 }) => {
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -138,8 +139,9 @@ const MessageForm = ({
         </Form.Item>
       ) : null}
 
+      {/* Price Information in USD */}
       <Form.Item>
-        <Tooltip title={PriceInfo} placement="bottom">
+        <Tooltip title={PriceInfo(secondPrice, charPrice, seconds, usdConvert, message)} placement="bottom">
           <div style={{ textAlign: "center", marginBottom: "1em" }}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
             <div>
@@ -149,6 +151,7 @@ const MessageForm = ({
         </Tooltip>
       </Form.Item>
 
+      {/* Button to continue */}
       <Form.Item {...tailLayout}>
         <Button
           type="primary"
@@ -209,9 +212,9 @@ const EnterMessage = ({
     setTotal(roundXMR(total, 6));
   }, [message, seconds]);
 
-  // useEffect(() => {
-  //   setUsdConvert((usdPrice * total).toFixed(2));
-  // }, [total, usdPrice]);
+  useEffect(() => {
+    setUsdPrice((usdPrice * total).toFixed(2));
+  }, [total, usdPrice]);
 
   return (
     <Row justify="center" align="middle">
