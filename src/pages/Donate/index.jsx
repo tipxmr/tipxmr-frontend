@@ -61,8 +61,8 @@ const Donate = () => {
     } else {
       setShowStreamerNotFound(false);
       setShowPayment(false);
-      setShowSuccess(false);
-      setShowEnterMessage(true);
+      setShowSuccess(true); // TODO CHANGE BACK
+      setShowEnterMessage(false); // TODO CHANGE BACK
     }
   }, [streamer]);
 
@@ -166,10 +166,8 @@ const Donate = () => {
                 ) : null}
                 {showSuccess ? (
                   <Success
-                    displayName={streamer.displayName}
-                    donor={donor}
-                    message={message}
-                    amount={amount}
+                    setShowSuccess={setShowSuccess}
+                    setShowEnterMessage={setShowEnterMessage}
                   />
                 ) : null}
                 {showStreamerNotFound ? <StreamerNotFound /> : null}
