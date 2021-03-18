@@ -78,7 +78,6 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
     // </div>
   );
 }
-// Payment property types
 Payment.propTypes = {
   message: PropTypes.string,
   donor: PropTypes.string,
