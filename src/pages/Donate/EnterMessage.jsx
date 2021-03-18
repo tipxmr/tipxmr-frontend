@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
 import {
   Row,
   Col,
@@ -69,6 +68,10 @@ const MessageForm = ({
   usdConvert,
   charPrice,
 }) => {
+
+  const handleSeconds = (value) => { setSeconds(value) }
+  const handleMessage = (value) => { setMessage(value) }
+  const handleDonor = (value) => { setDonor(value) }
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -100,9 +103,7 @@ const MessageForm = ({
         <Input
           size="large"
           placeholder="Your name"
-          onChange={(e) => {
-            setDonor(e.target.value);
-          }}
+          onChange={handleDonor}
           maxLength={15}
         />
       </Form.Item>
@@ -135,7 +136,7 @@ const MessageForm = ({
             step={1}
             min={1}
             defaultValue={5}
-            onChange={(seconds) => setSeconds(seconds)}
+            onChange={handleSeconds}
           />
         </Form.Item>
       ) : null}
