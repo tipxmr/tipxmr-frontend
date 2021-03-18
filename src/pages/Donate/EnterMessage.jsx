@@ -79,10 +79,8 @@ const MessageForm = ({
   const handleDonor = (e) => {
     setDonor(e.target.value);
   };
-  const handleChange = (value) => {
-    setInputValue(value);
-  };
   const handleSeconds = (value) => {
+    console.log("seconds: ", value)
     setSeconds(value);
   };
   const onFinish = (values) => {
@@ -93,12 +91,17 @@ const MessageForm = ({
     console.log("Failed:", errorInfo);
   };
 
+  useEffect(() => {
+    setSeconds(seconds)
+  }, [seconds, setSeconds])
+
   return (
     <Form
       {...layout}
       name="tip"
       initialValues={{
         remember: true,
+        seconds: 12,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -138,26 +141,37 @@ const MessageForm = ({
       </Form.Item>
 
       {secondPrice ? (
-        <Form.Item {...secondsLayout} style={{ textAlign: "center" }}>
-          <Form.Item name="secondsSlider">
-            <Slider
-              min={1}
-              max={20}
-              onChange={handleSeconds}
-              value={seconds}
-            />
-          </Form.Item>
+        <Form.Item {...secondsLayout} style={{ textAlign: "center", display: "inline" }}>
+          <Row justify="center">
+            Showtime in seconds:
+            <Col span={24}>
+              <Form.Item name="secondsSlider" >
+                <Slider
+                  min={1}
+                  max={20}
+                  value={seconds}
+                  initialValue="seconds"
+                  onChange={handleSeconds}
+                  style={{ width: "300px" }}
+                />
+              </Form.Item>
 
-          <Form.Item name="secondsInput" label="Showtime in seconds:">
-            <InputNumber
-              size="large"
-              step={1}
-              min={1}
-              value={seconds}
-              initialValue="5"
-              onChange={handleSeconds}
-            />
-          </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item name="secondsInput" style={{ display: "inline" }}>
+                <InputNumber
+                  size="large"
+                  step={1}
+                  min={1}
+                  value={seconds}
+                  defaultValue={seconds}
+                  onChange={handleSeconds}
+                />
+              </Form.Item>
+
+            </Col>
+          </Row>
+
         </Form.Item>
       ) : null}
 
