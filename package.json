@@ -45,7 +45,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "preinstall": "cp .env.example .env",
+    "preinstall": "cp -n .env.example .env",
     "postinstall": "cp ./node_modules/monero-javascript/dist/* ./public"
   },
   "eslintConfig": {
