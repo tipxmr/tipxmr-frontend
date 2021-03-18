@@ -48,7 +48,8 @@ const PriceInfo = (secondPrice, charPrice, usdConvert, seconds, message) => {
         <li>- Price per character = {charPrice} XMR</li>
       </ul>
       <Text code>
-        {usdConvert}$ = ({secondPrice}$ * {seconds} secs ) + ({charPrice}$ * {message.length})
+        {usdConvert}$ = ({secondPrice}$ * {seconds} secs ) + ({charPrice}$ *{" "}
+        {message.length})
       </Text>
     </div>
   );
@@ -141,7 +142,16 @@ const MessageForm = ({
 
       {/* Price Information in USD */}
       <Form.Item>
-        <Tooltip title={PriceInfo(secondPrice, charPrice, seconds, usdConvert, message)} placement="bottom">
+        <Tooltip
+          title={PriceInfo(
+            secondPrice,
+            charPrice,
+            seconds,
+            usdConvert,
+            message
+          )}
+          placement="bottom"
+        >
           <div style={{ textAlign: "center", marginBottom: "1em" }}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
             <div>
@@ -195,9 +205,9 @@ const EnterMessage = ({
   const { register, handleSubmit, errors } = useForm();
 
   const roundXMR = (number, decimals) => {
-    const factorOfTen = Math.pow(10, decimals)
-    return Math.round(number * factorOfTen) / factorOfTen
-  }
+    const factorOfTen = Math.pow(10, decimals);
+    return Math.round(number * factorOfTen) / factorOfTen;
+  };
   useEffect(() => {
     // Get MoneroPrice as number
     fetch("https://api.coinpaprika.com/v1/tickers/xmr-monero?quotes=USD")
@@ -208,7 +218,7 @@ const EnterMessage = ({
   }, []);
 
   useEffect(() => {
-    const total = secondPrice * seconds + message.length * charPrice
+    const total = secondPrice * seconds + message.length * charPrice;
     setTotal(roundXMR(total, 6));
   }, [message, seconds]);
 

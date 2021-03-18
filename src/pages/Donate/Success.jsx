@@ -1,27 +1,24 @@
 import PropTypes from "prop-types";
-import { Row, Col, Typography, Button } from "antd"
+import { Row, Col, Typography, Button } from "antd";
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const Success = ({ setShowSuccess, setShowEnterMessage }) => {
-
   const handleButton = () => {
-    setShowSuccess(false)
-    setShowEnterMessage(true)
-  }
+    setShowSuccess(false);
+    setShowEnterMessage(true);
+  };
 
-  return (<Row justify="center" align="middle" style={{ textAlign: "center" }}>
-    <Col span={24}>
-      <Title level={1}>
-        ✅ 💯 🙏
-      </Title>
-      <Title level={2}>
-        Your payment was successful!
-      </Title>
-      <Button type="primary" size="large" onClick={handleButton}>Tip again</Button>
-    </Col>
-
-  </Row>
+  return (
+    <Row justify="center" align="middle" style={{ textAlign: "center" }}>
+      <Col span={24}>
+        <Title level={1}>✅ 💯 🙏</Title>
+        <Title level={2}>Your payment was successful!</Title>
+        <Button type="primary" size="large" onClick={handleButton}>
+          Tip again
+        </Button>
+      </Col>
+    </Row>
 
     // <div className="flex flex-grow justify-center text-gray-200">
     //   <div className="text-center my-auto">
@@ -49,7 +46,7 @@ const Success = ({ setShowSuccess, setShowEnterMessage }) => {
     //   </div>
     // </div>
   );
-}
+};
 Success.propTypes = {
   displayName: PropTypes.string,
   message: PropTypes.string,

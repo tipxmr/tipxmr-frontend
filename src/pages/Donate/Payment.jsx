@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col, Card, Spin, Typography, Image } from "antd"
-import { WalletOutlined } from "@ant-design/icons"
+import { Row, Col, Card, Spin, Typography, Image } from "antd";
+import { WalletOutlined } from "@ant-design/icons";
 
-const { Title } = Typography
+const { Title } = Typography;
 const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   const [qrcode, setQrcode] = useState("");
   const [paymentUri, setPaymentUri] = useState(null);
@@ -24,7 +24,7 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
     }
     setPaymentUri(uri);
     return uri;
-  }
+  };
 
   // generete QR Code on subaddress change
   useEffect(() => {
@@ -34,17 +34,22 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
         const qrcode = await monerojs.generateQrCode(paymentUri);
         setQrcode(qrcode);
       }
-    }
+    };
     generateQrCode();
   }, [subaddress, createPaymentUri]);
 
   const handleClick = (e) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-  }
+  };
 
   return (
-    <Row justify="center" align="middle" style={{ textAlign: "center" }} gutter={[0, 14]}>
+    <Row
+      justify="center"
+      align="middle"
+      style={{ textAlign: "center" }}
+      gutter={[0, 14]}
+    >
       <Col span={24}>
         <Spin size="large" />
         <Title level={3}>Waiting for payment...</Title>
@@ -56,8 +61,8 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
             Transfer at least <Title level={2}>{total} XMR</Title>
           </span>
         ) : (
-            <span>Transfer any amount of XMR to</span>
-          )}
+          <span>Transfer any amount of XMR to</span>
+        )}
       </Col>
 
       {/* QRCode */}
@@ -68,24 +73,34 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
       {/* Payment Link */}
       <Col>
         <a href={paymentUri} onClick={handleClick}>
-          <WalletOutlined /> {" "}
-          Pay from desktop wallet
+          <WalletOutlined /> Pay from desktop wallet
         </a>
       </Col>
 
       {/* Preview the message */}
       <Col span={20} style={{ textAlign: "left" }}>
-        <Title level={2} style={{ textAlign: "center" }}>Preview: </Title>
-        <Card title={<span><Title level={4} style={{ display: "inline" }}>{donor}</Title> tipped</span>} extra={<Title level={4}>{total} XMR</Title>}>
+        <Title level={2} style={{ textAlign: "center" }}>
+          Preview:{" "}
+        </Title>
+        <Card
+          title={
+            <span>
+              <Title level={4} style={{ display: "inline" }}>
+                {donor}
+              </Title>{" "}
+              tipped
+            </span>
+          }
+          extra={<Title level={4}>{total} XMR</Title>}
+        >
           <Title level={5} style={{ textAlign: "center" }}>
             {message}
           </Title>
         </Card>
       </Col>
-
-    </Row >
+    </Row>
   );
-}
+};
 Payment.propTypes = {
   message: PropTypes.string,
   donor: PropTypes.string,
