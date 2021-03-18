@@ -38,7 +38,8 @@ const Donate = () => {
     streamDescription: "",
     streamCategory: "",
   });
-  const [subaddress, setSubaddress] = useState(null);
+  // const [subaddress, setSubaddress] = useState(null);
+  const [subaddress, setSubaddress] = useState("555RneqFCh7Xe7bR93vNs1RK6mNASHPtfABzqHnCQx3UX2tNvU8ppbMb4z5ixK2A4of48VyEfQ2sL2vtAh8jt1RsJAg6zQD"); // for testing
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState("");
   const [showLivestream, setShowLivestream] = useState(true);
