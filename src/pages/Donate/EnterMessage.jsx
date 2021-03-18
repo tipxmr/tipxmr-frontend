@@ -26,10 +26,10 @@ const layout = {
 };
 const secondsLayout = {
   labelCol: {
-    span: 0,
+    span: 8,
   },
   wrapperCol: {
-    span: 24,
+    span: 16,
   },
 };
 const tailLayout = {
@@ -110,40 +110,44 @@ const MessageForm = ({
           maxLength={15}
         />
       </Form.Item>
-      <Form.Item name="message">
+      <Form.Item>
         <div>
-          <TextArea
-            size="large"
-            autosize={{ minRows: 4, maxRows: 7 }}
-            maxLength={charLimit}
-            placeholder="Enter your message here..."
-            onChange={handleMessage}
-          />
+          <Form.Item name="message" >
+            <TextArea
+              size="large"
+              autosize={{ minRows: 4, maxRows: 7 }}
+              maxLength={charLimit}
+              placeholder="Enter your message here..."
+              onChange={handleMessage}
+            />
+          </Form.Item>
           <p style={{ textAlign: "right" }}>
             {message ? message.length + "/" + charLimit : null}
           </p>
         </div>
       </Form.Item>
 
-      {secondPrice ? (
-        <Form.Item
-          {...secondsLayout}
-          name="seconds"
-          style={{ textAlign: "center" }}
-        >
-          Showtime in seconds:
-          <InputNumber
-            size="large"
-            step={1}
-            min={1}
-            defaultValue={5}
-            onChange={handleSeconds}
-          />
-        </Form.Item>
-      ) : null}
+      {
+        secondPrice ? (
+          <Form.Item
+            {...secondsLayout}
+            style={{ textAlign: "center" }}
+          >
+            <Form.Item name="seconds" label="Showtime in seconds:">
+              <InputNumber
+                size="large"
+                step={1}
+                min={1}
+                initialValue="5"
+                onChange={handleSeconds}
+              />
+            </Form.Item>
+          </Form.Item>
+        ) : null
+      }
 
       {/* Price Information in USD */}
-      <Form.Item>
+      <Form.Item name="priceInfo">
         <Tooltip
           title={PriceInfo(
             secondPrice, charPrice, usdConvert, seconds, message
@@ -160,7 +164,7 @@ const MessageForm = ({
       </Form.Item>
 
       {/* Button to continue */}
-      <Form.Item {...tailLayout}>
+      <Form.Item name="submitButton" {...tailLayout}>
         <Button
           type="primary"
           htmlType="submit"
@@ -173,7 +177,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form>
+    </Form >
   );
 };
 
