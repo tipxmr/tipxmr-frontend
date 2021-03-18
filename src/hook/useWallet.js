@@ -1,6 +1,4 @@
-import { useState, useReducer, useRef, useEffect } from "react";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { dispatcherState, walletState } from "../store/atom";
+import { useReducer, useRef } from "react";
 import monerojs from "../libs/monero";
 
 const actionTypes = {
@@ -55,21 +53,11 @@ function useWallet() {
   const stateRef = useRef(state);
   const { status, data, reason } = stateRef;
 
-  /*   useEffect(() => {
-    stateRef.current = state;
-  }, [state]); */
-
   const isLoading = status === "idle" || status === "pending";
   const isIdle = status === "idle";
   const isPending = status === "pending";
   const isResolved = status === "resolved";
   const isRejected = status === "rejected";
-
-  // const dispatcher = useRecoilValue(dispatcherState);
-  // const [wallet, setWallet] = useRecoilState(walletState);
-  // const [wallet, setWallet] = useState(null);
-  // const [error, setError] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
 
   function openFromSeed(seed) {
     dispatch({ type: actionTypes.go });

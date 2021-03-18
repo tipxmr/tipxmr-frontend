@@ -11,8 +11,8 @@ import {
 } from "antd";
 import { isNil } from "ramda";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import { LanguageSelector, PickUserName } from "../../components";
 import { openFromSeed, useWallet } from "../../context/wallet";
 import monerojs, {
@@ -20,7 +20,8 @@ import monerojs, {
   isValidMnemoicLength,
 } from "../../libs/monero";
 import socket_streamer from "../../libs/socket_streamer";
-import { dispatcherState, streamerState } from "../../store/atom";
+import { useAppDispatch } from "../../store";
+import { actions } from "../../store/slices/streamer";
 
 const { Title } = Typography;
 const importantList = [
@@ -66,9 +67,8 @@ const Login = () => {
   const [language, setLanguage] = useState(defaultLanguage);
   const [seed, setSeed] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const dispatcher = useRecoilValue(dispatcherState);
-  const streamer = useRecoilValue(streamerState);
-  const [wallet, dispatch] = useWallet();
+  const streamer = useSelector(state => state.streamer)
+  const [wallet, walletDispatch] = useWallet();
   const { isPending, isResolved } = wallet.status;
   const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
   const [creationMode, setCreationMode] = useState(false);
@@ -76,6 +76,7 @@ const Login = () => {
   const [userNameNotSet, setUserNameNotSet] = useState(false);
   const [userNameError, setUserNameError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useAppDispatch();
 
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
@@ -89,9 +90,9 @@ const Login = () => {
     if (isValidMnemoicLength(seed) && !isWalletOpen && !isPending) {
       console.log("25 words reached");
       login();
-      dispatch(openFromSeed(seed));
+      walletDispatch(openFromSeed(seed));
     }
-  }, [dispatcher, isWalletOpen, isPending, dispatch, seed]);
+  }, [ isWalletOpen, isPending, walletDispatch, seed]);
 
   // Das streamer.restoreHeight, weil er erst weiterleiten soll,
   // wenn die Streamer Config vom Backend gesendet wurde
@@ -113,7 +114,7 @@ const Login = () => {
       console.log("CB response:", response);
       if (!(response instanceof Error)) {
         setUserNameNotSet(false);
-        dispatcher.updateStreamer(response);
+        dispatch(actions.updateStreamer(response));
       } else if (
         response.message ===
         "_id not found and no userName for userCreation was sent"

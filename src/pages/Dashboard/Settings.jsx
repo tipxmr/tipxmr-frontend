@@ -10,8 +10,9 @@ import {
   StatBox,
   DropdownField,
 } from "../../components";
-import { useRecoilValue } from "recoil";
-import { dispatcherState, streamerState } from "../../store/atom";
+
+import { useAppDispatch, useAppSelector } from "../../store";
+import { actions } from "../../store/slices/streamer";
 
 const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
 const platformOptions = ["twitch", "youtube", "chaturbate"];
@@ -29,8 +30,8 @@ const languageOptions = [
 ];
 
 function Settings() {
-  const streamerConfig = useRecoilValue(streamerState);
-  const dispatcher = useRecoilValue(dispatcherState);
+  const streamerConfig = useAppSelector(state => state.streamer)
+  const dispatch = useAppDispatch();
 
   console.log("streamerConfig", streamerConfig);
 
@@ -56,7 +57,7 @@ function Settings() {
       restoreHeight: parseInt(data.restoreHeight),
       profilePicture: data.profilePicture,
     };
-    dispatcher.updateStreamer(newStreamerConfig);
+    dispatch(actions.updateStreamer(newStreamerConfig));
   };
 
   return (

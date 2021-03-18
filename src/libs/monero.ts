@@ -115,6 +115,7 @@ async function createTx(wallet, address, amount) {
     return await wallet.createTx({
       accountIndex: 0,
       address,
+      // eslint-disable-line
       amount: BigInt(Math.round(amount * Math.pow(10, 12))),
       relay: true, // relay the transaction to the network
       priority: monerojs.MoneroTxPriority.UNIMPORTANT,

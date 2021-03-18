@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   InputField,
@@ -8,12 +7,13 @@ import {
   Button,
   DropdownField,
 } from "../../components";
-import { useRecoilValue } from "recoil";
-import { dispatcherState, streamerState } from "../../store/atom";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../store";
+import { actions } from "../../store/slices/streamer";
 
 function AnimationSettings() {
-  const streamerConfig = useRecoilValue(streamerState);
-  const dispatcher = useRecoilValue(dispatcherState);
+  const streamerConfig = useSelector(state => state.streamer);
+  const dispatch = useAppDispatch()
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
 
@@ -38,7 +38,7 @@ function AnimationSettings() {
       sound: data.sound,
       bgImg: data.bgImg,
     };
-    dispatcher.updateAnimationSettings(newAnimationSettings);
+    dispatch(actions.updateAnimationSettings(newAnimationSettings));
     console.log("Update successful", newAnimationSettings);
   };
 

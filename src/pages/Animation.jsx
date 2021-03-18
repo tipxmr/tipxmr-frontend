@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
-import { useRecoilValue } from "recoil";
-import { streamerState } from "../store/atom";
 import {
   emitGetAnimationConfig,
   onGetAnimationConfig,
@@ -82,9 +80,6 @@ function Animation() {
       }, 2000);
     }
   }, [animationConfig]);
-
-  // const streamerConfig = useRecoilValue(streamerState);
-  // console.log("Animation streamer config: ", streamerConfig);
 
   const messageTransitions = useTransition(showMessage, null, {
     from: { opacity: 0 },

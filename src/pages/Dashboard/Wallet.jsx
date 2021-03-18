@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Progressbar, SyncBanner, Button } from "../../components";
-import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
-import { useRecoilValue } from "recoil";
-import { streamerState } from "../../store/atom";
 import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { startSynchronisation, stopSynchronisation } from "../../store/middlewares/wallet";
 
 function Wallet() {
-  const {
-    isActive,
-    isDone,
-    progress,
-    start,
-    stop,
-    balance,
-    unlockedBalance,
-  } = useWalletSynchronisation();
+  const { isActive, isDone, progress } = useAppSelector(state => state.synchronisation);
+  const { total: balance, unlocked: unlockedBalance } = useAppSelector(state => state.balance);
+  const dispatch = useAppDispatch();
 
   const wallet = useWalletState();
-  const streamerConfig = useRecoilValue(streamerState);
+  const streamerConfig = useAppSelector(state => state.streamer);
   const [tableData, setTableData] = useState(null);
   // transaction states
   const [totalTransactions, setTotalTransactions] = useState(0);
@@ -36,9 +29,9 @@ function Wallet() {
   // start or stop sync
   function handleSync() {
     if (isActive) {
-      stop();
+      dispatch(stopSynchronisation());
     } else {
-      start();
+      dispatch(startSynchronisation());
     }
   }
 

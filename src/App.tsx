@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   BrowserRouter as Router,
   Redirect, Route,
   Switch
 } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { TipLayout, PrivateRoute } from "./components";
 import { useWalletState } from "./context/wallet";
 import monerojs from "./libs/monero";
@@ -17,31 +16,29 @@ import {
   Invoice, Landing, Login,
   Logout, StreamerPage
 } from "./pages";
-import {
-  dispatcherState,
-  donorsInfoState, restoreHeightState, streamerState
-} from "./store/atom";
-import createDispatcher from "./store/dispatcher";
+
+import { useAppDispatch, useAppSelector } from './store';
+import { actions as txActions } from "./store/slices/transaction";
+import { actions } from "./store/slices/restore-height";
+// login, logout, send, RootState, 
 
 function App() {
-  const [dispatcher, setDispatcher] = useRecoilState(dispatcherState);
-  const dispatcherRef = useRef(createDispatcher());
-  const walletUseEffectDidFire = useRef(false);
-  const setDonorsInfo = useSetRecoilState(donorsInfoState);
-  const [restoreHeight, setRestoreHeight] = useRecoilState(restoreHeightState);
-  const customWallet = useWalletState();
-  const streamerConfig = useRecoilValue(streamerState);
+  const store = useAppSelector(x => x);
+  console.log(store);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setDispatcher(dispatcherRef.current);
-  }, [setDispatcher]);
+  const walletUseEffectDidFire = useRef(false);
+  const customWallet = useWalletState();
+  const streamerConfig = useAppSelector(state => state.streamer);
+  const restoreHeight = useAppSelector(state => state.restoreHeight);
+  
 
   // as soon as wallet is loaded
   useEffect(() => {
     const handleOnNewSubaddress = (data) => {
       monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
         const newDonorInfo = { ...data, subaddress: subaddress };
-        setDonorsInfo((prevState) => [...prevState, newDonorInfo]);
+        dispatch(txActions.appendToDonors(newDonorInfo))
         socketio.emitSubaddressToBackend(newDonorInfo);
         console.log("created Subaddress for:", newDonorInfo);
       });
@@ -59,9 +56,7 @@ function App() {
   }, [
     customWallet.wallet,
     walletUseEffectDidFire,
-    streamerConfig._id,
-    dispatcher,
-    setDonorsInfo,
+    streamerConfig._id
   ]);
 
   // set restore height for wasm wallet
@@ -71,9 +66,9 @@ function App() {
       streamerConfig.restoreHeight &&
       restoreHeight !== streamerConfig.restoreHeight
     ) {
-      setRestoreHeight(streamerConfig.restoreHeight);
+      dispatch(actions.update(streamerConfig.restoreHeight))
     }
-  }, [streamerConfig, restoreHeight, setRestoreHeight]);
+  }, [streamerConfig, restoreHeight]);
 
   return (
     <div>

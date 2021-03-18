@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+const atom = () => {}
 
 export const streamerState = atom({
   key: "streamer",
@@ -13,11 +13,6 @@ export const walletState = atom({
 export const restoreHeightState = atom({
   key: "restoreHeight",
   default: 0,
-});
-
-export const dispatcherState = atom({
-  key: "dispatcher",
-  default: undefined,
 });
 
 //////////////////////////////////

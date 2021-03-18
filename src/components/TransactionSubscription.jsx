@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
-import { useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { dispatcherState, donorsInfoState, streamerState } from "../store/atom";
+import { useEffect } from "react";
 import Donation from "../models/Donation";
 import monerojs from "../libs/monero";
 import useIncomingTransaction from "../hook/useIncomingTransaction";
 import { useWalletState } from "../context/wallet";
 import socketio from "../libs/socket_streamer";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../store";
+import { actions } from "../store/slices/transaction";
+
+
 
 function parseAmount(amount) {
   return parseFloat(amount) / Math.pow(10, 12);
@@ -13,10 +16,10 @@ function parseAmount(amount) {
 
 function TransactionSubscription() {
   useIncomingTransaction(onIncomingTransaction);
-  const streamerConfig = useRecoilValue(streamerState);
-  const dispatcher = useRecoilValue(dispatcherState);
+  const streamerConfig = useSelector(state => state.streamer);
+  const dispatch = useAppDispatch();
   const customWallet = useWalletState();
-  const donorsInfo = useRecoilValue(donorsInfoState);
+  const donorsInfo = useSelector(state => state.transaction.donors);
   console.log("donorsInfo", donorsInfo);
 
   function onIncomingTransaction(tx) {
@@ -45,8 +48,8 @@ function TransactionSubscription() {
                   donationsInfo.message.length) /
               streamerConfig.animationSettings.secondPrice,
           });
-          dispatcher.appendToDonationsQueue(newDonation);
-          dispatcher.appendToDonationsHistory(newDonation);
+          dispatch(actions.appendToQueue(newDonation));
+          dispatch(actions.appendToHistory(newDonation));
           socketio.emitPaymentRecieved(newDonation);
         }
       });
