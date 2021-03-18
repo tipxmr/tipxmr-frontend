@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col, Spin } from "antd"
+import { Row, Col, Card, Spin, Typography, Image } from "antd"
+import { WalletOutlined } from "@ant-design/icons"
 
+const { Title } = Typography
 const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   const [qrcode, setQrcode] = useState("");
   const [paymentUri, setPaymentUri] = useState(null);
@@ -42,40 +44,46 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   }
 
   return (
-    <Row justify="center" align="middle" style={{ textAlign: "center" }}>
-      <Col span={24}>
-        {total ? (
-          <span>
-            Please transfer at least {total} XMR to{" "}
-          </span>
-        ) : (
-            <span>Please transfer any amount of XMR to</span>
-          )}
-      </Col>
-      <Col span={24}>
-        <img className="w-400px h-auto" src={qrcode} alt="qr code" />
-      </Col>
-      <Col>
-        <a href={paymentUri} onClick={handleClick}>
-          <div className="overlfow-x-auto break-all my-3 tracking-tight text-xs px-3">
-            {subaddress}
-          </div>
-        </a>
-      </Col>
+    <Row justify="center" align="middle" style={{ textAlign: "center" }} gutter={[0, 14]}>
       <Col span={24}>
         <Spin size="large" />
+        <Title level={3}>Waiting for payment...</Title>
       </Col>
 
-    </Row>
-    // <div className="flex flex-grow flex-col justify-center items-center text-gray-200 text-center">
-    //  <div className="border-2 border-gray-200 rounded shadow-lg m-6 p-6">
-    //     <h2>
-    //       <span className="text-2xl">{donor}</span>, here is your message:{" "}
-    //     </h2>
-    //     <span className="text-left text-sm">{message}</span>
-    //   </div>
-    //   <ReactLoading type="spinningBubbles" color="#F16822" />
-    // </div>
+      <Col span={24}>
+        {total ? (
+          <span style={{ lineHeight: "1" }}>
+            Transfer at least <Title level={2}>{total} XMR</Title>
+          </span>
+        ) : (
+            <span>Transfer any amount of XMR to</span>
+          )}
+      </Col>
+
+      {/* QRCode */}
+      <Col span={24}>
+        <Image src={qrcode} alt="qr code" preview={false} />
+      </Col>
+
+      {/* Payment Link */}
+      <Col>
+        <a href={paymentUri} onClick={handleClick}>
+          <WalletOutlined /> {" "}
+          Pay from desktop wallet
+        </a>
+      </Col>
+
+      {/* Preview the message */}
+      <Col span={20} style={{ textAlign: "left" }}>
+        <Title level={2} style={{ textAlign: "center" }}>Preview: </Title>
+        <Card title={<span><Title level={4} style={{ display: "inline" }}>{donor}</Title> tipped</span>} extra={<Title level={4}>{total} XMR</Title>}>
+          <Title level={5} style={{ textAlign: "center" }}>
+            {message}
+          </Title>
+        </Card>
+      </Col>
+
+    </Row >
   );
 }
 Payment.propTypes = {

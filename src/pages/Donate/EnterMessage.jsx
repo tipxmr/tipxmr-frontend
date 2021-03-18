@@ -191,6 +191,10 @@ const EnterMessage = ({
 
   const { register, handleSubmit, errors } = useForm();
 
+  const roundXMR = (number, decimals) => {
+    const factorOfTen = Math.pow(10, decimals)
+    return Math.round(number * factorOfTen) / factorOfTen
+  }
   useEffect(() => {
     // Get MoneroPrice as number
     fetch("https://api.coinpaprika.com/v1/tickers/xmr-monero?quotes=USD")
@@ -201,7 +205,8 @@ const EnterMessage = ({
   }, []);
 
   useEffect(() => {
-    setTotal(secondPrice * seconds + message.length * charPrice);
+    const total = secondPrice * seconds + message.length * charPrice
+    setTotal(roundXMR(total, 6));
   }, [message, seconds]);
 
   // useEffect(() => {
