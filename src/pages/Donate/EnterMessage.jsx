@@ -40,6 +40,37 @@ const tailLayout = {
   },
 };
 
+const IntegerStep = ({ seconds, setSeconds }) => {
+
+  const onChange = value => {
+    setSeconds(value);
+  };
+
+  return (
+    <Row justify="center">
+      <Col span={8}>
+        <Title level={5}>Showtime in seconds:</Title>
+      </Col>
+      <Col span={12}>
+        <Slider
+          min={1}
+          max={20}
+          onChange={onChange}
+          value={typeof seconds === 'number' ? seconds : 0}
+        />
+      </Col>
+      <Col span={4}>
+        <InputNumber
+          min={1}
+          max={20}
+          style={{ margin: '0 16px' }}
+          value={seconds}
+          onChange={onChange}
+        />
+      </Col>
+    </Row>
+  );
+}
 const PriceInfo = (secondPrice, charPrice, usdConvert, seconds, message) => {
   return (
     <div>
@@ -142,35 +173,8 @@ const MessageForm = ({
 
       {secondPrice ? (
         <Form.Item {...secondsLayout} style={{ textAlign: "center", display: "inline" }}>
-          <Row justify="center">
-            Showtime in seconds:
-            <Col span={24}>
-              <Form.Item name="secondsSlider" >
-                <Slider
-                  min={1}
-                  max={20}
-                  value={seconds}
-                  initialValue="seconds"
-                  onChange={handleSeconds}
-                  style={{ width: "300px" }}
-                />
-              </Form.Item>
 
-            </Col>
-            <Col>
-              <Form.Item name="secondsInput" style={{ display: "inline" }}>
-                <InputNumber
-                  size="large"
-                  step={1}
-                  min={1}
-                  value={seconds}
-                  defaultValue={seconds}
-                  onChange={handleSeconds}
-                />
-              </Form.Item>
-
-            </Col>
-          </Row>
+          <IntegerStep seconds={seconds} setSeconds={setSeconds} />
 
         </Form.Item>
       ) : null}
