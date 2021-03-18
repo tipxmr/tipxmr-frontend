@@ -41,11 +41,6 @@ const tailLayout = {
 };
 
 const IntegerStep = ({ seconds, setSeconds }) => {
-
-  const onChange = value => {
-    setSeconds(value);
-  };
-
   return (
     <Row justify="center">
       <Col span={8}>
@@ -55,7 +50,7 @@ const IntegerStep = ({ seconds, setSeconds }) => {
         <Slider
           min={1}
           max={20}
-          onChange={onChange}
+          onChange={setSeconds}
           value={typeof seconds === 'number' ? seconds : 0}
         />
       </Col>
@@ -65,13 +60,15 @@ const IntegerStep = ({ seconds, setSeconds }) => {
           max={20}
           style={{ margin: '0 16px' }}
           value={seconds}
-          onChange={onChange}
+          onChange={setSeconds}
         />
       </Col>
     </Row>
   );
 }
-const PriceInfo = (secondPrice, charPrice, usdConvert, seconds, message) => {
+
+
+const PriceInfo = ({ secondPrice, charPrice, usdConvert, seconds, message }) => {
   return (
     <div>
       <Title level={5}>How is this price calculated?</Title>
@@ -182,14 +179,12 @@ const MessageForm = ({
       {/* Price Information in USD */}
       <Form.Item name="priceInfo">
         <Tooltip
-          title={PriceInfo(
-            secondPrice,
-            charPrice,
-            usdConvert,
-            seconds,
-            message
-          )}
           placement="bottom"
+          title={<PriceInfo secondPrice={secondPrice}
+            charPrice={charPrice}
+            usdConvert={usdConvert}
+            seconds={seconds}
+            message={message} />}
         >
           <div style={{ textAlign: "center", marginBottom: "1em" }}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
@@ -214,7 +209,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form>
+    </Form >
   );
 };
 
