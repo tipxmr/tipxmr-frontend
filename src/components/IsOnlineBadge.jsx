@@ -1,30 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
+import { Tag } from "antd";
 
-function IsOnlineBadge({ isOnline }) {
+const IsOnlineBadge = ({ isOnline }) => {
   return (
-    <button
-      type="button"
-      className={clsx([
-        "pointer-events-none",
-        "text-white",
-        "p-2",
-        "rounded",
-        "leading-none",
-        {
-          "bg-green-500": isOnline,
-          "bg-red-600": !isOnline,
-        },
-      ])}
-    >
+    <Tag color={isOnline ? "success" : "error"}>
       {isOnline ? "online" : "offline"}
-    </button>
+    </Tag>
   );
-}
-
-IsOnlineBadge.propTypes = {
-  isOnline: PropTypes.bool,
 };
 
 export default IsOnlineBadge;
