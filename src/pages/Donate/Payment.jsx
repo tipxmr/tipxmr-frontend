@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-// import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col } from "antd"
+import { Row, Col, Spin } from "antd"
 
 const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   const [qrcode, setQrcode] = useState("");
@@ -43,7 +42,7 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   }
 
   return (
-    <Row justify="center" align="middle">
+    <Row justify="center" align="middle" style={{ textAlign: "center" }}>
       <Col span={24}>
         {total ? (
           <span>
@@ -62,6 +61,9 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
             {subaddress}
           </div>
         </a>
+      </Col>
+      <Col span={24}>
+        <Spin size="large" />
       </Col>
 
     </Row>
