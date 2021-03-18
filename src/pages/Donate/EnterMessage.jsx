@@ -193,16 +193,12 @@ const EnterMessage = ({
   charLimit,
   charPrice,
   streamUrl,
-  streamPlatform,
   streamLanguage,
-  streamDescription,
   streamCategory,
 }) => {
   const [usdPrice, setUsdPrice] = useState();
-  const usdConvert = (usdPrice * total).toFixed(2);
+  const [usdConvert, setUsdConvert] = useState()
   const [seconds, setSeconds] = useState(0);
-
-  const { register, handleSubmit, errors } = useForm();
 
   const roundXMR = (number, decimals) => {
     const factorOfTen = Math.pow(10, decimals);
@@ -218,13 +214,11 @@ const EnterMessage = ({
   }, []);
 
   useEffect(() => {
+    // Update the total price of tip
     const total = secondPrice * seconds + message.length * charPrice;
     setTotal(roundXMR(total, 6));
-  }, [message, seconds]);
-
-  useEffect(() => {
-    setUsdPrice((usdPrice * total).toFixed(2));
-  }, [total, usdPrice]);
+    setUsdConvert((usdPrice * total).toFixed(2));
+  }, [message, seconds, charPrice, secondPrice, setTotal, total, usdPrice]);
 
   return (
     <Row justify="center" align="middle">
@@ -265,7 +259,7 @@ const EnterMessage = ({
         <MessageForm
           message={message}
           setMessage={setMessage}
-          charLimit={180}
+          charLimit={charLimit}
           setShowEnterMessage={setShowEnterMessage}
           setDonor={setDonor}
           setShowPayment={setShowPayment}
