@@ -14,6 +14,7 @@ import {
 import { BulbOutlined, DesktopOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
+const { TextArea } = Input
 
 const layout = {
   labelCol: {
@@ -70,7 +71,9 @@ const MessageForm = ({
 }) => {
 
   const handleSeconds = (value) => { setSeconds(value) }
-  const handleMessage = (value) => { setMessage(value) }
+  const handleMessage = (value) => {
+    setMessage(value.target.value)
+  }
   const handleDonor = (value) => { setDonor(value) }
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -109,14 +112,12 @@ const MessageForm = ({
       </Form.Item>
       <Form.Item name="message">
         <div>
-          <Input.TextArea
+          <TextArea
             size="large"
             autosize={{ minRows: 4, maxRows: 7 }}
             maxLength={charLimit}
             placeholder="Enter your message here..."
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
+            onChange={handleMessage}
           />
           <p style={{ textAlign: "right" }}>
             {message ? message.length + "/" + charLimit : null}
