@@ -63,8 +63,8 @@ const Donate = () => {
     } else {
       setShowStreamerNotFound(false);
       setShowPayment(false);
-      setShowSuccess(true); // TODO CHANGE BACK
-      setShowEnterMessage(false); // TODO CHANGE BACK
+      setShowSuccess(false);
+      setShowEnterMessage(true);
     }
   }, [streamer]);
 

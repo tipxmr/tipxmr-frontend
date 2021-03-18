@@ -6,6 +6,7 @@ import {
   Col,
   Typography,
   Form,
+  Slider,
   Input,
   InputNumber,
   Button,
@@ -14,7 +15,7 @@ import {
 import { BulbOutlined, DesktopOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
-const { TextArea } = Input
+const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -69,12 +70,21 @@ const MessageForm = ({
   usdConvert,
   charPrice,
 }) => {
+  // const handleSeconds = (value) => { setSeconds(value) }
+  // const [inputValue, setInputValue] = useState(1);
 
-  const handleSeconds = (value) => { setSeconds(value) }
   const handleMessage = (value) => {
-    setMessage(value.target.value)
-  }
-  const handleDonor = (value) => { setDonor(value) }
+    setMessage(value.target.value);
+  };
+  const handleDonor = (e) => {
+    setDonor(e.target.value);
+  };
+  const handleChange = (value) => {
+    setInputValue(value);
+  };
+  const handleSeconds = (value) => {
+    setSeconds(value);
+  };
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -112,7 +122,7 @@ const MessageForm = ({
       </Form.Item>
       <Form.Item>
         <div>
-          <Form.Item name="message" >
+          <Form.Item name="message">
             <TextArea
               size="large"
               autosize={{ minRows: 4, maxRows: 7 }}
@@ -127,30 +137,39 @@ const MessageForm = ({
         </div>
       </Form.Item>
 
-      {
-        secondPrice ? (
-          <Form.Item
-            {...secondsLayout}
-            style={{ textAlign: "center" }}
-          >
-            <Form.Item name="seconds" label="Showtime in seconds:">
-              <InputNumber
-                size="large"
-                step={1}
-                min={1}
-                initialValue="5"
-                onChange={handleSeconds}
-              />
-            </Form.Item>
+      {secondPrice ? (
+        <Form.Item {...secondsLayout} style={{ textAlign: "center" }}>
+          <Form.Item name="secondsSlider">
+            <Slider
+              min={1}
+              max={20}
+              onChange={handleSeconds}
+              value={seconds}
+            />
           </Form.Item>
-        ) : null
-      }
+
+          <Form.Item name="secondsInput" label="Showtime in seconds:">
+            <InputNumber
+              size="large"
+              step={1}
+              min={1}
+              value={seconds}
+              initialValue="5"
+              onChange={handleSeconds}
+            />
+          </Form.Item>
+        </Form.Item>
+      ) : null}
 
       {/* Price Information in USD */}
       <Form.Item name="priceInfo">
         <Tooltip
           title={PriceInfo(
-            secondPrice, charPrice, usdConvert, seconds, message
+            secondPrice,
+            charPrice,
+            usdConvert,
+            seconds,
+            message
           )}
           placement="bottom"
         >
@@ -177,7 +196,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form >
+    </Form>
   );
 };
 
@@ -199,7 +218,7 @@ const EnterMessage = ({
   streamCategory,
 }) => {
   const [usdPrice, setUsdPrice] = useState();
-  const [usdConvert, setUsdConvert] = useState()
+  const [usdConvert, setUsdConvert] = useState();
   const [seconds, setSeconds] = useState(0);
 
   const roundXMR = (number, decimals) => {
