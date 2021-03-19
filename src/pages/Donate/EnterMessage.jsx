@@ -98,18 +98,12 @@ const MessageForm = ({
   usdConvert,
   charPrice,
 }) => {
-  // const handleSeconds = (value) => { setSeconds(value) }
-  // const [inputValue, setInputValue] = useState(1);
 
   const handleMessage = (value) => {
     setMessage(value.target.value);
   };
   const handleDonor = (e) => {
     setDonor(e.target.value);
-  };
-  const handleSeconds = (value) => {
-    console.log("seconds: ", value)
-    setSeconds(value);
   };
   const onFinish = (values) => {
     console.log("Success:", values);
