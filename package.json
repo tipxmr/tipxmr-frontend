@@ -36,6 +36,7 @@
     "react-spring": "^8.0.27",
     "react-use": "^17.1.1",
     "recoil": "^0.1.2",
+    "shx": "^0.3.3",
     "socket.io-client": "^3.1.1",
     "typescript": "^4.1.5",
     "web-vitals": "^1.1.0"
@@ -45,8 +46,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "preinstall": "cp .env.example .env",
-    "postinstall": "cp ./node_modules/monero-javascript/dist/* ./public"
+    "postinstall": "shx cp -u ./node_modules/monero-javascript/dist/* ./public && shx cp -n .env.example .env"
   },
   "eslintConfig": {
     "extends": [
