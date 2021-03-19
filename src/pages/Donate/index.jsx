@@ -7,6 +7,7 @@ import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 import { Row, Col, Switch, Button } from "antd";
 import "./index.less";
+import { IsOnlineBadge } from "../../components"
 
 import socketio from "../../libs/socket_donator";
 
@@ -99,15 +100,7 @@ const Donate = () => {
           <p className="inline toggle-container">Show Stream</p>
         </Row>
         <Row justify="center" align="middle">
-          <Button
-            type="text"
-            shape="round"
-            size="large"
-            className={streamer.isOnline ? "button-online" : "button-offline"}
-            onClick={() => console.log("Online")}
-          >
-            {streamer.isOnline ? "Online" : "Offline"}
-          </Button>
+          <IsOnlineBadge isOnline={streamer.isOnline} />
         </Row>
       </Col>
 
@@ -178,7 +171,7 @@ const Donate = () => {
           </Col>
         </Row>
       </Col>
-    </Row>
+    </Row >
   );
 };
 

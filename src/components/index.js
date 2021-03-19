@@ -14,6 +14,8 @@ export { default as NumberInput } from "./NumberInput";
 
 export { default as InfoHover } from "./InfoHover";
 export { default as InputField } from "./InputField";
+export { default as IsOnlineBadge } from "./IsOnlineBadge";
+
 
 export { default as LanguageSelector } from "./LanguageSelector";
 export { default as Loading } from "./Loading";
