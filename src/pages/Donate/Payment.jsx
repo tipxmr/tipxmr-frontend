@@ -5,7 +5,7 @@ import { Row, Col, Card, Spin, Typography, Image } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
-const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
+const Payment = ({ displayName, donor, message, subaddress, getSubaddress, total }) => {
   const [qrcode, setQrcode] = useState("");
   const [paymentUri, setPaymentUri] = useState(null);
 
@@ -61,8 +61,8 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
             Transfer at least <Title level={2}>{total} XMR</Title>
           </span>
         ) : (
-          <span>Transfer any amount of XMR to</span>
-        )}
+            <span>Transfer any amount of XMR to</span>
+          )}
       </Col>
 
       {/* QRCode */}
@@ -102,6 +102,7 @@ const Payment = ({ donor, message, subaddress, getSubaddress, total }) => {
   );
 };
 Payment.propTypes = {
+  displayName: PropTypes.string,
   message: PropTypes.string,
   donor: PropTypes.string,
   subaddress: PropTypes.string,
