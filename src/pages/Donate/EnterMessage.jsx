@@ -51,24 +51,29 @@ const IntegerStep = ({ seconds, setSeconds }) => {
           min={1}
           max={20}
           onChange={setSeconds}
-          value={typeof seconds === 'number' ? seconds : 0}
+          value={typeof seconds === "number" ? seconds : 0}
         />
       </Col>
       <Col span={4}>
         <InputNumber
           min={1}
           max={20}
-          style={{ margin: '0 16px' }}
+          style={{ margin: "0 16px" }}
           value={seconds}
           onChange={setSeconds}
         />
       </Col>
     </Row>
   );
-}
+};
 
-
-const PriceInfo = ({ secondPrice, charPrice, usdConvert, seconds, message }) => {
+const PriceInfo = ({
+  secondPrice,
+  charPrice,
+  usdConvert,
+  seconds,
+  message,
+}) => {
   return (
     <div>
       <Title level={5}>How is this price calculated?</Title>
@@ -98,7 +103,6 @@ const MessageForm = ({
   usdConvert,
   charPrice,
 }) => {
-
   const handleMessage = (value) => {
     setMessage(value.target.value);
   };
@@ -114,8 +118,8 @@ const MessageForm = ({
   };
 
   useEffect(() => {
-    setSeconds(seconds)
-  }, [seconds, setSeconds])
+    setSeconds(seconds);
+  }, [seconds, setSeconds]);
 
   return (
     <Form
@@ -163,10 +167,11 @@ const MessageForm = ({
       </Form.Item>
 
       {secondPrice ? (
-        <Form.Item {...secondsLayout} style={{ textAlign: "center", display: "inline" }}>
-
+        <Form.Item
+          {...secondsLayout}
+          style={{ textAlign: "center", display: "inline" }}
+        >
           <IntegerStep seconds={seconds} setSeconds={setSeconds} />
-
         </Form.Item>
       ) : null}
 
@@ -174,11 +179,15 @@ const MessageForm = ({
       <Form.Item name="priceInfo">
         <Tooltip
           placement="bottom"
-          title={<PriceInfo secondPrice={secondPrice}
-            charPrice={charPrice}
-            usdConvert={usdConvert}
-            seconds={seconds}
-            message={message} />}
+          title={
+            <PriceInfo
+              secondPrice={secondPrice}
+              charPrice={charPrice}
+              usdConvert={usdConvert}
+              seconds={seconds}
+              message={message}
+            />
+          }
         >
           <div style={{ textAlign: "center", marginBottom: "1em" }}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
@@ -203,7 +212,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form >
+    </Form>
   );
 };
 

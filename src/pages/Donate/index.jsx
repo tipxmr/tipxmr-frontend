@@ -7,7 +7,7 @@ import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 import { Row, Col, Switch, Button } from "antd";
 import "./index.less";
-import { IsOnlineBadge } from "../../components"
+import { IsOnlineBadge } from "../../components";
 
 import socketio from "../../libs/socket_donator";
 
@@ -171,7 +171,7 @@ const Donate = () => {
           </Col>
         </Row>
       </Col>
-    </Row >
+    </Row>
   );
 };
 
