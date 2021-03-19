@@ -82,8 +82,8 @@ const PriceInfo = ({
   message,
 }) => {
   return (
-    <div>
-      <Title level={5}>How is this price calculated?</Title>
+    <div style={{ fontSize: "120%" }}>
+      <Title level={3}>How is this price calculated?</Title>
       <ul>
         <li>- Price per second = {secondPrice} XMR</li>
         <li>- Price per character = {charPrice} XMR</li>
@@ -95,6 +95,7 @@ const PriceInfo = ({
     </div>
   );
 };
+
 
 const MessageForm = ({
   message,
@@ -118,6 +119,8 @@ const MessageForm = ({
   };
   const onFinish = (values) => {
     console.log("Success:", values);
+    setShowEnterMessage(false);
+    setShowPayment(true);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -143,9 +146,9 @@ const MessageForm = ({
         name="name"
         rules={[
           {
-            required: false,
+            required: true,
             default: "anon",
-            message: "Please input your username!",
+            message: "Please enter a name",
           },
         ]}
       >
@@ -185,26 +188,24 @@ const MessageForm = ({
 
       <Divider />
       {/* Price Information in USD */}
-      <Form.Item name="priceInfo">
-        <Tooltip
-          placement="bottom"
-          title={
-            <PriceInfo
-              secondPrice={secondPrice}
-              charPrice={charPrice}
-              usdConvert={usdConvert}
-              seconds={seconds}
-              message={message}
-            />
-          }
-        >
-          <div style={{ textAlign: "center" }}>
-            <Title level={2}>
-              Price: {total.toFixed(5)} XMR = {usdConvert} $
+      <Tooltip
+        placement="bottom"
+        title={
+          <PriceInfo
+            secondPrice={secondPrice}
+            charPrice={charPrice}
+            usdConvert={usdConvert}
+            seconds={seconds}
+            message={message}
+          />
+        }
+      >
+        <div style={{ textAlign: "center" }}>
+          <Title level={2}>
+            Price: {total.toFixed(5)} XMR = {usdConvert} $
             </Title>
-          </div>
-        </Tooltip>
-      </Form.Item>
+        </div>
+      </Tooltip>
 
       {/* Button to continue */}
       <Form.Item name="submitButton" {...tailLayout}>
@@ -212,10 +213,7 @@ const MessageForm = ({
           type="primary"
           htmlType="submit"
           size="large"
-          onClick={() => {
-            setShowEnterMessage(false);
-            setShowPayment(true);
-          }}
+
         >
           Submit
         </Button>
