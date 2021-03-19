@@ -209,7 +209,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form >
+    </Form>
   );
 };
 

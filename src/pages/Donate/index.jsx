@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
 // import StreamerNotFound from "./StreamerNotFound";
-import NotFound404 from "../NotFound404"
+import NotFound404 from "../NotFound404";
 import Success from "./Success";
 import { Row, Col, Switch } from "antd";
 import "./index.less";
@@ -91,7 +91,6 @@ const Donate = () => {
 
   return (
     <Row justify="center" align="middle" gutter={[0, 48]}>
-
       {/* Toggle Livestream Preview / Online/Offline Button */}
       <Col span={6} offset={18} className="gutter-row">
         <Row justify="center" align="middle">
