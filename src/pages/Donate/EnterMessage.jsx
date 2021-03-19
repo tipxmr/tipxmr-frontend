@@ -12,7 +12,7 @@ import {
   Button,
   Tooltip,
 } from "antd";
-import { BulbOutlined, DesktopOutlined } from "@ant-design/icons";
+import { DesktopOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -30,7 +30,7 @@ const secondsLayout = {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 const tailLayout = {
@@ -43,9 +43,6 @@ const tailLayout = {
 const IntegerStep = ({ seconds, setSeconds }) => {
   return (
     <Row justify="center">
-      <Col span={8}>
-        <Title level={5}>Showtime in seconds:</Title>
-      </Col>
       <Col span={12}>
         <Slider
           min={1}
@@ -58,7 +55,7 @@ const IntegerStep = ({ seconds, setSeconds }) => {
         <InputNumber
           min={1}
           max={20}
-          style={{ margin: "0 16px" }}
+          /* style={{ margin: "0 16px" }} */
           value={seconds}
           onChange={setSeconds}
         />
@@ -171,6 +168,7 @@ const MessageForm = ({
           {...secondsLayout}
           style={{ textAlign: "center", display: "inline" }}
         >
+          <Title level={5}>How many seconds should the message show?</Title>
           <IntegerStep seconds={seconds} setSeconds={setSeconds} />
         </Form.Item>
       ) : null}
@@ -189,11 +187,10 @@ const MessageForm = ({
             />
           }
         >
-          <div style={{ textAlign: "center", marginBottom: "1em" }}>
-            Price: {total.toFixed(5)} XMR = {usdConvert} $
-            <div>
-              <BulbOutlined size="large" />
-            </div>
+          <div style={{ textAlign: "center" }}>
+            <Title level={2}>
+              Price: {total.toFixed(5)} XMR = {usdConvert} $
+            </Title>
           </div>
         </Tooltip>
       </Form.Item>
@@ -212,7 +209,7 @@ const MessageForm = ({
           Submit
         </Button>
       </Form.Item>
-    </Form>
+    </Form >
   );
 };
 
@@ -224,13 +221,18 @@ const EnterMessage = ({
   setShowPayment,
   displayName,
   secondPrice,
+  charLimit,
+  charPrice,
+  stream,
   total,
   setTotal,
   message,
-  charLimit,
-  charPrice,
+  goal,
+  goalReached,
   streamUrl,
+  streamPlatform,
   streamLanguage,
+  streamDescription,
   streamCategory,
 }) => {
   const [usdPrice, setUsdPrice] = useState();
