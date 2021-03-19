@@ -79,6 +79,7 @@ const Donate = () => {
   };
 
   const getSubaddress = () => {
+    // Does not appear to be working properly
     socketio.emitGetSubaddress(
       streamer.displayName,
       streamer.userName,

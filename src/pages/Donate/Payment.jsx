@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
 import { Row, Col, Card, Spin, Typography, Image } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
+import "./index.less"
 
 const { Title } = Typography;
 const Payment = ({
@@ -54,7 +55,7 @@ const Payment = ({
     <Row
       justify="center"
       align="middle"
-      style={{ textAlign: "center" }}
+      className="text-center"
       gutter={[0, 14]}
     >
       <Col span={24}>
@@ -68,8 +69,8 @@ const Payment = ({
             Transfer at least <Title level={2}>{total} XMR</Title>
           </span>
         ) : (
-          <span>Transfer any amount of XMR to</span>
-        )}
+            <span>Transfer any amount of XMR to</span>
+          )}
       </Col>
 
       {/* QRCode */}
@@ -85,8 +86,8 @@ const Payment = ({
       </Col>
 
       {/* Preview the message */}
-      <Col span={20} style={{ textAlign: "left" }}>
-        <Title level={2} style={{ textAlign: "center" }}>
+      <Col span={20} className="text-left">
+        <Title level={2} className="text-center">
           Preview:{" "}
         </Title>
         <Card
@@ -100,7 +101,7 @@ const Payment = ({
           }
           extra={<Title level={4}>{total} XMR</Title>}
         >
-          <Title level={5} style={{ textAlign: "center" }}>
+          <Title level={5} className="text-center">
             {message}
           </Title>
         </Card>
@@ -108,6 +109,7 @@ const Payment = ({
     </Row>
   );
 };
+
 Payment.propTypes = {
   displayName: PropTypes.string,
   message: PropTypes.string,

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Row, Col, Typography, Button } from "antd";
+import "./index.less"
 
 const { Title } = Typography;
 
@@ -10,7 +11,7 @@ const Success = ({ setShowSuccess, setShowEnterMessage }) => {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ textAlign: "center" }}>
+    <Row justify="center" align="middle" className="text-center">
       <Col span={24}>
         <Title level={1}>✅ 💯 🙏</Title>
         <Title level={2}>Your payment was successful!</Title>
