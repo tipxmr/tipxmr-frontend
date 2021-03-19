@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
-import StreamerNotFound from "./StreamerNotFound";
+// import StreamerNotFound from "./StreamerNotFound";
+import NotFound404 from "../NotFound404"
 import Success from "./Success";
-import { Row, Col, Switch, Button } from "antd";
+import { Row, Col, Switch } from "antd";
 import "./index.less";
 import { IsOnlineBadge } from "../../components";
 
@@ -18,6 +19,10 @@ const Donate = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showStreamerNotFound, setShowStreamerNotFound] = useState(false);
   const [amount, setAmount] = useState(null);
+  const [donor, setDonor] = useState(null);
+  const [message, setMessage] = useState("");
+  const [showLivestream, setShowLivestream] = useState(true);
+  const [total, setTotal] = useState(0);
 
   // propably not needed in the donate
   const [streamer, setStreamer] = useState({
@@ -39,14 +44,10 @@ const Donate = () => {
     streamDescription: "",
     streamCategory: "",
   });
-  // const [subaddress, setSubaddress] = useState(null);
+  // const [subaddress, setSubaddress] = useState(null); // commented out for testing purposes
   const [subaddress, setSubaddress] = useState(
     "555RneqFCh7Xe7bR93vNs1RK6mNASHPtfABzqHnCQx3UX2tNvU8ppbMb4z5ixK2A4of48VyEfQ2sL2vtAh8jt1RsJAg6zQD"
   ); // for testing
-  const [donor, setDonor] = useState(null);
-  const [message, setMessage] = useState("");
-  const [showLivestream, setShowLivestream] = useState(true);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     // Get Streamer Info from Backend
@@ -56,6 +57,7 @@ const Donate = () => {
   }, [userName]);
 
   useEffect(() => {
+    // Rendering the different page components of a donation
     if (streamer === 0) {
       setShowStreamerNotFound(true);
       setShowPayment(false);
@@ -88,7 +90,8 @@ const Donate = () => {
   };
 
   return (
-    <Row justify="center" align="middle" gutter={[16, 48]}>
+    <Row justify="center" align="middle" gutter={[0, 48]}>
+
       {/* Toggle Livestream Preview / Online/Offline Button */}
       <Col span={6} offset={18} className="gutter-row">
         <Row justify="center" align="middle">
@@ -97,7 +100,7 @@ const Donate = () => {
             onChange={() => setShowLivestream(!showLivestream)}
             style={{ marginRight: "5px" }}
           ></Switch>
-          <p className="inline toggle-container">Show Stream</p>
+          <span>Show Stream</span>
         </Row>
         <Row justify="center" align="middle">
           <IsOnlineBadge isOnline={streamer.isOnline} />
@@ -108,11 +111,12 @@ const Donate = () => {
         {/* Livestream Preview with iframe */}
         <Row justify="center" align="middle">
           {showLivestream ? (
-            <Col span={8} className="right-padding">
-              <div className="container">
+            <Col span={8}>
+              <div className="iframe-container">
                 <iframe
                   className="responsive-iframe"
-                  src="https://www.youtube.com/embed/5qap5aO4i9A"
+                  src="https://www.youtube.com/embed/5qap5aO4i9A" /* for testing */
+                  /* src={streamer.streamUrl} /\* for individual streams *\/ */
                   frameBorder="0"
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -165,7 +169,7 @@ const Donate = () => {
                     setShowEnterMessage={setShowEnterMessage}
                   />
                 ) : null}
-                {showStreamerNotFound ? <StreamerNotFound /> : null}
+                {showStreamerNotFound ? <NotFound404 /> : null}
               </Col>
             </Row>
           </Col>
