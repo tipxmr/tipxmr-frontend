@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col, Card, Spin, Typography, Image } from "antd";
+import { Row, Col, Card, Spin, Typography, Image, Divider } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 import "./index.less"
 
@@ -84,7 +84,7 @@ const Payment = ({
           <WalletOutlined /> Pay from desktop wallet
         </a>
       </Col>
-
+      <Divider />
       {/* Preview the message */}
       <Col span={20} className="text-left">
         <Title level={2} className="text-center">
