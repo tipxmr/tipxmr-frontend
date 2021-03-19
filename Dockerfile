@@ -1,22 +1,10 @@
-FROM node:14
+FROM node:current-alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/local/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
+COPY .env.example ./
+COPY ./public ./public
+RUN npm install && npm cache clean --force
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Copies everything over to Docker environment
-COPY . .
- 
-# Uses port which is used by the actual application
-EXPOSE 8080
- 
-# Finally runs the application
-CMD [ "npm", "start" ]
+COPY ./src ./src
