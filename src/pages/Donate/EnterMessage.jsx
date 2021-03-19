@@ -5,6 +5,7 @@ import {
   Row,
   Col,
   Typography,
+  Divider,
   Form,
   Slider,
   Input,
@@ -43,7 +44,7 @@ const tailLayout = {
 const IntegerStep = ({ seconds, setSeconds }) => {
   return (
     <Row justify="center">
-      <Col span={12}>
+      <Col span={15}>
         <Slider
           min={1}
           max={20}
@@ -51,11 +52,11 @@ const IntegerStep = ({ seconds, setSeconds }) => {
           value={typeof seconds === "number" ? seconds : 0}
         />
       </Col>
-      <Col span={4}>
+      <Col span={1}>
         <InputNumber
           min={1}
           max={20}
-          /* style={{ margin: "0 16px" }} */
+          defaultValue={seconds}
           value={seconds}
           onChange={setSeconds}
         />
@@ -173,6 +174,7 @@ const MessageForm = ({
         </Form.Item>
       ) : null}
 
+      <Divider />
       {/* Price Information in USD */}
       <Form.Item name="priceInfo">
         <Tooltip
@@ -237,7 +239,7 @@ const EnterMessage = ({
 }) => {
   const [usdPrice, setUsdPrice] = useState();
   const [usdConvert, setUsdConvert] = useState();
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(5);
 
   const roundXMR = (number, decimals) => {
     const factorOfTen = Math.pow(10, decimals);
