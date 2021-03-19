@@ -42,12 +42,21 @@ const tailLayout = {
 };
 
 const IntegerStep = ({ seconds, setSeconds }) => {
+  const marks = {
+    1: '1 sec',
+    15: '15 secs',
+    30: '30 secs',
+    45: '45 secs',
+    60: '1 min',
+  };
+
   return (
     <Row justify="center">
       <Col span={15}>
         <Slider
+          marks={marks}
           min={1}
-          max={20}
+          max={60}
           onChange={setSeconds}
           value={typeof seconds === "number" ? seconds : 0}
         />
@@ -55,7 +64,7 @@ const IntegerStep = ({ seconds, setSeconds }) => {
       <Col span={1}>
         <InputNumber
           min={1}
-          max={20}
+          max={60}
           defaultValue={seconds}
           value={seconds}
           onChange={setSeconds}
@@ -169,7 +178,7 @@ const MessageForm = ({
           {...secondsLayout}
           style={{ textAlign: "center", display: "inline" }}
         >
-          <Title level={5}>How many seconds should the message show?</Title>
+          <Title level={5}>How long should your message show?</Title>
           <IntegerStep seconds={seconds} setSeconds={setSeconds} />
         </Form.Item>
       ) : null}
