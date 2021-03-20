@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EnterMessage from "./EnterMessage";
 import Payment from "./Payment";
-// import StreamerNotFound from "./StreamerNotFound";
 import NotFound404 from "../NotFound404";
 import Success from "./Success";
 import { Row, Col, Switch } from "antd";
