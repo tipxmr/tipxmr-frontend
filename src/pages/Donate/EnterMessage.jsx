@@ -74,6 +74,10 @@ const IntegerStep = ({ seconds, setSeconds }) => {
     </Row>
   );
 };
+IntegerStep.propTypes = {
+  seconds: PropTypes.number,
+  setSeconds: PropTypes.func,
+}
 
 const PriceInfo = ({
   secondPrice,
@@ -96,6 +100,13 @@ const PriceInfo = ({
     </div>
   );
 };
+PriceInfo.propTypes = {
+  secondPrice: PropTypes.number,
+  charPrice: PropTypes.number,
+  usdConvert: PropTypes.number,
+  seconds: PropTypes.number,
+  message: PropTypes.string,
+}
 
 const MessageForm = ({
   message,
@@ -216,6 +227,20 @@ const MessageForm = ({
     </Form>
   );
 };
+MessageForm.propTypes = {
+  message: PropTypes.string,
+  setMessage: PropTypes.func,
+  charLimit: PropTypes.number,
+  setShowEnterMessage: PropTypes.func,
+  setShowPayment: PropTypes.func,
+  setDonor: PropTypes.func,
+  seconds: PropTypes.number,
+  setSeconds: PropTypes.func,
+  secondPrice: PropTypes.number,
+  total: PropTypes.number,
+  usdConvert: PropTypes.number,
+  charPrice: PropTypes.number,
+}
 
 const EnterMessage = ({
   donor,
