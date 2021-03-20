@@ -18,7 +18,12 @@ const Success = ({
   };
 
   return (
-    <Row justify="center" align="middle" className="text-center" gutter={[0, 24]}>
+    <Row
+      justify="center"
+      align="middle"
+      className="text-center"
+      gutter={[0, 24]}
+    >
       <Col span={24}>
         <Title level={1}>✅ 💯 🙏</Title>
         <Title level={2}>Your payment was successful!</Title>
@@ -30,7 +35,7 @@ const Success = ({
           Tip again
         </Button>
       </Col>
-    </Row >
+    </Row>
   );
 };
 
