@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col, Card, Spin, Typography, Image, Divider } from "antd";
+import { Row, Col, Spin, Typography, Image, Divider } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 import "./index.less"
+import MessagePreview from "./MessagePreview"
 
 const { Title } = Typography;
 const Payment = ({
@@ -84,28 +85,8 @@ const Payment = ({
           <WalletOutlined /> Pay from desktop wallet
         </a>
       </Col>
-      <Divider />
       {/* Preview the message */}
-      <Col span={20} className="text-left">
-        <Title level={2} className="text-center">
-          Preview:{" "}
-        </Title>
-        <Card
-          title={
-            <span>
-              <Title level={4} style={{ display: "inline" }}>
-                {donor}
-              </Title>{" "}
-              tipped
-            </span>
-          }
-          extra={<Title level={4}>{total} XMR</Title>}
-        >
-          <Title level={5} className="text-center">
-            {message}
-          </Title>
-        </Card>
-      </Col>
+      <MessagePreview message={message} donor={donor} total={total} />
     </Row>
   );
 };

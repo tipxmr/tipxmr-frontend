@@ -65,8 +65,8 @@ const Donate = () => {
     } else {
       setShowStreamerNotFound(false);
       setShowPayment(false);
-      setShowSuccess(false);
-      setShowEnterMessage(true);
+      setShowSuccess(true);
+      setShowEnterMessage(false);
     }
   }, [streamer]);
 
@@ -166,6 +166,9 @@ const Donate = () => {
                   <Success
                     setShowSuccess={setShowSuccess}
                     setShowEnterMessage={setShowEnterMessage}
+                    message={message}
+                    donor={donor}
+                    total={total}
                   />
                 ) : null}
                 {showStreamerNotFound ? <NotFound404 /> : null}
