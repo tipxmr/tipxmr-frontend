@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from "antd";
 import { DesktopOutlined } from "@ant-design/icons";
-import "./index.less"
+import "./index.less";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -77,7 +77,7 @@ const IntegerStep = ({ seconds, setSeconds }) => {
 IntegerStep.propTypes = {
   seconds: PropTypes.number,
   setSeconds: PropTypes.func,
-}
+};
 
 const PriceInfo = ({
   secondPrice,
@@ -106,7 +106,7 @@ PriceInfo.propTypes = {
   usdConvert: PropTypes.number,
   seconds: PropTypes.number,
   message: PropTypes.string,
-}
+};
 
 const MessageForm = ({
   message,
@@ -236,7 +236,7 @@ MessageForm.propTypes = {
   total: PropTypes.number,
   usdConvert: PropTypes.number,
   charPrice: PropTypes.number,
-}
+};
 
 const EnterMessage = ({
   donor,
@@ -305,9 +305,7 @@ const EnterMessage = ({
               <span> | </span>
               <Tooltip title="Go to stream">
                 <a href={streamUrl}>
-                  <DesktopOutlined
-                    className="desktop-icon"
-                  />
+                  <DesktopOutlined className="desktop-icon" />
                 </a>
               </Tooltip>
             </Title>
