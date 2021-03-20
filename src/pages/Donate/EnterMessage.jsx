@@ -14,6 +14,7 @@ import {
   Tooltip,
 } from "antd";
 import { DesktopOutlined } from "@ant-design/icons";
+import "./index.less"
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -284,10 +285,7 @@ const EnterMessage = ({
               <Tooltip title="Go to stream">
                 <a href={streamUrl}>
                   <DesktopOutlined
-                    style={{
-                      fontSize: "2rem",
-                      color: "rgba(255, 255, 255, 0.85)",
-                    }}
+                    className="desktop-icon"
                   />
                 </a>
               </Tooltip>
