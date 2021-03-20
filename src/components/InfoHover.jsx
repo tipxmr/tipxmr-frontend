@@ -59,6 +59,6 @@ const InfoHover = ({ displayName, secondPrice, charPrice }) => {
       <FiInfo className="ml-auto text-gray-200" />
     </div>
   );
-}
+};
 
 export default InfoHover;
