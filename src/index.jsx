@@ -3,7 +3,6 @@ import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
 import "./styles/index.less";
-import "./styles/tailwind.css";
 
 import App from "./App";
 
