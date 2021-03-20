@@ -30,7 +30,7 @@ import {
 } from "./store/atom";
 import createDispatcher from "./store/dispatcher";
 
-function App() {
+const App = () => {
   const [dispatcher, setDispatcher] = useRecoilState(dispatcherState);
   const dispatcherRef = useRef(createDispatcher());
   const walletUseEffectDidFire = useRef(false);
@@ -129,6 +129,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;

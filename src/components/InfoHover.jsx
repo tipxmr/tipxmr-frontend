@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useMeasure } from "react-use";
 import { useSpring, animated } from "react-spring";
 import { FiInfo } from "react-icons/fi";
-import clsx from "clsx";
 
-function InfoHover({ displayName, secondPrice, charPrice }) {
+const InfoHover = ({ displayName, secondPrice, charPrice }) => {
   const [isShown, setIsShown] = useState(false);
 
   // --- ANSWER---
@@ -60,6 +59,6 @@ function InfoHover({ displayName, secondPrice, charPrice }) {
       <FiInfo className="ml-auto text-gray-200" />
     </div>
   );
-}
+};
 
 export default InfoHover;

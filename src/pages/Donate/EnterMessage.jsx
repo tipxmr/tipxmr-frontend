@@ -1,40 +1,244 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Counter } from "../../components";
-import clsx from "clsx";
-import { BsDisplay } from "react-icons/bs";
-import { useForm } from "react-hook-form";
+import {
+  Row,
+  Col,
+  Typography,
+  Divider,
+  Form,
+  Slider,
+  Input,
+  InputNumber,
+  Button,
+  Tooltip,
+} from "antd";
+import { DesktopOutlined } from "@ant-design/icons";
+import "./index.less";
 
-function MessageArea({ message, setMessage, charLimit }) {
-  const textBoxStyle = clsx([
-    "flex flex-grow p-2 mx-3 border border-gray-200 shadow placeholder-gray-200 bg-xmrgray-darker rounded",
-  ]);
+const { Title, Text } = Typography;
+const { TextArea } = Input;
+
+const layout = {
+  labelCol: {
+    span: 0,
+  },
+  wrapperCol: {
+    span: 24,
+  },
+};
+const secondsLayout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 24,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 10,
+    span: 5,
+  },
+};
+
+const IntegerStep = ({ seconds, setSeconds }) => {
+  const marks = {
+    1: "1 sec",
+    15: "15 secs",
+    30: "30 secs",
+    45: "45 secs",
+    60: "1 min",
+  };
 
   return (
-    <div className="flex flex-grow relative h-32 mx-3">
-      <textarea
-        type="text"
-        className={textBoxStyle}
-        maxLength={charLimit}
-        placeholder="Enter your message here..."
-        onChange={(e) => {
-          setMessage(e.target.value);
-        }}
-      />
-      <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
-        {message ? message.length + "/" + charLimit : null}
-      </p>
+    <Row justify="center">
+      <Col span={15}>
+        <Slider
+          marks={marks}
+          min={1}
+          max={60}
+          onChange={setSeconds}
+          value={typeof seconds === "number" ? seconds : 0}
+        />
+      </Col>
+      <Col span={1}>
+        <InputNumber
+          min={1}
+          max={60}
+          defaultValue={seconds}
+          value={seconds}
+          onChange={setSeconds}
+        />
+      </Col>
+    </Row>
+  );
+};
+IntegerStep.propTypes = {
+  seconds: PropTypes.number,
+  setSeconds: PropTypes.func,
+};
+
+const PriceInfo = ({
+  secondPrice,
+  charPrice,
+  usdConvert,
+  seconds,
+  message,
+}) => {
+  return (
+    <div style={{ fontSize: "120%" }}>
+      <Title level={3}>How is this price calculated?</Title>
+      <ul>
+        <li>- Price per second = {secondPrice} XMR</li>
+        <li>- Price per character = {charPrice} XMR</li>
+      </ul>
+      <Text code>
+        {usdConvert}$ = ({secondPrice}$ * {seconds} secs ) + ({charPrice}$ *{" "}
+        {message.length})
+      </Text>
     </div>
   );
-}
-MessageArea.propTypes = {
+};
+PriceInfo.propTypes = {
+  secondPrice: PropTypes.number,
+  charPrice: PropTypes.number,
+  usdConvert: PropTypes.number,
+  seconds: PropTypes.number,
+  message: PropTypes.string,
+};
+
+const MessageForm = ({
+  message,
+  setMessage,
+  charLimit,
+  setShowEnterMessage,
+  setShowPayment,
+  setDonor,
+  seconds,
+  setSeconds,
+  secondPrice,
+  total,
+  usdConvert,
+  charPrice,
+}) => {
+  const handleMessage = (value) => {
+    setMessage(value.target.value);
+  };
+  const handleDonor = (e) => {
+    setDonor(e.target.value);
+  };
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    setShowEnterMessage(false);
+    setShowPayment(true);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  return (
+    <Form
+      {...layout}
+      name="tip"
+      initialValues={{
+        remember: true,
+        seconds: 12,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        name="name"
+        rules={[
+          {
+            required: true,
+            default: "anon",
+            message: "Please enter a name",
+          },
+        ]}
+      >
+        <Input
+          size="large"
+          placeholder="Your name"
+          onChange={handleDonor}
+          maxLength={15}
+        />
+      </Form.Item>
+      <Form.Item>
+        <div>
+          <Form.Item name="message">
+            <TextArea
+              size="large"
+              autosize={{ minRows: 4, maxRows: 7 }}
+              maxLength={charLimit}
+              placeholder="Enter your message here..."
+              onChange={handleMessage}
+            />
+          </Form.Item>
+          <p style={{ textAlign: "right" }}>
+            {message ? message.length + "/" + charLimit : null}
+          </p>
+        </div>
+      </Form.Item>
+
+      {secondPrice ? (
+        <Form.Item
+          {...secondsLayout}
+          style={{ textAlign: "center", display: "inline" }}
+        >
+          <Title level={5}>How long should your message show?</Title>
+          <IntegerStep seconds={seconds} setSeconds={setSeconds} />
+        </Form.Item>
+      ) : null}
+
+      <Divider />
+      {/* Price Information in USD */}
+      <Tooltip
+        placement="bottom"
+        title={
+          <PriceInfo
+            secondPrice={secondPrice}
+            charPrice={charPrice}
+            usdConvert={usdConvert}
+            seconds={seconds}
+            message={message}
+          />
+        }
+      >
+        <div style={{ textAlign: "center" }}>
+          <Title level={2}>
+            Price: {total.toFixed(5)} XMR = {usdConvert} $
+          </Title>
+        </div>
+      </Tooltip>
+
+      {/* Button to continue */}
+      <Form.Item name="submitButton" {...tailLayout}>
+        <Button type="primary" htmlType="submit" size="large">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+MessageForm.propTypes = {
   message: PropTypes.string,
   setMessage: PropTypes.func,
   charLimit: PropTypes.number,
+  setShowEnterMessage: PropTypes.func,
+  setShowPayment: PropTypes.func,
+  setDonor: PropTypes.func,
+  seconds: PropTypes.number,
+  setSeconds: PropTypes.func,
+  secondPrice: PropTypes.number,
+  total: PropTypes.number,
+  usdConvert: PropTypes.number,
+  charPrice: PropTypes.number,
 };
 
-function EnterMessage({
+const EnterMessage = ({
   donor,
   setDonor,
   setMessage,
@@ -42,23 +246,28 @@ function EnterMessage({
   setShowPayment,
   displayName,
   secondPrice,
+  charLimit,
+  charPrice,
+  stream,
   total,
   setTotal,
   message,
-  charLimit,
-  charPrice,
+  goal,
+  goalReached,
   streamUrl,
   streamPlatform,
   streamLanguage,
   streamDescription,
   streamCategory,
-}) {
+}) => {
   const [usdPrice, setUsdPrice] = useState();
-  const usdConvert = (usdPrice * total).toFixed(2);
-  const [seconds, setSeconds] = useState(0);
+  const [usdConvert, setUsdConvert] = useState();
+  const [seconds, setSeconds] = useState(5);
 
-  const { register, handleSubmit, errors } = useForm();
-
+  const roundXMR = (number, decimals) => {
+    const factorOfTen = Math.pow(10, decimals);
+    return Math.round(number * factorOfTen) / factorOfTen;
+  };
   useEffect(() => {
     // Get MoneroPrice as number
     fetch("https://api.coinpaprika.com/v1/tickers/xmr-monero?quotes=USD")
@@ -69,101 +278,62 @@ function EnterMessage({
   }, []);
 
   useEffect(() => {
-    setTotal(secondPrice * seconds + message.length * charPrice);
-  }, [message, seconds]);
-
-  // useEffect(() => {
-  //   setUsdConvert((usdPrice * total).toFixed(2));
-  // }, [total, usdPrice]);
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+    // Update the total price of tip
+    const total = secondPrice * seconds + message.length * charPrice;
+    setTotal(roundXMR(total, 6));
+    setUsdConvert((usdPrice * total).toFixed(2));
+  }, [message, seconds, charPrice, secondPrice, setTotal, total, usdPrice]);
 
   return (
-    <div className="flex flex-grow justify-center text-gray-200">
-      <div className="my-auto">
-        <h2 className="text-center text-3xl">
-          <span role="img" aria-label="Green Money">
-            💸
-          </span>
-          Donate to <span className="font-bold">{displayName}</span> with Monero
-          <span role="img" aria-label="Green Money">
-            💸
-          </span>
-        </h2>
-        <div className="flex flex-row justify-evenly items-center">
-          <span className="text-xl">{streamLanguage}</span>
-          <span className="px-2 py-1 text-sm tracking-wide rounded-full bg-xmrgray-darker ">
-            #{streamCategory}
-          </span>
+    <Row justify="center" align="middle">
+      {/* Information on the Streamer */}
+      <Col>
+        <Row
+          justify="center"
+          align="middle"
+          gutter={[16, 0]}
+          style={{ textAlign: "center" }}
+        >
+          <Col className="gutter-row" flex="0 1 auto">
+            <Title level={1}>{displayName}</Title>
+          </Col>
+          <Col className="gutter-row" flex="0 1 70VW">
+            <Title level={2}>
+              <Tooltip title="Stream category">#{streamCategory}</Tooltip>
+              <span> | </span>
+              <Tooltip title="Stream language">{streamLanguage}</Tooltip>
+              <span> | </span>
+              <Tooltip title="Go to stream">
+                <a href={streamUrl}>
+                  <DesktopOutlined className="desktop-icon" />
+                </a>
+              </Tooltip>
+            </Title>
+          </Col>
+        </Row>
+      </Col>
 
-          <a href={streamUrl}>
-            <BsDisplay size="1.2em" color="text-gray-700" />
-          </a>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col text-center">
-            <div className="flex flex-grow relative mx-3">
-              <input
-                name="donorName"
-                type="text"
-                align="middle"
-                maxLength={15}
-                className="block m-4 p-2 border border-gray-200 bg-xmrgray-darker placeholder-gray-200 w-2/3 mx-auto text-center rounded"
-                placeholder="Your Name"
-                ref={register({
-                  required: "You forgot to put in a name",
-                })}
-                onChange={(e) => {
-                  setDonor(e.target.value);
-                }}
-              />
-              <p className="bottom-0 right-0 absolute text-gray-200 text-xs tracking-tight px-4">
-                {donor ? donor.length + "/15" : null}
-              </p>
-            </div>
-            <p className="text-xmrorange mb-3">
-              {errors.donorName ? "Please enter a name" : null}
-            </p>
-
-            <MessageArea
-              message={message}
-              setMessage={setMessage}
-              charLimit={charLimit}
-            />
-            <div className="w-3/5 mx-auto m-4 text-gray-200">
-              {secondPrice ? (
-                <div className="flex items-center justify-center">
-                  <p className="tracking-tight mr-3">Showtime: </p>
-                  <Counter count={seconds} setCount={setSeconds} />
-                  <p className="tracking-tight ml-3">seconds</p>
-                </div>
-              ) : null}
-
-              <div className="my-3">
-                <p className="tracking-tight text-xs">Minimum amount:</p>
-                {total.toFixed(5)} XMR = {usdConvert} $
-              </div>
-            </div>
-          </div>
-          <div className="w-full flex justify-center">
-            <Button
-              onClick={() => {
-                setShowEnterMessage(false);
-                setShowPayment(true);
-              }}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+      {/* Enter message form */}
+      <Col span={24}>
+        <MessageForm
+          message={message}
+          setMessage={setMessage}
+          charLimit={charLimit}
+          setShowEnterMessage={setShowEnterMessage}
+          setDonor={setDonor}
+          setShowPayment={setShowPayment}
+          seconds={seconds}
+          secondPrice={secondPrice}
+          total={total}
+          setSeconds={setSeconds}
+          charPrice={charPrice}
+          setTotal={setTotal}
+          usdConvert={usdConvert}
+        />
+      </Col>
+    </Row>
   );
-}
+};
 EnterMessage.propTypes = {
   donor: PropTypes.string,
   setDonor: PropTypes.func,
