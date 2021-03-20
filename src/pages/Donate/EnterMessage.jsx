@@ -138,10 +138,6 @@ const MessageForm = ({
     console.log("Failed:", errorInfo);
   };
 
-  useEffect(() => {
-    setSeconds(seconds);
-  }, [seconds, setSeconds]);
-
   return (
     <Form
       {...layout}
@@ -301,7 +297,7 @@ const EnterMessage = ({
           <Col className="gutter-row" flex="0 1 auto">
             <Title level={1}>{displayName}</Title>
           </Col>
-          <Col className="gutter-row" flex="0 1 500px">
+          <Col className="gutter-row" flex="0 1 70VW">
             <Title level={2}>
               <Tooltip title="Stream category">#{streamCategory}</Tooltip>
               <span> | </span>
