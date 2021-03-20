@@ -43,11 +43,11 @@ const tailLayout = {
 
 const IntegerStep = ({ seconds, setSeconds }) => {
   const marks = {
-    1: '1 sec',
-    15: '15 secs',
-    30: '30 secs',
-    45: '45 secs',
-    60: '1 min',
+    1: "1 sec",
+    15: "15 secs",
+    30: "30 secs",
+    45: "45 secs",
+    60: "1 min",
   };
 
   return (
@@ -95,7 +95,6 @@ const PriceInfo = ({
     </div>
   );
 };
-
 
 const MessageForm = ({
   message,
@@ -203,18 +202,13 @@ const MessageForm = ({
         <div style={{ textAlign: "center" }}>
           <Title level={2}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
-            </Title>
+          </Title>
         </div>
       </Tooltip>
 
       {/* Button to continue */}
       <Form.Item name="submitButton" {...tailLayout}>
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-
-        >
+        <Button type="primary" htmlType="submit" size="large">
           Submit
         </Button>
       </Form.Item>

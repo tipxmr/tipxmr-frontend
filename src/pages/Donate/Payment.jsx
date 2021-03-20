@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
 import { Row, Col, Spin, Typography, Image, Divider } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
-import "./index.less"
-import MessagePreview from "./MessagePreview"
+import "./index.less";
+import MessagePreview from "./MessagePreview";
 
 const { Title } = Typography;
 const Payment = ({
@@ -70,8 +70,8 @@ const Payment = ({
             Transfer at least <Title level={2}>{total} XMR</Title>
           </span>
         ) : (
-            <span>Transfer any amount of XMR to</span>
-          )}
+          <span>Transfer any amount of XMR to</span>
+        )}
       </Col>
 
       {/* QRCode */}
@@ -85,6 +85,7 @@ const Payment = ({
           <WalletOutlined /> Pay from desktop wallet
         </a>
       </Col>
+
       {/* Preview the message */}
       <MessagePreview message={message} donor={donor} total={total} />
     </Row>
