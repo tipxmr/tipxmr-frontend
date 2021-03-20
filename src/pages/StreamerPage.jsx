@@ -59,19 +59,17 @@ const StreamerPage = () => {
     "talk",
     "XXX",
   ]);
+
   const [collapsed, setCollapsed] = useState(false);
 
-  // TODO implement category pictures
-  const [activeCategory, setActiveCategory] = useState("all");
-
-  // ----------- STREAMERCARD -----------
   const [onlineStreamers, setOnlineStreamers] = useState(null);
+
   useEffect(() => {
     socketio.emitGetOnlineStreamers();
     socketio.onGetOnlineStreamer(setOnlineStreamers);
   }, []);
 
-  const renderStreamerCards = () => {
+  const RenderStreamerCards = () => {
     if (onlineStreamers && onlineStreamers.value) {
       return onlineStreamers.value.map((streamer) => {
         if (activeCategory === streamer.stream.category) {
@@ -85,7 +83,8 @@ const StreamerPage = () => {
         }
       });
     }
-    return null;
+    // return null;
+    return <StreamerCard key={7} streamer={alex} />;
   };
 
   return (
@@ -114,7 +113,7 @@ const StreamerPage = () => {
             <Title level={1}>Online right now</Title>
           </Col>
           <Col span={6}>
-            <StreamerCard key={7} streamer={alex} />
+            <RenderStreamerCards />
           </Col>
         </Row>
       </Content>
@@ -125,7 +124,7 @@ const StreamerPage = () => {
     //     categories={categories}
     //   />
 
-    //   <div className="bg-xmrgray-darker m-16">{renderStreamerCards()}</div>
+    //   <div className="bg-xmrgray-darker m-16"></div>
   );
 };
 export default StreamerPage;
