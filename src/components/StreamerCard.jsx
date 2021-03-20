@@ -40,13 +40,17 @@ TipButton.propTypes = {
 const StreamerCard = ({ streamer }) => {
   return (
     <Card
-      cover={<img alt="example" src="https://i.imgur.com/PW3XO3u.jpg" />}
+      cover={
+        <img
+          alt="example"
+          /* src={streamer.profilePicture} */
+          src="https://i.imgur.com/PW3XO3u.jpg"
+        />
+      }
       actions={[<TipButton streamerName={streamer.userName} />]}
+      style={{ textAlign: "center", maxWidth: "300px", minWidth: "100px" }}
     >
-      <Meta
-        avatar={<Avatar src={streamer.profilePicture} />}
-        title={<Title level={2}>{streamer.displayName}</Title>}
-      />
+      <Meta title={<Title level={2}>{streamer.displayName}</Title>} />
       <Row justify="center" align="middle" gutter={[12, 12]}>
         <Col className="gutter-row">
           <Tag>{streamer.stream.category}</Tag>
