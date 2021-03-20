@@ -65,8 +65,8 @@ const Donate = () => {
     } else {
       setShowStreamerNotFound(false);
       setShowPayment(false);
-      setShowSuccess(true);
-      setShowEnterMessage(false);
+      setShowSuccess(false);
+      setShowEnterMessage(true);
     }
   }, [streamer]);
 
