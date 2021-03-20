@@ -67,22 +67,3 @@ StreamerCard.propTypes = {
 };
 
 export default StreamerCard;
-
-// function Funding({ streamer }) {
-//   if (streamer) {
-//     console.log("funding: ", streamer);
-//     return (
-//       <div className="px-2 text-sm mb-4">
-//         <span className="tracking-wide">Funding:</span>
-
-//         <span className="tracking-tight">
-//           {streamer.goalProgress} of {streamer.goal}XMR
-//         </span>
-//       </div>
-//     );
-//   }
-//   return null;
-// }
-// Funding.propTypes = {
-//   streamer: PropTypes.object,
-// };
