@@ -3,7 +3,7 @@
 import React from "react";
 import clsx from "clsx";
 
-function NavItem({ children, activeCategory, stateSetter }) {
+const NavItem = ({ children, activeCategory, stateSetter }) => {
   const pillStyle = clsx(
     "rounded",
     "text-sm",
@@ -22,9 +22,9 @@ function NavItem({ children, activeCategory, stateSetter }) {
     }
   );
 
-  function handleChange(children) {
+  const handleChange = (children) => {
     stateSetter(children);
-  }
+  };
 
   if (children === activeCategory) {
     return (
@@ -39,9 +39,9 @@ function NavItem({ children, activeCategory, stateSetter }) {
       </li>
     );
   }
-}
+};
 
-function CategoryNav({ activeCategory, categories, stateSetter }) {
+const CategoryNav = ({ activeCategory, categories, stateSetter }) => {
   return (
     <div className="h-full flex flex-grow bg-gray-200">
       {/*<!-- container -->*/}
@@ -70,6 +70,6 @@ function CategoryNav({ activeCategory, categories, stateSetter }) {
       </aside>
     </div>
   );
-}
+};
 
 export default CategoryNav;
