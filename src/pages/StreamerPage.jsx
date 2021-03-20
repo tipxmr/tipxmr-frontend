@@ -3,7 +3,7 @@ import { StreamerCard, CategoryNav } from "../components";
 import socketio from "../libs/socket_donator";
 
 // TODO render the category page with a filter
-function StreamerPage() {
+const StreamerPage = () => {
   // ----------- STATES FOR CATEGORY NAV -----------
   const [categories, setCategories] = useState([
     "all",
@@ -23,7 +23,7 @@ function StreamerPage() {
     socketio.onGetOnlineStreamer(setOnlineStreamers);
   }, []);
 
-  function renderStreamerCards() {
+  const renderStreamerCards = () => {
     if (onlineStreamers && onlineStreamers.value) {
       return onlineStreamers.value.map((streamer) => {
         if (activeCategory === streamer.stream.category) {
@@ -38,7 +38,7 @@ function StreamerPage() {
       });
     }
     return null;
-  }
+  };
   return (
     <div className="flex">
       <CategoryNav
@@ -50,5 +50,5 @@ function StreamerPage() {
       <div className="bg-xmrgray-darker m-16">{renderStreamerCards()}</div>
     </div>
   );
-}
+};
 export default StreamerPage;
