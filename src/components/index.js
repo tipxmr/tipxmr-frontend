@@ -1,7 +1,6 @@
 export { default as Button } from "./Button";
 
 export { default as CategoryCard } from "./CategoryCard";
-export { default as CategoryNav } from "./CategoryNav";
 export { default as CheckboxField } from "./CheckboxField";
 export { default as Counter } from "./Counter";
 
