@@ -13,14 +13,15 @@ import {
   Switch,
 } from "antd";
 import { WalletOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import "../styles/index.less";
 
 const { Title, Text } = Typography;
 
 const TierInfo = () => {
   const data = [
     <Text type="secondary">
-      The Basic model will enable you to recieve XMR in livestreams. Great to
-      get started.
+      The Basic model enables you to recieve XMR in livestreams. Great to get
+      started.
     </Text>,
     <Text type="secondary">
       The Premium model allows full customization of your donations. Perfect for
@@ -31,7 +32,11 @@ const TierInfo = () => {
     <div>
       <List
         size="small"
-        header={<Title level={4}>Basic or Premium?</Title>}
+        header={
+          <Title level={4} className="text-center">
+            Basic or Premium?
+          </Title>
+        }
         dataSource={data}
         renderItem={(item) => <List.Item>{item}</List.Item>}
       />
@@ -104,58 +109,67 @@ const Payment = () => {
   }, [yearly, isPremium]);
 
   return (
-    <Row justify="center" align="middle">
+    <Row
+      justify="center"
+      align="middle"
+      gutter={[0, 16]}
+      className="text-center"
+    >
       <Col span={24}>
-        <Row justify="center" gutter={[0, 24]}>
-          <Col span={24}>
-            Configure your membership for TipXMR{" "}
-            <Tooltip title={TierInfo} placement="right">
-              <InfoCircleOutlined />
-            </Tooltip>
-          </Col>
-          <Col span={8}>
-            <Text>One Month</Text>
-          </Col>
-          <Col span={6}>
-            <Tooltip title={IntervalInfo}>
-              <Switch defaultChecked onChange={handleInterval} />
-            </Tooltip>
-          </Col>
-          <Col span={8}>
-            <Text>One year</Text>
-          </Col>
-          <Col span={8}>
-            <Text>Basic</Text>
-          </Col>
-          <Col span={6}>
-            <Switch defaultChecked onChange={handleTier} />
-          </Col>
-          <Col span={8}>
-            <Text>Premium</Text>
-          </Col>
-        </Row>
-        <Divider />
-        <Row justify="center" align="middle">
-          <Col span={24}>
-            <img
-              src={qrCode}
-              alt="qr code"
-              preview={false}
-              style={{ margin: "0 auto" }}
-            />
-          </Col>
-          <Col>
-            <a href={paymentUri} onClick={handleClick}>
-              <WalletOutlined /> Pay from desktop wallet
-            </a>
-          </Col>
-        </Row>
-        <Divider />
-        <Row justify="center" style={{ textAlign: "center" }}>
-          <Col span={24}>
-            <Title level={3}>Total: {amount} XMR</Title>
-          </Col>
-        </Row>
+        Configure your membership for TipXMR{" "}
+        <Tooltip title={TierInfo} placement="right">
+          <InfoCircleOutlined />
+        </Tooltip>
+      </Col>
+
+      <Col span={8}>
+        <Text>One Month</Text>
+      </Col>
+      <Col span={6}>
+        <Tooltip title={IntervalInfo}>
+          <Switch defaultChecked onChange={handleInterval} />
+        </Tooltip>
+      </Col>
+      <Col span={8}>
+        <Text>One year</Text>
+      </Col>
+
+      <Col span={8}>
+        <Text>Basic</Text>
+      </Col>
+      <Col span={6}>
+        <Switch defaultChecked onChange={handleTier} />
+      </Col>
+      <Col span={8}>
+        <Text>Premium</Text>
+      </Col>
+
+      <Divider />
+      <Col span={24}>
+        <img
+          src={qrCode}
+          alt="qr code"
+          preview={false}
+          style={{ margin: "0 auto" }}
+        />
+      </Col>
+      <Col span={12}>
+        <Button type="secondary">
+          <a href={paymentUri} onClick={handleClick}>
+            <WalletOutlined /> Pay from desktop wallet
+          </a>
+        </Button>
+      </Col>
+      <Col span={12}>
+        <Button type="secondary">
+          <a href={paymentUri} onClick={handleClick}>
+            <WalletOutlined /> Pay from TipXMR wallet
+          </a>
+        </Button>
+      </Col>
+      <Divider />
+      <Col span={24}>
+        <Title level={3}>Total: {amount} XMR</Title>
       </Col>
     </Row>
   );
@@ -171,14 +185,16 @@ const InvoiceModal = () => {
       closable={false}
       cancelButtonProps={{ visible: "false" }}
       footer={[
-        <Button
-          type="primary"
-          disabled={!isPayed}
-          icon={!isPayed ? <Spin size="small" /> : null}
-          size="large"
-        >
-          {isPayed ? "Continue" : "Awaiting Payment"}
-        </Button>,
+        <Row justify="center">
+          <Button
+            type="primary"
+            disabled={!isPayed}
+            icon={!isPayed ? <Spin size="small" /> : null}
+            size="large"
+          >
+            {isPayed ? "Continue" : " Awaiting Payment"}
+          </Button>
+        </Row>,
       ]}
     >
       <Payment />
