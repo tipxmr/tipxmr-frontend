@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { FaTwitch, FaYoutube } from "react-icons/fa";
 import tipxmr from "../images/tipxmr-button.png";
 import { Link } from "react-router-dom";
-import { Row, Col, Card, Avatar, Image, Tag, Typography } from "antd";
+import { Row, Col, Card, Image, Tag, Typography } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
