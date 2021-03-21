@@ -9,6 +9,7 @@ import {
   GiftOutlined,
 } from "@ant-design/icons";
 import "../styles/index.less";
+import "./index.less";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -49,8 +50,7 @@ const StreamerCard = ({ streamer }) => {
         />
       }
       actions={[<TipButton streamerName={streamer.userName} />]}
-      style={{ maxWidth: "300px", minWidth: "100px" }}
-      className="text-center"
+      className="text-center card-size"
     >
       <Meta title={<Title level={2}>{streamer.displayName}</Title>} />
       <Row justify="center" align="middle" gutter={[12, 12]}>

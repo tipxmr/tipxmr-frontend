@@ -3,6 +3,7 @@ import StreamerCard from "./";
 import socketio from "../../libs/socket_donator";
 import { Row, Col, Layout, Menu, Typography } from "antd";
 import "../../styles/index.less";
+import "./index.less";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -40,7 +41,7 @@ const StreamerPage = () => {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="layout-height">
       <Sider
         collapsible
         collapsed={collapsed}
@@ -50,7 +51,7 @@ const StreamerPage = () => {
           theme="dark"
           defaultSelectedKeys={["all"]}
           mode="inline"
-          style={{ fontSize: "1.5rem" }}
+          className="large-font"
           onClick={handleActiveCategory}
         >
           <Menu.Item key="all">All</Menu.Item>
@@ -61,7 +62,7 @@ const StreamerPage = () => {
         </Menu>
       </Sider>
       <Content>
-        <Row justify="center" style={{ paddingLeft: "5vw" }}>
+        <Row justify="center" className="padding-left">
           <Col span={24} className="text-center">
             <Title level={1}>Online right now</Title>
           </Col>
