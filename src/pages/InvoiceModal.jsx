@@ -207,13 +207,4 @@ const InvoiceModal = () => {
   );
 };
 
-// For testing
-const Invoice = () => {
-  return (
-    <div>
-      <InvoiceModal />
-    </div>
-  );
-};
-
-export default Invoice;
+export default InvoiceModal;

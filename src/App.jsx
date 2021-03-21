@@ -16,7 +16,7 @@ import {
   Disclaimer,
   Donate,
   FAQ,
-  Invoice,
+  InvoiceModal,
   Landing,
   Login,
   Logout,
@@ -116,7 +116,7 @@ const App = () => {
               <Logout />
             </Route>
             <Route path="/invoice">
-              <Invoice />
+              <InvoiceModal />
             </Route>
             <Route path="/">
               <Redirect to="/dashboard" />
