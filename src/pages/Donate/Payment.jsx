@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
 import { Row, Col, Spin, Typography, Image, Divider } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
-import "./index.less";
+import "./Donate.less";
+import "../../styles/index.less";
 import MessagePreview from "./MessagePreview";
 
 const { Title } = Typography;
