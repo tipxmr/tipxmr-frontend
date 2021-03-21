@@ -7,6 +7,7 @@ import NotFound404 from "../NotFound404";
 import Success from "./Success";
 import { Row, Col, Switch } from "antd";
 import "./index.less";
+import "../../styles/index.less";
 import { IsOnlineBadge } from "../../components";
 
 import socketio from "../../libs/socket_donator";

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { StreamerCard } from "../components";
 import socketio from "../libs/socket_donator";
 import { Row, Col, Layout, Menu, Typography } from "antd";
+import "../styles/index.less";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -61,7 +62,7 @@ const StreamerPage = () => {
       </Sider>
       <Content>
         <Row justify="center" style={{ paddingLeft: "5vw" }}>
-          <Col span={24} style={{ textAlign: "center" }}>
+          <Col span={24} className="text-center">
             <Title level={1}>Online right now</Title>
           </Col>
           <Col span={6}>

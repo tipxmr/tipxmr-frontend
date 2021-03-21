@@ -8,6 +8,7 @@ import {
   EllipsisOutlined,
   GiftOutlined,
 } from "@ant-design/icons";
+import "../styles/index.less";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -18,7 +19,7 @@ const iconLookup = {
 
 const StreamIcon = ({ type }) => {
   const Icon = iconLookup[type];
-  return <Icon style={{ display: "inline" }} />;
+  return <Icon className="inline" />;
 };
 StreamIcon.propTypes = {
   type: PropTypes.oneOf(["youtube", "twitch"]),
@@ -27,7 +28,7 @@ StreamIcon.propTypes = {
 const TipButton = ({ streamerName }) => {
   return (
     <Link to={"/donate/" + streamerName}>
-      <div style={{ margin: "0 auto" }}>
+      <div className="center-div">
         <Image src={tipxmr} width={100} preview={false} />
       </div>
     </Link>
@@ -48,7 +49,8 @@ const StreamerCard = ({ streamer }) => {
         />
       }
       actions={[<TipButton streamerName={streamer.userName} />]}
-      style={{ textAlign: "center", maxWidth: "300px", minWidth: "100px" }}
+      style={{ maxWidth: "300px", minWidth: "100px" }}
+      className="text-center"
     >
       <Meta title={<Title level={2}>{streamer.displayName}</Title>} />
       <Row justify="center" align="middle" gutter={[12, 12]}>
@@ -59,7 +61,7 @@ const StreamerCard = ({ streamer }) => {
         <Col className="gutter-row">
           <StreamIcon type={streamer.stream.platform} />
         </Col>
-        <Col span={24} className="gutter-row" style={{ textAlign: "center" }}>
+        <Col span={24} className="gutter-row" className="text-center">
           <Text type="secondary">{streamer.stream.description}</Text>
         </Col>
       </Row>
