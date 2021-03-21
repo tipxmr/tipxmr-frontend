@@ -45,7 +45,12 @@ const TierInfo = () => {
 };
 
 const IntervalInfo = () => {
-  return <div>Pay for the whole year in advance, get one month for free!</div>;
+  return (
+    <div className="text-center">
+      <p>Pay for the whole year in advance,</p>
+      <p>get one month for free!</p>
+    </div>
+  );
 };
 
 const Payment = () => {
