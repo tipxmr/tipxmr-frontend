@@ -49,17 +49,8 @@ const alex = {
   userName: "alexanarcho",
 };
 
-// TODO render the category page with a filter
 const StreamerPage = () => {
-  // ----------- STATES FOR CATEGORY NAV -----------
-  const [categories, setCategories] = useState([
-    "all",
-    "gaming",
-    "politics",
-    "talk",
-    "XXX",
-  ]);
-
+  const [activeCategory, setActiveCategory] = useState("all");
   const [collapsed, setCollapsed] = useState(false);
 
   const [onlineStreamers, setOnlineStreamers] = useState(null);
@@ -68,6 +59,10 @@ const StreamerPage = () => {
     socketio.emitGetOnlineStreamers();
     socketio.onGetOnlineStreamer(setOnlineStreamers);
   }, []);
+
+  const handleCategory = (e) => {
+    setActiveCategory(e.key);
+  };
 
   const RenderStreamerCards = () => {
     if (onlineStreamers && onlineStreamers.value) {
@@ -83,8 +78,8 @@ const StreamerPage = () => {
         }
       });
     }
-    // return null;
-    return <StreamerCard key={7} streamer={alex} />;
+    return null;
+    // return <StreamerCard key={7} streamer={alex} />;
   };
 
   return (
@@ -96,15 +91,16 @@ const StreamerPage = () => {
       >
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["all"]}
           mode="inline"
           style={{ fontSize: "1.5rem" }}
+          onClick={handleCategory}
         >
-          <Menu.Item key={1}>All</Menu.Item>
-          <Menu.Item key={2}>Gaming</Menu.Item>
-          <Menu.Item key={3}>Politics</Menu.Item>
-          <Menu.Item key={4}>Music</Menu.Item>
-          <Menu.Item key={5}>XXX</Menu.Item>
+          <Menu.Item key="all">All</Menu.Item>
+          <Menu.Item key="gaming">Gaming</Menu.Item>
+          <Menu.Item key="politics">Politics</Menu.Item>
+          <Menu.Item key="music">Music</Menu.Item>
+          <Menu.Item key="xxx">XXX</Menu.Item>
         </Menu>
       </Sider>
       <Content>
@@ -118,13 +114,6 @@ const StreamerPage = () => {
         </Row>
       </Content>
     </Layout>
-    //   <CategoryNav
-    //     activeCategory={activeCategory}
-    //     stateSetter={setActiveCategory}
-    //     categories={categories}
-    //   />
-
-    //   <div className="bg-xmrgray-darker m-16"></div>
   );
 };
 export default StreamerPage;
