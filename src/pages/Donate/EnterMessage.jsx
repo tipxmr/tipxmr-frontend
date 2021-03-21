@@ -14,7 +14,8 @@ import {
   Tooltip,
 } from "antd";
 import { DesktopOutlined } from "@ant-design/icons";
-import "./index.less";
+import "./Donate.less";
+import "../../styles/index.less";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -177,17 +178,14 @@ const MessageForm = ({
               onChange={handleMessage}
             />
           </Form.Item>
-          <p style={{ textAlign: "right" }}>
+          <p className="text-right">
             {message ? message.length + "/" + charLimit : null}
           </p>
         </div>
       </Form.Item>
 
       {secondPrice ? (
-        <Form.Item
-          {...secondsLayout}
-          style={{ textAlign: "center", display: "inline" }}
-        >
+        <Form.Item {...secondsLayout} className="text-center inline">
           <Title level={5}>How long should your message show?</Title>
           <IntegerStep seconds={seconds} setSeconds={setSeconds} />
         </Form.Item>
@@ -207,7 +205,7 @@ const MessageForm = ({
           />
         }
       >
-        <div style={{ textAlign: "center" }}>
+        <div className="text-center">
           <Title level={2}>
             Price: {total.toFixed(5)} XMR = {usdConvert} $
           </Title>
@@ -292,7 +290,7 @@ const EnterMessage = ({
           justify="center"
           align="middle"
           gutter={[16, 0]}
-          style={{ textAlign: "center" }}
+          className="text-center"
         >
           <Col className="gutter-row" flex="0 1 auto">
             <Title level={1}>{displayName}</Title>

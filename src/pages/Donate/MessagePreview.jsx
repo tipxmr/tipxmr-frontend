@@ -1,5 +1,6 @@
 import { Col, Card, Typography, Divider } from "antd";
 import PropTypes from "prop-types";
+import "../../styles/index.less";
 
 const { Title } = Typography;
 
@@ -13,7 +14,7 @@ const MessagePreview = ({ message, donor, total }) => {
       <Card
         title={
           <span>
-            <Title level={4} style={{ display: "inline" }}>
+            <Title level={4} className="inline">
               {donor}
             </Title>{" "}
             tipped
