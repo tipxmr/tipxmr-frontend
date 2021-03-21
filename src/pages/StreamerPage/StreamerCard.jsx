@@ -9,7 +9,7 @@ import {
   GiftOutlined,
 } from "@ant-design/icons";
 import "../styles/index.less";
-import "./index.less";
+import "./StreamerPage.less";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;

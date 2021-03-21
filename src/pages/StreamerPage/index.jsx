@@ -3,7 +3,7 @@ import StreamerCard from "./";
 import socketio from "../../libs/socket_donator";
 import { Row, Col, Layout, Menu, Typography } from "antd";
 import "../../styles/index.less";
-import "./index.less";
+import "./StreamerPage.less";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
