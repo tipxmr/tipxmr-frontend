@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import StreamerCard from "./";
-import socketio from "../libs/socket_donator";
+import socketio from "../../libs/socket_donator";
 import { Row, Col, Layout, Menu, Typography } from "antd";
 import "../../styles/index.less";
 
