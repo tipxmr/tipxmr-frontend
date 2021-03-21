@@ -8,7 +8,6 @@ export { default as DropdownField } from "./DropdownField";
 
 export { default as FileInput } from "./FileInput";
 
-export { default as Nav } from "./Nav";
 export { default as NumberInput } from "./NumberInput";
 
 export { default as InfoHover } from "./InfoHover";
