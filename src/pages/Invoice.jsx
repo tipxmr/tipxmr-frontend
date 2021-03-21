@@ -212,10 +212,3 @@ const Invoice = () => {
 };
 
 export default Invoice;
-
-// TODO confirmation on payment
-// TODO continue button one payment is confirmed
-// TODO integrate with backend (generate subaddress, confirm payment, confirm amount)
-// TODO update the db to the new date
-// TODO backend function to check if invoice is due on user login
-// TODO create sockets for subaddress getting
