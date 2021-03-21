@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from "antd";
 import { DesktopOutlined } from "@ant-design/icons";
-import "./index.less";
+import "./Donate.less";
 import "../../styles/index.less";
 
 const { Title, Text } = Typography;

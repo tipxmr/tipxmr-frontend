@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Row, Col, Typography, Button } from "antd";
-import "./index.less";
+import "./Donate.less";
 import "../../styles/index.less";
 import MessagePreview from "./MessagePreview";
 

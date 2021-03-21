@@ -6,7 +6,7 @@ import Payment from "./Payment";
 import NotFound404 from "../NotFound404";
 import Success from "./Success";
 import { Row, Col, Switch } from "antd";
-import "./index.less";
+import "./Donate.less";
 import "../../styles/index.less";
 import { IsOnlineBadge } from "../../components";
 
