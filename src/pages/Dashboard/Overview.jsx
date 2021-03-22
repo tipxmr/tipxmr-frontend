@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { StatBox } from "../../components";
-import { Tag } from "antd"
+import { Row, Col, Statistic, Table, Typography, Tag } from "antd"
 import "./Dashboard.less"
+import "../../styles/index.less"
 
+const { Title } = Typography
 const SyncStatus = ({ synced }) => {
   return (
     <Tag color={synced ? "blue" : "magenta"} className="padding-around">{synced ? "Your wallet is up to date" : "Your wallet still needs to catch up"}</Tag>
@@ -40,42 +41,49 @@ const Overview = () => {
       amount: "0,1231",
     },
   ]);
-  return (
-    <div className="h-full text-gray-200 ">
-      <div className="w-1/2 mx-auto mb-4 text-center">
-        <SyncStatus synced={isSynced} />
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* TODO Make the info in the boxes dynamic */}
-        <StatBox boxTitle="Your Balance" boxStat="1337 XMR" />
-        <StatBox boxTitle="Total Donations" boxStat="1337 XMR" />
-        <StatBox boxTitle="Last Month" boxStat="&#8773;1337 XMR" />
-      </div>
-      <div className="mt-12 mx-auto w-3/4">
-        <h2 className="text-3xl text-center my-3">Most recent Donations</h2>
-        {/* Dynamische Tabelle nach dieser Anleitung */}
-        <table className="table-auto border-4 overflow-hidden mx-auto">
-          <thead>
-            <tr className="text-xl">
-              <th className="px-4 py-2">Donor</th>
-              <th className="px-4 py-2 truncate">Message</th>
-              <th className="px-4 py-2 border-r-4">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.id} className="border-2">
-                <td className="px-4 py-2">{item.donor}</td>
-                <td className="px-4 py-2">{item.message}</td>
-                <td className="px-4 py-2 md:w-16">{item.amount} XMR</td>
-                <td />
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+  const columns = [
+    {
+      title: "Donor",
+      dataIndex: "donor",
+      key: "donor",
+    },
+    {
+      title: "Message",
+      dataIndex: "message",
+      key: "message",
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+
+  ]
+  return (
+    <Row justify="center" align="middle" gutter={[12, 12]} className="text-center">
+      <Col span={24}>
+        <SyncStatus synced={isSynced} />
+      </Col>
+
+      <Col span={8}>
+        <Statistic title="Your balance" value={1337} precision={5} suffix="XMR" />
+      </Col>
+
+      <Col span={8}>
+
+        <Statistic title="Total money earned" value={4321} precision={5} suffix="XMR" />
+      </Col>
+
+      <Col span={8}>
+
+        <Statistic title="Earnings last month" value={1337} precision={5} suffix="XMR" />
+      </Col>
+      <Col span={24}>
+        <Title level={2}>Recent Donations</Title>
+        <Table columns={columns} dataSource={data} />
+      </Col>
+    </Row>
   );
 };
 
