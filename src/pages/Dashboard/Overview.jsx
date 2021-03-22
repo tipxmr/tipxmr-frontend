@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Statistic, Table, Typography, Tag } from "antd";
+import { Row, Col, Card, Statistic, Table, Typography, Tag } from "antd";
 import "./Dashboard.less";
 import "../../styles/index.less";
 
@@ -77,30 +77,37 @@ const Overview = () => {
       </Col>
 
       <Col span={8}>
-        <Statistic
-          title="Your balance"
-          value={1337}
-          precision={5}
-          suffix="XMR"
-        />
+        <Card>
+          <Statistic
+            title="Your balance"
+            value={1337}
+            precision={5}
+            suffix="XMR"
+          />
+        </Card>
       </Col>
 
       <Col span={8}>
-        <Statistic
-          title="Total money earned"
-          value={4321}
-          precision={5}
-          suffix="XMR"
-        />
+        <Card>
+          <Statistic
+            title="Total money earned"
+            value={4321}
+            precision={5}
+            suffix="XMR"
+          />
+        </Card>
       </Col>
 
       <Col span={8}>
-        <Statistic
-          title="Earnings last month"
-          value={1337}
-          precision={5}
-          suffix="XMR"
-        />
+        <Card>
+          <Statistic
+            title="Earnings last month"
+            value={1337}
+            precision={5}
+            suffix="XMR"
+          />
+        </Card>
+
       </Col>
       <Col span={24}>
         <Title level={2}>Recent Donations</Title>
