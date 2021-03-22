@@ -167,7 +167,7 @@ const Settings = () => {
       </div>
     </div>
   );
-}
+};
 
 Settings.propTypes = {
   streamerConfig: PropTypes.object,

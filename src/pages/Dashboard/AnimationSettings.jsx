@@ -168,6 +168,6 @@ const AnimationSettings = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AnimationSettings;

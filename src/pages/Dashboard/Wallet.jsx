@@ -40,7 +40,7 @@ const Wallet = () => {
     } else {
       start();
     }
-  }
+  };
 
   const fillTable = async (txs) => {
     // amount, height, date, confirmations, incoming/outgoing
@@ -89,7 +89,7 @@ const Wallet = () => {
         );
       });
     setTableData(data);
-  }
+  };
 
   useEffect(() => {
     if (isDone) {
@@ -113,18 +113,18 @@ const Wallet = () => {
     const withdrawAddress = event.target.value;
     setWithdrawAddress(withdrawAddress);
     setIsValidAddress(monerojs.isValidAddress(withdrawAddress.trim()));
-  }
+  };
 
   const handleWithdrawAllButton = () => {
     setWithdrawAmount(unlockedBalance);
     amountValidation(unlockedBalance);
-  }
+  };
 
   const handleWithdrawAmountChange = (event) => {
     const amount = parseFloat(event.target.value);
     setWithdrawAmount(amount);
     amountValidation(amount);
-  }
+  };
 
   const amountValidation = (amount) => {
     if (amount <= 0) {
@@ -136,7 +136,7 @@ const Wallet = () => {
     } else {
       setIsValidAmount(true);
     }
-  }
+  };
 
   const withdraw = async () => {
     console.log("Withdraw request");
@@ -158,7 +158,7 @@ const Wallet = () => {
           console.error("error with tx:", tx);
         }
       });
-  }
+  };
 
   return (
     <div className="h-full text-gray-200">
@@ -262,7 +262,7 @@ const Wallet = () => {
       </div>
     </div>
   );
-}
+};
 
 Wallet.propTypes = {};
 

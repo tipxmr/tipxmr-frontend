@@ -69,6 +69,6 @@ const Overview = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Overview;
