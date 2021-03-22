@@ -85,19 +85,13 @@ const Payment = () => {
   // }, [getSubaddress, subaddress]);
 
   const createPaymentUri = () => {
-    let uri;
-    if (amount > 0) {
-      uri = "monero:" + subaddress + "?tx_amount=" + amount;
-    } else {
-      uri = "monero:" + subaddress;
-    }
-    setPaymentUri(uri);
-    return uri;
-  };
+    return amount > 0 ? `monero:${subaddress}?tx_amount=${amount}` : `monero:${subaddress}`
+  }
 
   // generete QR Code on subaddress change
   useEffect(() => {
     const paymentUri = createPaymentUri();
+    setPaymentUri(paymentUri)
     const generateQrCode = async () => {
       if (subaddress) {
         const qrcode = await monerojs.generateQrCode(paymentUri);
@@ -105,7 +99,7 @@ const Payment = () => {
       }
     };
     generateQrCode();
-  }, [subaddress, createPaymentUri]);
+  }, [subaddress, createPaymentUri, paymentUri]);
 
   useEffect(() => {
     const basePrice = isPremium ? 0.09 : 0.009;
@@ -154,7 +148,7 @@ const Payment = () => {
         <img
           src={qrCode}
           alt="qr code"
-          preview={false}
+          preview="false"
           style={{ margin: "0 auto" }}
         />
       </Col>
