@@ -9,4 +9,4 @@ export { default as NotFound404 } from "./NotFound404";
 export { default as Logout } from "./Logout";
 export { default as Landing } from "./Landing";
 export { default as Login } from "./Login";
-export { default as Invoice } from "./Invoice";
+export { default as InvoiceModal } from "./InvoiceModal";

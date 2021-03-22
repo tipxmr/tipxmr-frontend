@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import monerojs from "../../libs/monero";
-import { Row, Col, Spin, Typography, Image, Divider } from "antd";
+import { Row, Col, Spin, Typography, Image } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 import "./Donate.less";
 import "../../styles/index.less";
