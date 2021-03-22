@@ -25,7 +25,7 @@ const Dashboard = () => {
     <div>
       <Layout>
         <Sider
-          collapisble
+          collapsible
           collapsed={collapsed}
           onCollapse={() => setCollapsed(!collapsed)}
           width={250}
