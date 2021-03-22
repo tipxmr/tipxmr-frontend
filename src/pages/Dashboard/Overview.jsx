@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Row, Col, Statistic, Table, Typography, Tag } from "antd"
-import "./Dashboard.less"
-import "../../styles/index.less"
+import { Row, Col, Statistic, Table, Typography, Tag } from "antd";
+import "./Dashboard.less";
+import "../../styles/index.less";
 
-const { Title } = Typography
+const { Title } = Typography;
 const SyncStatus = ({ synced }) => {
   return (
-    <Tag color={synced ? "blue" : "magenta"} className="padding-around">{synced ? "Your wallet is up to date" : "Your wallet still needs to catch up"}</Tag>
-  )
-}
+    <Tag color={synced ? "blue" : "magenta"} className="padding-around">
+      {synced
+        ? "Your wallet is up to date"
+        : "Your wallet still needs to catch up"}
+    </Tag>
+  );
+};
 
 const Overview = () => {
   const [isSynced, setIsSynced] = useState(false);
@@ -58,26 +62,43 @@ const Overview = () => {
       dataIndex: "amount",
       key: "amount",
     },
-
-  ]
+  ];
   return (
-    <Row justify="center" align="middle" gutter={[12, 12]} className="text-center">
+    <Row
+      justify="center"
+      align="middle"
+      gutter={[12, 12]}
+      className="text-center"
+    >
       <Col span={24}>
         <SyncStatus synced={isSynced} />
       </Col>
 
       <Col span={8}>
-        <Statistic title="Your balance" value={1337} precision={5} suffix="XMR" />
+        <Statistic
+          title="Your balance"
+          value={1337}
+          precision={5}
+          suffix="XMR"
+        />
       </Col>
 
       <Col span={8}>
-
-        <Statistic title="Total money earned" value={4321} precision={5} suffix="XMR" />
+        <Statistic
+          title="Total money earned"
+          value={4321}
+          precision={5}
+          suffix="XMR"
+        />
       </Col>
 
       <Col span={8}>
-
-        <Statistic title="Earnings last month" value={1337} precision={5} suffix="XMR" />
+        <Statistic
+          title="Earnings last month"
+          value={1337}
+          precision={5}
+          suffix="XMR"
+        />
       </Col>
       <Col span={24}>
         <Title level={2}>Recent Donations</Title>

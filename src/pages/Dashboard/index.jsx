@@ -37,12 +37,24 @@ const Dashboard = () => {
             className="semi-large-font"
             onClick={handleActiveCategory}
           >
-            <Menu.Item key="overview"><Link to={`${url}/overview`}>Overview</Link></Menu.Item>
-            <Menu.Item key="wallet"><Link to={`${url}/wallet`}>Wallet</Link></Menu.Item>
-            <Menu.Item key="account"><Link to={`${url}/settings`}>Account Settings</Link></Menu.Item>
-            <Menu.Item key="animation"><Link to={`${url}/animation`}>Animation Settings</Link></Menu.Item>
-            <Menu.Item key="preview"><Link to={`${url}/preview`}>Preview</Link></Menu.Item>
-            <Menu.Item key="logout"><Link to={`${url}/logout`}>Logout</Link></Menu.Item>
+            <Menu.Item key="overview">
+              <Link to={`${url}/overview`}>Overview</Link>
+            </Menu.Item>
+            <Menu.Item key="wallet">
+              <Link to={`${url}/wallet`}>Wallet</Link>
+            </Menu.Item>
+            <Menu.Item key="account">
+              <Link to={`${url}/settings`}>Account Settings</Link>
+            </Menu.Item>
+            <Menu.Item key="animation">
+              <Link to={`${url}/animation`}>Animation Settings</Link>
+            </Menu.Item>
+            <Menu.Item key="preview">
+              <Link to={`${url}/preview`}>Preview</Link>
+            </Menu.Item>
+            <Menu.Item key="logout">
+              <Link to={`${url}/logout`}>Logout</Link>
+            </Menu.Item>
           </Menu>
         </Sider>
 
