@@ -1,5 +1,4 @@
 //@ts-nocheck
-import React from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import {
@@ -28,7 +27,7 @@ const languageOptions = [
   "Spanish",
 ];
 
-function Settings() {
+const Settings = () => {
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
 

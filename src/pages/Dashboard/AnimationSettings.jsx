@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   InputField,
@@ -11,7 +10,7 @@ import {
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
 
-function AnimationSettings() {
+const AnimationSettings = () => {
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
   // useForm hook

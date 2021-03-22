@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-
+import { useState } from "react";
 import { SyncBanner, StatBox } from "../../components";
 
-function Overview() {
+const Overview = () => {
   const [isSynced, setIsSynced] = useState(false);
 
   const [data, setData] = useState([

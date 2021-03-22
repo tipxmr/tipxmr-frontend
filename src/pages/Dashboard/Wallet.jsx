@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Progressbar, SyncBanner, Button } from "../../components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
@@ -7,7 +7,7 @@ import { streamerState } from "../../store/atom";
 import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
 
-function Wallet() {
+const Wallet = () => {
   const {
     isActive,
     isDone,
@@ -34,7 +34,7 @@ function Wallet() {
   const [withdrawAddress, setWithdrawAddress] = useState(null);
 
   // start or stop sync
-  function handleSync() {
+  const handleSync = () => {
     if (isActive) {
       stop();
     } else {
@@ -42,7 +42,7 @@ function Wallet() {
     }
   }
 
-  async function fillTable(txs) {
+  const fillTable = async (txs) => {
     // amount, height, date, confirmations, incoming/outgoing
     const data = await txs
       .slice(0)
@@ -109,24 +109,24 @@ function Wallet() {
   }, [isDone, wallet.wallet, streamerConfig._id, unlockedBalance, balance]);
 
   // Withdraw
-  function handleAddressChange(event) {
+  const handleAddressChange = (event) => {
     const withdrawAddress = event.target.value;
     setWithdrawAddress(withdrawAddress);
     setIsValidAddress(monerojs.isValidAddress(withdrawAddress.trim()));
   }
 
-  function handleWithdrawAllButton() {
+  const handleWithdrawAllButton = () => {
     setWithdrawAmount(unlockedBalance);
     amountValidation(unlockedBalance);
   }
 
-  function handleWithdrawAmountChange(event) {
+  const handleWithdrawAmountChange = (event) => {
     const amount = parseFloat(event.target.value);
     setWithdrawAmount(amount);
     amountValidation(amount);
   }
 
-  function amountValidation(amount) {
+  const amountValidation = (amount) => {
     if (amount <= 0) {
       setIsValidAmount(false);
       console.error("Withdraw amount is 0 or negative");
@@ -138,7 +138,7 @@ function Wallet() {
     }
   }
 
-  async function withdraw() {
+  const withdraw = async () => {
     console.log("Withdraw request");
     console.log("Wallet:", wallet);
     console.log("withdrawAddress:", withdrawAddress);

@@ -8,7 +8,7 @@ import Animation from "../Animation";
 import clsx from "clsx";
 import TransactionSubscription from "../../components/TransactionSubscription";
 
-function Dashboard() {
+const Dashboard = () => {
   const { path, url } = useRouteMatch();
   const liStyle = clsx(["transform", "hover:scale-110"]);
 
