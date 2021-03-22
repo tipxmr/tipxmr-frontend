@@ -99,7 +99,7 @@ const Payment = () => {
   useEffect(() => {
     const paymentUri = createPaymentUri();
     const generateQrCode = async () => {
-      if (subaddress !== null) {
+      if (subaddress) {
         const qrcode = await monerojs.generateQrCode(paymentUri);
         setQrCode(qrcode);
       }
