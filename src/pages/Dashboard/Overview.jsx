@@ -47,6 +47,7 @@ const Overview = () => {
   ]);
 
   const columns = [
+
     {
       title: "Donor",
       dataIndex: "donor",
@@ -63,6 +64,7 @@ const Overview = () => {
       key: "amount",
     },
   ];
+
   return (
     <Row
       justify="center"
