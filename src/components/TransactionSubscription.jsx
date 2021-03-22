@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { dispatcherState, donorsInfoState, streamerState } from "../store/atom";
 import Donation from "../models/Donation";
@@ -7,11 +7,11 @@ import useIncomingTransaction from "../hook/useIncomingTransaction";
 import { useWalletState } from "../context/wallet";
 import socketio from "../libs/socket_streamer";
 
-const parseAmount = (amount) => {
+function parseAmount(amount) {
   return parseFloat(amount) / Math.pow(10, 12);
 }
 
-const TransactionSubscription = () => {
+function TransactionSubscription() {
   useIncomingTransaction(onIncomingTransaction);
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
@@ -19,11 +19,11 @@ const TransactionSubscription = () => {
   const donorsInfo = useRecoilValue(donorsInfoState);
   console.log("donorsInfo", donorsInfo);
 
-  const onIncomingTransaction = (tx) => {
+  function onIncomingTransaction(tx) {
     getNewOutput(tx);
   }
 
-  const getNewOutput = (output) => {
+  function getNewOutput(output) {
     monerojs
       .getSubaddress(customWallet.wallet, output.subaddressIndex)
       .then((subaddress) => {
