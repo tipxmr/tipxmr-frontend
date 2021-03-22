@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
 import monerologo from "../../images/monero-symbol.png";
 import Overview from "./Overview";
