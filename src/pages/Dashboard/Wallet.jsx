@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Progressbar, SyncBanner, Button } from "../../components";
+import { Progressbar, Button } from "../../components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useRecoilValue } from "recoil";
@@ -164,7 +164,7 @@ const Wallet = () => {
     <div className="h-full text-gray-200">
       <div className="mx-auto">
         <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center ">
-          <SyncBanner synced={isDone} />
+          {/* <SyncBanner synced={isDone} /> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
