@@ -92,16 +92,16 @@ const Payment = () => {
 
   // generete QR Code on subaddress change
   useEffect(() => {
-    const paymentUri = createPaymentUri();
-    setPaymentUri(paymentUri);
+    const uri = createPaymentUri();
+    setPaymentUri(uri);
     const generateQrCode = async () => {
       if (subaddress) {
-        const qrcode = await monerojs.generateQrCode(paymentUri);
+        const qrcode = await monerojs.generateQrCode(uri);
         setQrCode(qrcode);
       }
     };
     generateQrCode();
-  }, [subaddress, createPaymentUri, paymentUri]);
+  }, [subaddress, createPaymentUri]);
 
   useEffect(() => {
     const basePrice = isPremium ? 0.09 : 0.009;
