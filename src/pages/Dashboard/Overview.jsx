@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { SyncBanner, StatBox } from "../../components";
+import { StatBox } from "../../components";
+import { Tag } from "antd"
+import "./Dashboard.less"
+
+const SyncStatus = ({ synced }) => {
+  return (
+    <Tag color={synced ? "blue" : "magenta"} className="padding-around">{synced ? "Your wallet is up to date" : "Your wallet still needs to catch up"}</Tag>
+  )
+}
 
 const Overview = () => {
   const [isSynced, setIsSynced] = useState(false);
@@ -35,7 +43,7 @@ const Overview = () => {
   return (
     <div className="h-full text-gray-200 ">
       <div className="w-1/2 mx-auto mb-4 text-center">
-        <SyncBanner synced={isSynced} />
+        <SyncStatus synced={isSynced} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
