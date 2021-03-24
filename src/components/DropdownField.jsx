@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
-function DropdownField({
+const DropdownField = ({
   name,
   options,
   labelText,
   selected,
   register,
   errors,
-}) {
+}) => {
   const [selectedItem, setSelectedItem] = useState(selected);
   const menuItems = options.map((option) => {
     return (
@@ -18,7 +18,7 @@ function DropdownField({
     );
   });
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setSelectedItem(e.target.value);
   }
 
