@@ -217,7 +217,7 @@ const Settings = () => {
               { type: "url", message: "Please enter a valid URL" },
             ]}
           >
-            <Input placeholder={streamerConfig.stream.url} />
+            <Input />
           </Form.Item>
 
           <Form.Item
@@ -226,7 +226,7 @@ const Settings = () => {
             initialValue={streamerConfig.stream.description}
             rules={[{ max: 250, message: "Maximum length is 250 characters." }]}
           >
-            <Input placeholder={streamerConfig.stream.description} />
+            <Input />
           </Form.Item>
 
           <Form.Item
@@ -237,7 +237,7 @@ const Settings = () => {
               { type: "number", message: "Restore height must be a number" },
             ]}
           >
-            <Input placeholder={streamerConfig.restoreHeight} />
+            <Input />
           </Form.Item>
 
           <Form.Item name="language" label="Language of your stream">
