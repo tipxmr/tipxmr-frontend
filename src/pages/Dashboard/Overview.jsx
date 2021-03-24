@@ -47,7 +47,6 @@ const Overview = () => {
   ]);
 
   const columns = [
-
     {
       title: "Donor",
       dataIndex: "donor",
@@ -107,7 +106,6 @@ const Overview = () => {
             suffix="XMR"
           />
         </Card>
-
       </Col>
       <Col span={24}>
         <Title level={2}>Recent Donations</Title>
