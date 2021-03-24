@@ -52,6 +52,7 @@ const UploadButton = ({ isLoading }) => {
 
 const Avatar = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [imgUrl, setImgUrl] = useState("")
 
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
@@ -59,11 +60,13 @@ const Avatar = () => {
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl) => setIsLoading(false));
+      getBase64(info.file.originFileObj, (imageUrl) => {
+        setImgUrl(imageUrl)
+        setIsLoading(false)
+      });
     }
   };
 
-  const { loading, imageUrl } = isLoading;
 
   return (
     <Upload
@@ -75,8 +78,8 @@ const Avatar = () => {
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {imageUrl ? (
-        <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+      {imgUrl ? (
+        <img src={imgUrl} alt="avatar" style={{ width: "100%" }} />
       ) : (
           <UploadButton isLoading={isLoading} />
         )}
@@ -143,12 +146,14 @@ const Settings = () => {
   };
   const formItemLayout = {
     labelCol: {
-      xs: { span: 24 },
-      sm: { span: 12 },
+      span: 8,
+      // xs: { span: 24 },
+      // sm: { span: 12 },
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 12 },
+      span: 16,
+      // xs: { span: 24 },
+      // sm: { span: 12 },
     },
   };
 
@@ -183,7 +188,7 @@ const Settings = () => {
           />
         </Card>
       </Col>
-      <Col span={24}>
+      <Col span={20}>
         <Title level={2}>Change your settings:</Title>
         <Form {...formItemLayout} size="large">
           <Form.Item
