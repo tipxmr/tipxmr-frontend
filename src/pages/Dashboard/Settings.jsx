@@ -1,78 +1,70 @@
 //@ts-nocheck
-import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import {
-  InputField,
-  FileInput,
-  NumberInput,
-  StatBox,
-  DropdownField,
-  LanguageSelector
-} from "../../components";
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Row,
+  Select,
+  Statistic,
+  Typography,
+  Upload,
+} from "antd";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
+import { LanguageSelector } from "../../components";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { Upload, message, Button, Form, Select, Input, InputNumber, Tag, Statistic, Row, Col, Card, Typography, Dropdown, Menu } from "antd"
-import { PlusOutlined, LoadingOutlined, DownOutlined } from "@ant-design/icons"
-import "../../styles/index.less"
+import "../../styles/index.less";
 
-const { Title } = Typography
-const { Option } = Select
-
-const categoryOptions = ["Politics", "Gaming", "XXX", "Music"];
-const platformOptions = ["twitch", "youtube", "chaturbate"];
-const languageOptions = [
-  "Dutch",
-  "English",
-  "Esperanto",
-  "French",
-  "German",
-  "Italian",
-  "Japanese",
-  "Portuguese",
-  "Russian",
-  "Spanish",
-];
+const { Title } = Typography;
+const { Option } = Select;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
+  reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
-}
+};
 
 const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
+    message.error("You can only upload JPG/PNG file!");
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
+    message.error("Image must smaller than 2MB!");
   }
   return isJpgOrPng && isLt2M;
+};
+
+const UploadButton = ({ isLoading }) => {
+  return (
+    <div>
+      {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  )
 }
 
 const Avatar = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (info) => {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === "uploading") {
       setIsLoading(true);
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
-        setIsLoading(false),
-      );
+      getBase64(info.file.originFileObj, (imageUrl) => setIsLoading(false));
     }
   };
 
   const { loading, imageUrl } = isLoading;
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+
   return (
     <Upload
       name="avatar"
@@ -83,16 +75,20 @@ const Avatar = () => {
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+      {imageUrl ? (
+        <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+      ) : (
+          <UploadButton isLoading={isLoading} />
+        )}
     </Upload>
   );
-}
+};
 
 const Settings = () => {
-  const [language, setLanguage] = useState("English")
+  const [language, setLanguage] = useState("English");
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
-  const [date, setDate] = useState("")
+  const [date, setDate] = useState("");
 
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
@@ -121,16 +117,30 @@ const Settings = () => {
 
   useEffect(() => {
     // convert the date object into a formatted date string
-    let creationDate = formatDate(streamerConfig)
-    setDate(creationDate)
-  }, [streamerConfig])
+    let creationDate = formatDate(streamerConfig);
+    setDate(creationDate);
+  }, [streamerConfig]);
 
   const formatDate = (streamerConfig) => {
-    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-    let date = new Date(streamerConfig.creationDate)
-    let formattedDate = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()
-    return formattedDate
-  }
+    const months = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ];
+    let date = new Date(streamerConfig.creationDate);
+    let formattedDate =
+      date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear();
+    return formattedDate;
+  };
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -142,7 +152,6 @@ const Settings = () => {
     },
   };
 
-
   return (
     <Row
       justify="center"
@@ -150,7 +159,6 @@ const Settings = () => {
       gutter={[12, 12]}
       className="text-center"
     >
-
       <Col span={8}>
         <Card>
           <Statistic
@@ -186,86 +194,84 @@ const Settings = () => {
               { required: true, message: "Please enter a display name" },
               { pattern: "[a-zA-Z0-9]", message: "Characters not allowed" },
               { max: 15, message: "Maximum length is 15 characters" },
-              { min: 4, message: "Minimum length is 4 characters" }]} >
+              { min: 4, message: "Minimum length is 4 characters" },
+            ]}
+          >
             <Input placeholder={streamerConfig.displayName} />
           </Form.Item>
+
           <Form.Item
             name="streamUrl"
             label="URL to your stream"
             initialValue={streamerConfig.stream.url}
             rules={[
-              { required: true, message: "Please enter provide the URL to your stream" },
-              { type: "url", message: "Please enter a valid URL" }
-            ]} ><Input placeholder={streamerConfig.stream.url} />
+              {
+                required: true,
+                message: "Please enter provide the URL to your stream",
+              },
+              { type: "url", message: "Please enter a valid URL" },
+            ]}
+          >
+            <Input placeholder={streamerConfig.stream.url} />
           </Form.Item>
+
           <Form.Item
             name="description"
             label="Tell viewers what your stream is about"
             initialValue={streamerConfig.stream.description}
-            rules={[
-              { max: 250, message: "Maximum length is 250 characters." }
-            ]} ><Input placeholder={streamerConfig.stream.description} />
+            rules={[{ max: 250, message: "Maximum length is 250 characters." }]}
+          >
+            <Input placeholder={streamerConfig.stream.description} />
           </Form.Item>
+
           <Form.Item
             name="restoreHeight"
             label="Select restore height for your Monero wallet"
             initialValue={streamerConfig.restoreHeight}
             rules={[
               { type: "number", message: "Restore height must be a number" },
-            ]} ><Input placeholder={streamerConfig.restoreHeight} />
-          </Form.Item>
-          <Form.Item
-            name="profilePicture"
-            label="Upload a profile picture"
-          ><Avatar />
-          </Form.Item>
-          <Form.Item
-            name="language"
-            label="Language of your stream"
+            ]}
           >
+            <Input placeholder={streamerConfig.restoreHeight} />
+          </Form.Item>
+
+          <Form.Item name="language" label="Language of your stream">
             <LanguageSelector
               language={streamerConfig.stream.language}
               onChange={setLanguage}
               align="middle"
             />
+          </Form.Item>
 
+          <Form.Item name="platform" label="Streaming platform">
+            <Select defaultValue="other">
+              <Option value="twitch">Twitch</Option>
+              <Option value="youtube">YouTube</Option>
+              <Option value="other">Other</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="category" label="Category for your stream">
+            <Select defaultValue="politics">
+              <Option value="politics">Politics</Option>
+              <Option value="gaming">Gaming</Option>
+              <Option value="xxx">XXX</Option>
+              <Option value="music">Music</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="profilePicture" label="Upload a profile picture">
+            <Avatar />
           </Form.Item>
 
           {/* Save Button */}
-          <Button type="primary" htmlType="submit">Save changes</Button>
+          <Button type="primary" htmlType="submit">
+            Save changes
+          </Button>
         </Form>
       </Col>
-
     </Row>
-    // <div className="flex-grow text-gray-200">
-    //   <div className="mx-auto">
-    //     <div className="my-6">
-    //     <form onSubmit={handleSubmit(onSubmit)}>
-    //       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-    //         {/* TODO Option to automatically set new restore height? */}
-    //         <DropdownField
-    //           name="platform"
-    //           options={platformOptions}
-    //           labelText="What platform are you streaming on?"
-    //           selected={streamerConfig.stream.platform}
-    //           errors={errors}
-    //           register={register}
-    //         />
-    //         <DropdownField
-    //           name="category"
-    //           options={categoryOptions}
-    //           labelText="What category describes your stream best?"
-    //           selected={streamerConfig.stream.category}
-    //           register={register}
-    //           errors={errors}
-    //         />
-    //       </div>
-    //       <Button type="submit">Submit</Button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
-
 
 export default Settings;
