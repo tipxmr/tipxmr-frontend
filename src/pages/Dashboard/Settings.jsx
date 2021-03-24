@@ -7,10 +7,12 @@ import {
   NumberInput,
   StatBox,
   DropdownField,
+  LanguageSelector
 } from "../../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { Button, Form, Select, Input, InputNumber, Tag, Statistic, Row, Col, Card, Typography } from "antd"
+import { Upload, message, Button, Form, Select, Input, InputNumber, Tag, Statistic, Row, Col, Card, Typography, Dropdown, Menu } from "antd"
+import { PlusOutlined, LoadingOutlined, DownOutlined } from "@ant-design/icons"
 import "../../styles/index.less"
 
 const { Title } = Typography
@@ -31,12 +33,66 @@ const languageOptions = [
   "Spanish",
 ];
 
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+}
+
+const Avatar = () => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      setIsLoading(true);
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl =>
+        setIsLoading(false),
+      );
+    }
+  };
+
+  const { loading, imageUrl } = isLoading;
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  return (
+    <Upload
+      name="avatar"
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      beforeUpload={beforeUpload}
+      onChange={handleChange}
+    >
+      {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+    </Upload>
+  );
+}
+
 const Settings = () => {
+  const [language, setLanguage] = useState("English")
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
   const [date, setDate] = useState("")
-
-  console.log("streamerConfig", streamerConfig);
 
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
@@ -85,6 +141,7 @@ const Settings = () => {
       sm: { span: 12 },
     },
   };
+
 
   return (
     <Row
@@ -153,6 +210,26 @@ const Settings = () => {
               { type: "number", message: "Restore height must be a number" },
             ]} ><Input placeholder={streamerConfig.restoreHeight} />
           </Form.Item>
+          <Form.Item
+            name="profilePicture"
+            label="Upload a profile picture"
+          ><Avatar />
+          </Form.Item>
+          <Form.Item
+            name="language"
+            label="Language of your stream"
+            rules={[
+              { required: true, message: "Please select a language for your stream" }
+            ]} >
+            {/* <LanguageMenu /> */}
+            <LanguageSelector
+              language={streamerConfig.stream.language}
+              onChange={setLanguage}
+              align="middle"
+            />
+
+          </Form.Item>
+
           {/* Save Button */}
           <Button type="primary" htmlType="submit">Save changes</Button>
         </Form>
@@ -165,17 +242,6 @@ const Settings = () => {
     //     <form onSubmit={handleSubmit(onSubmit)}>
     //       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
     //         {/* TODO Option to automatically set new restore height? */}
-    //         <FileInput
-    //           name="profilePicture"
-    //           labelName="Change your profile picture"
-    //           accept=".jpg, .jpeg, .png"
-    //           maxFilesize={300 * 1024}
-    //           currentFile={streamerConfig.profilePicture}
-    //           register={register({
-    //             max: { value: 307200, message: "Maximum filesize is 300KB" },
-    //           })}
-    //           errors={errors}
-    //         />
     //         <DropdownField
     //           name="language"
     //           options={languageOptions}

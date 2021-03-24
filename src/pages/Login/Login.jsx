@@ -46,24 +46,11 @@ const importantList = [
   },
 ];
 const defaultStateSeed = "";
-const languages = [
-  "Dutch",
-  "English",
-  "Esperanto",
-  "French",
-  "German",
-  "Italian",
-  "Japanese",
-  "Portuguese",
-  "Russian",
-  "Spanish",
-];
-const defaultLanguage = languages[1];
 const { TextArea } = Input;
 
 const Login = () => {
   // states
-  const [language, setLanguage] = useState(defaultLanguage);
+  const [language, setLanguage] = useState("English");
   const [seed, setSeed] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const dispatcher = useRecoilValue(dispatcherState);
@@ -143,11 +130,6 @@ const Login = () => {
     createWallet(language);
   };
 
-  // LanguageSelector handler
-  const handleLanguageChange = (value) => {
-    setLanguage(value);
-  };
-
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
   };
@@ -167,12 +149,19 @@ const Login = () => {
                 Your Seed 👛
               </Title>
               {creationMode ? (
-                <LanguageSelector
-                  language={language}
-                  languages={languages}
-                  onChange={handleLanguageChange}
-                  align="middle"
-                />
+                <Row justify="center" align="middle">
+                  <Col>
+                    <span htmlFor="languages" style={{ "padding-right": "10px" }}>
+                      Seed language:
+                    </span>
+                    <LanguageSelector
+                      language={language}
+                      onChange={setLanguage}
+                      align="middle"
+                    />
+                  </Col>
+                </Row>
+
               ) : null}
             </Col>
           </Row>
