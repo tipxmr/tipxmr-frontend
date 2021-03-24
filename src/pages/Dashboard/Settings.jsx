@@ -181,9 +181,10 @@ const Settings = () => {
           <Form.Item
             name="displayName"
             label="Change display name"
+            initialValue={streamerConfig.displayName}
             rules={[
               { required: true, message: "Please enter a display name" },
-              { pattern: "^[a-zA-Z0-9]$", message: "Characters not allowed" },
+              { pattern: "[a-zA-Z0-9]", message: "Characters not allowed" },
               { max: 15, message: "Maximum length is 15 characters" },
               { min: 4, message: "Minimum length is 4 characters" }]} >
             <Input placeholder={streamerConfig.displayName} />
@@ -191,6 +192,7 @@ const Settings = () => {
           <Form.Item
             name="streamUrl"
             label="URL to your stream"
+            initialValue={streamerConfig.stream.url}
             rules={[
               { required: true, message: "Please enter provide the URL to your stream" },
               { type: "url", message: "Please enter a valid URL" }
@@ -199,6 +201,7 @@ const Settings = () => {
           <Form.Item
             name="description"
             label="Tell viewers what your stream is about"
+            initialValue={streamerConfig.stream.description}
             rules={[
               { max: 250, message: "Maximum length is 250 characters." }
             ]} ><Input placeholder={streamerConfig.stream.description} />
@@ -206,6 +209,7 @@ const Settings = () => {
           <Form.Item
             name="restoreHeight"
             label="Select restore height for your Monero wallet"
+            initialValue={streamerConfig.restoreHeight}
             rules={[
               { type: "number", message: "Restore height must be a number" },
             ]} ><Input placeholder={streamerConfig.restoreHeight} />
@@ -218,10 +222,7 @@ const Settings = () => {
           <Form.Item
             name="language"
             label="Language of your stream"
-            rules={[
-              { required: true, message: "Please select a language for your stream" }
-            ]} >
-            {/* <LanguageMenu /> */}
+          >
             <LanguageSelector
               language={streamerConfig.stream.language}
               onChange={setLanguage}
@@ -242,14 +243,6 @@ const Settings = () => {
     //     <form onSubmit={handleSubmit(onSubmit)}>
     //       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
     //         {/* TODO Option to automatically set new restore height? */}
-    //         <DropdownField
-    //           name="language"
-    //           options={languageOptions}
-    //           labelText="Select a language for your stream"
-    //           selected={streamerConfig.stream.language}
-    //           register={register}
-    //           errors={errors}
-    //         />
     //         <DropdownField
     //           name="platform"
     //           options={platformOptions}
