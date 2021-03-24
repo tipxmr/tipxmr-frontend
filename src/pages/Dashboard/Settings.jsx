@@ -202,7 +202,7 @@ const Settings = () => {
               { min: 4, message: "Minimum length is 4 characters" },
             ]}
           >
-            <Input placeholder={streamerConfig.displayName} />
+            <Input />
           </Form.Item>
 
           <Form.Item
