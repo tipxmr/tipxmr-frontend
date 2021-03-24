@@ -1,18 +1,16 @@
 //@ts-nocheck
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form";
-import PropTypes from "prop-types";
 import {
   InputField,
   FileInput,
-  Button,
   NumberInput,
   StatBox,
   DropdownField,
 } from "../../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { Form, Select, Input, InputNumber, Tag, Statistic, Row, Col, Card, Typography } from "antd"
+import { Button, Form, Select, Input, InputNumber, Tag, Statistic, Row, Col, Card, Typography } from "antd"
 import "../../styles/index.less"
 
 const { Title } = Typography
@@ -80,7 +78,7 @@ const Settings = () => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 5 },
+      sm: { span: 12 },
     },
     wrapperCol: {
       xs: { span: 24 },
@@ -123,7 +121,40 @@ const Settings = () => {
       <Col span={24}>
         <Title level={2}>Change your settings:</Title>
         <Form {...formItemLayout} size="large">
-          <Form.Item name="displayName" label="Change display name" rules={[{ required: true, message: "Please enter a display name" }, { pattern: "^[a-zA-Z0-9]$", message: "Characters not allowed" }]} ><Input placeholder={streamerConfig.displayName} /></Form.Item>
+          <Form.Item
+            name="displayName"
+            label="Change display name"
+            rules={[
+              { required: true, message: "Please enter a display name" },
+              { pattern: "^[a-zA-Z0-9]$", message: "Characters not allowed" },
+              { max: 15, message: "Maximum length is 15 characters" },
+              { min: 4, message: "Minimum length is 4 characters" }]} >
+            <Input placeholder={streamerConfig.displayName} />
+          </Form.Item>
+          <Form.Item
+            name="streamUrl"
+            label="URL to your stream"
+            rules={[
+              { required: true, message: "Please enter provide the URL to your stream" },
+              { type: "url", message: "Please enter a valid URL" }
+            ]} ><Input placeholder={streamerConfig.stream.url} />
+          </Form.Item>
+          <Form.Item
+            name="description"
+            label="Tell viewers what your stream is about"
+            rules={[
+              { max: 250, message: "Maximum length is 250 characters." }
+            ]} ><Input placeholder={streamerConfig.stream.description} />
+          </Form.Item>
+          <Form.Item
+            name="restoreHeight"
+            label="Select restore height for your Monero wallet"
+            rules={[
+              { type: "number", message: "Restore height must be a number" },
+            ]} ><Input placeholder={streamerConfig.restoreHeight} />
+          </Form.Item>
+          {/* Save Button */}
+          <Button type="primary" htmlType="submit">Save changes</Button>
         </Form>
       </Col>
 
@@ -133,45 +164,6 @@ const Settings = () => {
     //     <div className="my-6">
     //     <form onSubmit={handleSubmit(onSubmit)}>
     //       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-    //         <InputField
-    //           name="displayName"
-    //           labelName="Change your display name"
-    //           placeholderName={streamerConfig.displayName}
-    //           register={register({
-    //             required: { value: true, message: "Cannot be empty" },
-    //             maxLength: { value: 15, message: "Maximum of 15 characters" },
-    //             minLength: { value: 3, message: "Minimum of 3 characters" },
-    //           })}
-    //           errors={errors}
-    //         />
-    //         <InputField
-    //           name="url"
-    //           labelName="Set URL to your stream"
-    //           placeholderName={streamerConfig.stream.url}
-    //           register={register({
-    //             required: { value: true, message: "Cannot be empty" },
-    //           })}
-    //           errors={errors}
-    //         />
-    //         <InputField
-    //           name="description"
-    //           labelName="Give your stream a description"
-    //           placeholderName={streamerConfig.stream.description}
-    //           register={register({
-    //             maxLength: { value: 50, message: "Maximum of 50 characters" },
-    //           })}
-    //           errors={errors}
-    //         />
-    //         <NumberInput
-    //           name="restoreHeight"
-    //           labelName="Restore Height for Wallet"
-    //           placeholderName={streamerConfig.restoreHeight}
-    //           numType="integer"
-    //           register={register({
-    //             min: { value: 0, message: "Cannot be negative" },
-    //           })}
-    //           errors={errors}
-    //         />
     //         {/* TODO Option to automatically set new restore height? */}
     //         <FileInput
     //           name="profilePicture"
@@ -216,9 +208,5 @@ const Settings = () => {
   );
 };
 
-Settings.propTypes = {
-  streamerConfig: PropTypes.object,
-  setStreamerConfig: PropTypes.func,
-};
 
 export default Settings;
