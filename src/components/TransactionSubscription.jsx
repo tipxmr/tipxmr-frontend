@@ -42,7 +42,7 @@ function TransactionSubscription() {
             duration:
               (parseAmount(output.amount) -
                 streamerConfig.animationSettings.charPrice *
-                donationsInfo.message.length) /
+                  donationsInfo.message.length) /
               streamerConfig.animationSettings.secondPrice,
           });
           dispatcher.appendToDonationsQueue(newDonation);
