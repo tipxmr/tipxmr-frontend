@@ -1,13 +1,13 @@
+import { Col, Layout, Menu, Row } from "antd";
 import { useState } from "react";
-import { useRouteMatch, Route, Link, Redirect } from "react-router-dom";
-import Overview from "./Overview";
-import Wallet from "./Wallet";
-import Settings from "./Settings";
-import AnimationSettings from "./AnimationSettings";
-import Animation from "../Animation";
+import { Link, Redirect, Route, useRouteMatch } from "react-router-dom";
 import TransactionSubscription from "../../components/TransactionSubscription";
-import { Row, Col, Menu, Layout } from "antd";
 import "../../styles/index.less";
+import Animation from "../Animation";
+import AnimationSettings from "./AnimationSettings";
+import Overview from "./Overview";
+import Settings from "./Settings";
+import Wallet from "./Wallet";
 
 const { Sider, Content } = Layout;
 

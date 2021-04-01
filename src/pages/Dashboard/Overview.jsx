@@ -1,8 +1,8 @@
+import { Card, Col, Row, Statistic, Table, Typography } from "antd";
 import { useState } from "react";
-import { Row, Col, Card, Statistic, Table, Typography, Tag } from "antd";
-import "./Dashboard.less";
 import { SyncStatus } from "../../components";
 import "../../styles/index.less";
+import "./Dashboard.less";
 
 const { Title } = Typography;
 

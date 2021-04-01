@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { SyncStatus } from "../../components";
-import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
-import { useWalletState } from "../../context/wallet";
-import { useRecoilValue } from "recoil";
-import { streamerState } from "../../store/atom";
-import monerojs from "../../libs/monero";
-import socketio from "../../libs/socket_streamer";
 import {
-  Row,
-  Table,
-  Typography,
-  Col,
-  Card,
   Button,
-  Statistic,
-  Progress,
+  Card,
+  Col,
   Input,
   InputNumber,
+  Progress,
+  Row,
+  Statistic,
+  Table,
+  Typography,
 } from "antd";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { SyncStatus } from "../../components";
+import { useWalletState } from "../../context/wallet";
+import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
+import monerojs from "../../libs/monero";
+import socketio from "../../libs/socket_streamer";
+import { streamerState } from "../../store/atom";
 import "../../styles/index.less";
 
 const { Title } = Typography;
@@ -248,7 +248,7 @@ const Wallet = () => {
                 <p>Amount</p>
                 <InputNumber
                   name="withdrawAmount"
-                  style={{ width: 200 }}
+                  className="min-width"
                   min={0.00001}
                   max={unlockedBalance}
                   value={withdrawAmount}

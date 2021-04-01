@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
-import { dispatcherState, streamerState } from "../../store/atom";
 import {
-  Row,
   Button,
+  Checkbox,
   Col,
-  Typography,
   Form,
   Input,
   InputNumber,
-  Checkbox,
+  Row,
+  Typography,
 } from "antd";
+import { useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
+import { dispatcherState, streamerState } from "../../store/atom";
 import "../../styles/index.less";
 
 const { Title } = Typography;
