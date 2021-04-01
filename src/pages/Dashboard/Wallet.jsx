@@ -1,13 +1,30 @@
 import { useEffect, useState } from "react";
-import { Progressbar, Button } from "../../components";
+import { SyncStatus } from "../../components";
 import useWalletSynchronisation from "../../hook/useWalletSynchronisation";
 import { useWalletState } from "../../context/wallet";
 import { useRecoilValue } from "recoil";
 import { streamerState } from "../../store/atom";
 import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
+import { Row, Table, Typography, Col, Card, Button, Statistic, Progress, Input, InputNumber } from "antd"
+import "../../styles/index.less"
+
+const { Title } = Typography
 
 const Wallet = () => {
+  const columns = [
+    {
+      title: "Donor",
+      dataIndex: "donor",
+      key: "donor"
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount"
+    }
+  ]
+
   const {
     isActive,
     isDone,
@@ -120,8 +137,9 @@ const Wallet = () => {
     amountValidation(unlockedBalance);
   };
 
-  const handleWithdrawAmountChange = (event) => {
-    const amount = parseFloat(event.target.value);
+  const handleWithdrawAmountChange = (e) => {
+    const amount = parseFloat(e);
+    console.log("Amount: ", amount)
     setWithdrawAmount(amount);
     amountValidation(amount);
   };
@@ -161,105 +179,87 @@ const Wallet = () => {
   };
 
   return (
-    <div className="h-full text-gray-200">
-      <div className="mx-auto">
-        <div className="w-1/2 mx-auto mb-4 text-gray-200 text-center ">
-          {/* <SyncBanner synced={isDone} /> */}
-        </div>
+    <div>
+      <Row justify="center" align="middle" gutter={[12, 12]} className="text-center">
+        <Col span={24}>
+          <SyncStatus synced={isDone} />
+        </Col>
+        <Col span={8}>
+          <Card>
+            <Statistic
+              title="🔓 balance"
+              value={unlockedBalance}
+              precision={5}
+              suffix="XMR"
+            />
+            <Statistic
+              title="🔒 balance"
+              value={balance}
+              precision={5}
+              suffix="XMR"
+            />
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card>
+            <Statistic
+              title="Incoming Transactions"
+              value={transactionCounter.incoming}
+            />
+            <Statistic
+              title="outgoing Transactions"
+              value={transactionCounter.outgoing}
+            />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
-            <div className="px-4 py-6">
-              <p>Your Balance</p>
-              <div className="text-2xl my-2">🔓: {unlockedBalance} XMR</div>
-              <div className="text-2xl my-2">🔐: {balance} XMR</div>
-            </div>
-          </div>
-          <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
-            <div className="px-4 py-6">
-              <p>Total Transactions</p>
-              <div
-                title={
-                  "Incoming: " +
-                  transactionCounter.incoming +
-                  " Outgoing: " +
-                  transactionCounter.outgoing
-                }
-                className="text-6xl my-2"
-              >
-                {totalTransactions}
-              </div>
-            </div>
-          </div>
-          <div className="rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
-            <div className="px-4 py-6">
-              <p>Wallet Sync</p>
-              <div className="text-4xl my-2">
-                <Progressbar
-                  percentage={progress}
-                  isSyncActive={isActive}
-                  isSynced={isDone}
-                />
-              </div>
-              <Button
-                onClick={handleSync}
-                className="bg-xmrorange hover:bg-xmrorange-darker text-white font-bold rounded"
-              >
-                {isActive ? "Stop Sync" : "Start Sync"}
-              </Button>
-            </div>
-          </div>
-          <div className="col-span-3">
-            <div className="flex flex-col justify-center p-4 rounded overflow-hidden shadow-lg text-center bg-xmrgray-darker ">
-              <div className="flex-1">
-                <p>Send funds to another wallet</p>
-              </div>
-              <div className="flex flex-1 flex-row items-center m-4">
-                <label htmlFor="withdrawAmount">Amount</label>
-                <input
-                  className="m-5 text-xmrgray-darker bg-gray-200 p-2 rounded"
-                  type="number"
-                  min="0.000001"
-                  max={unlockedBalance}
-                  step="0.000000000001"
-                  value={withdrawAmount}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card>
+            <Title level={4}>Blockchain Sync</Title>
+            <Progress percent={progress} status={isActive} />
+            <Button type="primary" onClick={handleSync}>{isActive ? "Stop Sync" : "Start Sync"}</Button>
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card>
+            <Row justify="space-around" align="middle">
+              <Col span={24}>
+                <Title level={2}>Withdraw funds</Title>
+              </Col>
+
+              <Col>
+                <p>Amount</p>
+                <InputNumber
                   name="withdrawAmount"
-                  onChange={(event) => handleWithdrawAmountChange(event)}
-                ></input>
-                XMR
-                <Button onClick={handleWithdrawAllButton}>All</Button>
-                <label htmlFor="withdrawAddress">Address</label>
-                <input
-                  className="m-5 text-xmrgray-darker bg-gray-200 p-2 rounded"
-                  type="text"
+                  style={{ width: 200 }}
+                  min={0.00001}
+                  max={unlockedBalance}
+                  value={withdrawAmount}
+                  step={0.001}
+                  onChange={handleWithdrawAmountChange}
+                />
+                <Button type="secondary" onClick={handleWithdrawAllButton}>All</Button>
+
+              </Col>
+
+              <Col>
+                Destination Address
+                <Input
                   name="withdrawAddress"
-                  onChange={(event) => handleAddressChange(event)}
-                ></input>
-                <Button
-                  disabled={!isValidAddress || !isValidAmount || !isDone}
-                  onClick={withdraw}
-                >
-                  Send
-                </Button>
-              </div>
-            </div>
-            <div className="mt-12 flex flex-grow justify-center">
-              <table className="table-auto border-4 mx-auto">
-                <thead>
-                  <tr className="text-xl">
-                    <th className="px-4 py-2">Type</th>
-                    <th className="px-4 py-2">Amount</th>
-                    <th className="px-4 py-2">Height</th>
-                    <th className="px-4 py-2">Date</th>
-                    <th className="px-4 py-2">Confirmations</th>
-                  </tr>
-                </thead>
-                <tbody>{tableData}</tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+                  size="large"
+                  onChange={handleAddressChange}
+                />
+              </Col>
+
+              <Button type="primary">Withdraw</Button>
+            </Row>
+          </Card>
+        </Col>
+
+        <Col span={24}>
+          <Table columns={columns} dataSource={tableData} />
+        </Col>
+      </Row>
     </div>
   );
 };

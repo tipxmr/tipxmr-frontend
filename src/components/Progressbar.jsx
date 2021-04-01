@@ -1,7 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
 
-function Status({ isActive, isDone }) {
+const Status = ({ isActive, isDone }) => {
   let status = "";
 
   if (isActive) {
@@ -21,7 +20,7 @@ function Status({ isActive, isDone }) {
   );
 }
 
-function Percentage({ value }) {
+const Percentage = ({ value }) => {
   return (
     <span className="text-xs font-semibold inline-block text-green-500">
       {value}%
@@ -29,7 +28,7 @@ function Percentage({ value }) {
   );
 }
 
-function Progress({ value }) {
+const Progress = ({ value }) => {
   const barStyles = { width: value + "%" };
 
   return (
@@ -42,7 +41,7 @@ function Progress({ value }) {
   );
 }
 
-function ProgressIndicator({ percentage, isSyncActive, isSynced }) {
+const ProgressIndicator = ({ percentage, isSyncActive, isSynced }) => {
   return (
     <div className="relative pt-1">
       <div className="flex mb-2 items-center justify-between">
