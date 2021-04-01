@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { Row, Col, Card, Statistic, Table, Typography, Tag } from "antd";
 import "./Dashboard.less";
+import { SyncStatus } from "../../components"
 import "../../styles/index.less";
 
 const { Title } = Typography;
-const SyncStatus = ({ synced }) => {
-  return (
-    <Tag color={synced ? "blue" : "magenta"} className="padding-around">
-      {synced
-        ? "Your wallet is up to date"
-        : "Your wallet still needs to catch up"}
-    </Tag>
-  );
-};
 
 const Overview = () => {
   const [isSynced, setIsSynced] = useState(false);
