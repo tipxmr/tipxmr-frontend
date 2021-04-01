@@ -1,10 +1,19 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { Row, Button, Col, Typography, Form, Input, InputNumber, Checkbox } from "antd"
-import "../../styles/index.less"
+import {
+  Row,
+  Button,
+  Col,
+  Typography,
+  Form,
+  Input,
+  InputNumber,
+  Checkbox,
+} from "antd";
+import "../../styles/index.less";
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const AnimationSettings = () => {
   const streamerConfig = useRecoilValue(streamerState);
@@ -44,16 +53,19 @@ const AnimationSettings = () => {
     wrapperCol: {
       span: 16,
     },
-  }
+  };
 
-  const positiveNumberRule = [{ type: "number", message: "Must be a positive number", min: 0 }]
+  const positiveNumberRule = [
+    { type: "number", message: "Must be a positive number", min: 0 },
+  ];
 
   return (
     <Row
       justify="center"
       align="middle"
       gutter={[12, 12]}
-      className="text-center">
+      className="text-center"
+    >
       <Col span={20}>
         <Title level={2}>Customize your TipXMR animation:</Title>
         <Form {...formLayout} size="large">
@@ -65,7 +77,10 @@ const AnimationSettings = () => {
               { type: "string" },
               { pattern: "[a-zA-Z0-9]", message: "Provide a valid hexcode" },
               { max: 7, message: "Provide a valid hexcode" },
-              { min: 6, message: "Please enter all 6 characters of the hexcode" },
+              {
+                min: 6,
+                message: "Please enter all 6 characters of the hexcode",
+              },
             ]}
           >
             <Input />
@@ -137,10 +152,9 @@ const AnimationSettings = () => {
           <Button type="primary" htmlType="submit">
             Save changes
           </Button>
-
         </Form>
       </Col>
-    </Row >
+    </Row>
   );
 };
 

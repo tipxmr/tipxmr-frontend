@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Row, Col, Card, Statistic, Table, Typography, Tag } from "antd";
 import "./Dashboard.less";
-import { SyncStatus } from "../../components"
+import { SyncStatus } from "../../components";
 import "../../styles/index.less";
 
 const { Title } = Typography;

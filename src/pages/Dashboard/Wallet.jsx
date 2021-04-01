@@ -6,24 +6,35 @@ import { useRecoilValue } from "recoil";
 import { streamerState } from "../../store/atom";
 import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
-import { Row, Table, Typography, Col, Card, Button, Statistic, Progress, Input, InputNumber } from "antd"
-import "../../styles/index.less"
+import {
+  Row,
+  Table,
+  Typography,
+  Col,
+  Card,
+  Button,
+  Statistic,
+  Progress,
+  Input,
+  InputNumber,
+} from "antd";
+import "../../styles/index.less";
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const Wallet = () => {
   const columns = [
     {
       title: "Donor",
       dataIndex: "donor",
-      key: "donor"
+      key: "donor",
     },
     {
       title: "Amount",
       dataIndex: "amount",
-      key: "amount"
-    }
-  ]
+      key: "amount",
+    },
+  ];
 
   const {
     isActive,
@@ -139,7 +150,7 @@ const Wallet = () => {
 
   const handleWithdrawAmountChange = (e) => {
     const amount = parseFloat(e);
-    console.log("Amount: ", amount)
+    console.log("Amount: ", amount);
     setWithdrawAmount(amount);
     amountValidation(amount);
   };
@@ -180,7 +191,12 @@ const Wallet = () => {
 
   return (
     <div>
-      <Row justify="center" align="middle" gutter={[12, 12]} className="text-center">
+      <Row
+        justify="center"
+        align="middle"
+        gutter={[12, 12]}
+        className="text-center"
+      >
         <Col span={24}>
           <SyncStatus synced={isDone} />
         </Col>
@@ -210,14 +226,15 @@ const Wallet = () => {
               title="outgoing Transactions"
               value={transactionCounter.outgoing}
             />
-
           </Card>
         </Col>
         <Col span={8}>
           <Card>
             <Title level={4}>Blockchain Sync</Title>
             <Progress percent={progress} status={isActive} />
-            <Button type="primary" onClick={handleSync}>{isActive ? "Stop Sync" : "Start Sync"}</Button>
+            <Button type="primary" onClick={handleSync}>
+              {isActive ? "Stop Sync" : "Start Sync"}
+            </Button>
           </Card>
         </Col>
         <Col span={24}>
@@ -238,8 +255,9 @@ const Wallet = () => {
                   step={0.001}
                   onChange={handleWithdrawAmountChange}
                 />
-                <Button type="secondary" onClick={handleWithdrawAllButton}>All</Button>
-
+                <Button type="secondary" onClick={handleWithdrawAllButton}>
+                  All
+                </Button>
               </Col>
 
               <Col>

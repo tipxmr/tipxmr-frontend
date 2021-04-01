@@ -47,12 +47,12 @@ const UploadButton = ({ isLoading }) => {
       {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
-  )
-}
+  );
+};
 
 const Avatar = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [imgUrl, setImgUrl] = useState("")
+  const [imgUrl, setImgUrl] = useState("");
 
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
@@ -61,12 +61,11 @@ const Avatar = () => {
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl) => {
-        setImgUrl(imageUrl)
-        setIsLoading(false)
+        setImgUrl(imageUrl);
+        setIsLoading(false);
       });
     }
   };
-
 
   return (
     <Upload
@@ -81,8 +80,8 @@ const Avatar = () => {
       {imgUrl ? (
         <img src={imgUrl} alt="avatar" style={{ width: "100%" }} />
       ) : (
-          <UploadButton isLoading={isLoading} />
-        )}
+        <UploadButton isLoading={isLoading} />
+      )}
     </Upload>
   );
 };
