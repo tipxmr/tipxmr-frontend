@@ -19,6 +19,7 @@ import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
 import { streamerState } from "../../store/atom";
 import "../../styles/index.less";
+import "./Dashboard.less"
 
 const { Title } = Typography;
 
