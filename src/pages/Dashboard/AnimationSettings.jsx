@@ -4,12 +4,11 @@ import {
   FileInput,
   NumberInput,
   CheckboxField,
-  Button,
   DropdownField,
 } from "../../components";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
-import { Row, Col, Typography, Form, Input, InputNumber, Checkbox } from "antd"
+import { Row, Button, Col, Typography, Form, Input, InputNumber, Checkbox } from "antd"
 import "../../styles/index.less"
 
 const { Title } = Typography
@@ -53,6 +52,9 @@ const AnimationSettings = () => {
       span: 16,
     },
   }
+
+  const positiveNumberRule = [{ type: "number", message: "Must be a positive number", min: 0 }]
+
   return (
     <Row
       justify="center"
@@ -67,22 +69,20 @@ const AnimationSettings = () => {
             label="Hexcode for font color"
             initialValue={streamerConfig.animationSettings.fontColor}
             rules={[
+              { type: "string" },
               { pattern: "[a-zA-Z0-9]", message: "Provide a valid hexcode" },
-              { max: 6, message: "Provide a valid hexcode" },
+              { max: 7, message: "Provide a valid hexcode" },
               { min: 6, message: "Please enter all 6 characters of the hexcode" },
             ]}
           >
             <Input />
           </Form.Item>
-
+          <Title level={4}>(All numbers in XMR)</Title>
           <Form.Item
             name="secondPrice"
             label="Price per second of showtime"
             initialValue={streamerConfig.animationSettings.secondPrice}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -91,10 +91,7 @@ const AnimationSettings = () => {
             name="charPrice"
             label="Price per character"
             initialValue={streamerConfig.animationSettings.charPrice}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -103,10 +100,7 @@ const AnimationSettings = () => {
             name="charLimit"
             label="Maximum characters per message"
             initialValue={streamerConfig.animationSettings.charLimit}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -115,10 +109,7 @@ const AnimationSettings = () => {
             name="minAmount"
             label="Minimum amount for a tip"
             initialValue={streamerConfig.animationSettings.minAmount}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -127,10 +118,7 @@ const AnimationSettings = () => {
             name="goal"
             label="Set a funding goal"
             initialValue={streamerConfig.animationSettings.goal}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -139,10 +127,7 @@ const AnimationSettings = () => {
             name="gifsMinAmount"
             label="Set minimum amount to send a gif"
             initialValue={streamerConfig.animationSettings.gifsMinAmount}
-            rules={[
-              { type: "number", message: "Must be a number" },
-              { min: 0, message: "Cannot be negative" },
-            ]}
+            rules={positiveNumberRule}
           >
             <InputNumber />
           </Form.Item>
@@ -155,71 +140,14 @@ const AnimationSettings = () => {
             <Checkbox />
           </Form.Item>
 
-
+          {/* Save Button */}
+          <Button type="primary" htmlType="submit">
+            Save changes
+          </Button>
 
         </Form>
       </Col>
     </Row >
-    // <div className="h-full text-gray-200">
-    //   <div className="mx-auto">
-    //     <div className="text-center text-xl underline mb-4">
-    //       Change your Animation:
-    //     </div>
-
-    //     <form onSubmit={handleSubmit(onSubmit)}>
-    //       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-    //         {/* TODO Create a new component to pick the color */}
-
-    //         <CheckboxField
-    //           name="showGoal"
-    //           label="Display donation goal in stream"
-    //           defaultChecked={streamerConfig.animationSettings.showGoal}
-    //           register={register}
-    //         />
-    //         <CheckboxField
-    //           name="gifs"
-    //           label="Allow users to send gifs"
-    //           defaultChecked={streamerConfig.animationSettings.gifs}
-    //           register={register}
-    //         />
-    //         {/* Not really possible */}
-    //         {/* <CheckboxField */}
-    //         {/*   name="fontShadow" */}
-    //         {/*   label="Turn on text shadow" */}
-    //         {/*   defaultChecked={streamerConfig.animationSettings.fontShadow} */}
-    //         {/*   register={register} */}
-    //         {/* /> */}
-    //         <FileInput
-    //           name="sound"
-    //           label="Upload a custom MP3 for donations"
-    //           currentFile={streamerConfig.animationSettings.sound}
-    //           register={register({
-    //             max: { value: 307200, message: "Maximum filesize is 300KB" },
-    //           })}
-    //           errors={errors}
-    //         />
-    //         <FileInput
-    //           name="bgImg"
-    //           label="Upload custom background image for donations"
-    //           currentFile={streamerConfig.animationSettings.bgImg}
-    //           register={register({
-    //             max: { value: 307200, message: "Maximum filesize is 300KB" },
-    //           })}
-    //           errors={errors}
-    //         />
-    //         <DropdownField
-    //           name="fontSize"
-    //           options={fontSizeOptions}
-    //           labelText="Select a font size"
-    //           selected={streamerConfig.animationSettings.fontSize}
-    //           register={register}
-    //           errors={errors}
-    //         />
-    //       </div>
-    //       <Button type="submit">Submit</Button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
