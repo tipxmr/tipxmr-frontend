@@ -22,6 +22,7 @@ export { default as PrivateRoute } from "./PrivateRoute";
 export { default as Progressbar } from "./Progressbar";
 
 export { default as StatBox } from "./StatBox";
+export { default as SyncStatus } from './SyncStatus'
 
 export { default as Table } from "./Table";
 export { default as TipFooter } from "./TipFooter";
