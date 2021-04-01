@@ -1,4 +1,4 @@
-import { Col, Row, Select } from "antd";
+import { Select } from "antd";
 import PropTypes from "prop-types";
 
 const { Option } = Select;
