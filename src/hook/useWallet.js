@@ -60,6 +60,7 @@ function useWallet() {
   const isRejected = status === "rejected";
 
   function openFromSeed(seed) {
+    console.log("openFromSeed@useWallet");
     dispatch({ type: actionTypes.go });
     monerojs
       .openWalletFromSeed(seed)

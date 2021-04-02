@@ -34,30 +34,30 @@ function App() {
   
 
   // as soon as wallet is loaded
-  useEffect(() => {
-    const handleOnNewSubaddress = (data) => {
-      monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
-        const newDonorInfo = { ...data, subaddress: subaddress };
-        dispatch(txActions.appendToDonors(newDonorInfo))
-        socketio.emitSubaddressToBackend(newDonorInfo);
-        console.log("created Subaddress for:", newDonorInfo);
-      });
-    }
-    if (
-      streamerConfig._id &&
-      customWallet.wallet &&
-      walletUseEffectDidFire.current === false
-    ) {
-      // listen for new request of subaddress generation
-      socketio.onCreateSubaddress(handleOnNewSubaddress);
-
-      walletUseEffectDidFire.current = true;
-    }
-  }, [
-    customWallet.wallet,
-    walletUseEffectDidFire,
-    streamerConfig._id
-  ]);
+  // useEffect(() => {
+  //   const handleOnNewSubaddress = (data) => {
+  //     monerojs.createSubaddress(customWallet.wallet).then((subaddress) => {
+  //       const newDonorInfo = { ...data, subaddress: subaddress };
+  //       dispatch(txActions.appendToDonors(newDonorInfo))
+  //       socketio.emitSubaddressToBackend(newDonorInfo);
+  //       console.log("created Subaddress for:", newDonorInfo);
+  //     });
+  //   }
+  //   if (
+  //     streamerConfig._id &&
+  //     customWallet.wallet &&
+  //     walletUseEffectDidFire.current === false
+  //   ) {
+  //     // listen for new request of subaddress generation
+  //     socketio.onCreateSubaddress(handleOnNewSubaddress);
+  //     walletUseEffectDidFire.current = true;
+  //   }
+  // }, [
+  //   dispatch,
+  //   customWallet.wallet,
+  //   walletUseEffectDidFire,
+  //   streamerConfig._id
+  // ]);
 
   // set restore height for wasm wallet
   useEffect(() => {
@@ -68,10 +68,13 @@ function App() {
     ) {
       dispatch(actions.update(streamerConfig.restoreHeight))
     }
-  }, [streamerConfig, restoreHeight]);
+  }, [dispatch, streamerConfig, restoreHeight]);
 
   return (
     <div>
+      <div>
+        <button onClick={() => dispatch({ "type": "INCREMENT_ASYNC" })}>Increment</button>
+      </div>
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
         <TipLayout>

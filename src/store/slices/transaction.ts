@@ -4,6 +4,7 @@ interface TransactionState {
   donors: any[];
   qeueu: any[];
   history: any[];
+  transactions: any[];
 }
 
 const slice = createSlice({
@@ -12,6 +13,7 @@ const slice = createSlice({
     donors: [],
     qeueu: [],
     history: [],
+    transactions: [],
   } as TransactionState,
   reducers: {
     appendToQueue: (state, action: PayloadAction<any>) => {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Donation from "../models/Donation";
 import monerojs from "../libs/monero";
-import useIncomingTransaction from "../hook/useIncomingTransaction";
+// import useIncomingTransaction from "../hook/useIncomingTransaction";
 import { useWalletState } from "../context/wallet";
 import socketio from "../libs/socket_streamer";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ function parseAmount(amount) {
 }
 
 function TransactionSubscription() {
-  useIncomingTransaction(onIncomingTransaction);
+  // useIncomingTransaction(onIncomingTransaction);
   const streamerConfig = useSelector(state => state.streamer);
   const dispatch = useAppDispatch();
   const customWallet = useWalletState();

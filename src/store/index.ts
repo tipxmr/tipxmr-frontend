@@ -1,7 +1,13 @@
 import logger from "redux-logger";
-import { createEpicMiddleware } from "redux-observable";
+// import { createEpicMiddleware } from "redux-observable";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { Action, combineReducers, configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import {
+  combineReducers,
+  configureStore,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import socketMiddleware from "./middlewares/socket";
 import walletMiddleware from "./middlewares/wallet";
@@ -15,7 +21,22 @@ import synchronisation from "./slices/synchronisation";
 import transaction from "./slices/transaction";
 import wallet from "./slices/wallet";
 
-const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
+import saga from "./sagas";
+
+// const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
+const sagaMiddleware = createSagaMiddleware();
+
+// const counterSlice = createSlice({
+//   name: "counter",
+//   initialState: 0,
+//   reducers: {
+//     increment: (state) => {
+//       return state + 1;
+//     },
+//   },
+// });
+
+// console.log(counterSlice.actions.increment());
 
 const reducer = combineReducers({
   balance: balance.reducer,
@@ -26,6 +47,7 @@ const reducer = combineReducers({
   synchronisation: synchronisation.reducer,
   transaction: transaction.reducer,
   wallet: wallet.reducer,
+  // counter: counterSlice.reducer,
 });
 
 const store = configureStore({
@@ -33,13 +55,15 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat([
       logger,
-    //   epicMiddleware,
+      //   epicMiddleware,
+      sagaMiddleware,
       walletMiddleware,
       socketMiddleware,
     ]),
 });
 
 // epicMiddleware.run(epic);
+sagaMiddleware.run(saga);
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

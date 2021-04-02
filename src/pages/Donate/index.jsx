@@ -7,7 +7,9 @@ import Payment from "./Payment";
 import StreamerNotFound from "./StreamerNotFound";
 import Success from "./Success";
 
-import socketio from "../../libs/socket_donator";
+// import socketio from "../../libs/socket_donator";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { requestStreamer, requestSubaddress } from "../../store/slices/donor";
 
 function Donate() {
   let { userName } = useParams();
@@ -17,38 +19,19 @@ function Donate() {
   const [showStreamerNotFound, setShowStreamerNotFound] = useState(false);
   const [amount, setAmount] = useState(null);
 
-  // propably not needed in the donate
-  const [streamer, setStreamer] = useState({
-    displayName: "loading",
-    userName: "loading",
-    isOnline: false,
-    _id: "",
-    secondPrice: 0,
-    charPrice: 0,
-    charLimit: 100,
-    minAmount: 0.0004,
-    gifsMinAmount: 0,
-    goalProgress: 0,
-    goal: 1,
-    goalReached: false,
-    streamUrl: "",
-    streamPlatform: "",
-    streamLanguage: "",
-    streamDescription: "",
-    streamCategory: "",
-  });
-  const [subaddress, setSubaddress] = useState(null);
+  const streamer = useAppSelector(state => state.donor.streamer);
+  const subaddress = useAppSelector(state => state.donor.subaddress);
+  const confirmation = useAppSelector(state => state.donor.payment.confirmation);
+  const dispatch = useAppDispatch();
+
   const [donor, setDonor] = useState(null);
   const [message, setMessage] = useState("");
   const [showLivestream, setShowLivestream] = useState(false);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    // Get Streamer Info from Backend
-    socketio.emitGetStreamer(userName);
-    socketio.onRecieveStreamerFromBackend(setStreamer);
-    socketio.onPaymentConfirmation(paymentConfirmation);
-  }, [userName]);
+    dispatch(requestStreamer(userName));
+  }, [dispatch, userName]);
 
   useEffect(() => {
     if (streamer === 0) {
@@ -64,22 +47,23 @@ function Donate() {
     }
   }, [streamer]);
 
-  function paymentConfirmation(confirmation) {
-    console.log("confirmation", confirmation);
-    setAmount(confirmation.amount);
-    setShowPayment(false);
-    setShowSuccess(true);
-  }
+  useEffect(() => {
+    if (confirmation) {
+      console.log("confirmation", confirmation);
+      setAmount(confirmation.amount);
+      setShowPayment(false);
+      setShowSuccess(true);
+    }
+  }, [confirmation]);
 
   function getSubaddress() {
-    socketio.emitGetSubaddress(
+    dispatch(requestSubaddress(
       streamer.displayName,
       streamer.userName,
       streamer._id,
       donor,
       message
-    );
-    socketio.onSubaddressToDonator(setSubaddress);
+    ));
   }
 
   return (

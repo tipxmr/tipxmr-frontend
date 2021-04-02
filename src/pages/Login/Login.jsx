@@ -20,8 +20,10 @@ import monerojs, {
   isValidMnemoicLength,
 } from "../../libs/monero";
 import socket_streamer from "../../libs/socket_streamer";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { actions } from "../../store/slices/streamer";
+import { actions as walletActions } from "../../store/slices/wallet";
+import { openWallet } from "../../store/middlewares/wallet";
 
 const { Title } = Typography;
 const importantList = [
@@ -70,13 +72,14 @@ const Login = () => {
   const streamer = useSelector(state => state.streamer)
   const [wallet, walletDispatch] = useWallet();
   const { isPending, isResolved } = wallet.status;
-  const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
+  // const isWalletOpen = !isNil(wallet.wallet) && isNil(wallet.error);
   const [creationMode, setCreationMode] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userNameNotSet, setUserNameNotSet] = useState(false);
   const [userNameError, setUserNameError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useAppDispatch();
+  const isWalletOpen = useAppSelector(store => store.wallet.isOpen)
 
   // this useEffect gets triggered, when the state lanugage changes
   useEffect(() => {
@@ -91,6 +94,8 @@ const Login = () => {
       console.log("25 words reached");
       login();
       walletDispatch(openFromSeed(seed));
+      dispatch(walletActions.setSeed(seed));
+      dispatch(openWallet());
     }
   }, [ isWalletOpen, isPending, walletDispatch, seed]);
 

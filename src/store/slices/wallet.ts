@@ -7,17 +7,33 @@ type Language = string;
 type WalletStatus = "idle" | "pending" | "resolved" | "rejected";
 
 interface WalletState {
+  seed: Seed;
   wallet: any;
   status: WalletStatus;
+  isOpen: boolean;
+  // subaddress: string;
 }
 
 const slice = createSlice({
   name: "wallet",
   initialState: {
-    wallet: null,
+    wallet: {},
     status: "idle",
+    isOpen: false
   } as WalletState,
   reducers: {
+    setSeed: (state, action: PayloadAction<Seed>) => {
+      state.seed = action.payload;
+    },
+    setWallet: (state, action: PayloadAction<any>) => {
+      state.wallet = action.payload;
+    },
+    setIsOpen: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    },
+    // setSubaddress: (state, action: PayloadAction<string>) => {
+    //   state.subaddress = action.payload;
+    // },
     // open: (state, action: PayloadAction<Seed>) => {
     //   state = action.payload;
     // },

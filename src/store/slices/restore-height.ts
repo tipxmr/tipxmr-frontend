@@ -8,7 +8,8 @@ const slice = createSlice({
   initialState: 0 as RestoreHeightState,
   reducers: {
     update: (state, action: PayloadAction<number>) => {
-      state = action.payload;
+      // state = action.payload;
+      return action.payload;
     },
   },
 });

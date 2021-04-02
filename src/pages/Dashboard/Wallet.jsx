@@ -84,28 +84,28 @@ function Wallet() {
     setTableData(data);
   }
 
-  useEffect(() => {
-    if (isDone) {
-      // get all transactions
-      monerojs.getTxs(wallet.wallet).then((txs) => {
-        // fill the table with data
-        fillTable(txs);
-        // Set number of total transactions
-        setTotalTransactions(txs.length);
-      });
-      // set Online status to true
-      socketio.emitUpdateOnlineStatus(streamerConfig._id, true);
-    } else {
-      // set Online status to false
-      socketio.emitUpdateOnlineStatus(streamerConfig._id, false);
-    }
-  }, [
-    isDone,
-    wallet.wallet,
-    streamerConfig._id,
-    unlockedBalance,
-    balance,
-  ]);
+  // useEffect(() => {
+  //   if (isDone) {
+  //     // get all transactions
+  //     monerojs.getTxs(wallet.wallet).then((txs) => {
+  //       // fill the table with data
+  //       fillTable(txs);
+  //       // Set number of total transactions
+  //       setTotalTransactions(txs.length);
+  //     });
+  //     // set Online status to true
+  //     socketio.emitUpdateOnlineStatus(streamerConfig._id, true);
+  //   } else {
+  //     // set Online status to false
+  //     socketio.emitUpdateOnlineStatus(streamerConfig._id, false);
+  //   }
+  // }, [
+  //   isDone,
+  //   wallet.wallet,
+  //   streamerConfig._id,
+  //   unlockedBalance,
+  //   balance,
+  // ]);
 
   // Withdraw
   function handleAddressChange(event) {
@@ -138,25 +138,25 @@ function Wallet() {
   }
 
   async function withdraw() {
-    console.log("Withdraw request");
-    console.log("Wallet:", wallet);
-    console.log("withdrawAddress:", withdrawAddress);
-    console.log("withdrawAmount:", withdrawAmount);
-    wallet.wallet
-      .getDaemonHeight()
-      .then((daemonHeight) => console.log("DeamonHeight:", daemonHeight));
-    wallet.wallet
-      .getHeight()
-      .then((walletHeight) => console.log("WalletHeight:", walletHeight));
-    monerojs
-      .createTx(wallet.wallet, withdrawAddress, withdrawAmount)
-      .then((tx) => {
-        if (!(tx instanceof Error)) {
-          console.log("Tx created:", tx);
-        } else {
-          console.error("error with tx:", tx);
-        }
-      });
+    // console.log("Withdraw request");
+    // console.log("Wallet:", wallet);
+    // console.log("withdrawAddress:", withdrawAddress);
+    // console.log("withdrawAmount:", withdrawAmount);
+    // wallet.wallet
+    //   .getDaemonHeight()
+    //   .then((daemonHeight) => console.log("DeamonHeight:", daemonHeight));
+    // wallet.wallet
+    //   .getHeight()
+    //   .then((walletHeight) => console.log("WalletHeight:", walletHeight));
+    // monerojs
+    //   .createTx(wallet.wallet, withdrawAddress, withdrawAmount)
+    //   .then((tx) => {
+    //     if (!(tx instanceof Error)) {
+    //       console.log("Tx created:", tx);
+    //     } else {
+    //       console.error("error with tx:", tx);
+    //     }
+    //   });
   }
 
   return (

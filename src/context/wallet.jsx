@@ -105,6 +105,7 @@ function useWallet() {
 function openFromSeed(seed) {
   return (dispatch) => {
     dispatch({ type: actionTypes.go });
+    console.log("openFromSeed@wallet");
     monerojs
       .openWalletFromSeed(seed)
       .then((wallet) => dispatch({ type: actionTypes.success, wallet }))

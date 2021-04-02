@@ -50,7 +50,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
-      <TransactionSubscription />
+      {/* <TransactionSubscription /> */}
       <div className="flex-7">
         <div className="m-16">
           <Route exact path={path}>
