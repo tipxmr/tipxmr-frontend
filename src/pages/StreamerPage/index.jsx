@@ -25,7 +25,7 @@ const StreamerPage = () => {
 
   const RenderStreamerCards = () => {
     if (onlineStreamers) {
-      return onlineStreamers.map((streamer) => {
+      return onlineStreamers.value.map((streamer) => {
         if (activeCategory === streamer.stream.category) {
           return (
             <StreamerCard key={streamer.displayName} streamer={streamer} />
