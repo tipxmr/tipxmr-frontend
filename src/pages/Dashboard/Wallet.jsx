@@ -19,21 +19,36 @@ import monerojs from "../../libs/monero";
 import socketio from "../../libs/socket_streamer";
 import { streamerState } from "../../store/atom";
 import "../../styles/index.less";
-import "./Dashboard.less"
+import "./Dashboard.less";
 
 const { Title } = Typography;
 
 const Wallet = () => {
   const columns = [
     {
-      title: "Donor",
-      dataIndex: "donor",
-      key: "donor",
+      title: "Inout",
+      dataIndex: "inout",
+      key: "inout",
     },
     {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+    },
+    {
+      title: "Height",
+      dataIndex: "height",
+      key: "height",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Confirmations",
+      dataIndex: "numConfirmations",
+      key: "numConfirmations",
     },
   ];
 
@@ -101,21 +116,7 @@ const Wallet = () => {
             outgoing: prevState.outgoing + 1,
           }));
         }
-        const cellStyle =
-          inout === "incoming"
-            ? "bg-green-500 border px-4 py-2"
-            : "bg-red-500 border px-4 py-2";
-        return (
-          <tr key={index}>
-            <td className={cellStyle}>{inout}</td>
-            <td className={cellStyle}>{amount} XMR</td>
-            <td className={cellStyle} title={tx.state.hash}>
-              {height}
-            </td>
-            <td className={cellStyle}>{date}</td>
-            <td className={cellStyle}>{numConfirmations}</td>
-          </tr>
-        );
+        return { inout, amount, height, date, numConfirmations };
       });
     setTableData(data);
   };

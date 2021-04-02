@@ -22,69 +22,67 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <Layout>
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={() => setCollapsed(!collapsed)}
-          width={250}
+    <Layout>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={() => setCollapsed(!collapsed)}
+        width={250}
+      >
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={["overview"]}
+          mode="inline"
+          className="semi-large-font"
+          onClick={handleActiveCategory}
         >
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={["overview"]}
-            mode="inline"
-            className="semi-large-font"
-            onClick={handleActiveCategory}
-          >
-            <Menu.Item key="overview">
-              <Link to={`${url}/overview`}>Overview</Link>
-            </Menu.Item>
-            <Menu.Item key="wallet">
-              <Link to={`${url}/wallet`}>Wallet</Link>
-            </Menu.Item>
-            <Menu.Item key="account">
-              <Link to={`${url}/settings`}>Account Settings</Link>
-            </Menu.Item>
-            <Menu.Item key="animation">
-              <Link to={`${url}/animation`}>Animation Settings</Link>
-            </Menu.Item>
-            <Menu.Item key="preview">
-              <Link to={`${url}/preview`}>Preview</Link>
-            </Menu.Item>
-            <Menu.Item key="logout">
-              <Link to={`${url}/logout`}>Logout</Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+          <Menu.Item key="overview">
+            <Link to={`${url}/overview`}>Overview</Link>
+          </Menu.Item>
+          <Menu.Item key="wallet">
+            <Link to={`${url}/wallet`}>Wallet</Link>
+          </Menu.Item>
+          <Menu.Item key="account">
+            <Link to={`${url}/settings`}>Account Settings</Link>
+          </Menu.Item>
+          <Menu.Item key="animation">
+            <Link to={`${url}/animation`}>Animation Settings</Link>
+          </Menu.Item>
+          <Menu.Item key="preview">
+            <Link to={`${url}/preview`}>Preview</Link>
+          </Menu.Item>
+          <Menu.Item key="logout">
+            <Link to={`${url}/logout`}>Logout</Link>
+          </Menu.Item>
+        </Menu>
+      </Sider>
 
-        <TransactionSubscription />
-        <Content>
-          <Row justify="center" className="padding-left">
-            <Col span={24}>
-              <Route exact path={path}>
-                <Redirect to={`${path}/overview`} />
-              </Route>
-              <Route path={`${path}/overview`}>
-                <Overview />
-              </Route>
-              <Route path={`${path}/wallet`}>
-                <Wallet />
-              </Route>
-              <Route path={`${path}/settings`}>
-                <Settings />
-              </Route>
-              <Route path={`${path}/animation`}>
-                <AnimationSettings />
-              </Route>
-              <Route path={`${path}/preview`}>
-                <Animation />
-              </Route>
-            </Col>
-          </Row>
-        </Content>
-      </Layout>
-    </div>
+      {/* <TransactionSubscription /> */}
+      <Content>
+        <Row justify="center" className="padding-left">
+          <Col span={24}>
+            <Route exact path={path}>
+              <Redirect to={`${path}/overview`} />
+            </Route>
+            <Route path={`${path}/overview`}>
+              <Overview />
+            </Route>
+            <Route path={`${path}/wallet`}>
+              <Wallet />
+            </Route>
+            <Route path={`${path}/settings`}>
+              <Settings />
+            </Route>
+            <Route path={`${path}/animation`}>
+              <AnimationSettings />
+            </Route>
+            <Route path={`${path}/preview`}>
+              <Animation />
+            </Route>
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 };
 
