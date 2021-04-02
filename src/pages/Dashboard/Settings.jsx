@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { LanguageSelector } from "../../components";
 import { dispatcherState, streamerState } from "../../store/atom";
+import { format } from "date-fns";
 import "../../styles/index.less";
 
 const { Title } = Typography;
@@ -119,30 +120,13 @@ const Settings = () => {
 
   useEffect(() => {
     // convert the date object into a formatted date string
-    let creationDate = formatDate(streamerConfig);
+    const creationDate = format(
+      new Date(streamerConfig.creationDate),
+      "dd.MM.yyyy"
+    );
     setDate(creationDate);
   }, [streamerConfig]);
 
-  const formatDate = (streamerConfig) => {
-    const months = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
-    ];
-    let date = new Date(streamerConfig.creationDate);
-    let formattedDate =
-      date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear();
-    return formattedDate;
-  };
   const formItemLayout = {
     labelCol: {
       span: 8,
