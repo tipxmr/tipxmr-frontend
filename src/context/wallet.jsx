@@ -1,4 +1,4 @@
-// @ts-nocheck 
+// @ts-nocheck
 import React, { createContext, useContext } from "react";
 
 import useThunkReducer from "../hook/useThunkReducer";

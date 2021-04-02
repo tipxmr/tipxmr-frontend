@@ -1,5 +1,5 @@
-/// <reference types="@welldone-software/why-did-you-render" />
-import "./wdyr"
+// /// <reference types="@welldone-software/why-did-you-render" />
+// import "./wdyr"
 
 import { hot } from "react-hot-loader/root";
 import { StrictMode } from "react";
@@ -7,8 +7,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import './styles/index.less';
-import './styles/tailwind.css';
+import "./styles/index.less";
 
 import App from "./App";
 

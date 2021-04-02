@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import Donation from "../models/Donation";
 import monerojs from "../libs/monero";
 // import useIncomingTransaction from "../hook/useIncomingTransaction";
+// import { useRecoilValue } from "recoil";
 import { useWalletState } from "../context/wallet";
+// import useIncomingTransaction from "../hook/useIncomingTransaction";
 import socketio from "../libs/socket_streamer";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store";
 import { actions } from "../store/slices/transaction";
 
+// import { dispatcherState, donorsInfoState, streamerState } from "../store/atom";
 
-
-function parseAmount(amount) {
+const parseAmount = (amount) => {
   return parseFloat(amount) / Math.pow(10, 12);
 }
 
@@ -22,11 +24,11 @@ function TransactionSubscription() {
   const donorsInfo = useSelector(state => state.transaction.donors);
   console.log("donorsInfo", donorsInfo);
 
-  function onIncomingTransaction(tx) {
+  const onIncomingTransaction = (tx) => {
     getNewOutput(tx);
   }
 
-  function getNewOutput(output) {
+  const getNewOutput = (output) => {
     monerojs
       .getSubaddress(customWallet.wallet, output.subaddressIndex)
       .then((subaddress) => {
@@ -45,7 +47,7 @@ function TransactionSubscription() {
             duration:
               (parseAmount(output.amount) -
                 streamerConfig.animationSettings.charPrice *
-                  donationsInfo.message.length) /
+                donationsInfo.message.length) /
               streamerConfig.animationSettings.secondPrice,
           });
           dispatch(actions.appendToQueue(newDonation));

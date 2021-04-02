@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import {
   BrowserRouter as Router,
-  Redirect, Route,
-  Switch
+  Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
 import { TipLayout, PrivateRoute } from "./components";
 import { useWalletState } from "./context/wallet";
@@ -11,10 +12,14 @@ import socketio from "./libs/socket_streamer";
 import {
   Animation,
   Dashboard,
-  Disclaimer, Donate,
+  Disclaimer,
+  Donate,
   FAQ,
-  Invoice, Landing, Login,
-  Logout, StreamerPage
+  InvoiceModal,
+  Landing,
+  Login,
+  Logout,
+  StreamerPage,
 } from "./pages";
 
 import { useAppDispatch, useAppSelector } from './store';
@@ -72,9 +77,9 @@ function App() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <button onClick={() => dispatch({ "type": "INCREMENT_ASYNC" })}>Increment</button>
-      </div>
+      </div> */}
       <Router>
         {/* userName in Header is just for easier testing, remove for production */}
         <TipLayout>
@@ -107,7 +112,7 @@ function App() {
               <Logout />
             </Route>
             <Route path="/invoice">
-              <Invoice />
+              <InvoiceModal />
             </Route>
             <Route path="/">
               <Redirect to="/dashboard" />
@@ -120,6 +125,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
