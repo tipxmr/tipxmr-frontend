@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { isNil } from "ramda";
+import { Redirect, Route } from "react-router-dom";
 import { useWalletState } from "../context/wallet";
 
 function PrivateRoute({ children, ...props }) {

@@ -1,23 +1,38 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
-  InputField,
-  FileInput,
-  NumberInput,
-  CheckboxField,
   Button,
-  DropdownField,
-} from "../../components";
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Typography,
+} from "antd";
+import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { dispatcherState, streamerState } from "../../store/atom";
+import "../../styles/index.less";
 
-function AnimationSettings() {
+const { Title } = Typography;
+
+const formLayout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+
+const positiveNumberRule = [
+  { type: "number", message: "Must be a positive number", min: 0 },
+];
+
+const AnimationSettings = () => {
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
-
-  const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   const onSubmit = (data) => {
     console.log("data", data);
@@ -43,132 +58,102 @@ function AnimationSettings() {
   };
 
   return (
-    <div className="h-full text-gray-200">
-      <div className="mx-auto">
-        <div className="text-center text-xl underline mb-4">
-          Change your Animation:
-        </div>
+    <Row
+      justify="center"
+      align="middle"
+      gutter={[12, 12]}
+      className="text-center"
+    >
+      <Col span={20}>
+        <Title level={2}>Customize your TipXMR animation:</Title>
+        <Form {...formLayout} size="large">
+          <Form.Item
+            name="fontColor"
+            label="Hexcode for font color"
+            initialValue={streamerConfig.animationSettings.fontColor}
+            rules={[
+              { type: "string" },
+              { pattern: "[a-zA-Z0-9]", message: "Provide a valid hexcode" },
+              { max: 7, message: "Provide a valid hexcode" },
+              {
+                min: 6,
+                message: "Please enter all 6 characters of the hexcode",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Title level={4}>(All numbers in XMR)</Title>
+          <Form.Item
+            name="secondPrice"
+            label="Price per second of showtime"
+            initialValue={streamerConfig.animationSettings.secondPrice}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* TODO Create a new component to pick the color */}
-            <InputField
-              name="fontColor"
-              labelName="Hexcode for font color"
-              placeholderName={streamerConfig.animationSettings.fontColor}
-              register={register}
-              errors={errors}
-            />
-            <NumberInput
-              name="secondPrice"
-              labelName="The price of 1 second (in XMR)"
-              placeholderName={streamerConfig.animationSettings.secondPrice}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-              })}
-              errors={errors}
-            />
-            <NumberInput
-              name="charPrice"
-              labelName="The price of 1 character (in XMR)"
-              placeholderName={streamerConfig.animationSettings.charPrice}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-              })}
-              errors={errors}
-            />
+          <Form.Item
+            name="charPrice"
+            label="Price per character"
+            initialValue={streamerConfig.animationSettings.charPrice}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
 
-            <NumberInput
-              name="charLimit"
-              labelName="Maximum characters allowed for messages"
-              placeholderName={streamerConfig.animationSettings.charLimit}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-                max: {
-                  value: 1000,
-                  message: "Maximal length is 1000 characters",
-                },
-              })}
-              errors={errors}
-            />
-            <NumberInput
-              name="minAmount"
-              labelName="Minimum amount of a donation (in XMR)"
-              placeholderName={streamerConfig.animationSettings.minAmount}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-              })}
-              errors={errors}
-            />
-            <NumberInput
-              name="goal"
-              labelName="Set a donation goal for your stream (in XMR)"
-              placeholderName={streamerConfig.animationSettings.goal}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-              })}
-              errors={errors}
-            />
-            <NumberInput
-              name="gifsMinAmount"
-              labelName="Minimum amount to send gifs"
-              placeholderName={streamerConfig.animationSettings.gifsMinAmount}
-              register={register({
-                min: { value: 0, message: "Cannot be negative" },
-              })}
-              errors={errors}
-            />
-            <CheckboxField
-              name="showGoal"
-              labelName="Display donation goal in stream"
-              defaultChecked={streamerConfig.animationSettings.showGoal}
-              register={register}
-            />
-            <CheckboxField
-              name="gifs"
-              labelName="Allow users to send gifs"
-              defaultChecked={streamerConfig.animationSettings.gifs}
-              register={register}
-            />
-            {/* Not really possible */}
-            {/* <CheckboxField */}
-            {/*   name="fontShadow" */}
-            {/*   labelName="Turn on text shadow" */}
-            {/*   defaultChecked={streamerConfig.animationSettings.fontShadow} */}
-            {/*   register={register} */}
-            {/* /> */}
-            <FileInput
-              name="sound"
-              labelName="Upload a custom MP3 for donations"
-              currentFile={streamerConfig.animationSettings.sound}
-              register={register({
-                max: { value: 307200, message: "Maximum filesize is 300KB" },
-              })}
-              errors={errors}
-            />
-            <FileInput
-              name="bgImg"
-              labelName="Upload custom background image for donations"
-              currentFile={streamerConfig.animationSettings.bgImg}
-              register={register({
-                max: { value: 307200, message: "Maximum filesize is 300KB" },
-              })}
-              errors={errors}
-            />
-            <DropdownField
-              name="fontSize"
-              options={fontSizeOptions}
-              labelText="Select a font size"
-              selected={streamerConfig.animationSettings.fontSize}
-              register={register}
-              errors={errors}
-            />
-          </div>
-          <Button type="submit">Submit</Button>
-        </form>
-      </div>
-    </div>
+          <Form.Item
+            name="charLimit"
+            label="Maximum characters per message"
+            initialValue={streamerConfig.animationSettings.charLimit}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="minAmount"
+            label="Minimum amount for a tip"
+            initialValue={streamerConfig.animationSettings.minAmount}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="goal"
+            label="Set a funding goal"
+            initialValue={streamerConfig.animationSettings.goal}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="gifsMinAmount"
+            label="Set minimum amount to send a gif"
+            initialValue={streamerConfig.animationSettings.gifsMinAmount}
+            rules={positiveNumberRule}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="showGoal"
+            label="Show funding goal in stream"
+            initialValue={streamerConfig.animationSettings.showGoal}
+          >
+            <Checkbox />
+          </Form.Item>
+
+          {/* Save Button */}
+          <Button type="primary" htmlType="submit">
+            Save changes
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
-}
+};
 
 export default AnimationSettings;

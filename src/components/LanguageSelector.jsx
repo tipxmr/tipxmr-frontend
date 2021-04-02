@@ -1,4 +1,4 @@
-import { Col, Row, Select } from "antd";
+import { Select } from "antd";
 import PropTypes from "prop-types";
 
 const { Option } = Select;
@@ -28,7 +28,20 @@ const convertFlag = (language) => {
   }
 };
 
-const LanguageSelector = ({ languages, language, onChange }) => {
+const LanguageSelector = ({ language, onChange }) => {
+  const languages = [
+    "Dutch",
+    "English",
+    "Esperanto",
+    "French",
+    "German",
+    "Italian",
+    "Japanese",
+    "Portuguese",
+    "Russian",
+    "Spanish",
+  ];
+
   // Build list of language items, alphabetically sorted
   const languageItems = languages.map((language) => {
     return (
@@ -39,22 +52,15 @@ const LanguageSelector = ({ languages, language, onChange }) => {
   });
 
   return (
-    <Row justify="center" align="middle">
-      <Col>
-        <span htmlFor="languages" style={{ "padding-right": "10px" }}>
-          Seed language:
-        </span>
-        <Select
-          id="languages"
-          name="languages"
-          defaultValue={language}
-          onChange={onChange}
-          style={{ width: "200px" }}
-        >
-          {languageItems}
-        </Select>
-      </Col>
-    </Row>
+    <Select
+      id="languages"
+      name="languages"
+      defaultValue={language}
+      onChange={onChange}
+      style={{ width: "200px" }}
+    >
+      {languageItems}
+    </Select>
   );
 };
 
