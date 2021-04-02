@@ -24,6 +24,29 @@ import "../../styles/index.less";
 const { Title } = Typography;
 const { Option } = Select;
 
+const displayNameRules = [
+  { required: true, message: "Please enter a display name" },
+  { pattern: "[a-zA-Z0-9]", message: "Characters not allowed" },
+  { max: 15, message: "Maximum length is 15 characters" },
+  { min: 4, message: "Minimum length is 4 characters" },
+];
+
+const streamUrlRules = [
+  {
+    required: true,
+    message: "Please enter provide the URL to your stream",
+  },
+  { type: "url", message: "Please enter a valid URL" },
+];
+
+const streamDescriptionRules = [
+  { max: 250, message: "Maximum length is 250 characters." },
+];
+
+const restoreHeightRules = [
+  { type: "number", message: "Restore height must be a number" },
+];
+
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));
@@ -178,12 +201,7 @@ const Settings = () => {
             name="displayName"
             label="Change display name"
             initialValue={streamerConfig.displayName}
-            rules={[
-              { required: true, message: "Please enter a display name" },
-              { pattern: "[a-zA-Z0-9]", message: "Characters not allowed" },
-              { max: 15, message: "Maximum length is 15 characters" },
-              { min: 4, message: "Minimum length is 4 characters" },
-            ]}
+            rules={displayNameRules}
           >
             <Input />
           </Form.Item>
@@ -192,13 +210,7 @@ const Settings = () => {
             name="streamUrl"
             label="URL to your stream"
             initialValue={streamerConfig.stream.url}
-            rules={[
-              {
-                required: true,
-                message: "Please enter provide the URL to your stream",
-              },
-              { type: "url", message: "Please enter a valid URL" },
-            ]}
+            rules={streamUrlRules}
           >
             <Input />
           </Form.Item>
@@ -207,7 +219,7 @@ const Settings = () => {
             name="description"
             label="Tell viewers what your stream is about"
             initialValue={streamerConfig.stream.description}
-            rules={[{ max: 250, message: "Maximum length is 250 characters." }]}
+            rules={streamDescriptionRules}
           >
             <Input />
           </Form.Item>
@@ -216,9 +228,7 @@ const Settings = () => {
             name="restoreHeight"
             label="Select restore height for your Monero wallet"
             initialValue={streamerConfig.restoreHeight}
-            rules={[
-              { type: "number", message: "Restore height must be a number" },
-            ]}
+            rules={restoreHeightRules}
           >
             <Input />
           </Form.Item>
