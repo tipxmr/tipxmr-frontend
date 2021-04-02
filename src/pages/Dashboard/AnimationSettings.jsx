@@ -15,13 +15,24 @@ import "../../styles/index.less";
 
 const { Title } = Typography;
 
+const formLayout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+
+const positiveNumberRule = [
+  { type: "number", message: "Must be a positive number", min: 0 },
+];
+
 const AnimationSettings = () => {
   const streamerConfig = useRecoilValue(streamerState);
   const dispatcher = useRecoilValue(dispatcherState);
   // useForm hook
   const { handleSubmit, register, errors } = useForm();
-
-  const fontSizeOptions = ["small", "medium", "large", "extra large"];
 
   const onSubmit = (data) => {
     console.log("data", data);
@@ -45,19 +56,6 @@ const AnimationSettings = () => {
     dispatcher.updateAnimationSettings(newAnimationSettings);
     console.log("Update successful", newAnimationSettings);
   };
-
-  const formLayout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-
-  const positiveNumberRule = [
-    { type: "number", message: "Must be a positive number", min: 0 },
-  ];
 
   return (
     <Row
