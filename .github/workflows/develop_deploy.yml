@@ -4,11 +4,13 @@ on:
     branches:
       - develop
       - develop_deploy
+  pull_request:
+    branches:
+      - develop
+      - develop_deploy
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Install Node.js
