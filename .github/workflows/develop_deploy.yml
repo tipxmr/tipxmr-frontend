@@ -26,11 +26,11 @@ jobs:
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_TIPXMR_SERVER }}
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "build/"
-          REMOTE_HOST: ${{ secrets.TIPXMR_SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.TIPXMR_SERVER_USER }}
-          REMOTE_PORT: ${{ secrets.TIPXMR_SERVER_SSH_PORT }}
-          TARGET: ${{ secrets.REMOTE_TARGET_PATH_DEVELOP }}
-          EXCLUDE: "/dist/, /node_modules/"
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_TIPXMR_SERVER }}
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "build/"
+        REMOTE_HOST: ${{ secrets.TIPXMR_SERVER_HOST }}
+        REMOTE_USER: ${{ secrets.TIPXMR_SERVER_USER }}
+        REMOTE_PORT: ${{ secrets.TIPXMR_SERVER_SSH_PORT }}
+        TARGET: ${{ secrets.REMOTE_TARGET_PATH_DEVELOP }}
+        EXCLUDE: "/dist/, /node_modules/"
