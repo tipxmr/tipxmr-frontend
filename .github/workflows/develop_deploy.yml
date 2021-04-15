@@ -19,6 +19,8 @@ jobs:
       run: npm install
     - name: Run build task
       run: npm run build --if-present
+      env:
+        CI: false
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
