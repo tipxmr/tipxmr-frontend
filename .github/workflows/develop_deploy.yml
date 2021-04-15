@@ -25,7 +25,7 @@ jobs:
         CI: false
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.5
-      env:
+      with:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_TIPXMR_SERVER }}
         ARGS: "-rltgoDzvO --delete"
         SOURCE: "build/"
