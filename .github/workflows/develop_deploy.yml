@@ -33,4 +33,3 @@ jobs:
         REMOTE_USER: ${{ secrets.TIPXMR_SERVER_USER }}
         REMOTE_PORT: ${{ secrets.TIPXMR_SERVER_SSH_PORT }}
         TARGET: ${{ secrets.REMOTE_TARGET_PATH_DEVELOP }}
-        EXCLUDE: "/dist/, /node_modules/"
