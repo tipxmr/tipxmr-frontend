@@ -18,7 +18,7 @@ jobs:
     - name: Create .env file
       run: |
         touch .env 
-        echo REACT_APP_SOCKET_URL=wss://dev.tipxmr.live/api >> .env
+        echo REACT_APP_SOCKET_URL=wss://dev.tipxmr.live >> .env
     - name: Install npm dependencies
       run: npm ci
     - name: Run build task
