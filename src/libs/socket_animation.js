@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socketAnimation = io("ws://localhost:3000/animation");
+const socketAnimation = io(`${process.env.SOCKET_URL}/animation`);
 
 // ===============================================================
 // Animation Functions

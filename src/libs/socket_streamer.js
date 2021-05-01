@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socketStreamer = io("ws://localhost:3000/streamer");
+const socketStreamer = io(`${process.env.SOCKET_URL}/streamer`);
 
 // ===============================================================
 // Streamer Functions
