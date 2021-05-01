@@ -16,9 +16,9 @@ jobs:
       with:
         node-version: '16.x'
     - name: Create .env file
-        run: |
-          touch .env 
-          echo SOCKET_URL=wss://dev.tipxmr.live >> .env
+      run: |
+        touch .env 
+        echo SOCKET_URL=wss://dev.tipxmr.live >> .env
     - name: Install npm dependencies
       run: npm ci
     - name: Run build task
