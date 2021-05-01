@@ -1,5 +1,4 @@
-import io from "socket.io-client";
-const socketAnimation = io(`${process.env.REACT_APP_SOCKET_URL}/animation`);
+import { socketAnimation } from "./socket";
 
 // ===============================================================
 // Animation Functions
