@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 const socketStreamer = io(`${process.env.REACT_APP_SOCKET_URL}/streamer`);
-
+console.log("socketStreamer", socketStreamer);
 // ===============================================================
 // Streamer Functions
 // ===============================================================
