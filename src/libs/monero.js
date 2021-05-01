@@ -9,11 +9,12 @@ export async function createWallet(lang = "English") {
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    serverUri: process.env.REACT_APP_MONEROD_URI,
+    serverUri: process.env.REACT_APP_MONEROD_URI, // https://dev.tipxmr.live/stagenet // http://localhost:38081
     serverUsername: process.env.REACT_APP_MONEROD_USER,
     serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
+  console.log(process.env.REACT_APP_MONEROD_URI);
   return walletFull;
 }
 
