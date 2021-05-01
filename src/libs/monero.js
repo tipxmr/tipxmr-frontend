@@ -28,6 +28,7 @@ export async function openWalletFromSeed(seed) {
     serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
+  console.log(process.env.REACT_APP_MONEROD_URI);
   return walletFull;
 }
 
