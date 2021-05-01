@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socketDonator = io(`${process.env.SOCKET_URL}/donator`);
+const socketDonator = io(`${process.env.REACT_APP_SOCKET_URL}/donator`);
 
 // ===============================================================
 // Donator Functions
