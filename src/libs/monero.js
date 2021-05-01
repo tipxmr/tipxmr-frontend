@@ -5,29 +5,28 @@ const monerojs = require("monero-javascript");
 
 export async function createWallet(lang = "English") {
   console.log("Creating new wallet");
-  let walletFull = await monerojs.createWalletFull({
+  const walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    serverUri: "http://localhost:38081",
-    serverUsername: "superuser",
-    serverPassword: "abctesting123",
+    serverUri: process.env.REACT_APP_MONEROD_URI,
+    serverUsername: process.env.REACT_APP_MONEROD_USER,
+    serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
   return walletFull;
 }
 
 export async function openWalletFromSeed(seed) {
-  let walletFull = await monerojs.createWalletFull({
+  const walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
-    serverUri: "http://localhost:38081",
-    serverUsername: "superuser",
-    serverPassword: "abctesting123",
+    serverUri: process.env.REACT_APP_MONEROD_URI,
+    serverUsername: process.env.REACT_APP_MONEROD_USER,
+    serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
-  console.log(walletFull);
   return walletFull;
 }
 
