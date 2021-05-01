@@ -1,6 +1,9 @@
-import io from "socket.io-client";
-const socketStreamer = io(`${process.env.REACT_APP_SOCKET_URL}/streamer`);
+import { Manager } from "socket.io-client";
+
+const manager = new Manager(process.env.REACT_APP_SOCKET_URL);
+const socketStreamer = manager.socket("/streamer");
 console.log("socketStreamer", socketStreamer);
+
 // ===============================================================
 // Streamer Functions
 // ===============================================================
