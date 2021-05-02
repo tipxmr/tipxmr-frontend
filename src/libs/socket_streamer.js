@@ -1,5 +1,4 @@
-import io from "socket.io-client";
-const socketStreamer = io("ws://localhost:3000/streamer");
+import { socketStreamer } from "./socket";
 
 // ===============================================================
 // Streamer Functions

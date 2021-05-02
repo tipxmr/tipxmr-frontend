@@ -1,0 +1,40 @@
+name: TipXMR Develop Instance
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '16.x'
+    - name: Create .env file
+      run: |
+        touch .env 
+        echo REACT_APP_SOCKET_URL=wss://dev.tipxmr.live >> .env
+        echo REACT_APP_MONEROD_URI=${{ secrets.MONEROD_URI_STAGENET }} >> .env
+        echo REACT_APP_MONEROD_USER=${{ secrets.MONEROD_USER }} >> .env
+        echo REACT_APP_MONEROD_PW=${{ secrets.MONEROD_PW }} >> .env
+    - name: Install npm dependencies
+      run: npm ci
+    - name: Run build task
+      run: npm run build --if-present
+      env:
+        CI: false
+    - name: Deploy to dev.tipxmr.live
+      uses: easingthemes/ssh-deploy@v2.1.5
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_TIPXMR_SERVER }}
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "build/"
+        REMOTE_HOST: ${{ secrets.TIPXMR_SERVER_HOST }}
+        REMOTE_USER: ${{ secrets.TIPXMR_SERVER_USER }}
+        REMOTE_PORT: ${{ secrets.TIPXMR_SERVER_SSH_PORT }}
+        TARGET: ${{ secrets.REMOTE_TARGET_PATH_DEVELOP }}

@@ -1,5 +1,4 @@
-import io from "socket.io-client";
-const socketDonator = io("ws://localhost:3000/donator");
+import { socketDonator } from "./socket";
 
 // ===============================================================
 // Donator Functions
