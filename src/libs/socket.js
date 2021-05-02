@@ -1,7 +1,7 @@
 import { Manager } from "socket.io-client";
 
 const manager = new Manager(process.env.REACT_APP_SOCKET_URL, {
-  path: "/api"
+  path: process.env.REACT_APP_SOCKET_PATH
 });
 
 export const socketAnimation = manager.socket("/animation");
