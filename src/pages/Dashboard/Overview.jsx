@@ -12,6 +12,7 @@ const Overview = () => {
   const [data, setData] = useState([
     {
       id: 1,
+      key: 1,
       donor: "Fluffypony",
       message:
         "Hey Guys, I really like this project. I wish I would have thought of that!",
@@ -19,18 +20,21 @@ const Overview = () => {
     },
     {
       id: 2121,
+      key: 2121,
       donor: "Nicolas van Saberhagen",
       message: "I am not the creator of Monero, but I wish I was!",
       amount: "420",
     },
     {
       id: 10231,
+      key: 10231,
       donor: "AlexAnarcho",
       message: "Just awesome",
       amount: "0,000501",
     },
     {
       id: 91234,
+      key: 91234,
       donor: "N00b_Styler",
       message:
         "Ich hab, ich hab, ich hab STYLE UND DAS GELD. ICH HAB ALL DAS - na ihr wisst schon",

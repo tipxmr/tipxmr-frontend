@@ -4,7 +4,6 @@ import QRCode from "qrcode";
 const monerojs = require("monero-javascript");
 
 export async function createWallet(lang = "English") {
-  console.log("Creating new wallet");
   const walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     language: lang,
@@ -14,7 +13,6 @@ export async function createWallet(lang = "English") {
     serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
-  console.log(process.env.REACT_APP_MONEROD_URI);
   return walletFull;
 }
 
@@ -28,7 +26,6 @@ export async function openWalletFromSeed(seed) {
     serverPassword: process.env.REACT_APP_MONEROD_PW,
     rejectUnauthorized: false, // e.g. local development
   });
-  console.log(process.env.REACT_APP_MONEROD_URI);
   return walletFull;
 }
 
