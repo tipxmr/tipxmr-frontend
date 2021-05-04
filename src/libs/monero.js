@@ -3,14 +3,24 @@ import Hex from "crypto-js/enc-hex";
 import QRCode from "qrcode";
 const monerojs = require("monero-javascript");
 
+const rpcConnection = new monerojs.MoneroRpcConnection(
+  process.env.REACT_APP_MONEROD_URI,
+  process.env.REACT_APP_MONEROD_USER,
+  process.env.REACT_APP_MONEROD_PW
+);
+
+let daemon;
+
+const init = async () => {
+  daemon = await monerojs.connectToDaemonRpc(rpcConnection);
+};
+
 export async function createWallet(lang = "English") {
   const walletFull = await monerojs.createWalletFull({
     networkType: "stagenet",
     language: lang,
     password: "pass123",
-    serverUri: process.env.REACT_APP_MONEROD_URI,
-    serverUsername: process.env.REACT_APP_MONEROD_USER,
-    serverPassword: process.env.REACT_APP_MONEROD_PW,
+    server: rpcConnection,
     rejectUnauthorized: false, // e.g. local development
   });
   return walletFull;
@@ -21,9 +31,7 @@ export async function openWalletFromSeed(seed) {
     networkType: "stagenet",
     mnemonic: seed,
     password: "pass123",
-    serverUri: process.env.REACT_APP_MONEROD_URI,
-    serverUsername: process.env.REACT_APP_MONEROD_USER,
-    serverPassword: process.env.REACT_APP_MONEROD_PW,
+    server: rpcConnection,
     rejectUnauthorized: false, // e.g. local development
   });
   return walletFull;
@@ -123,7 +131,13 @@ async function createTx(wallet, address, amount) {
   }
 }
 
+async function getCurrentBlockHeight() {
+  return await daemon.getHeight();
+}
+
+init();
 export default {
+  daemon,
   createWallet,
   openWalletFromSeed,
   getPrimaryAddress,
@@ -138,4 +152,5 @@ export default {
   isValidMnemoicLength,
   isValidAddress,
   createTx,
+  getCurrentBlockHeight,
 };

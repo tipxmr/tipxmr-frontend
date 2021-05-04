@@ -164,10 +164,13 @@ export function useWalletSynchronisation() {
     }
   }
 
-  async function start() {
+  async function start(newRestoreHeight) {
+    const relevantRestoreHeight = newRestoreHeight
+      ? newRestoreHeight
+      : restoreHeight;
     setIsDone(false);
     setIsActive(true);
-    await wallet.wallet.setSyncHeight(restoreHeight);
+    await wallet.wallet.setSyncHeight(relevantRestoreHeight);
     await wallet.wallet.startSyncing();
   }
 
