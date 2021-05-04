@@ -28,7 +28,7 @@
     "ramda": "^0.27.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.3.6",
+    "react-hook-form": "^7.4.0",
     "react-hot-loader": "^4.13.0",
     "react-icons": "^4.2.0",
     "react-loading": "^2.0.3",
@@ -47,7 +47,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "postinstall": "shx cp -u ./node_modules/monero-javascript/dist/* ./public && shx cp -n .env.example .env"
+    "postinstall": "shx cp ./node_modules/monero-javascript/dist/* ./public && shx cp -n .env.example .env"
   },
   "eslintConfig": {
     "extends": [
