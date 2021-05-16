@@ -19,6 +19,7 @@ jobs:
       run: |
         touch .env 
         echo REACT_APP_SOCKET_URL=wss://dev.tipxmr.live >> .env
+        echo REACT_APP_SOCKET_PATH=/api >> .env
         echo REACT_APP_MONEROD_URI=${{ secrets.MONEROD_URI_STAGENET }} >> .env
         echo REACT_APP_MONEROD_USER=${{ secrets.MONEROD_USER }} >> .env
         echo REACT_APP_MONEROD_PW=${{ secrets.MONEROD_PW }} >> .env
