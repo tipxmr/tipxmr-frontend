@@ -1,20 +1,24 @@
 name: TipXMR Develop Instance
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - develop
+    types: [closed]
+  push:
+    branches:
+      - feature/154-optimize_pipeline
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Install Node.js
-      uses: actions/setup-node@v1
+    - name: checkout
+      uses: actions/checkout@v2
+      timeout-minutes: 1 
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
       with:
         node-version: '16.x'
+      timeout-minutes: 1
     - name: Create .env file
       run: |
         touch .env 
@@ -25,12 +29,14 @@ jobs:
         echo REACT_APP_MONEROD_PW=${{ secrets.MONEROD_PW }} >> .env
     - name: Install npm dependencies
       run: npm ci
+      timeout-minutes: 10
     - name: Run build task
       run: npm run build --if-present
       env:
         CI: false
+      timeout-minutes: 15
     - name: Deploy to dev.tipxmr.live
-      uses: easingthemes/ssh-deploy@v2.1.5
+      uses: easingthemes/ssh-deploy@v2
       with:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_TIPXMR_SERVER }}
         ARGS: "-rltgoDzvO --delete"
@@ -39,3 +45,4 @@ jobs:
         REMOTE_USER: ${{ secrets.TIPXMR_SERVER_USER }}
         REMOTE_PORT: ${{ secrets.TIPXMR_SERVER_SSH_PORT }}
         TARGET: ${{ secrets.REMOTE_TARGET_PATH_DEVELOP }}
+      timeout-minutes: 10
