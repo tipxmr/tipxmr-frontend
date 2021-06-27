@@ -4,9 +4,6 @@ on:
     branches:
       - develop
     types: [closed]
-  push:
-    branches:
-      - feature/154-optimize_pipeline
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
