@@ -9,10 +9,10 @@ const TipHeader = () => {
   return (
     <Header className="header">
       <Row justify="space-around" align="middle">
-        <Col>
+        <Col span={8}>
           <img src={logo} width={180} />
         </Col>
-        <Col>
+        <Col span={8} offset={8}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1">
               <Link to="/">Home</Link>
