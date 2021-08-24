@@ -1,6 +1,11 @@
 FROM node:current-alpine
 
-WORKDIR /usr/local/app
+WORKDIR /usr/app
 
-RUN npm install && npm cache clean --force
-USER node
+#COPY package.json .
+COPY . .
+RUN npm install --legacy-peer-deps
+
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
+
+COPY . .
