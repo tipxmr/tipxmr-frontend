@@ -151,7 +151,7 @@ const Login = () => {
               {creationMode ? (
                 <Row justify="center" align="middle">
                   <Col>
-                    <span htmlFor="languages" style={{ "padding-right": "10px" }}>
+                    <span htmlFor="languages" style={{ "paddingRight": "10px" }}>
                       Seed language:
                     </span>
                     <LanguageSelector
