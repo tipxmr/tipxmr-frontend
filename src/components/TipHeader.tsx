@@ -10,7 +10,9 @@ const TipHeader = () => {
     <Header className="header">
       <Row justify="space-around" align="middle">
         <Col span={8}>
-          <img src={logo} width={180} />
+          <Link to='/'>
+            <img src={logo} width={180} />
+          </Link>
         </Col>
         <Col span={8} offset={8}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
