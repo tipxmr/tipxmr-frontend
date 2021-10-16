@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "./Login";
-import Info from "./Info";
+import Login from "./Signup";
+import Info from "./RegistrationInfo";
 
 function Signup() {
   const [showInfo, setShowInfo] = useState(true);

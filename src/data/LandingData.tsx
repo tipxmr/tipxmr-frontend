@@ -1,7 +1,7 @@
-const streamerCard = {
+export const streamerCard = {
   title: "For Streamers",
   buttonCta: "Get started now",
-  buttonLink: "/login",
+  buttonLink: "/signup",
   bulletpoints: [
     {
       title:
@@ -19,7 +19,8 @@ const streamerCard = {
     },
   ],
 };
-const viewerCard = {
+
+export const viewerCard = {
   title: "For Viewers",
   buttonCta: "See who is streaming",
   buttonLink: "/streamerpage",
@@ -41,5 +42,4 @@ const viewerCard = {
   ],
 };
 
-const cards = [streamerCard, viewerCard];
-export default cards;
+export const cards = [streamerCard, viewerCard];

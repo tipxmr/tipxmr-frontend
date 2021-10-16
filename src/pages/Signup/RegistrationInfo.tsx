@@ -1,34 +1,8 @@
 import { Row, Col, Typography, Card, List, Button } from "antd";
+import {registrationInstructions} from '../../data/SignupData'
 
 const { Title } = Typography;
 
-const stepByStep = [
-  {
-    title: "Step 1: Create your TipXMR account",
-    description:
-      "Follow the button below and create your TipXMR account. Just pick your username and continue - no email verification required",
-  },
-  {
-    title: "Step 2: Secure your Monero Wallet",
-    description:
-      "Your Browser will generate a seedphrase for you. This is your Monero wallet. Write the seed on a piece of paper and keep is secure.",
-  },
-  {
-    title: "Step 3: Set up OBS with TipXMR",
-    description:
-      "Add a new browser source in your OBS and point it to your unique TipXMR URL.",
-  },
-  {
-    title: "Step 4: Customize your donation screen",
-    description:
-      "Make TipXMR your own by customizing the style of your tip messages.",
-  },
-  {
-    title: "Step 5: Start streaming!",
-    description:
-      "All done! You can now go live and Monero donations will be displayed directly in your stream.",
-  },
-];
 
 const Info = ({ stateSetterInfo, stateSetterCreate }) => {
   const handleChange = () => {
@@ -80,7 +54,7 @@ const Info = ({ stateSetterInfo, stateSetterCreate }) => {
               <Title level={2}>Get started with TipXMR in 5 easy steps:</Title>
               <List
                 itemLayout="horizontal"
-                dataSource={stepByStep}
+                dataSource={registrationInstructions}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
@@ -97,7 +71,7 @@ const Info = ({ stateSetterInfo, stateSetterCreate }) => {
           {/* Continue Button */}
           <Row justify="center" align="middle">
             <Col>
-              <Button type="primary" justify="center" onClick={handleChange}>
+              <Button type="primary" onClick={handleChange}>
                 Create TipXMR Account
               </Button>
             </Col>
