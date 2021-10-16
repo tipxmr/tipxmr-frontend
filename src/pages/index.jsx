@@ -6,6 +6,6 @@ export { default as Dashboard } from "./Dashboard";
 export { default as StreamerPage } from "./StreamerPage";
 export { default as NotFound404 } from "./NotFound404";
 export { default as Logout } from "./Logout";
-export { default as Landing } from "./Landing";
+export { default as Landing } from "./Landing.tsx";
 export { default as Login } from "./Login";
 export { default as InvoiceModal } from "./InvoiceModal";
