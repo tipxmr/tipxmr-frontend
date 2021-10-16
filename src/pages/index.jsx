@@ -1,5 +1,5 @@
 export { default as Disclaimer } from "./Disclaimer.tsx";
-export { default as FAQ } from "./FAQ";
+export { default as FAQ } from "./FAQ.tsx";
 export { default as Donate } from "./Donate";
 export { default as Animation } from "./Animation";
 export { default as Dashboard } from "./Dashboard";
