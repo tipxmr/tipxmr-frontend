@@ -8,4 +8,5 @@ export { default as NotFound404 } from "./NotFound404";
 export { default as Logout } from "./Logout";
 export { default as Landing } from "./Landing.tsx";
 export { default as Login } from "./Login";
+export { default as Signup } from "./Signup";
 export { default as InvoiceModal } from "./InvoiceModal";

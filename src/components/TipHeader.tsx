@@ -26,7 +26,10 @@ const TipHeader = () => {
               <Link to="/donate/hundehausen">Donate</Link>
             </Menu.Item>
             <Menu.Item key="4">
-              <Link to="/login">Login/Signup</Link>
+              <Link to="/login">Login</Link>
+            </Menu.Item>
+            <Menu.Item key="5">
+              <Link to="/signup">Signup</Link>
             </Menu.Item>
           </Menu>
         </Col>

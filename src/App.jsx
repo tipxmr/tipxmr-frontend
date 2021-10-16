@@ -19,6 +19,7 @@ import {
   InvoiceModal,
   Landing,
   Login,
+  Signup,
   Logout,
   StreamerPage,
 } from "./pages";
@@ -96,6 +97,9 @@ const App = () => {
             </Route>
             <Route path="/" exact>
               <Landing />
+            </Route>
+           <Route path="/signup">
+              <Signup />
             </Route>
             <Route path="/login">
               <Login />

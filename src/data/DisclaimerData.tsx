@@ -1,7 +1,8 @@
 import { Typography } from "antd";
 
 const { Link } = Typography;
-const tips = [
+
+export const tips = [
   {
     title: "Tip 1: Keep your seedphrase save",
     description: (
@@ -59,5 +60,3 @@ const tips = [
     ),
   },
 ];
-
-export default tips;

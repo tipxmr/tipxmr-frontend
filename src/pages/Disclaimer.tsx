@@ -1,5 +1,5 @@
 import { Row, Col, Typography, Divider, List } from "antd";
-import tips from '../data/disclaimer'
+import { tips } from "../data/DisclaimerData";
 
 const { Title, Text } = Typography;
 

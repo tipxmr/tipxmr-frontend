@@ -15,6 +15,7 @@ import { Redirect } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LanguageSelector, PickUserName } from "../../components";
 import { openFromSeed, useWallet } from "../../context/wallet";
+import { safetyHints } from "../../data/SignupData";
 import monerojs, {
   getMnemonicHash,
   isValidMnemoicLength,
@@ -23,28 +24,6 @@ import socket_streamer from "../../libs/socket_streamer";
 import { dispatcherState, streamerState } from "../../store/atom";
 
 const { Title } = Typography;
-const importantList = [
-  {
-    title: "Secure your seed",
-    description:
-      "Please write your seedphrase on a piece of paper. DO NOT STORE IT ON THE COMPUTER.",
-  },
-  {
-    title: "Keep your seed secret",
-    description:
-      "Anybody that knows the seed can access funds stored on the wallet. Do not share it with others.",
-  },
-  {
-    title: "Don't get phished",
-    description:
-      "Before you sign into TipXMR with your seed, make sure that you are actually using TipXMR. Verify the URL and check the 🔒 in your browser.",
-  },
-  {
-    title: "Regularly withdraw to a different wallet",
-    description:
-      "Just to be on the save side, do not keep large amounts on your TipXMR wallet. You should regularly withdraw funds to another Monero wallet, like CakeWallet or Monerujo.",
-  },
-];
 const defaultStateSeed = "";
 const { TextArea } = Input;
 
@@ -151,7 +130,7 @@ const Login = () => {
               {creationMode ? (
                 <Row justify="center" align="middle">
                   <Col>
-                    <span htmlFor="languages" style={{ "paddingRight": "10px" }}>
+                    <span htmlFor="languages" style={{ paddingRight: "10px" }}>
                       Seed language:
                     </span>
                     <LanguageSelector
@@ -161,7 +140,6 @@ const Login = () => {
                     />
                   </Col>
                 </Row>
-
               ) : null}
             </Col>
           </Row>
@@ -228,7 +206,7 @@ const Login = () => {
               </p>
               <List
                 itemLayout="horizontal"
-                dataSource={importantList}
+                dataSource={safetyHints}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
