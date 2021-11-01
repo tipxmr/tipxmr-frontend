@@ -1,6 +1,17 @@
 import { Card, Button, List } from "antd";
 import { Link } from "react-router-dom";
 
+interface IBulletpoint {
+  title: string,
+  description: string
+}
+interface IOverviewCard {
+  title: string,
+  buttonLink: string,
+  buttonCta: string,
+  bulletpoints: IBulletpoint,
+}
+
 const OverviewCard = ({title, buttonLink, bulletpoints, buttonCta}) => {
   return (
     <Card

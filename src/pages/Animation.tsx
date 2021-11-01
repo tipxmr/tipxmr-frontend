@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
-import { useRecoilValue } from "recoil";
-import { streamerState } from "../store/atom";
 import {
   emitGetAnimationConfig,
   onGetAnimationConfig,
@@ -81,7 +79,7 @@ function Animation() {
         setGoalProgress((prevState) => prevState + amount);
       }, 2000);
     }
-  }, [animationConfig]);
+  }, [animationConfig, amount]);
 
   // const streamerConfig = useRecoilValue(streamerState);
   // console.log("Animation streamer config: ", streamerConfig);

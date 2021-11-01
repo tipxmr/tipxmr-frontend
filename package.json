@@ -23,6 +23,7 @@
     "date-fns": "^2.23.0",
     "deep-diff": "^1.0.2",
     "husky": "^7.0.2",
+    "less": "^2.7.3",
     "lint-staged": "^11.1.2",
     "monero-javascript": "^0.5.5",
     "prettier": "^2.4.1",
@@ -49,12 +50,32 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "postinstall": "shx cp ./node_modules/monero-javascript/dist/* ./public && shx cp -n .env.example .env"
+    "postinstall": "shx cp ./node_modules/monero-javascript/dist/* ./public && shx cp -n .env.example .env",
+    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      },
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -70,9 +91,21 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/manager-webpack5": "^6.3.12",
+    "@storybook/node-logger": "^6.3.12",
+    "@storybook/react": "^6.3.12",
     "@types/crypto-js": "^4.0.2",
     "@types/qrcode": "^1.4.1",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.4.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "less-loader": "^4.1.0",
+    "storybook-less-loader": "^0.1.0",
+    "style-loader": "^3.3.0"
   },
   "husky": {
     "hooks": {

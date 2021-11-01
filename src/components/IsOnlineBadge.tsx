@@ -1,15 +1,15 @@
 import { Tag } from "antd";
-import PropTypes from "prop-types";
 
-const IsOnlineBadge = ({ isOnline }) => {
+interface IIsOnlineBadge {
+  isOnline: boolean
+}
+
+const IsOnlineBadge = ({ isOnline }:  IIsOnlineBadge) => {
   return (
     <Tag color={isOnline ? "success" : "error"}>
       {isOnline ? "online" : "offline"}
     </Tag>
   );
-};
-IsOnlineBadge.propTypes = {
-  isOnline: PropTypes.bool,
 };
 
 export default IsOnlineBadge;

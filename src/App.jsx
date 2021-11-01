@@ -1,3 +1,6 @@
+/*
+* @ts-ignore
+*/ 
 import React, { useEffect, useRef } from "react";
 import {
   BrowserRouter as Router,
@@ -92,28 +95,28 @@ const App = () => {
             <PrivateRoute path="/dashboard">
               <Dashboard />
             </PrivateRoute>
-            <Route path="/donate/:userName">
+            <Route path="/donate/:userName" exact>
               <Donate />
             </Route>
             <Route path="/" exact>
               <Landing />
             </Route>
-           <Route path="/signup">
+           <Route path="/signup" exact>
               <Signup />
             </Route>
-            <Route path="/login">
+            <Route path="/login" exact>
               <Login />
             </Route>
             <Route path="/streamerpage" exact>
               <StreamerPage />
             </Route>
-            <Route path="/animation/:userName">
+            <Route path="/animation/:userName" exact>
               <Animation />
             </Route>
-            <Route path="/disclaimer">
+            <Route path="/disclaimer" exact>
               <Disclaimer />
             </Route>
-            <Route path="/faq">
+            <Route path="/faq" exact>
               <FAQ />
             </Route>
             <Route path="/logout">

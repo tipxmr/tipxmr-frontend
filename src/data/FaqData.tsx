@@ -1,6 +1,3 @@
-//@ts-nocheck
-import React from "react";
-
 const linkStyle = "text-xmrorange underline";
 export const faqs = [
   {
@@ -121,3 +118,5 @@ export const faqs = [
     ),
   },
 ];
+
+export default faqs

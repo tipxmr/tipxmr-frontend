@@ -1,4 +1,4 @@
-import { faqs } from "../data/faqdata";
+import { faqs } from "../data/FaqData";
 import { Row, Col, Collapse, Typography } from "antd";
 
 const { Title } = Typography;

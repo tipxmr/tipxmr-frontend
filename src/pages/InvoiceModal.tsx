@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import monerojs from "../libs/monero";
 import {
   Spin,
@@ -84,12 +84,12 @@ const Payment = () => {
   //   }
   // }, [getSubaddress, subaddress]);
 
-  const createPaymentUri = () => {
+  const createPaymentUri = useCallback(() => {
     return amount > 0
       ? `monero:${subaddress}?tx_amount=${amount}`
       : `monero:${subaddress}`;
-  };
-
+  }, [amount, subaddress])
+  
   // generete QR Code on subaddress change
   useEffect(() => {
     const uri = createPaymentUri();
