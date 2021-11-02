@@ -25,7 +25,7 @@ const OverviewCard = ({title, buttonLink, bulletpoints, buttonCta}) => {
       <List
         itemLayout="horizontal"
         dataSource={bulletpoints}
-        renderItem={(item) => (
+        renderItem={ (item: IBulletpoint ) => (
           <List.Item>
             <List.Item.Meta
               title={<a href="#">{item.title}</a>}

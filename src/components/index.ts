@@ -8,5 +8,5 @@ export { default as PrivateRoute } from "./PrivateRoute";
 export { default as SyncStatus } from "./SyncStatus";
 
 export { default as TipFooter } from "./TipFooter";
-export { default as TipHeader } from "./TipHeader.tsx";
+export { default as TipHeader } from "./TipHeader";
 export { default as TipLayout } from "./TipLayout";

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const { Option } = Select;
 
-const convertFlag = (language) => {
+const convertFlag = (language: string) => {
   switch (language) {
     case "German":
       return "🇩🇪";
@@ -54,7 +54,7 @@ const LanguageSelector = ({ language, onChange }) => {
   return (
     <Select
       id="languages"
-      name="languages"
+      // name="languages"
       defaultValue={language}
       onChange={onChange}
       style={{ width: "200px" }}
