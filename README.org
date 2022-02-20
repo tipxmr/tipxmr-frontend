@@ -1,3 +1,5 @@
+Project moved to [[https://github.com/tipxmr/tipxmr][tipxmr/tipxmr]]
+
 [[src/images/tipxmr-live.png]]
 
 * TipXMR - The Livestream Tipping Service for OBS
