@@ -76,6 +76,7 @@ const Wallet = () => {
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [isValidAmount, setIsValidAmount] = useState(false);
   const [withdrawAddress, setWithdrawAddress] = useState(null);
+  const [currentBlockHeight, setCurrentBlockHeight] = useState(0);
 
   // start or stop sync
   const handleSync = () => {
@@ -155,6 +156,15 @@ const Wallet = () => {
     console.log("Amount: ", amount);
     setWithdrawAmount(amount);
     amountValidation(amount);
+  };
+
+  const handleSkipSync = () => {
+    monerojs.getCurrentBlockHeight().then((height) => {
+      setCurrentBlockHeight(height);
+      stop().then(() => {
+        start(height - 10);
+      });
+    });
   };
 
   const amountValidation = (amount) => {
@@ -237,6 +247,9 @@ const Wallet = () => {
             <Button type="primary" onClick={handleSync}>
               {isActive ? "Stop Sync" : "Start Sync"}
             </Button>
+            <Button type="primary" disabled={isDone} onClick={handleSkipSync}>
+              Skip Sync
+            </Button>
           </Card>
         </Col>
         <Col span={24}>
@@ -271,7 +284,9 @@ const Wallet = () => {
                 />
               </Col>
 
-              <Button type="primary">Withdraw</Button>
+              <Button type="primary" onClick={withdraw}>
+                Withdraw
+              </Button>
             </Row>
           </Card>
         </Col>
